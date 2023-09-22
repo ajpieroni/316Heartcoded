@@ -11,3 +11,5 @@
 
 Our team, Heartcoded, has chosed the open project option.
 
+
+### [Documentation for Rails and Next.js](https://medium.com/@raphox/rails-and-next-js-the-perfect-combination-for-modern-web-development-final-part-a88af492a00)
