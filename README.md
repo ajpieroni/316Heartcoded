@@ -11,3 +11,10 @@
 
 Our team, Heartcoded, has chosed the open project option.
 
+Milestone2:
+- Anna Zhang - Figma, helped with ER Diagram, cloned the repo
+- Alexander Pieroni - setting up next.js, Rails, Docker, Tech Stack
+- Eileen Cai - ER Diagram, started designing schema, cloned the repo
+- Lily Neusaenger - cloned the repo
+- Linda Wang - Figma, helped with ER Diagram, cloned the repo
+- Jacob Lee - ER Diagram, started designing schema, worked on the report.pdf, cloned the repo
