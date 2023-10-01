@@ -43,7 +43,7 @@ services:
       RAILS_MAX_THREADS: 5
   
   sidekiq:
-    image: ourapp-backend
+    image: my_api-backend
     command: bundle exec sidekiq
     volumes:
       - ./backend:/app
