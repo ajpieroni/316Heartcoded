@@ -12,4 +12,7 @@ Team Members
 - Linda Wang - Figma, helped with ER Diagram, cloned the repo
 - Jacob Lee - ER Diagram, started designing schema, worked on the report.pdf, cloned the repo
 
+### [Documentation for Rails and Next.js](https://medium.com/@raphox/rails-and-next-js-the-perfect-combination-for-modern-web-development-final-part-a88af492a00)
+=======
 https://github.com/ajpieroni/316Heartcoded-Web-App 
+
