@@ -755,3 +755,273 @@ Started GET "/ws" for 172.18.0.1 at 2023-10-02 01:01:58 +0000
   
 ActionController::RoutingError (No route matches [GET] "/ws"):
   
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE DATABASE "postgres" ENCODING = 'unicode'[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT pg_try_advisory_lock(737815420147457505)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(737815420147457505)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTimeslot Update All (4.8ms)[0m  [1m[33mUPDATE "timeslots" SET "count" = $1, "has_passed" = $2 WHERE (date = '2023-10-01') AND (slot_start < '2023-10-02 01:11:09.936294')[0m  [["count", nil], ["has_passed", true]]
+  ↳ app/jobs/cleanup_job.rb:9:in `perform'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (2.4ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 12:30:00"], ["slot_end", "2023-09-06 12:40:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.052683"], ["updated_at", "2023-10-02 01:11:10.052683"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.3ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 12:40:00"], ["slot_end", "2023-09-06 12:50:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.061078"], ["updated_at", "2023-10-02 01:11:10.061078"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.3ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 13:00:00"], ["slot_end", "2023-09-06 13:10:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.065474"], ["updated_at", "2023-10-02 01:11:10.065474"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.3ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 13:10:00"], ["slot_end", "2023-09-06 13:20:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.070454"], ["updated_at", "2023-10-02 01:11:10.070454"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.6ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 13:20:00"], ["slot_end", "2023-09-06 13:30:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.075292"], ["updated_at", "2023-10-02 01:11:10.075292"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.3ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 13:30:00"], ["slot_end", "2023-09-06 13:40:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.081771"], ["updated_at", "2023-10-02 01:11:10.081771"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.4ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 13:40:00"], ["slot_end", "2023-09-06 13:50:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.088768"], ["updated_at", "2023-10-02 01:11:10.088768"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.3ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 14:00:00"], ["slot_end", "2023-09-06 14:10:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.094461"], ["updated_at", "2023-10-02 01:11:10.094461"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.4ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 14:10:00"], ["slot_end", "2023-09-06 14:20:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.100367"], ["updated_at", "2023-10-02 01:11:10.100367"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.4ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 14:20:00"], ["slot_end", "2023-09-06 14:30:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.107207"], ["updated_at", "2023-10-02 01:11:10.107207"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.3ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 14:30:00"], ["slot_end", "2023-09-06 14:40:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.111907"], ["updated_at", "2023-10-02 01:11:10.111907"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.2ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 14:40:00"], ["slot_end", "2023-09-06 14:50:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.116615"], ["updated_at", "2023-10-02 01:11:10.116615"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.2ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 15:00:00"], ["slot_end", "2023-09-06 15:10:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.120770"], ["updated_at", "2023-10-02 01:11:10.120770"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.2ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 15:10:00"], ["slot_end", "2023-09-06 15:20:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.124918"], ["updated_at", "2023-10-02 01:11:10.124918"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.3ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 15:20:00"], ["slot_end", "2023-09-06 15:30:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.129454"], ["updated_at", "2023-10-02 01:11:10.129454"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.2ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 15:30:00"], ["slot_end", "2023-09-06 15:40:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.133463"], ["updated_at", "2023-10-02 01:11:10.133463"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.4ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 15:40:00"], ["slot_end", "2023-09-06 15:50:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.137287"], ["updated_at", "2023-10-02 01:11:10.137287"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.3ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 16:00:00"], ["slot_end", "2023-09-06 16:10:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.142329"], ["updated_at", "2023-10-02 01:11:10.142329"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.3ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 16:10:00"], ["slot_end", "2023-09-06 16:20:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.147595"], ["updated_at", "2023-10-02 01:11:10.147595"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.3ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 16:20:00"], ["slot_end", "2023-09-06 16:30:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.153059"], ["updated_at", "2023-10-02 01:11:10.153059"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.7ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 16:30:00"], ["slot_end", "2023-09-06 16:40:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.159446"], ["updated_at", "2023-10-02 01:11:10.159446"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.3ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 16:40:00"], ["slot_end", "2023-09-06 16:50:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.165732"], ["updated_at", "2023-10-02 01:11:10.165732"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.3ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 17:00:00"], ["slot_end", "2023-09-06 17:10:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.172407"], ["updated_at", "2023-10-02 01:11:10.172407"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.4ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 17:10:00"], ["slot_end", "2023-09-06 17:20:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.178055"], ["updated_at", "2023-10-02 01:11:10.178055"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.3ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 17:20:00"], ["slot_end", "2023-09-06 17:30:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.183702"], ["updated_at", "2023-10-02 01:11:10.183702"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.4ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 17:30:00"], ["slot_end", "2023-09-06 17:40:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.188525"], ["updated_at", "2023-10-02 01:11:10.188525"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.3ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 17:40:00"], ["slot_end", "2023-09-06 17:50:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.193699"], ["updated_at", "2023-10-02 01:11:10.193699"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.3ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 18:00:00"], ["slot_end", "2023-09-06 18:10:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.198374"], ["updated_at", "2023-10-02 01:11:10.198374"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.3ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 18:10:00"], ["slot_end", "2023-09-06 18:20:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.203136"], ["updated_at", "2023-10-02 01:11:10.203136"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.4ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 18:20:00"], ["slot_end", "2023-09-06 18:30:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.207799"], ["updated_at", "2023-10-02 01:11:10.207799"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.3ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 18:30:00"], ["slot_end", "2023-09-06 18:40:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.212605"], ["updated_at", "2023-10-02 01:11:10.212605"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.4ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 18:40:00"], ["slot_end", "2023-09-06 18:50:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.216746"], ["updated_at", "2023-10-02 01:11:10.216746"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.3ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 19:00:00"], ["slot_end", "2023-09-06 19:10:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.222304"], ["updated_at", "2023-10-02 01:11:10.222304"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.2ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 19:10:00"], ["slot_end", "2023-09-06 19:20:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.227103"], ["updated_at", "2023-10-02 01:11:10.227103"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.4ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 19:20:00"], ["slot_end", "2023-09-06 19:30:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.231683"], ["updated_at", "2023-10-02 01:11:10.231683"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.3ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 19:30:00"], ["slot_end", "2023-09-06 19:40:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.235980"], ["updated_at", "2023-10-02 01:11:10.235980"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTimeslot Create (0.2ms)[0m  [1m[32mINSERT INTO "timeslots" ("slot_start", "slot_end", "date", "created_at", "updated_at", "count", "has_passed") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["slot_start", "2023-09-06 19:40:00"], ["slot_end", "2023-09-06 19:50:00"], ["date", "2023-09-06"], ["created_at", "2023-10-02 01:11:10.240107"], ["updated_at", "2023-10-02 01:11:10.240107"], ["count", 3], ["has_passed", false]]
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/jobs/timeslot_job.rb:44:in `create_timeslot'
+Started GET "/ws" for 172.18.0.1 at 2023-10-02 01:11:25 +0000
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-02 01:11:27 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-02 01:11:29 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/" for 172.18.0.1 at 2023-10-02 01:11:32 +0000
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/gems/railties-7.0.5/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/gems/railties-7.0.5/lib/rails/templates/rails/welcome/index.html.erb (Duration: 1.2ms | Allocations: 493)
+Completed 200 OK in 35ms (Views: 4.0ms | ActiveRecord: 0.0ms | Allocations: 4912)
+
+
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE DATABASE "postgres" ENCODING = 'unicode'[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(737815420147457505)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(737815420147457505)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/" for 172.19.0.1 at 2023-10-02 01:28:49 +0000
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/gems/railties-7.0.5/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/gems/railties-7.0.5/lib/rails/templates/rails/welcome/index.html.erb (Duration: 2.1ms | Allocations: 826)
+Completed 200 OK in 27ms (Views: 7.9ms | ActiveRecord: 0.0ms | Allocations: 7727)
+
+
+Started GET "/users" for 172.19.0.1 at 2023-10-02 01:28:53 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/users"):
+  

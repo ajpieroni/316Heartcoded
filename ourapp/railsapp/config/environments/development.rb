@@ -78,27 +78,27 @@ Rails.application.configure do
                                         :authentication => :none,
                                         :enable_starttls_auto => false}
 
-  config.middleware.use RackAuthenticator::Configurable, *[
-    "rk337@duke.edu",["urn:mace:duke.edu:groups:group-manager:roles:fixit-admin"], #exact string might be changed
-    {
-      'HTTP_EMPLID' => '000000',
-      'HTTP_DUDUKEID' => '1197415',
-      'HTTP_GIVENNAME' => 'Ria',
-      'HTTP_SN' => 'Kapoor',
-      'HTTP_DISPLAYNAME' => 'Ria Kapoor',
-      'HTTP_AFFILIATION' => "student",
-      'HTTP_MAIL' => 'rk337@duke.edu'
+  # config.middleware.use RackAuthenticator::Configurable, *[
+  #   "rk337@duke.edu",["urn:mace:duke.edu:groups:group-manager:roles:fixit-admin"], #exact string might be changed
+  #   {
+  #     'HTTP_EMPLID' => '000000',
+  #     'HTTP_DUDUKEID' => '1197415',
+  #     'HTTP_GIVENNAME' => 'Ria',
+  #     'HTTP_SN' => 'Kapoor',
+  #     'HTTP_DISPLAYNAME' => 'Ria Kapoor',
+  #     'HTTP_AFFILIATION' => "student",
+  #     'HTTP_MAIL' => 'rk337@duke.edu'
 
-      # 'HTTP_EMPLID' => '000000',
-      # 'HTTP_DUDUKEID' => '1097969',
-      # 'HTTP_GIVENNAME' => 'Aaron',
-      # 'HTTP_SN' => 'Diefes',
-      # 'HTTP_DISPLAYNAME' => 'Aaron Diefes',
-      # 'HTTP_AFFILIATION' => "student",
-      # 'HTTP_MAIL' => 'awd18@duke.edu'
+  #     # 'HTTP_EMPLID' => '000000',
+  #     # 'HTTP_DUDUKEID' => '1097969',
+  #     # 'HTTP_GIVENNAME' => 'Aaron',
+  #     # 'HTTP_SN' => 'Diefes',
+  #     # 'HTTP_DISPLAYNAME' => 'Aaron Diefes',
+  #     # 'HTTP_AFFILIATION' => "student",
+  #     # 'HTTP_MAIL' => 'awd18@duke.edu'
 
-    }
-  ]
+  #   }
+  # ]
 
 end
 

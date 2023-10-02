@@ -1,2 +1,0 @@
-class LineStatus < ApplicationRecord
-end
