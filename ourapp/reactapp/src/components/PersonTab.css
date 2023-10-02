@@ -1,0 +1,30 @@
+.staff-member {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0px 10px 10px 10px;
+  /* margin: 0px 5px 0px 5px; */
+  min-width: 30%;
+}
+.staff-member h3 {
+  text-align: center;
+}
+.staff-member p {
+  max-width: 250px;
+}
+
+#placeholder-image {
+  width: 200px;
+  height: 200px;
+  background-color: #005587;
+  border-radius: 10px;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.25);
+  background-image: url("../assets/maulik.jpeg");
+  width: 200px;
+  height: 200px;
+  min-width: 200px;
+  border-radius: 10px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

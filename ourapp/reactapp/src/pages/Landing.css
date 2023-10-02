@@ -1,0 +1,99 @@
+.Onboard .content-wrapper {
+  background-color: #e2e6ed;
+  display: flex;
+  height: 100%;
+  min-height: 81.15vh;
+  padding: 20px;
+}
+.Onboard .content-wrapper.mobile {
+  flex-flow: column;
+  padding-top: 0;
+}
+.mail-status {
+  display: flex;
+  flex-flow: column;
+  padding-right: 2vw;
+  width: 28vw;
+}
+.mobile .mail-status {
+  justify-content: center;
+  max-width: 70vw;
+}
+.mobile .mail-status * {
+  max-width: 100%;
+}
+.mail-status.mobile {
+  align-items: center;
+  align-self: center;
+  padding-top: 10px;
+  width: 75vw;
+}
+.subheader,
+.mail-status h2 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.25em;
+  font-weight: 700;
+  margin: 0;
+  padding-left: 15px;
+  white-space: normal;
+}
+.subheader.mobile,
+.mobile .mail-status h2 {
+  padding: 10px;
+  text-align: center;
+}
+.status-wrapper {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 0 6px rgb(0 0 0 /.25);
+  display: flex;
+  font-family: "Open Sans", sans-serif;
+  margin: 5px;
+}
+.status-wrapper p {
+  margin: 10px;
+}
+.mobile .status-wrapper {
+  margin-bottom: 1vh;
+  width: 75vw;
+}
+#status-icon {
+  color: #c84e00;
+  font-size: 2em;
+  padding-right: 5px;
+}
+.status-message {
+  align-items: center;
+  display: flex;
+  flex-flow: row;
+  overflow-wrap: break-word;
+}
+.alert-message {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  line-height: 27px;
+}
+.mobile .alert-message {
+  width: 75vw;
+}
+.time-est {
+  font-style: italic;
+  font-weight: 400;
+}
+.message-wrapper {
+  background: #ffd960;
+  border-radius: 18px;
+  box-shadow: 0 0 6px rgb(0 0 0 /.25);
+  display: flex;
+  font-family: "Open Sans", sans-serif;
+  margin: 5px;
+  margin-top: 10px;
+}
+.message-wrapper p {
+  margin: 15px;
+}
+#space-holder {
+  flex: 1;
+  max-width: 30vw;
+}

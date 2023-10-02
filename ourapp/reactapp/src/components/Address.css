@@ -1,0 +1,16 @@
+.Address {
+  font-family: "Open Sans", sans-serif;
+}
+
+.address-text {
+  margin-left: 10px;
+}
+
+.Address h2 {
+  margin-bottom: 0.5vh;
+}
+
+.address-text p {
+  font-style: italic;
+  margin: 0;
+}

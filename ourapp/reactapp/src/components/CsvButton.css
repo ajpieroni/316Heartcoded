@@ -1,0 +1,101 @@
+.msg-csv,
+.scd-csv {
+  align-items: center;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 0 3px rgb(0 0 0 /.3);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: fit-content;
+  justify-content: center;
+  min-width: fit-content;
+  padding: 20px;
+}
+.msg-csv .date-selec > *,
+.scd-csv .date-selec > * {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.msg-csv .date-selec,
+.scd-csv .date-selec {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  justify-content: center;
+}
+.msg-csv .start-selec input,
+.scd-csv .start-selec input,
+.msg-csv .end-selec input,
+.scd-csv .end-selec input {
+  font-family: "Open Sans", sans-serif;
+  margin: auto 5px;
+}
+.msg-csv .start-selec,
+.scd-csv .start-selec {
+  margin: 0 auto 4px;
+}
+.msg-csv .dl-icon label,
+.scd-csv .dl-icon label {
+  font-size: .75em;
+  margin-right: 5px;
+}
+.msg-csv .dl-icon label:hover,
+.scd-csv .dl-icon label:hover {
+  cursor: pointer;
+}
+.msg-csv .MuiButtonBase-root,
+.scd-csv .MuiButtonBase-root {
+  align-self: center;
+  background: #00539b;
+  border: none;
+  border-radius: 10px;
+  box-shadow: inset -3px -6px 0 1.5px rgb(4 45 55 /.5);
+  color: #fff;
+  font-size: 1.25em;
+  font-weight: 600;
+  height: fit-content;
+  margin: 10px;
+  margin-bottom: 0;
+  padding: 12px;
+  padding-left: 10px;
+  padding-top: 10px;
+  width: fit-content;
+}
+.msg-csv .MuiButtonBase-root:hover,
+.scd-csv .MuiButtonBase-root:hover {
+  background: #012169;
+  box-shadow: inset 3px 6px 0 1.5px rgb(0 0 0 /.5);
+  cursor: pointer !important;
+  padding: 12px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+}
+input[type=date] {
+  appearance: none;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  color: #555;
+  font-size: 16px;
+  outline: none;
+  padding: 8px 12px;
+}
+input[type=date]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(.4);
+}
+input[type=date]:focus {
+  box-shadow: 0 0 5px rgb(0 0 0 /.3);
+}
+input[type=date]::placeholder {
+  color: #999;
+}
+.msg-csv .dl-icon,
+.scd-csv .dl-icon {
+  margin-top: 10px;
+}

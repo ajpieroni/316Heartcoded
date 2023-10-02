@@ -1,0 +1,15 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+ 
+# rails ignore
+**/log
+**/tmp
+**/public
+**/node_modules
+ 
+# railsapp/tmp/cache
+ 
+.env
+ 
+yarn-error.log
+yarn-debug.log*
+.yarn-integrity

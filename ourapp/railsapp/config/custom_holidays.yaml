@@ -1,0 +1,62 @@
+months:
+  1:
+    - name: New Year's Day
+      regions: [duke]
+      mday: 1
+      observed: to_weekday_if_weekend(date)
+    - name: Martin Luther King Day
+      regions: [duke]
+      week: 3
+      wday: 1
+  5:
+    - name: Memorial Day
+      regions: [duke]
+      week: -1
+      wday: 1
+  6:
+    - name: Juneteenth
+      regions: [duke]
+      mday: 19
+      observed: to_weekday_if_weekend(date)
+  7:
+    - name: Independence Day
+      regions: [duke]
+      mday: 4
+      observed: to_weekday_if_weekend(date)
+  9:
+    - name: Labor Day
+      week: 1
+      regions: [duke]
+      wday: 1
+  11:
+    - name: Thanksgiving Day
+      regions: [duke]
+      week: 4
+      wday: 4
+    - name: Friday after Thanksgiving
+      function: day_after_thanksgiving(year)
+      regions: [duke]
+  12:
+    - name: Christmas Eve
+      regions: [duke]
+      mday: 24
+      function: christmas_eve_holiday(date)
+    - name: Christmas Day
+      regions: [duke]
+      mday: 25
+      observed: to_weekday_if_weekend(date)
+    - name: New Year's Eve
+      regions: [duke]
+      mday: 31
+
+methods:
+  christmas_eve_holiday:
+    arguments: date
+    ruby: |
+      beginning_of_month = Date.civil(date.year, date.month, 1)
+      (date.saturday? || date.sunday?) ? date.downto(beginning_of_month).find {|d| d if d.wday == 5} : date
+
+  day_after_thanksgiving:
+    arguments: year
+    ruby: |
+      Holidays::Factory::DateCalculator.day_of_month_calculator.call(year, 11, 4, 4) + 1

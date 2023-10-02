@@ -67,4 +67,39 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  #test_userid = ENV['Test_DUID'] || "jsx"
+
+  #config.middleware.use RackAuthenticator::Configurable, *[test_netid, []]
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {:address  => "smtp.duke.edu",
+                                        :port  => 25,
+                                        :domain => "duke.edu",
+                                        :authentication => :none,
+                                        :enable_starttls_auto => false}
+
+  config.middleware.use RackAuthenticator::Configurable, *[
+    "rk337@duke.edu",["urn:mace:duke.edu:groups:group-manager:roles:fixit-admin"], #exact string might be changed
+    {
+      'HTTP_EMPLID' => '000000',
+      'HTTP_DUDUKEID' => '1197415',
+      'HTTP_GIVENNAME' => 'Ria',
+      'HTTP_SN' => 'Kapoor',
+      'HTTP_DISPLAYNAME' => 'Ria Kapoor',
+      'HTTP_AFFILIATION' => "student",
+      'HTTP_MAIL' => 'rk337@duke.edu'
+
+      # 'HTTP_EMPLID' => '000000',
+      # 'HTTP_DUDUKEID' => '1097969',
+      # 'HTTP_GIVENNAME' => 'Aaron',
+      # 'HTTP_SN' => 'Diefes',
+      # 'HTTP_DISPLAYNAME' => 'Aaron Diefes',
+      # 'HTTP_AFFILIATION' => "student",
+      # 'HTTP_MAIL' => 'awd18@duke.edu'
+
+    }
+  ]
+
 end
+
+

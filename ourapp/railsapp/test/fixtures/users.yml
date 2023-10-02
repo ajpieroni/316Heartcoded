@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  net_id: MyString
+  first_name: MyString
+
+  email: MyString
+  box_number: 1
+
+two:
+  net_id: MyString
+  first_name: MyString
+
+  email: MyString
+  box_number: 1

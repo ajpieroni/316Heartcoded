@@ -1,0 +1,121 @@
+.LineStatusModifier {
+  font-family: "Open Sans";
+}
+.update-l {
+  color: #65676b;
+  font-size: .75em;
+  margin-top: 5px;
+  padding-left: 15px;
+}
+.circle.selected {
+  border: 5px solid #012169;
+}
+#status-circle,
+.circle {
+  font-size: 100px;
+}
+.status-box p {
+  color: #000;
+  font-size: 1em;
+  font-weight: 400;
+  margin: auto 0;
+  margin-left: 4px;
+  text-align: left;
+}
+.LineStatus.mobile .status-box {
+  height: fit-content;
+  margin: 5px;
+  padding: 15px;
+}
+#status-circle {
+  color: #c84e00;
+  font-size: 2em;
+  margin-top: 10px;
+}
+.status-selector {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+.circle {
+  align-items: center;
+  border: 5px solid #f3f2f1;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  margin-right: 10px;
+  min-height: 40px;
+  min-width: 40px;
+}
+.red {
+  background-color: #c84e00;
+  font-size: 100px;
+}
+.yellow {
+  background-color: #ffd960;
+}
+.green {
+  background-color: #a1b70d;
+}
+.checkmark {
+  color: #fff;
+  font-size: 18px;
+}
+.LineStatus button {
+  cursor: pointer;
+  margin-top: 10px;
+  padding: 10px 20px;
+}
+.mod-wrapper {
+  align-items: center;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 0 3px rgb(0 0 0 /.25);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  font-family: "Open Sans";
+  min-width: fit-content;
+  padding: 15px;
+  width: 100%;
+}
+.mod-wrapper * {
+  margin: 5px;
+}
+.mail-header {
+  font-size: 1em;
+  font-weight: 700;
+  margin-left: 5px;
+  text-align: left;
+}
+.mod-wrapper button {
+  background: #00539b;
+  border: none;
+  border-radius: 10px;
+  box-shadow: inset -3px -6px 0 1.5px rgb(4 45 55 /.5);
+  color: #fff;
+  font-size: 1em;
+  font-weight: 600;
+  height: fit-content;
+  margin-bottom: 0;
+  padding: 10px;
+  padding-left: 8px;
+  padding-top: 8px;
+  width: 60%;
+}
+.mod-wrapper button:hover {
+  background: #012169;
+  box-shadow: inset 3px 6px 0 1.5px rgb(0 0 0 /.5);
+  cursor: pointer;
+  padding: 10px;
+  padding-bottom: 8px;
+  padding-right: 8px;
+}
+#curr-clr {
+  color: rgb(0 0 0 /.5);
+  font-size: .75em;
+  font-style: italic;
+  margin: 5px 0 0;
+  padding-left: 15px;
+}

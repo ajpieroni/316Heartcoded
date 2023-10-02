@@ -1,0 +1,164 @@
+.Schedule {
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
+  margin-right: 5vw;
+  min-height: 50vh;
+  overflow: hidden;
+  width: 28vw;
+}
+.disclaimer {
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: 400;
+  padding: 15px;
+}
+.terms {
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: 400;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  text-align: left;
+  width: 80%;
+}
+.Schedule h2 {
+  background-color: #993399;
+  color: #fff;
+  font-family: "Open Sans";
+  font-size: 1.25em;
+  font-weight: 700;
+  margin: 0;
+  padding: 1.5vh;
+  text-align: center;
+}
+.Schedule.mobile {
+  margin: 0 auto;
+  margin-bottom: 5vh;
+  width: 75vw;
+}
+
+.inner-schedule {
+  background-color: #fff;
+  height: 100%;
+  padding-top: 10px;
+}
+.inner-schedule p {
+  color: #949494;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.inner-schedule button {
+  background: #00539b;
+  border: none;
+  border-radius: 10px;
+  box-shadow: inset -3px -6px 0px 1.5px rgba(4, 45, 55, 0.5);
+  color: #fff;
+  font-size: 1em;
+  font-weight: 600;
+  height: 40px;
+  margin-top: 10px;
+  padding: 10px;
+  padding-left: 8px;
+  padding-top: 8px;
+  width: 60%;
+}
+.inner-schedule button:hover {
+  background: #012169;
+  box-shadow: inset 3px 6px 0px 1.5px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  padding: 10px;
+  padding-bottom: 8px;
+  padding-right: 8px;
+}
+
+.no-scheduled-pickup {
+  border-radius: 10px;
+  color: #727272;
+  font-style: italic;
+  margin: 10px auto;
+  min-height: 6vh;
+  overflow-wrap: normal;
+  padding: 6px;
+  width: 80%;
+}
+
+.scheduled-pickup {
+  align-items: center;
+  background-color: #e2e6ed;
+  border: 3px solid transparent;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 1vh;
+  min-height: 6vh;
+  overflow-wrap: normal;
+  padding: 6px;
+  text-align: left;
+  width: 80%;
+}
+.scheduled-pickup p {
+  align-self: flex-start;
+  color: black;
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0 0 0 10px;
+  padding: 10px;
+}
+.scheduled-pickup:hover {
+  border-color: #00539b;
+  cursor: pointer;
+}
+
+.sched-ops {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: space-evenly;
+  margin: 10px;
+  width: 90%;
+}
+
+.deletion-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 10px;
+}
+
+.scheduled-pickup .delete-button,
+.scheduled-pickup .no-keep {
+  background-color: #c84e00;
+}
+.scheduled-pickup .delete-button:hover,
+.scheduled-pickup .no-keep:hover {
+  background-color: #8f3700;
+}
+
+.scheduled-pickup .yes-delete {
+  background-color: #a1b70d;
+}
+
+.scheduled-pickup .yes-delete:hover {
+  background-color: #758609;
+}
+
+.scheduled-pickup #udl {
+  text-decoration: underline;
+}
+
+.scheduled-pickup #sched-ts {
+  border-bottom: 3px solid #a1b70d;
+  color: #00539b;
+  font-weight: 700;
+  line-height: 1.8;
+  padding-bottom: 5px;
+}
+
+.loading {
+  padding-top: 20px;
+}
