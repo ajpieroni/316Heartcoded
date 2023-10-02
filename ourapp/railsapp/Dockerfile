@@ -1,5 +1,4 @@
 #dockerfile
-
 FROM ruby:3.0.2
 RUN apt-get update -qq \
 && apt-get install -y curl build-essential libpq-dev \
@@ -14,5 +13,8 @@ ADD Gemfile .
 ADD Gemfile.lock .
 
 RUN bundle install
+
+ADD . .
+
 EXPOSE 3000
 CMD ["bash"]

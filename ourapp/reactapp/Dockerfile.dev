@@ -1,0 +1,28 @@
+
+# Dockerfile
+# Pull the base image
+
+
+# COPY ./startapp.sh .
+# CMD ./startapp.sh
+
+# Deploy app for local development
+# CMD npm start --host 0.0.0.0 --port 3000 --disableHostCheck true
+
+
+# # # UNCOMMENT BELOW
+# FROM node:13
+# WORKDIR /opt/tmpnode
+
+# # Copy app dependencies to container
+# COPY ./package.json ./
+
+# COPY ./package-lock.json ./
+
+# # Add `/app/node_modules/.bin` to $PATH
+# ENV PATH /app/node_modules/.bin:$PATH
+
+# # Install dependencies
+# RUN npm install
+
+# WORKDIR /reactapp

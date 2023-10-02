@@ -1,20 +1,22 @@
-# Dockerfile
-# Pull the base image
-FROM node:13
-# Set the working directory
-WORKDIR /reactapp
-# Copy app dependencies to container
-COPY ./package*.json ./
-# Add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+# FROM node:16.17.0-bullseye-slim
+# RUN apt-get update && apt-get install -y --no-install-recommends dumb-init
+# RUN npm install -g npm@9.7.2
+# ENV NODE_ENV production
+# #COPY package.json /usr/src/app/
+# #COPY .npmrc /usr/src/app/
+# COPY . /usr/src/app/
+# WORKDIR /usr/src/app
+# COPY --chown=node:node . .
+# RUN npm ci --only=production
+# USER node
+# EXPOSE 8080
+# CMD [ "npm", "start" ]
+# #CMD ["dumb-init", "node", "server.js"]
 
-# Install dependencies
-RUN npm install
-
-# # UI modules
-# RUN npm install @mui/icons-material
-# RUN npm install @mui/material
-
-
-# Deploy app for local development
-CMD npm start --host 0.0.0.0 --port 3000 --disableHostCheck true
+FROM node:14
+WORKDIR /app
+# COPY package*.json ./
+# RUN npm install
+# COPY . .
+# EXPOSE 3000
+CMD ["npm", "start"]

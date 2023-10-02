@@ -1,35 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
-import Content from './content';
-import Footer from './footer';
-import { BrowserRouter } from 'react-router-dom';
-import Header from './Header';
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { useState, useEffect, useRef, createContext } from "react";
+
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import headerRef
+import UserLanding from "./pages/UserLanding";
+import "./App.css";
+import axios from "axios";
 
 
 function App() {
-   return (
+  // const fetchLatestMessage = () => {
+  //   fetch(`${process.env.REACT_APP_LOCAL_HOST}/api/admin_messages`)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       const latestIndex = data.length - 1;
+  //       const latestMessage = data[latestIndex].message;
+  //       setInputMessage(latestMessage);
+  //       const updatedAt = data[latestIndex].updated_at;
+  //       const dateObject = new Date(updatedAt);
+  //       const formattedDate = `${dateObject.toLocaleDateString()}, ${dateObject.toLocaleTimeString()}`;
+  //       setLastUpdatedMessage(formattedDate);
+  //     })
+  //     .catch((error) => {
+  //       console.log("Error fetching the latest message:", error);
+  //     });
+  // };
 
-    <>
+  // useEffect(() => {
+  //   fetchLatestMessage();
+  // }, []);
 
-    {/* <Router> */}
-{/*       
-      <Switch>
-        <Route exact path ="/" component = {HomePage} />
-        <Route path ="/FAQ" component = {FAQ} />
-        <Route path ="/About Us" component = {AboutUs} />
-      </Switch> */}
-
-    <div className = "App">
-      <Header />
-    </div>
-    <Content />
-    <Footer />
-    {/* </Router> */}
-    </>
-  
-
+  return (
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<UserLanding />} />
+      </Routes>
+    </Router>
   );
 }
 
