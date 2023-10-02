@@ -1,5 +1,29 @@
 // import './Landing.css';
+import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
 export default function UserLanding() {
+  // Username variable
+  const [userName, setUserName] = useState();
+// !TODO: How to route from backend to frontend.
+ const fetchUserName = () => {
+    fetch(`http://localhost:3000/test_users/1`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        console.log(data.name);
+        setUserName(data.name);
+        
+      })
+      .catch((error) => {
+        console.log("Error fetching the latest name:", error);
+      });
+  };
+
+  useEffect(() => {
+    fetchUserName();
+    console.log("hello!");
+  }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-8 bg-gradient-to-b from-pink-300 via-red-400 to-red-500">
@@ -70,7 +94,7 @@ export default function UserLanding() {
       <div className="text-center text-white mb-20">
         <h2 className="text-3xl font-bold mb-4">Ready to find your match?</h2>
         <button className="bg-white text-red-500 hover:bg-red-400 hover:text-white px-6 py-2 rounded-full font-semibold">
-          Join HeartCoded
+          Join HeartCoded, {userName}!
         </button>
       </div>
     </main>
