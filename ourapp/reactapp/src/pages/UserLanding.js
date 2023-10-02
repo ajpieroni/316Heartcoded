@@ -1,69 +1,78 @@
-import './Landing.css';
-import LineStatus from '../components/LineStatus';
-import { useMediaQuery } from "@mui/material";
-import { useNavigate } from 'react-router-dom';
-import Viewer from '../components/HubViewer';
-// import Image from '../assets/logo.png';
-
-// Message imports
-import Message from '../components/Message';
-import { MessageContext } from '../components/contexts/MessageContext';
-import { useContext } from 'react';
-import { useState, useEffect } from 'react';
-import { LineStatusContext } from '../components/contexts/LineStatusContext';
-
+// import './Landing.css';
 export default function UserLanding() {
-  const {inputColor, setInputColor, lastUpdatedColor, setLastUpdatedColor, statusTime, setStatusTime} = useContext(LineStatusContext);
-
-  //Message Logic
-  const { inputMessage, lastUpdatedMessage } = useContext(MessageContext);
-
-  const isMobile = useMediaQuery('(max-width: 600px)');
-  const navigate = useNavigate();
-  const navigateToHome = () => {
-    navigate('/UserHome');
-    // *TODO: add shib login
-    window.location = `${process.env.REACT_APP_LOCAL_HOST}/login?target=${process.env.REACT_APP_FRONTEND_HOST}/UserHome`;
-    // navigate("/Shibboleth.sso/Login?target=#{URI.encode_www_form_component(target)}");
-  };
-
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const formattedDate = date.toLocaleString('en-US', {
-      month: 'numeric',
-      day: 'numeric',
-      year: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      hour12: true,
-    });
-
-    return formattedDate;
-  }
 
   return (
-    <div className='Onboard'>
-      {/* {console.log("Process: ", process.env)} */}
-      {/* {console.log(`Here is host: ${process.env.REACT_APP_FRONTEND_HOST}`)} */}
-      <div className={`content-wrapper ${isMobile ? 'mobile' : ''}`}>
+    <main className="flex min-h-screen flex-col items-center justify-between p-8 bg-gradient-to-b from-pink-300 via-red-400 to-red-500">
+      {/* Hero Section */}
+      <div className="text-white text-center mt-20">
+        <h1 className="text-4xl font-bold mb-4">Welcome to HeartCoded</h1>
+        <p className="text-xl mb-6">Find your soulmate today!</p>
+        <button className="bg-white text-red-500 hover:bg-red-400 hover:text-white px-6 py-2 rounded-full font-semibold">
+          Sign Up Now
+        </button>
+      </div>
 
-        <div className={`mail-status ${isMobile ? 'mobile' : ''}`}>
-          <LineStatus
-            color={inputColor}
-            est={statusTime}
-            update={lastUpdatedColor} // Call formatDate directly here
-          />
-
-          <Message message={inputMessage} time={lastUpdatedMessage} />
-
+      {/* Features */}
+      <div className="flex flex-wrap justify-center mt-16 mb-10 space-x-8 space-y-6">
+        <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-start justify-center w-80 h-auto space-y-4 mb-6">
+          <h2 className="text-2xl font-bold mb-4 text-gray-800">
+            Create Your Profile
+          </h2>
+          <p className="text-gray-700">
+            Personalize your space. Add a profile picture, write a bio, and list
+            your interests for potential matches to see.
+          </p>
         </div>
 
-        
+        <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-start justify-center w-80 h-auto space-y-4">
+          <h2 className="text-2xl font-bold mb-4 text-gray-800">
+            Find Your Match
+          </h2>
+          <p className="text-gray-700">
+            Answer tailored questions to help us find the best match for you.
+            New questions added weekly to refine your matches!
+          </p>
+        </div>
 
-        <Viewer prompt="View Package Pickup Hub" fxn={navigateToHome} />
-        <div id="space-holder"></div>
+        <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-start justify-center w-80 h-auto space-y-4">
+          <h2 className="text-2xl font-bold mb-4 text-gray-800">
+            Chat & Connect
+          </h2>
+          <p className="text-gray-700">
+            Engage in live chats, get prompted conversation starters, and decide
+            if you're ready to take the next step with your match.
+          </p>
+        </div>
+
+        <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-start justify-center w-80 h-auto space-y-4">
+          <h2 className="text-2xl font-bold mb-4 text-gray-800">
+            Dynamic Questions
+          </h2>
+          <p className="text-gray-700">
+            Our system ensures a variety of questions for you. Plus, you can
+            answer new ones as they come, keeping your profile fresh and
+            engaging.
+          </p>
+        </div>
+
+        <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-start justify-center w-80 h-auto space-y-4">
+          <h2 className="text-2xl font-bold mb-4 text-gray-800">
+            Give Feedback
+          </h2>
+          <p className="text-gray-700">
+            Rate your matches and share your thoughts. Your feedback helps us
+            refine the matching process for an enhanced experience.
+          </p>
+        </div>
       </div>
-    </div>
+
+      {/* Call-to-Action */}
+      <div className="text-center text-white mb-20">
+        <h2 className="text-3xl font-bold mb-4">Ready to find your match?</h2>
+        <button className="bg-white text-red-500 hover:bg-red-400 hover:text-white px-6 py-2 rounded-full font-semibold">
+          Join HeartCoded
+        </button>
+      </div>
+    </main>
   );
 }
