@@ -1,0 +1,42 @@
+Footer > * {
+  background-color: #012169 !important;
+}
+.Footer {
+  align-items: center;
+  background-color: #012169;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1em;
+  font-weight: 700;
+  justify-content: space-between;
+  padding: 10px;
+}
+.Footer a {
+  align-self: center;
+  color: #fff;
+  padding: 0;
+}
+.Footer a:hover {
+  background-color: #00008b;
+  cursor: pointer;
+}
+.Footer .contact-info {
+  padding: 10px;
+}
+.Footer .contact-info > * {
+  align-items: center;
+  display: flex;
+}
+.Footer .contact-icon {
+  margin-right: 4px;
+}
+.Footer img {
+  height: 10vh;
+  width: auto;
+}
+.mobile .Footer .img {
+  appearance: none;
+}

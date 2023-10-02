@@ -1,0 +1,42 @@
+<%= form_with(model: user_timeslot) do |form| %>
+  <% if user_timeslot.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(user_timeslot.errors.count, "error") %> prohibited this user_timeslot from being saved:</h2>
+
+      <ul>
+        <% user_timeslot.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div>
+    <%= form.label :timeslot_id, style: "display: block" %>
+    <%= form.text_field :timeslot_id %>
+  </div>
+
+  <div>
+    <%= form.label :status, style: "display: block" %>
+    <%= form.text_field :status %>
+  </div>
+
+  <div>
+    <%= form.label :selected_date_time, style: "display: block" %>
+    <%= form.text_field :selected_date_time %>
+  </div>
+
+  <div>
+    <%= form.label :num_packages, style: "display: block" %>
+    <%= form.number_field :num_packages %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

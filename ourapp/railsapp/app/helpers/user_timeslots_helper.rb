@@ -1,0 +1,2 @@
+module UserTimeslotsHelper
+end

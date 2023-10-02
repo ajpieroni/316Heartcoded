@@ -1,0 +1,27 @@
+<%= form_with(model: line_status) do |form| %>
+  <% if line_status.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(line_status.errors.count, "error") %> prohibited this line_status from being saved:</h2>
+
+      <ul>
+        <% line_status.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :admin, style: "display: block" %>
+    <%= form.text_field :admin %>
+  </div>
+
+  <div>
+    <%= form.label :color, style: "display: block" %>
+    <%= form.text_field :color %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

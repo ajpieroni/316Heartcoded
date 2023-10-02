@@ -1,0 +1,113 @@
+.ContactUs {
+  background-color: #e2e6ed;
+  font-family: "Open Sans", sans-serif !important;
+  height: 100%;
+  min-height: 83.15vh;
+  padding: 10px;
+}
+.ContactUs .postsubmit #ask {
+  color: #012169;
+  font-family: "Open Sans", sans-serif;
+  font-size: 2em;
+  font-weight: 700;
+  text-align: center;
+}
+.ContactUs .page-title {
+  color: #012169;
+  font-family: "EB Garamond", serif;
+  font-size: 3em;
+  font-weight: 700;
+  text-align: center;
+}
+.ContactUs h2 {
+  color: #005587;
+  font-size: 1.5em;
+  font-weight: 700;
+  margin: 0 auto;
+  max-width: 75vw;
+  text-align: center;
+}
+#contactForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 75vw;
+}
+#contactForm form {
+  margin: 0 auto;
+  max-width: 400px;
+}
+#contactForm label {
+  color: rgb(0 0 0 /.5);
+  display: block;
+  font-weight: 600;
+  padding: 10px 10px 5px 0;
+  width: fit-content;
+}
+#contactForm textarea {
+  align-self: center;
+  border-color: rgb(0 0 0 /.25);
+  border-radius: 10px;
+  display: block;
+  font-family: "Open Sans", sans-serif !important;
+  margin-bottom: 15px;
+  /* wrap word might be gone */
+  padding: 10px 16px;
+  resize: vertical;
+  width: 75vw;
+}
+#contactForm #message {
+  height: 100px;
+}
+#contactForm .default-text {
+  color: rgb(0 0 0 /.5);
+}
+#contactForm .user-text {
+  color: #000;
+}
+#sub {
+  height: 60px;
+  width: 40%;
+}
+#resub {
+  font-size: 1.25em;
+  min-height: fit-content;
+  min-width: fit-content;
+  padding: 20px;
+}
+.contact-button {
+  align-self: center;
+  background: #00539b;
+  border: none;
+  border-radius: 16px;
+  box-shadow: inset -3px -6px 0 1.5px rgb(4 45 55 /.5);
+  color: #fff;
+  font-size: 1.5em;
+  font-weight: 600;
+  margin: 20px 0;
+  text-align: center;
+}
+.contact-button:hover {
+  background: #012169;
+  box-shadow: inset 3px 6px 0 1.5px rgb(0 0 0 /.5);
+  cursor: pointer;
+}
+.thank-you-text {
+  color: #012169;
+  font-size: 1.5em;
+  font-weight: 700;
+  text-align: center;
+}
+#message-label {
+  color: #00000080;
+}
+.ContactUs #contact-label {
+  color: #005587;
+}
+.postsubmit {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

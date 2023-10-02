@@ -1,0 +1,205 @@
+.TimeslotsTable {
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 0 3px rgb(0 0 0 /0.25);
+  max-width: 100% !important;
+  min-height: fit-content;
+  padding: 1em 10px 10px 10px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.TimeslotsTable .page-title {
+  color: #012169;
+  font-family: "EB Garamond", serif;
+  font-size: 3em;
+  font-weight: 700;
+  margin-left: 20px;
+  margin-right: 20px;
+  text-align: center;
+}
+.TimeslotsTable .flex-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-family: "Open Sans", sans-serif !important;
+  gap: min(40px, 5vw);
+  justify-content: center;
+  max-width: 100% !important;
+  width: 95%;
+}
+.TimeslotsTable.mobile .flex-wrapper {
+  flex-direction: column;
+  width: 100%;
+}
+.TimeslotsTable .admin-cal {
+  flex: 1;
+}
+.TimeslotsTable .admin-cal * {
+  max-width: 100% !important;
+}
+.TimeslotsTable .inner-msgmod {
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 0 3px rgb(0 0 0 /0.25);
+  font-family: "Open Sans";
+  min-width: fit-content;
+  padding: 15px;
+}
+.TimeslotsTable .inner-msgmod .msg-header {
+  font-size: 1em;
+  font-weight: 700;
+  text-align: center;
+}
+.TimeslotsTable .inner-msgmod button {
+  background: #00539b;
+  border: none;
+  border-radius: 10px;
+  box-shadow: inset -3px -6px 0 1.5px rgb(4 45 55 /0.5);
+  color: #fff;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
+  height: fit-content;
+  margin-bottom: 0;
+  margin-top: 10px;
+  padding: 8px 10px 10px 8px;
+  width: 60%;
+}
+.TimeslotsTable .inner-msgmod button:hover,
+.TimeslotsTable .message .input button:hover,
+.TimeslotsTable .submit-button:hover {
+  background: #012169;
+  box-shadow: inset 3px 6px 0 1.5px rgb(0 0 0 /0.5);
+  cursor: pointer;
+  padding: 10px 8px 8px 10px;
+}
+.TimeslotsTable .line-stat .LineStatus h2 {
+  font-size: 1em;
+  font-weight: 400;
+  margin-left: 5%;
+  padding: 5px;
+}
+.TimeslotsTable .AH-col1-wrapper {
+  display: flex;
+  flex: 0.3;
+  flex-direction: column;
+  gap: 1vh;
+  min-width: 20vw;
+  text-align: left;
+}
+.TimeslotsTable .AH-col1-wrapper h2 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.25em;
+  font-weight: 700;
+  margin: 0;
+  padding-left: 15px;
+  white-space: normal;
+}
+.TimeslotsTable.mobile .AH-col1-wrapper h2 {
+  padding: 10px;
+}
+.TimeslotsTable.mobile .AH-col1-wrapper {
+  margin: 0 auto;
+  margin-bottom: 5vh;
+  width: 75vw;
+}
+.TimeslotsTable .message .input {
+  display: flex;
+  flex-direction: column;
+}
+.TimeslotsTable .message .input > * {
+  margin: 5px;
+}
+.TimeslotsTable .message .input input {
+  border: none;
+  border-radius: 5px;
+  box-shadow: inset 0 0 3px rgb(0 0 0 /0.5);
+  min-height: 30px;
+  min-width: 80%;
+}
+.TimeslotsTable .message .input button {
+  background: #00539b;
+  border: none;
+  border-radius: 10px;
+  box-shadow: inset -3px -6px 0 1.5px rgb(4 45 55 /0.5);
+  color: #fff;
+  font-size: 1em;
+  font-weight: 600;
+  height: fit-content;
+  padding: 8px 10px 10px 8px;
+  width: 60%;
+}
+.TimeslotsTable.mobile .flex-wrapper > * {
+  margin: 2vh;
+}
+.TimeslotsTable.mobile .message,
+.TimeslotsTable.mobile .line-stat {
+  min-height: unset;
+}
+.TimeslotsTable .admin-title {
+  color: #65676b;
+  font-family: "Open Sans";
+  font-weight: 700;
+  padding: 0.5vh 1.5vh;
+  width: 100%;
+}
+.TimeslotsTable .previews {
+  border: 1px solid grey;
+  border-radius: 20px;
+  box-shadow: inset 0 0 3px rgb(0 0 0 /0.5);
+  padding: 10px;
+}
+.TimeslotsTable .cancel-button {
+  background: #c84e00;
+  border: none;
+  border-radius: 10px;
+  box-shadow: inset -3px -6px 0 1.5px rgb(4 45 55 /0.5);
+  color: #fff;
+  font-size: 1em;
+  font-weight: 600;
+  height: fit-content;
+  margin-bottom: 0;
+  padding: 8px 10px 10px 8px;
+  width: 30%;
+}
+.TimeslotsTable .cancel-button:hover {
+  background: #8f3700;
+  box-shadow: inset 3px 6px 0 1.5px rgb(0 0 0 /0.5);
+  cursor: pointer;
+  padding: 10px 8px 8px 10px;
+}
+.TimeslotsTable .submit-button {
+  background: #00539b;
+  border: none;
+  border-radius: 10px;
+  box-shadow: inset -3px -6px 0 1.5px rgb(4 45 55 /0.5);
+  color: #fff;
+  font-size: 1em;
+  font-weight: 600;
+  height: fit-content;
+  margin-bottom: 0;
+  padding: 8px 10px 10px 8px;
+  width: 30%;
+}
+.no-date-selec {
+  text-align: center;
+}
+.ac-s-wrapper {
+  min-height: fit-content;
+}
+.TimeslotsTable h3 {
+  font-size: 1.25em;
+  margin: 0 auto 1em auto;
+  text-align: center;
+  width: fit-content;
+}
+.TimeslotsTable .vis-icon:hover {
+  cursor: pointer;
+}
+.TimeslotsTable .vis-icon > * {
+  margin: auto 0;
+  vertical-align: middle;
+}
+#ts-table {
+  width: 60%;
+}
