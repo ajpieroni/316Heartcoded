@@ -4,8 +4,24 @@ import { useState } from "react";
 import { useEffect } from "react";
 export default function UserLanding() {
   // Username variable
+  const [question, setQuestion] = useState();
   const [userName, setUserName] = useState();
+
 // !TODO: How to route from backend to frontend.
+ const fetchQuestion = () => {
+    fetch(`http://localhost:3000/questions/1`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        console.log(data.question);
+        setQuestion(data.question);
+        
+      })
+      .catch((error) => {
+        console.log("Error fetching the latest name:", error);
+      });
+  };
+// Fetch username
  const fetchUserName = () => {
     fetch(`http://localhost:3000/test_users/1`)
       .then((response) => response.json())
@@ -22,12 +38,14 @@ export default function UserLanding() {
 
   useEffect(() => {
     fetchUserName();
+    fetchQuestion();
     console.log("hello!");
   }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-8 bg-gradient-to-b from-pink-300 via-red-400 to-red-500">
       {/* Hero Section */}
+      <h1>{question}</h1>
       <div className="text-white text-center mt-20">
         <h1 className="text-4xl font-bold mb-4">Welcome to HeartCoded</h1>
         <p className="text-xl mb-6">Find your soulmate today!</p>
