@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :test_users
   resources :faqs
   # namespace :api do
   #   post '/send_timeslot_confirmation_email', to: 'api#send_timeslot_confirmation_email'
@@ -14,6 +15,7 @@ Rails.application.routes.draw do
     #     end
     # end
   end
+  
   require "sidekiq/web"
   mount Sidekiq::Web => "/sidekiq"
 
