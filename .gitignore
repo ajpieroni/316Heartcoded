@@ -6,7 +6,7 @@
 **/public
 **/node_modules
  
-# railsapp/tmp/cache
+./railsapp/tmp/cache
  
 .env
  

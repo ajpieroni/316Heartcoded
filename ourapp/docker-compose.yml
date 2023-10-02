@@ -1,3 +1,4 @@
+
 version: '3.8'
 services:
   frontend:
@@ -6,7 +7,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./reactapp:/app
-      - exclude:/reactapp/node_modules
+      - exclude:/app/node_modules
     ports:
       - 3001:3000
     env_file: ./reactapp/.env
@@ -29,13 +30,13 @@ services:
       dockerfile: Dockerfile
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
-      - ./railsapp:/app
+      - ./railsapp:/railsapp
     ports:
       - "3000:3000"
     depends_on:
       - db
     env_file: .env
-    entrypoint: /app/docker-entrypoint-rails.sh
+    entrypoint: /railsapp/docker-entrypoint-rails.sh
     environment:
       RAILS_ENV: development
       RAILS_MAX_THREADS: 5
