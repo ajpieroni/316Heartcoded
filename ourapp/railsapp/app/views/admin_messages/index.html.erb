@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Admin messages</h1>
+
+<div id="admin_messages">
+  <% @admin_messages.each do |admin_message| %>
+    <%= render admin_message %>
+    <p>
+      <%= link_to "Show this admin message", admin_message %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New admin message", new_admin_message_path %>

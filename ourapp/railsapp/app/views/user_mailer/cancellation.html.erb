@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>Hi <%=@name%>!</p>
+    <p>This email is to inform you that your package scheduled for pickup on <strong><%= @formatted_time %></strong> has been canceled.</p>
+
+    <p>If you believe this cancellation was made in error, or would like to reschedule your package pickup, please <%= link_to 'click here', 'http://localhost:3001/UserHome' %>.</p>
+
+  </body>
+</html>
+
+
