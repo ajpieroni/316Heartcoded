@@ -1,2 +1,0 @@
-class AdminMessage < ApplicationRecord
-end
