@@ -1,0 +1,48 @@
+version: '3.8'
+# every service is one container
+
+services:
+  frontend:
+    build:
+      context: ./reactapp
+      dockerfile: Dockerfile
+      # Do i need to connect this to the dockerfile within my react app? same below?
+    volumes:
+      # - ./:/reactapp:delegated
+      - ./reactapp:/reactapp
+      - /reactapp/node_modules
+    ports:
+      - 8080:3000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+  db:
+    env_file: .env
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=password 
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 4000:8080
+      #target/destination : local/remote
+
+  backend:
+    build:
+      context: ./railsapp
+      dockerfile: Dockerfile
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - ./railsapp:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    env_file: .env
+    environment:
+      - RAILS_ENV=development
+      - RAILS_MAX_THREADS=5
+      - DATABASE_PASSWORD=password # Add this line to set the Rails database password
