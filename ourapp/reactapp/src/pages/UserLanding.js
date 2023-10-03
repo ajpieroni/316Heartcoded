@@ -52,10 +52,9 @@ export default function UserLanding() {
 
         <Link to="/FindMatch">
           <div className="feature-card">
-            <h2>Find Your Match</h2>
+            <h2>View Current Matches</h2>
             <p>
-              Answer tailored questions to help us find the best match for you.
-              New questions added weekly to refine your matches!
+              View your current matches!
             </p>
           </div>
         </Link>

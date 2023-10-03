@@ -21,6 +21,12 @@ class MatchedWithsController < ApplicationController
   def edit
   end
 
+  def by_user_id
+    user_id = params[:id].to_i
+    matched_withs = MatchedWith.where('uid1 = ? OR uid2 = ?', user_id, user_id)
+    render json: matched_withs
+  end  
+
   # POST /matched_withs or /matched_withs.json
   def create
     @matched_with = MatchedWith.new(matched_with_params)
