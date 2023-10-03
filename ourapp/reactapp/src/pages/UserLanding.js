@@ -11,6 +11,7 @@ export default function UserLanding() {
   const [username, setUsername] = useState('');
 
   const initializeUser = () => {
+    console.log("pressed");
     fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
       .then((response) => {
         if (!response.ok) {
@@ -21,6 +22,7 @@ export default function UserLanding() {
       .then((data) => {
         if (data) {
           setUser(data);
+          console.log(data);
         } else {
           // Handle non-existing user, if needed
         }
