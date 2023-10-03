@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useContext } from "react";
+import { UserContext } from "../components/contexts/UserContext";
 // import "./UserLanding.css";
 import axios from "axios";
 
 export default function Feedback() {
   const [data, setData] = useState();
+
 
 //   const fetchData = () => {
 //     fetch(`http://localhost:3000/questions/1`)
@@ -21,7 +24,6 @@ export default function Feedback() {
   return (
     <main className="main-container">
         <h1>Feedback</h1>
- 
     </main>
   );
 }
