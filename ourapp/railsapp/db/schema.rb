@@ -10,9 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_03_015100) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_03_181723) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "chats", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "matched_withs", force: :cascade do |t|
     t.integer "uid1"
@@ -21,6 +26,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_03_015100) do
     t.string "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "content"
+    t.bigint "chat_id", null: false
+    t.bigint "test_user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_id"], name: "index_messages_on_chat_id"
+    t.index ["test_user_id"], name: "index_messages_on_test_user_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -43,4 +58,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_03_015100) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_chats", force: :cascade do |t|
+    t.bigint "test_user_id", null: false
+    t.bigint "chat_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_id"], name: "index_user_chats_on_chat_id"
+    t.index ["test_user_id"], name: "index_user_chats_on_test_user_id"
+  end
+
+  add_foreign_key "messages", "chats"
+  add_foreign_key "messages", "test_users"
+  add_foreign_key "user_chats", "chats"
+  add_foreign_key "user_chats", "test_users"
 end

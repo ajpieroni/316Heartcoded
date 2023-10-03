@@ -5,6 +5,11 @@ Rails.application.routes.draw do
   resources :test_users
 
   get '/test_users/find_by_username/:name', to: 'test_users#find_by_username'
+  resources :test_users, only: [], param: :name do # Using the user name as the parameter
+    resources :chats, only: [:index] do
+      resources :messages, only: [:index]
+    end
+  end
 
 
 
