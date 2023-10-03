@@ -7,8 +7,9 @@ import { UserContext } from "../components/contexts/UserContext";
 export default function UserLanding() {
   const [question, setQuestion] = useState("UNINIT");
   const [testUser, setTestUser] = useState("UNINIT");
-  const {setUser} = useContext(UserContext);
+  const {user,setUser} = useContext(UserContext);
   const [username, setUsername] = useState('');
+  const [login, setLogin] = useState(false);
 
   const initializeUser = () => {
     console.log("pressed");
@@ -22,7 +23,9 @@ export default function UserLanding() {
       .then((data) => {
         if (data) {
           setUser(data);
-          console.log(data);
+          console.log("here is data", data);
+          console.log(data.name);
+          setLogin(true);
         } else {
           // Handle non-existing user, if needed
         }
@@ -73,6 +76,8 @@ export default function UserLanding() {
           <button className="user-init-button" onClick={initializeUser}>
             Initialize User
           </button>
+          <h2>{login ? `Logged in as: ${user?.name}` : 'Not Logged In'}</h2>
+
         </div>
       </div>
 
