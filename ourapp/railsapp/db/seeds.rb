@@ -24,11 +24,11 @@ user6 = TestUser.create(name: "Alex", birthday: "032902")
 
 question1 = Question.create(question: "I believe opposites attract.", category: "1")
 
-match1 = MatchedWith.create(uid1: 1, uid2: 2, status: true, date: "11-11-2000")
-match2 = MatchedWith.create(uid1: 1, uid2: 3, status: true, date: "11-11-2000")
-match3 = MatchedWith.create(uid1: 1, uid2: 4, status: true, date: "11-11-2000")
-match4 = MatchedWith.create(uid1: 1, uid2: 5, status: true, date: "11-11-2000")
-match5 = MatchedWith.create(uid1: 1, uid2: 6, status: true, date: "11-11-2000")
+match1 = MatchedWith.create(uid1: 53, uid2: 54, status: true, date: "11-11-2000")
+match2 = MatchedWith.create(uid1: 53, uid2: 55, status: true, date: "11-11-2000")
+match3 = MatchedWith.create(uid1: 53, uid2: 56, status: true, date: "11-11-2000")
+match4 = MatchedWith.create(uid1: 53, uid2: 57, status: true, date: "11-11-2000")
+match5 = MatchedWith.create(uid1: 53, uid2: 58, status: true, date: "11-11-2000")
 
 # t.string "name"
 # t.string "join_date"
