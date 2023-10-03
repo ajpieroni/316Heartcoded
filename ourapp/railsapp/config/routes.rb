@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :questions
   resources :test_users
   resources :faqs
+  resources :matched_withs
   # namespace :api do
   #   post '/send_timeslot_confirmation_email', to: 'api#send_timeslot_confirmation_email'
   # end
