@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Matched withs</h1>
+
+<div id="matched_withs">
+  <% @matched_withs.each do |matched_with| %>
+    <%= render matched_with %>
+    <p>
+      <%= link_to "Show this matched with", matched_with %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New matched with", new_matched_with_path %>
