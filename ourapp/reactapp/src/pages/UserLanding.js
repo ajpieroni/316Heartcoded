@@ -85,7 +85,7 @@ export default function UserLanding() {
           <button className="user-init-button" onClick={initializeUser}>
             Initialize User
           </button>
-          <h2>{login ? `Logged in as: ${user?.name}` : 'Not Logged In'}</h2>
+          <h2>{login ? `Logged in as: ${user?.name}, Birthday: ${user?.birthday}` : 'Not Logged In'}</h2>
 
         </div>
       </div>
