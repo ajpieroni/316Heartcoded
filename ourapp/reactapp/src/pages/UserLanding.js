@@ -23,6 +23,7 @@ export default function UserLanding() {
       .then((data) => {
         if (data) {
           setUser(data);
+          sessionStorage.setItem("user", JSON.stringify(data));
           console.log("here is data", data);
           console.log(data.name);
           setLogin(true);
@@ -34,7 +35,15 @@ export default function UserLanding() {
         console.error("Failed to initialize user:", error);
       });
   }
-
+  useEffect(() => {
+    // Check if there's user data in sessionStorage on component initialization
+    const storedUser = sessionStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+      setLogin(true);
+    }
+  }, []);
+  
   // const fetchQuestion = () => {
   //   fetch(`http://localhost:3000/questions/1`)
   //     .then((response) => response.json())
