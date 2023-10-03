@@ -19,18 +19,15 @@ class TestUsersController < ApplicationController
     #   render json: { error: 'User not found' }, status: :not_found
     # end
   end
-
-  # * Lookup by Username:
+# *Find by username
   def find_by_username
-    test_user = TestUser.find_by(name: params[:unique_id])
-    if test_user
-      # Handle successful user retrieval
-      render json: test_user
+    @test_user = TestUser.find_by(name: params[:name])
+    
+    if @user
+      render json: @user
     else
-      # Handle user not found
-      render json: { error: 'User not found' }, status: :not_found
+      render json: { error: 'User not found' }, status: 404
     end
-
   end
   
 
