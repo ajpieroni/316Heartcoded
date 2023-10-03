@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @matched_with %>
+
+<div>
+  <%= link_to "Edit this matched with", edit_matched_with_path(@matched_with) %> |
+  <%= link_to "Back to matched withs", matched_withs_path %>
+
+  <%= button_to "Destroy this matched with", @matched_with, method: :delete %>
+</div>
