@@ -1128,3 +1128,783 @@ Migrating to CreateQuestions (20231002023353)
   [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
   [1m[36mQuestion Create (2.1ms)[0m  [1m[32mINSERT INTO "questions" ("question", "category", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["question", "I believe opposites attract."], ["category", "1"], ["created_at", "2023-10-02 02:37:59.873009"], ["updated_at", "2023-10-02 02:37:59.873009"]]
   [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE DATABASE "postgres" ENCODING = 'unicode'[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(737815420147457505)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(737815420147457505)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTestUser Load (0.4ms)[0m  [1m[34mSELECT "test_users".* FROM "test_users"[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTestUser Destroy (0.5ms)[0m  [1m[31mDELETE FROM "test_users" WHERE "test_users"."id" = $1[0m  [["id", 18]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTestUser Destroy (0.2ms)[0m  [1m[31mDELETE FROM "test_users" WHERE "test_users"."id" = $1[0m  [["id", 19]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTestUser Destroy (0.1ms)[0m  [1m[31mDELETE FROM "test_users" WHERE "test_users"."id" = $1[0m  [["id", 20]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTestUser Destroy (0.2ms)[0m  [1m[31mDELETE FROM "test_users" WHERE "test_users"."id" = $1[0m  [["id", 21]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT "questions".* FROM "questions"[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Destroy (0.3ms)[0m  [1m[31mDELETE FROM "questions" WHERE "questions"."id" = $1[0m  [["id", 3]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTestUser Create (0.6ms)[0m  [1m[32mINSERT INTO "test_users" ("name", "join_date", "location", "bio", "gender", "preferences", "birthday", "password", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING "id"[0m  [["name", "Jacob"], ["join_date", nil], ["location", nil], ["bio", nil], ["gender", nil], ["preferences", nil], ["birthday", "060303"], ["password", "[FILTERED]"], ["created_at", "2023-10-03 00:50:05.151084"], ["updated_at", "2023-10-03 00:50:05.151084"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTestUser Create (0.2ms)[0m  [1m[32mINSERT INTO "test_users" ("name", "join_date", "location", "bio", "gender", "preferences", "birthday", "password", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING "id"[0m  [["name", "Linda"], ["join_date", nil], ["location", nil], ["bio", nil], ["gender", nil], ["preferences", nil], ["birthday", "031404"], ["password", "[FILTERED]"], ["created_at", "2023-10-03 00:50:05.154863"], ["updated_at", "2023-10-03 00:50:05.154863"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTestUser Create (0.2ms)[0m  [1m[32mINSERT INTO "test_users" ("name", "join_date", "location", "bio", "gender", "preferences", "birthday", "password", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING "id"[0m  [["name", "Eileen"], ["join_date", nil], ["location", nil], ["bio", nil], ["gender", nil], ["preferences", nil], ["birthday", "081504"], ["password", "[FILTERED]"], ["created_at", "2023-10-03 00:50:05.157306"], ["updated_at", "2023-10-03 00:50:05.157306"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTestUser Create (0.1ms)[0m  [1m[32mINSERT INTO "test_users" ("name", "join_date", "location", "bio", "gender", "preferences", "birthday", "password", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING "id"[0m  [["name", "Anna"], ["join_date", nil], ["location", nil], ["bio", nil], ["gender", nil], ["preferences", nil], ["birthday", "102903"], ["password", "[FILTERED]"], ["created_at", "2023-10-03 00:50:05.159639"], ["updated_at", "2023-10-03 00:50:05.159639"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mQuestion Create (0.2ms)[0m  [1m[32mINSERT INTO "questions" ("question", "category", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["question", "I believe opposites attract."], ["category", "1"], ["created_at", "2023-10-03 00:50:05.161925"], ["updated_at", "2023-10-03 00:50:05.161925"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:50:09 +0000
+Started GET "/test_users/10" for 172.18.0.1 at 2023-10-03 00:50:09 +0000
+Started GET "/questions/1" for 172.18.0.1 at 2023-10-03 00:50:09 +0000
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Processing by TestUsersController#show as */*
+Processing by QuestionsController#show as */*
+  Parameters: {"id"=>"10"}
+  Parameters: {"id"=>"1"}
+  [1m[36mTestUser Load (0.5ms)[0m  [1m[34mSELECT "test_users".* FROM "test_users" WHERE "test_users"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/test_users_controller.rb:68:in `set_test_user'
+Completed 404 Not Found in 50ms (ActiveRecord: 4.4ms | Allocations: 23143)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find TestUser with 'id'=10):
+  
+app/controllers/test_users_controller.rb:68:in `set_test_user'
+  [1m[36mQuestion Load (0.7ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/questions_controller.rb:65:in `set_question'
+Completed 404 Not Found in 74ms (ActiveRecord: 21.4ms | Allocations: 48937)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Question with 'id'=1):
+  
+app/controllers/questions_controller.rb:65:in `set_question'
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:50:11 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:50:13 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:50:15 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/test_users/10" for 172.18.0.1 at 2023-10-03 00:50:15 +0000
+Started GET "/questions/1" for 172.18.0.1 at 2023-10-03 00:50:15 +0000
+Processing by TestUsersController#show as */*
+  Parameters: {"id"=>"10"}
+Processing by QuestionsController#show as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mTestUser Load (5.1ms)[0m  [1m[34mSELECT "test_users".* FROM "test_users" WHERE "test_users"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mQuestion Load (5.1ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/questions_controller.rb:65:in `set_question'
+  ↳ app/controllers/test_users_controller.rb:68:in `set_test_user'
+Completed 404 Not Found in 16ms (ActiveRecord: 5.1ms | Allocations: 1114)
+
+
+Completed 404 Not Found in 18ms (ActiveRecord: 5.1ms | Allocations: 1340)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find TestUser with 'id'=10):
+  
+app/controllers/test_users_controller.rb:68:in `set_test_user'
+  
+ActiveRecord::RecordNotFound (Couldn't find Question with 'id'=1):
+  
+app/controllers/questions_controller.rb:65:in `set_question'
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:50:17 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:50:19 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:50:23 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:50:31 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:50:47 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:51:19 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:52:24 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:53:06 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/questions/1" for 172.18.0.1 at 2023-10-03 00:53:06 +0000
+Started GET "/test_users/10" for 172.18.0.1 at 2023-10-03 00:53:06 +0000
+Processing by QuestionsController#show as */*
+Processing by TestUsersController#show as */*
+  Parameters: {"id"=>"10"}
+  Parameters: {"id"=>"1"}
+  [1m[36mQuestion Load (1.6ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTestUser Load (1.2ms)[0m  [1m[34mSELECT "test_users".* FROM "test_users" WHERE "test_users"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/test_users_controller.rb:68:in `set_test_user'
+  ↳ app/controllers/questions_controller.rb:65:in `set_question'
+Completed 404 Not Found in 13ms (ActiveRecord: 1.6ms | Allocations: 1217)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Question with 'id'=1):
+  
+app/controllers/questions_controller.rb:65:in `set_question'
+Completed 404 Not Found in 13ms (ActiveRecord: 1.2ms | Allocations: 1086)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find TestUser with 'id'=10):
+  
+app/controllers/test_users_controller.rb:68:in `set_test_user'
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:53:07 +0000
+Started GET "/questions/1" for 172.18.0.1 at 2023-10-03 00:53:07 +0000
+Started GET "/test_users/10" for 172.18.0.1 at 2023-10-03 00:53:07 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Processing by TestUsersController#show as */*
+Processing by QuestionsController#show as */*
+  Parameters: {"id"=>"10"}
+  Parameters: {"id"=>"1"}
+  [1m[36mTestUser Load (1.4ms)[0m  [1m[34mSELECT "test_users".* FROM "test_users" WHERE "test_users"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/test_users_controller.rb:68:in `set_test_user'
+Completed 404 Not Found in 18ms (ActiveRecord: 1.4ms | Allocations: 22404)
+
+
+  [1m[36mQuestion Load (11.3ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  
+ActiveRecord::RecordNotFound (Couldn't find TestUser with 'id'=10):
+  
+app/controllers/test_users_controller.rb:68:in `set_test_user'
+  ↳ app/controllers/questions_controller.rb:65:in `set_question'
+Completed 404 Not Found in 67ms (ActiveRecord: 11.3ms | Allocations: 76021)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Question with 'id'=1):
+  
+app/controllers/questions_controller.rb:65:in `set_question'
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:53:08 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:53:10 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:53:15 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:53:21 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/questions/1" for 172.18.0.1 at 2023-10-03 00:53:21 +0000
+Started GET "/test_users/10" for 172.18.0.1 at 2023-10-03 00:53:21 +0000
+Processing by QuestionsController#show as */*
+  Parameters: {"id"=>"1"}
+Processing by TestUsersController#show as */*
+  Parameters: {"id"=>"10"}
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTestUser Load (0.4ms)[0m  [1m[34mSELECT "test_users".* FROM "test_users" WHERE "test_users"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/test_users_controller.rb:68:in `set_test_user'
+Completed 404 Not Found in 4ms (ActiveRecord: 0.4ms | Allocations: 1033)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find TestUser with 'id'=10):
+  
+app/controllers/test_users_controller.rb:68:in `set_test_user'
+  ↳ app/controllers/questions_controller.rb:65:in `set_question'
+Completed 404 Not Found in 49ms (ActiveRecord: 0.3ms | Allocations: 54813)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Question with 'id'=1):
+  
+app/controllers/questions_controller.rb:65:in `set_question'
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:53:22 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:53:24 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:53:28 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:53:37 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:53:53 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:54:25 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:55:03 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/questions/1" for 172.18.0.1 at 2023-10-03 00:55:03 +0000
+Started GET "/test_users/10" for 172.18.0.1 at 2023-10-03 00:55:03 +0000
+Processing by QuestionsController#show as */*
+  Parameters: {"id"=>"1"}
+Processing by TestUsersController#show as */*
+  Parameters: {"id"=>"10"}
+  [1m[36mQuestion Load (2.0ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTestUser Load (0.7ms)[0m  [1m[34mSELECT "test_users".* FROM "test_users" WHERE "test_users"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/questions_controller.rb:65:in `set_question'
+  ↳ app/controllers/test_users_controller.rb:68:in `set_test_user'
+Completed 404 Not Found in 19ms (ActiveRecord: 2.0ms | Allocations: 1472)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Question with 'id'=1):
+  
+app/controllers/questions_controller.rb:65:in `set_question'
+Completed 404 Not Found in 8ms (ActiveRecord: 0.7ms | Allocations: 1162)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find TestUser with 'id'=10):
+  
+app/controllers/test_users_controller.rb:68:in `set_test_user'
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:55:04 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:55:06 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:55:10 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:55:19 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:55:35 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:56:07 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:57:11 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:58:32 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:58:34 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:58:36 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:58:40 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:58:48 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:59:04 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 00:59:36 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:00:26 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:00:27 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:00:27 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:00:28 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:00:30 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:00:31 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:00:34 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:00:37 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:00:43 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:00:49 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:00:53 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:01:01 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:01:13 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:01:33 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/questions/1" for 172.18.0.1 at 2023-10-03 01:01:51 +0000
+Started GET "/test_users/10" for 172.18.0.1 at 2023-10-03 01:01:51 +0000
+Processing by QuestionsController#show as */*
+  Parameters: {"id"=>"1"}
+Processing by TestUsersController#show as */*
+  Parameters: {"id"=>"10"}
+  [1m[36mQuestion Load (0.4ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/questions_controller.rb:65:in `set_question'
+  [1m[36mTestUser Load (0.7ms)[0m  [1m[34mSELECT "test_users".* FROM "test_users" WHERE "test_users"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/test_users_controller.rb:68:in `set_test_user'
+Completed 404 Not Found in 86ms (ActiveRecord: 10.4ms | Allocations: 6784)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Question with 'id'=1):
+  
+app/controllers/questions_controller.rb:65:in `set_question'
+Completed 404 Not Found in 80ms (ActiveRecord: 12.5ms | Allocations: 6549)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find TestUser with 'id'=10):
+  
+app/controllers/test_users_controller.rb:68:in `set_test_user'
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:01:52 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:01:58 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:02:05 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:02:12 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:02:23 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:02:39 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:03:11 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:04:15 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:06:24 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:06:42 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/questions/1" for 172.18.0.1 at 2023-10-03 01:06:42 +0000
+Started GET "/test_users/10" for 172.18.0.1 at 2023-10-03 01:06:42 +0000
+Processing by QuestionsController#show as */*
+  Parameters: {"id"=>"1"}
+Processing by TestUsersController#show as */*
+  Parameters: {"id"=>"10"}
+  [1m[36mQuestion Load (2.2ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/questions_controller.rb:65:in `set_question'
+Completed 404 Not Found in 11ms (ActiveRecord: 2.2ms | Allocations: 739)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Question with 'id'=1):
+  
+app/controllers/questions_controller.rb:65:in `set_question'
+  [1m[36mTestUser Load (2.0ms)[0m  [1m[34mSELECT "test_users".* FROM "test_users" WHERE "test_users"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/test_users_controller.rb:68:in `set_test_user'
+Completed 404 Not Found in 73ms (ActiveRecord: 2.0ms | Allocations: 56807)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find TestUser with 'id'=10):
+  
+app/controllers/test_users_controller.rb:68:in `set_test_user'
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:06:44 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/questions/1" for 172.18.0.1 at 2023-10-03 01:06:44 +0000
+Started GET "/test_users/10" for 172.18.0.1 at 2023-10-03 01:06:44 +0000
+Processing by QuestionsController#show as */*
+  Parameters: {"id"=>"1"}
+Processing by TestUsersController#show as */*
+  Parameters: {"id"=>"10"}
+  [1m[36mQuestion Load (1.4ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/questions_controller.rb:65:in `set_question'
+Completed 404 Not Found in 8ms (ActiveRecord: 1.4ms | Allocations: 712)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Question with 'id'=1):
+  
+app/controllers/questions_controller.rb:65:in `set_question'
+  [1m[36mTestUser Load (0.8ms)[0m  [1m[34mSELECT "test_users".* FROM "test_users" WHERE "test_users"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/test_users_controller.rb:68:in `set_test_user'
+Completed 404 Not Found in 53ms (ActiveRecord: 0.8ms | Allocations: 56853)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find TestUser with 'id'=10):
+  
+app/controllers/test_users_controller.rb:68:in `set_test_user'
+Started GET "/questions/1" for 172.18.0.1 at 2023-10-03 01:06:45 +0000
+Started GET "/test_users/10" for 172.18.0.1 at 2023-10-03 01:06:45 +0000
+Processing by QuestionsController#show as */*
+Processing by TestUsersController#show as */*
+  Parameters: {"id"=>"1"}
+  Parameters: {"id"=>"10"}
+  [1m[36mQuestion Load (0.5ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/questions_controller.rb:65:in `set_question'
+Completed 404 Not Found in 5ms (ActiveRecord: 0.5ms | Allocations: 723)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Question with 'id'=1):
+  
+app/controllers/questions_controller.rb:65:in `set_question'
+  [1m[36mTestUser Load (0.3ms)[0m  [1m[34mSELECT "test_users".* FROM "test_users" WHERE "test_users"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/test_users_controller.rb:68:in `set_test_user'
+Completed 404 Not Found in 61ms (ActiveRecord: 0.3ms | Allocations: 84853)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find TestUser with 'id'=10):
+  
+app/controllers/test_users_controller.rb:68:in `set_test_user'
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:06:46 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:06:50 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:06:58 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:07:14 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:07:31 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/test_users/10" for 172.18.0.1 at 2023-10-03 01:07:32 +0000
+Started GET "/questions/1" for 172.18.0.1 at 2023-10-03 01:07:32 +0000
+Processing by TestUsersController#show as */*
+  Parameters: {"id"=>"10"}
+Processing by QuestionsController#show as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mQuestion Load (1.0ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/questions_controller.rb:65:in `set_question'
+  [1m[36mTestUser Load (2.8ms)[0m  [1m[34mSELECT "test_users".* FROM "test_users" WHERE "test_users"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/test_users_controller.rb:68:in `set_test_user'
+Completed 404 Not Found in 6ms (ActiveRecord: 1.0ms | Allocations: 653)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Question with 'id'=1):
+  
+app/controllers/questions_controller.rb:65:in `set_question'
+Completed 404 Not Found in 12ms (ActiveRecord: 2.8ms | Allocations: 1537)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find TestUser with 'id'=10):
+  
+app/controllers/test_users_controller.rb:68:in `set_test_user'
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:07:33 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/test_users/10" for 172.18.0.1 at 2023-10-03 01:07:33 +0000
+Started GET "/questions/1" for 172.18.0.1 at 2023-10-03 01:07:33 +0000
+Processing by TestUsersController#show as */*
+  Parameters: {"id"=>"10"}
+Processing by QuestionsController#show as */*
+  [1m[36mTestUser Load (0.8ms)[0m  [1m[34mSELECT "test_users".* FROM "test_users" WHERE "test_users"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/test_users_controller.rb:68:in `set_test_user'
+Completed 404 Not Found in 5ms (ActiveRecord: 0.8ms | Allocations: 1031)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find TestUser with 'id'=10):
+  
+app/controllers/test_users_controller.rb:68:in `set_test_user'
+  Parameters: {"id"=>"1"}
+  [1m[36mQuestion Load (2.9ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/questions_controller.rb:65:in `set_question'
+Completed 404 Not Found in 7ms (ActiveRecord: 2.9ms | Allocations: 12432)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Question with 'id'=1):
+  
+app/controllers/questions_controller.rb:65:in `set_question'
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:07:34 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/questions/1" for 172.18.0.1 at 2023-10-03 01:07:35 +0000
+Started GET "/test_users/10" for 172.18.0.1 at 2023-10-03 01:07:35 +0000
+Processing by QuestionsController#show as */*
+  Parameters: {"id"=>"1"}
+Processing by TestUsersController#show as */*
+  Parameters: {"id"=>"10"}
+  [1m[36mQuestion Load (0.4ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/questions_controller.rb:65:in `set_question'
+Completed 404 Not Found in 5ms (ActiveRecord: 0.4ms | Allocations: 739)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Question with 'id'=1):
+  
+app/controllers/questions_controller.rb:65:in `set_question'
+  [1m[36mTestUser Load (0.5ms)[0m  [1m[34mSELECT "test_users".* FROM "test_users" WHERE "test_users"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/test_users_controller.rb:68:in `set_test_user'
+Completed 404 Not Found in 47ms (ActiveRecord: 0.5ms | Allocations: 57108)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find TestUser with 'id'=10):
+  
+app/controllers/test_users_controller.rb:68:in `set_test_user'
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:07:35 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:07:37 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:07:38 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/questions/1" for 172.18.0.1 at 2023-10-03 01:07:39 +0000
+Started GET "/test_users/10" for 172.18.0.1 at 2023-10-03 01:07:39 +0000
+Processing by QuestionsController#show as */*
+  Parameters: {"id"=>"1"}
+Processing by TestUsersController#show as */*
+  Parameters: {"id"=>"10"}
+  [1m[36mQuestion Load (0.4ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/questions_controller.rb:65:in `set_question'
+  [1m[36mTestUser Load (0.2ms)[0m  [1m[34mSELECT "test_users".* FROM "test_users" WHERE "test_users"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/test_users_controller.rb:68:in `set_test_user'
+Completed 404 Not Found in 5ms (ActiveRecord: 0.2ms | Allocations: 1192)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find TestUser with 'id'=10):
+  
+app/controllers/test_users_controller.rb:68:in `set_test_user'
+Completed 404 Not Found in 5ms (ActiveRecord: 0.4ms | Allocations: 739)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Question with 'id'=1):
+  
+app/controllers/questions_controller.rb:65:in `set_question'
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:07:40 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/test_users/10" for 172.18.0.1 at 2023-10-03 01:07:41 +0000
+Started GET "/questions/1" for 172.18.0.1 at 2023-10-03 01:07:41 +0000
+Processing by TestUsersController#show as */*
+Processing by QuestionsController#show as */*
+  Parameters: {"id"=>"10"}
+  Parameters: {"id"=>"1"}
+  [1m[36mQuestion Load (0.7ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/questions_controller.rb:65:in `set_question'
+Completed 404 Not Found in 5ms (ActiveRecord: 0.7ms | Allocations: 696)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Question with 'id'=1):
+  
+app/controllers/questions_controller.rb:65:in `set_question'
+  [1m[36mTestUser Load (1.2ms)[0m  [1m[34mSELECT "test_users".* FROM "test_users" WHERE "test_users"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/test_users_controller.rb:68:in `set_test_user'
+Completed 404 Not Found in 50ms (ActiveRecord: 1.2ms | Allocations: 55897)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find TestUser with 'id'=10):
+  
+app/controllers/test_users_controller.rb:68:in `set_test_user'
+Started GET "/questions/1" for 172.18.0.1 at 2023-10-03 01:07:42 +0000
+Started GET "/test_users/10" for 172.18.0.1 at 2023-10-03 01:07:42 +0000
+Processing by QuestionsController#show as */*
+  Parameters: {"id"=>"1"}
+Processing by TestUsersController#show as */*
+  Parameters: {"id"=>"10"}
+  [1m[36mQuestion Load (0.5ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/questions_controller.rb:65:in `set_question'
+  [1m[36mTestUser Load (0.3ms)[0m  [1m[34mSELECT "test_users".* FROM "test_users" WHERE "test_users"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+Completed 404 Not Found in 5ms (ActiveRecord: 0.5ms | Allocations: 739)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Question with 'id'=1):
+  
+app/controllers/questions_controller.rb:65:in `set_question'
+  ↳ app/controllers/test_users_controller.rb:68:in `set_test_user'
+Completed 404 Not Found in 46ms (ActiveRecord: 0.3ms | Allocations: 54763)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find TestUser with 'id'=10):
+  
+app/controllers/test_users_controller.rb:68:in `set_test_user'
+Started GET "/test_users/10" for 172.18.0.1 at 2023-10-03 01:07:43 +0000
+Started GET "/questions/1" for 172.18.0.1 at 2023-10-03 01:07:43 +0000
+Processing by TestUsersController#show as */*
+  Parameters: {"id"=>"10"}
+Processing by QuestionsController#show as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mTestUser Load (0.3ms)[0m  [1m[34mSELECT "test_users".* FROM "test_users" WHERE "test_users"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/test_users_controller.rb:68:in `set_test_user'
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/questions_controller.rb:65:in `set_question'
+Completed 404 Not Found in 4ms (ActiveRecord: 0.3ms | Allocations: 1199)
+
+
+Completed 404 Not Found in 4ms (ActiveRecord: 0.3ms | Allocations: 751)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find TestUser with 'id'=10):
+  
+app/controllers/test_users_controller.rb:68:in `set_test_user'
+  
+ActiveRecord::RecordNotFound (Couldn't find Question with 'id'=1):
+  
+app/controllers/questions_controller.rb:65:in `set_question'
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:07:43 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:07:50 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:07:56 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:08:07 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:08:27 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:09:00 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:10:04 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:12:12 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
+Started GET "/ws" for 172.18.0.1 at 2023-10-03 01:16:28 +0000
+  
+ActionController::RoutingError (No route matches [GET] "/ws"):
+  
