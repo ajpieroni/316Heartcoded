@@ -10,22 +10,23 @@ import CreateProfile from "./pages/CreateProfile";
 import Feedback from "./pages/Feedback";
 import FindMatch from "./pages/FindMatch";
 import Questions from "./pages/Questions";
-
+import { UserContext } from "./components/contexts/UserContext";
 
 function App() {
+  const [user, setUser] = useState(null);
   return (
-    <Router>
-      <Routes>
-        <Route exact path="/" element={<UserLanding />} />
-        <Route exact path="/Chat" element={<Chat />} />
-        <Route exact path="/CreateProfile" element={<CreateProfile />} />
-        <Route exact path="/Feedback" element={<Feedback />} />
-        <Route exact path="/FindMatch" element={<FindMatch />} />
-        <Route exact path="/Questions" element={<Questions />} />
-
-
-      </Routes>
-    </Router>
+    <UserContext.Provider value={{ user, setUser }}>
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<UserLanding />} />
+          <Route exact path="/Chat" element={<Chat />} />
+          <Route exact path="/CreateProfile" element={<CreateProfile />} />
+          <Route exact path="/Feedback" element={<Feedback />} />
+          <Route exact path="/FindMatch" element={<FindMatch />} />
+          <Route exact path="/Questions" element={<Questions />} />
+        </Routes>
+      </Router>
+    </UserContext.Provider>
   );
 }
 
