@@ -21,10 +21,10 @@ class TestUsersController < ApplicationController
   end
 # *Find by username
   def find_by_username
-    @test_user = TestUser.find_by(name: params[:name])
+    test_user = TestUser.find_by(name: params[:name])
     
-    if @user
-      render json: @user
+    if test_user
+      render json: test_user
     else
       render json: { error: 'User not found' }, status: 404
     end
