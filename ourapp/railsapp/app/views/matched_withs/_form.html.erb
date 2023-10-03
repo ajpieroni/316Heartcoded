@@ -1,0 +1,37 @@
+<%= form_with(model: matched_with) do |form| %>
+  <% if matched_with.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(matched_with.errors.count, "error") %> prohibited this matched_with from being saved:</h2>
+
+      <ul>
+        <% matched_with.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :uid1, style: "display: block" %>
+    <%= form.number_field :uid1 %>
+  </div>
+
+  <div>
+    <%= form.label :uid2, style: "display: block" %>
+    <%= form.number_field :uid2 %>
+  </div>
+
+  <div>
+    <%= form.label :status, style: "display: block" %>
+    <%= form.check_box :status %>
+  </div>
+
+  <div>
+    <%= form.label :date, style: "display: block" %>
+    <%= form.text_field :date %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
