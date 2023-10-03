@@ -2,10 +2,11 @@ Rails.application.routes.draw do
   resources :questions
   resources :faqs
   resources :matched_withs
-
-  get '/test_users/username/:name', to: 'test_users#find_by_username'
-
   resources :test_users
+
+  get '/test_users/find_by_username/:name', to: 'test_users#find_by_username'
+
+
 
   # namespace :api do
   #   post '/send_timeslot_confirmation_email', to: 'api#send_timeslot_confirmation_email'
