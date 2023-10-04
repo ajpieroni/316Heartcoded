@@ -1,11 +1,22 @@
 Rails.application.routes.draw do
+  # resources :messages
   resources :questions
   resources :faqs
   resources :matched_withs
   resources :test_users
+
   resources :feedbacks
 
+  resources :test_users do
+    member do
+      get 'messages'
+    end
+  end
+  
+
+
   get '/test_users/find_by_username/:name', to: 'test_users#find_by_username'
+  get 'test_users/:id', to: 'test_users#show'
 
 
 
@@ -26,6 +37,9 @@ Rails.application.routes.draw do
   
   require "sidekiq/web"
   mount Sidekiq::Web => "/sidekiq"
+
+  # getting all the tuples in matched_withs based on userid
+  get 'matched_withs/users/:id', to: 'matched_withs#by_user_id'
 
   # Add the contact_us route for form mailing
   # post '/contact_us', to: 'contacts#create'
