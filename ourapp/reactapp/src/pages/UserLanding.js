@@ -7,10 +7,12 @@ import { UserContext } from "../components/contexts/UserContext";
 export default function UserLanding() {
   const [question, setQuestion] = useState("UNINIT");
   const [testUser, setTestUser] = useState("UNINIT");
-  const {setUser} = useContext(UserContext);
+  const {user,setUser} = useContext(UserContext);
   const [username, setUsername] = useState('');
+  const [login, setLogin] = useState(false);
 
   const initializeUser = () => {
+    console.log("pressed");
     fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
       .then((response) => {
         if (!response.ok) {
@@ -21,6 +23,10 @@ export default function UserLanding() {
       .then((data) => {
         if (data) {
           setUser(data);
+          sessionStorage.setItem("user", JSON.stringify(data));
+          console.log("here is data", data);
+          console.log(data.name);
+          setLogin(true);
         } else {
           // Handle non-existing user, if needed
         }
@@ -29,7 +35,15 @@ export default function UserLanding() {
         console.error("Failed to initialize user:", error);
       });
   }
-
+  useEffect(() => {
+    // Check if there's user data in sessionStorage on component initialization
+    const storedUser = sessionStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+      setLogin(true);
+    }
+  }, []);
+  
   // const fetchQuestion = () => {
   //   fetch(`http://localhost:3000/questions/1`)
   //     .then((response) => response.json())
@@ -71,6 +85,8 @@ export default function UserLanding() {
           <button className="user-init-button" onClick={initializeUser}>
             Initialize User
           </button>
+          <h2>{login ? `Logged in as: ${user?.name}, Birthday: ${user?.birthday}` : 'Not Logged In'}</h2>
+
         </div>
       </div>
 
