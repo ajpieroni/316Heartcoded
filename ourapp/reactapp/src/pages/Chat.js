@@ -26,12 +26,11 @@ export default function Chat() {
     return fetch(`http://localhost:3000/test_users/${id}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        console.log(`name ${data.name}`);
+        return data.name;  // Return the name here
       })
       .catch((error) => console.error("Error fetching user:", error));
   };
-
+  
   useEffect(() => {
     // Fetch unique user IDs from messages
     const userIds = [
