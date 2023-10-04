@@ -1,8 +1,6 @@
-/* .main-container {
-    padding: 20px !important;
-    max-width: 600px !important;
-    margin: 0 auto !important;
-} */
+.main-container {
+    justify-content: flex-start !important;
+}
 
 .chat-container {
     border: 1px solid #e0e0e0 !important;
