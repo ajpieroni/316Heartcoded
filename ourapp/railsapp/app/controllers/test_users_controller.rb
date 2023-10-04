@@ -30,6 +30,16 @@ class TestUsersController < ApplicationController
     end
   end
   
+  def messages
+    @test_user = TestUser.find(params[:id])
+    @sent_messages = @test_user.sent_messages
+    @received_messages = @test_user.received_messages
+    # You can merge and sort them if needed
+    @all_messages = (@sent_messages + @received_messages).sort_by(&:timestamp)
+    
+    # Depending on your frontend, you may want to render as JSON:
+    render json: @all_messages
+  end
 
   # GET /test_users/new
   def new
