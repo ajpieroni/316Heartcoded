@@ -5,25 +5,28 @@ import { UserContext } from "../components/contexts/UserContext";
 import axios from "axios";
 
 export default function Feedback() {
-  const [data, setData] = useState();
+  const [feedback, setFeedback] = useState();
 
 
-//   const fetchData = () => {
-//     fetch(`http://localhost:3000/questions/1`)
-//       .then((response) => response.json())
-//       .then((data) => setQuestion(data.question))
-//       .catch((error) => {
-//         console.error("Error fetching the question:", error);
-//       });
-//   };
+  const fetchData = () => {
+    fetch(`http://localhost:3000/feedbacks/1`)
+      .then((response) => response.json())
+      .then((data) => setFeedback(data.feedback))
+      .catch((error) => {
+        console.error("Error fetching the feedback:", error);
+      });
+  };
 
-//   useEffect(() => {
-//     fetchData();
-//   }, []);
+  useEffect(() => {
+    fetchData();
+    console.log("hello");
+    console.log(feedback);
+  }, []);
 
   return (
     <main className="main-container">
         <h1>Feedback</h1>
+        <h1>What is your feedback about {feedback}</h1>
     </main>
   );
 }
