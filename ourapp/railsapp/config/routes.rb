@@ -26,6 +26,9 @@ Rails.application.routes.draw do
   require "sidekiq/web"
   mount Sidekiq::Web => "/sidekiq"
 
+  # getting all the tuples in matched_withs based on userid
+  get 'matched_withs/users/:id', to: 'matched_withs#by_user_id'
+
   # Add the contact_us route for form mailing
   # post '/contact_us', to: 'contacts#create'
 
