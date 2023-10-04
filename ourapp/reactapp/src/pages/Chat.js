@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useContext } from "react";
 import { UserContext } from "../components/contexts/UserContext";
 import axios from "axios";
-import './Chat.css'
+import './Chat.css';
 
 export default function Chat() {
   const [messages, setMessages] = useState([]);
@@ -26,8 +26,14 @@ export default function Chat() {
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
-    fetchMessages();
-  }, []);
+}, []);
+
+useEffect(() => {
+    if (user && user.id) {
+        fetchMessages();
+    }
+}, [user]);
+
 
   const handleSend = () => {
     // logic to send a new message, then fetch messages again or update the state directly
@@ -38,7 +44,7 @@ export default function Chat() {
     <main className="main-container">
       <h1>Chat</h1>
       <h2>
-        Welcome, {user?.name} {user?.id}
+        Welcome, {user?.name}
       </h2>
       <div className="chat-container">
         <MessageList messages={messages} currentUser={user} />
