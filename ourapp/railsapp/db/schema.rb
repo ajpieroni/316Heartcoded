@@ -14,6 +14,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_050832) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "feedbacks", force: :cascade do |t|
+    t.integer "gives_uid"
+    t.integer "receives_uid"
+    t.string "category"
+    t.string "feedback"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+
   create_table "matched_withs", force: :cascade do |t|
     t.integer "uid1"
     t.integer "uid2"
@@ -22,6 +32,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_050832) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
 
   create_table "messages", force: :cascade do |t|
     t.integer "chat_order"
@@ -34,6 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_050832) do
     t.index ["uid_receiver_id"], name: "index_messages_on_uid_receiver_id"
     t.index ["uid_sender_id"], name: "index_messages_on_uid_sender_id"
   end
+
 
   create_table "questions", force: :cascade do |t|
     t.string "question"
@@ -59,4 +71,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_050832) do
   add_foreign_key "matched_withs", "test_users", column: "uid2"
   add_foreign_key "messages", "test_users", column: "uid_receiver_id"
   add_foreign_key "messages", "test_users", column: "uid_sender_id"
+
 end
