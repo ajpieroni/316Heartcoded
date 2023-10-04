@@ -12,6 +12,19 @@
     # user1 = User.create(unique_id: "aa111", first_name: "Firstname", last_name: "Lastname", email: "a@a.com", box_no: "99999", affiliation: "student", display_name: "Aaron Jackson")
     # user2 = User.create(unique_id: "bb222", first_name: "bbbbb", last_name: "ccccc", email: "b@b.com", box_no: "88888", affiliation: "admin", display_name: "Ria Cai")
 # *Create sample users
+
+MatchedWith.destroy_all
+Message.destroy_all
+Question.destroy_all
+TestUser.destroy_all
+
+# This will ensure the primary key starts from 1 for each table
+ActiveRecord::Base.connection.reset_pk_sequence!('test_users')
+ActiveRecord::Base.connection.reset_pk_sequence!('questions')
+ActiveRecord::Base.connection.reset_pk_sequence!('matched_withs')
+ActiveRecord::Base.connection.reset_pk_sequence!('messages')
+
+
 user1 = TestUser.create(name: "Jacob", birthday: "060303")
 user2 = TestUser.create(name: "Linda", birthday: "031404")
 user3 = TestUser.create(name: "Eileen", birthday: "081504")
@@ -24,12 +37,22 @@ user6 = TestUser.create(name: "Alex", birthday: "032902")
 
 question1 = Question.create(question: "I believe opposites attract.", category: "1")
 
-match1 = MatchedWith.create(uid1: 53, uid2: 54, status: true, date: "11-11-2000")
-match2 = MatchedWith.create(uid1: 53, uid2: 55, status: true, date: "11-11-2000")
-match3 = MatchedWith.create(uid1: 53, uid2: 56, status: true, date: "11-11-2000")
-match4 = MatchedWith.create(uid1: 53, uid2: 57, status: true, date: "11-11-2000")
-match5 = MatchedWith.create(uid1: 53, uid2: 58, status: true, date: "11-11-2000")
+match1 = MatchedWith.create(uid1: 1, uid2: 2, status: true, date: "11-11-2000")
+match2 = MatchedWith.create(uid1: 1, uid2: 3, status: true, date: "11-11-2000")
+match3 = MatchedWith.create(uid1: 1, uid2: 4, status: true, date: "11-11-2000")
+match5 = MatchedWith.create(uid1: 2, uid2: 3, status: true, date: "11-11-2000")
+match6 = MatchedWith.create(uid1: 2, uid2: 4, status: true, date: "11-11-2000")
+match7 = MatchedWith.create(uid1: 3, uid2: 5, status: true, date: "11-11-2000")
+match8 = MatchedWith.create(uid1: 4, uid2: 5, status: true, date: "11-11-2000")
+match9 = MatchedWith.create(uid1: 5, uid2: 6, status: true, date: "11-11-2000")
+match10 = MatchedWith.create(uid1: 2, uid2: 6, status: true, date: "11-11-2000")
 
+
+# Create sample messages
+message1 = Message.create(chat_order: 1, uid_sender: user1, uid_receiver: user2, timestamp: Time.now, message: "Hey Linda, how's it going?")
+message2 = Message.create(chat_order: 2, uid_sender: user2, uid_receiver: user1, timestamp: Time.now + 5.minutes, message: "Hey Jacob! I'm good. Just building things.")
+# message3 = Message.create(chat_order: , uid_sender: user1, uid_receiver: user2, timestamp: Time.now, message: "Hey Linda, how's it going?")
+# message4 = Message.create(chat_order: 2, uid_sender: user2, uid_receiver: user1, timestamp: Time.now + 5.minutes, message: "Hey Jacob! I'm good. Just building things.")
 
 
 # t.string "name"
