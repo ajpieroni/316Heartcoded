@@ -19,18 +19,18 @@ export default function FindMatch() {
         fetch(`http://localhost:3000/matched_withs/users/${currentUser}`)
             .then((response) => response.json())
             .then(async (matches) => {
+                const myName = await fetchUserNameById(currentUser);
+                setCurrentName(myName);
                 const names = [];
                 for (let match of matches) {
                     const otherUserId = match.uid1 === currentUser ? match.uid2 : match.uid1;
                     const name = await fetchUserNameById(otherUserId);
-                    const myName = await fetchUserNameById(currentUser);
-                    setCurrentName(myName);
                     names.push(name);
                 }
                 setMatchNames(names);
             })
             .catch((error) => console.error("Error fetching matches:", error));
-    }, []);
+    }, [currentUser]);
 
     return (
         <main className="main-container">
