@@ -9,6 +9,7 @@ export default function UserLanding() {
   const [testUser, setTestUser] = useState("UNINIT");
   const {user,setUser} = useContext(UserContext);
   const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [login, setLogin] = useState(false);
 
   const initializeUser = () => {
@@ -81,6 +82,13 @@ export default function UserLanding() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Enter Username"
+          />
+          <input
+            type="password"
+            className="user-init-input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter Password"
           />
           <button className="user-init-button" onClick={initializeUser}>
             Initialize User
