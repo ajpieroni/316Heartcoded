@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useContext } from "react";
+import { UserContext } from "../components/contexts/UserContext";
 
 export default function FindMatch() {
     const [matchNames, setMatchNames] = useState([]);
-    const currentUser = 2;
+    const { user, setUser } = useContext(UserContext);
+    const currentUser = user?.id;
     const [currentName, setCurrentName] = useState("");
 
     const fetchUserNameById = (id) => {
