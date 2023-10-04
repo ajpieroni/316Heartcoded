@@ -9,7 +9,7 @@ class TestUsersController < ApplicationController
   end
 
   # GET /test_users/1 or /test_users/1.json
-  # !TODO: Copy this line to any new table.
+  # !TODO: Copy this line to any new table, specifically the json part
   def show
     # @test_user = TestUser.find_by(name: params[:name])
   
