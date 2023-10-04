@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useContext } from "react";
 import { UserContext } from "../components/contexts/UserContext";
 import axios from "axios";
-// import "./Chat.css";
+import "./Chat.css";
 
 export default function Chat() {
   const [messages, setMessages] = useState([]);
