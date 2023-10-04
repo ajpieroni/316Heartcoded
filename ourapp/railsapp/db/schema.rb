@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_03_181723) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_04_050832) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -29,13 +29,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_03_181723) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.text "content"
-    t.bigint "chat_id", null: false
-    t.bigint "test_user_id", null: false
+    t.integer "chat_order"
+    t.bigint "uid_sender_id", null: false
+    t.bigint "uid_receiver_id", null: false
+    t.datetime "timestamp"
+    t.text "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["chat_id"], name: "index_messages_on_chat_id"
-    t.index ["test_user_id"], name: "index_messages_on_test_user_id"
+    t.index ["uid_receiver_id"], name: "index_messages_on_uid_receiver_id"
+    t.index ["uid_sender_id"], name: "index_messages_on_uid_sender_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -69,8 +71,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_03_181723) do
 
   add_foreign_key "matched_withs", "test_users", column: "uid1"
   add_foreign_key "matched_withs", "test_users", column: "uid2"
-  add_foreign_key "messages", "chats"
-  add_foreign_key "messages", "test_users"
+  add_foreign_key "messages", "test_users", column: "uid_receiver_id"
+  add_foreign_key "messages", "test_users", column: "uid_sender_id"
   add_foreign_key "user_chats", "chats"
   add_foreign_key "user_chats", "test_users"
 end
