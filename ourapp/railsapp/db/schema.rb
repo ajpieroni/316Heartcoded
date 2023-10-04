@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_04_035151) do
+
+ActiveRecord::Schema[7.0].define(version: 2023_10_04_223825) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,10 +28,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_035151) do
   create_table "matched_withs", force: :cascade do |t|
     t.integer "uid1"
     t.integer "uid2"
-    t.boolean "status"
+    t.boolean "status", null: false
     t.string "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer "chat_order"
+    t.bigint "uid_sender_id", null: false
+    t.bigint "uid_receiver_id", null: false
+    t.datetime "timestamp"
+    t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["uid_receiver_id"], name: "index_messages_on_uid_receiver_id"
+    t.index ["uid_sender_id"], name: "index_messages_on_uid_sender_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -52,4 +66,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_035151) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "matched_withs", "test_users", column: "uid1"
+  add_foreign_key "matched_withs", "test_users", column: "uid2"
+  add_foreign_key "messages", "test_users", column: "uid_receiver_id"
+  add_foreign_key "messages", "test_users", column: "uid_sender_id"
 end

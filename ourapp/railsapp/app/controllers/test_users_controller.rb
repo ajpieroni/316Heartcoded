@@ -9,16 +9,17 @@ class TestUsersController < ApplicationController
   end
 
   # GET /test_users/1 or /test_users/1.json
-  # !TODO: Copy this line to any new table.
+  # !TODO: Copy this line to any new table, specifically the json part
   def show
-    # @test_user = TestUser.find_by(name: params[:name])
-  
-    # if @test_user
-      render json: @test_user
-    # else
-    #   render json: { error: 'User not found' }, status: :not_found
-    # end
-  end
+    @test_user = TestUser.find(params[:id])
+    
+    if @test_user
+       render json: @test_user
+    else
+       render json: { error: 'User not found' }, status: :not_found
+    end
+ end
+ 
 # *Find by username
   def find_by_username
     test_user = TestUser.find_by(name: params[:name])
@@ -30,6 +31,16 @@ class TestUsersController < ApplicationController
     end
   end
   
+  def messages
+    @test_user = TestUser.find(params[:id])
+    @sent_messages = @test_user.sent_messages
+    @received_messages = @test_user.received_messages
+    # You can merge and sort them if needed
+    @all_messages = (@sent_messages + @received_messages).sort_by(&:timestamp)
+    
+    # Depending on your frontend, you may want to render as JSON:
+    render json: @all_messages
+  end
 
   # GET /test_users/new
   def new
