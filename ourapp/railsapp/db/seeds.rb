@@ -6,9 +6,9 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
     #clear existing users
-    TestUser.destroy_all
-    Question.destroy_all
-    MatchedWith.destroy_all
+    # TestUser.destroy_all
+    # Question.destroy_all
+    # MatchedWith.destroy_all
     # user1 = User.create(unique_id: "aa111", first_name: "Firstname", last_name: "Lastname", email: "a@a.com", box_no: "99999", affiliation: "student", display_name: "Aaron Jackson")
     # user2 = User.create(unique_id: "bb222", first_name: "bbbbb", last_name: "ccccc", email: "b@b.com", box_no: "88888", affiliation: "admin", display_name: "Ria Cai")
 # *Create sample users
@@ -29,6 +29,8 @@ match2 = MatchedWith.create(uid1: 53, uid2: 55, status: true, date: "11-11-2000"
 match3 = MatchedWith.create(uid1: 53, uid2: 56, status: true, date: "11-11-2000")
 match4 = MatchedWith.create(uid1: 53, uid2: 57, status: true, date: "11-11-2000")
 match5 = MatchedWith.create(uid1: 53, uid2: 58, status: true, date: "11-11-2000")
+
+
 
 # t.string "name"
 # t.string "join_date"
