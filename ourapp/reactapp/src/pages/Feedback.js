@@ -11,7 +11,7 @@ export default function Feedback() {
   const [category, setCategory] = useState();
 
   const fetchData = () => {
-    fetch(`https://localhost:3000/feedbacks/1`)
+    fetch(`http://localhost:3000/feedbacks/1`)
       .then((response) => response.json())
       .then((data) => {
         setFeedback(data.feedback);
