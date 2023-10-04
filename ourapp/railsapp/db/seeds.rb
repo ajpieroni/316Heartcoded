@@ -58,6 +58,9 @@ message1 = Message.create(chat_order: 1, uid_sender_id: user2.id, uid_receiver_i
 # message4 = Message.create(chat_order: 2, uid_sender: user2, uid_receiver: user1, timestamp: Time.now + 5.minutes, message: "Hey Jacob! I'm good. Just building things.")
 
 
+# Create sample feedback
+feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "1", feedback: "I think we are a good match!")
+
 # t.string "name"
 # t.string "join_date"
 # t.string "location"
