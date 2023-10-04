@@ -14,16 +14,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_050832) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "chats", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "matched_withs", force: :cascade do |t|
     t.integer "uid1"
     t.integer "uid2"
     t.boolean "status", null: false
-    t.string "date"
+    t.string "date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -60,19 +55,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_050832) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "user_chats", force: :cascade do |t|
-    t.bigint "test_user_id", null: false
-    t.bigint "chat_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["chat_id"], name: "index_user_chats_on_chat_id"
-    t.index ["test_user_id"], name: "index_user_chats_on_test_user_id"
-  end
-
   add_foreign_key "matched_withs", "test_users", column: "uid1"
   add_foreign_key "matched_withs", "test_users", column: "uid2"
   add_foreign_key "messages", "test_users", column: "uid_receiver_id"
   add_foreign_key "messages", "test_users", column: "uid_sender_id"
-  add_foreign_key "user_chats", "chats"
-  add_foreign_key "user_chats", "test_users"
 end
