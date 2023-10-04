@@ -30,6 +30,9 @@ match3 = MatchedWith.create(uid1: 1, uid2: 4, status: true, date: "11-11-2000")
 match4 = MatchedWith.create(uid1: 1, uid2: 5, status: true, date: "11-11-2000")
 match5 = MatchedWith.create(uid1: 1, uid2: 6, status: true, date: "11-11-2000")
 
+# Create sample feedback
+feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "1", feedback: "I think we are a good match!")
+
 # t.string "name"
 # t.string "join_date"
 # t.string "location"

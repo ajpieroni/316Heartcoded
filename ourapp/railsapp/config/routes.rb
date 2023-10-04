@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :faqs
   resources :matched_withs
   resources :test_users
+  resources :feedbacks
 
   get '/test_users/find_by_username/:name', to: 'test_users#find_by_username'
 

@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_03_015100) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_04_035151) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "feedbacks", force: :cascade do |t|
+    t.integer "gives_uid"
+    t.integer "receives_uid"
+    t.string "category"
+    t.string "feedback"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "matched_withs", force: :cascade do |t|
     t.integer "uid1"
