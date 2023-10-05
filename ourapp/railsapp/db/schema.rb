@@ -29,6 +29,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_223825) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "categories", id: :serial, force: :cascade do |t|
+    t.string "descriptor"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "faqs", force: :cascade do |t|
     t.string "question"
     t.string "answer"
@@ -61,14 +67,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_223825) do
     t.datetime "updated_at", null: false
   end
 
-
-  create_table "passwords", force: :cascade do |t|
-    t.bigint "test_user_id", null: false
-    t.string "hashed_password"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["test_user_id"], name: "index_passwords_on_test_user_id"
-
   create_table "messages", force: :cascade do |t|
     t.integer "chat_order"
     t.bigint "uid_sender_id", null: false
@@ -79,7 +77,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_223825) do
     t.datetime "updated_at", null: false
     t.index ["uid_receiver_id"], name: "index_messages_on_uid_receiver_id"
     t.index ["uid_sender_id"], name: "index_messages_on_uid_sender_id"
+  end
 
+  create_table "passwords", force: :cascade do |t|
+    t.bigint "test_user_id", null: false
+    t.string "hashed_password"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["test_user_id"], name: "index_passwords_on_test_user_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -140,5 +145,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_223825) do
   add_foreign_key "matched_withs", "test_users", column: "uid2"
   add_foreign_key "messages", "test_users", column: "uid_receiver_id"
   add_foreign_key "messages", "test_users", column: "uid_sender_id"
-
+  add_foreign_key "user_timeslots", "timeslots"
+  add_foreign_key "user_timeslots", "users"
 end

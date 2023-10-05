@@ -6,14 +6,13 @@ import { UserContext } from "../components/contexts/UserContext";
 
 import ForgotPassword from "./ForgotPassword";
 
-
 export default function UserLanding() {
   const [question, setQuestion] = useState("UNINIT");
   const [testUser, setTestUser] = useState("UNINIT");
 
-  const {user,setUser} = useContext(UserContext);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const { user, setUser } = useContext(UserContext);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [login, setLogin] = useState(false);
 
   const initializeUser = () => {
@@ -105,18 +104,13 @@ export default function UserLanding() {
             Initialize User
           </button>
 
-          <ForgotPassword/>
-          <h2>{login ? `Logged in as: ${user?.name}, Birthday: ${user?.birthday}` : 'Not Logged In'}</h2>
+          <ForgotPassword />
 
-
-          {/* <h2> */}
-            <h2>
-              {login
-                ? `Logged in as: ${user?.name}, Birthday: ${user?.birthday}, ID: ${user?.id}`
-                : "Not Logged In"}
-            {/* </h2> */}
+          <h2>
+            {login
+              ? `Logged in as: ${user?.name}, Birthday: ${user?.birthday}, ID: ${user?.id}`
+              : "Not Logged In"}
           </h2>
-
         </div>
       </div>
 
