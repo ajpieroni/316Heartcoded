@@ -3,8 +3,10 @@ import { useLocation } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import 
 // import headerRef
+
 import UserLanding from "./pages/UserLanding";
 import "./App.css";
+// import "./Chat.css";
 import axios from "axios";
 import Chat from "./pages/Chat";
 import CreateProfile from "./pages/CreateProfile";
