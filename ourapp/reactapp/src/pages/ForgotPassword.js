@@ -50,11 +50,7 @@ function ForgotPassword() {
     <div>
       <h1>Forgot Password</h1>
       <p>Enter your username to request password reset instructions.</p>
-      <input
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="Username"
-      />
+     
       <button onClick={requestPasswordReset}>Request Password Reset</button>
       <p>{password}</p>
     </div>
