@@ -3,7 +3,9 @@ import "./UserLanding.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { UserContext } from "../components/contexts/UserContext";
+
 import ForgotPassword from "./ForgotPassword";
+
 
 export default function UserLanding() {
   const [question, setQuestion] = useState("UNINIT");
@@ -78,6 +80,7 @@ export default function UserLanding() {
 
   return (
     <main className="main-container">
+      {/* <img src={Image}/> */}
       {/* <h1 className="main-title">{question}</h1> */}
       <div className="hero-section">
         <h1 className="hero-title">Welcome to HeartCoded</h1>
