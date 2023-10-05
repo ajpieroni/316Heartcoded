@@ -10,12 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_04_023800) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_04_223825) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "categories", id: :serial, force: :cascade do |t|
-    t.string "descriptor"
+  create_table "feedbacks", force: :cascade do |t|
+    t.integer "gives_uid"
+    t.integer "receives_uid"
+    t.string "category"
+    t.string "feedback"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -23,11 +26,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_023800) do
   create_table "matched_withs", force: :cascade do |t|
     t.integer "uid1"
     t.integer "uid2"
-    t.boolean "status"
+    t.boolean "status", null: false
     t.string "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
 
   create_table "passwords", force: :cascade do |t|
     t.bigint "test_user_id", null: false
@@ -35,6 +39,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_023800) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["test_user_id"], name: "index_passwords_on_test_user_id"
+
+  create_table "messages", force: :cascade do |t|
+    t.integer "chat_order"
+    t.bigint "uid_sender_id", null: false
+    t.bigint "uid_receiver_id", null: false
+    t.datetime "timestamp"
+    t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["uid_receiver_id"], name: "index_messages_on_uid_receiver_id"
+    t.index ["uid_sender_id"], name: "index_messages_on_uid_sender_id"
+
   end
 
   create_table "questions", force: :cascade do |t|
@@ -56,41 +72,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_023800) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "timeslots", force: :cascade do |t|
-    t.datetime "slot_start"
-    t.datetime "slot_end"
-    t.date "date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "count", limit: 2, default: 3
-    t.boolean "has_passed"
-  end
+  add_foreign_key "matched_withs", "test_users", column: "uid1"
+  add_foreign_key "matched_withs", "test_users", column: "uid2"
+  add_foreign_key "messages", "test_users", column: "uid_receiver_id"
+  add_foreign_key "messages", "test_users", column: "uid_sender_id"
 
-  create_table "user_timeslots", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "timeslot_id", null: false
-    t.string "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "selected_date_time"
-    t.integer "num_packages"
-    t.index ["timeslot_id"], name: "index_user_timeslots_on_timeslot_id"
-    t.index ["user_id"], name: "index_user_timeslots_on_user_id"
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "unique_id"
-    t.string "first_name"
-    t.string "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "affiliation"
-    t.string "display_name"
-    t.string "box_no"
-    t.boolean "is_admin"
-    t.datetime "last_login"
-  end
-
-  add_foreign_key "user_timeslots", "timeslots"
-  add_foreign_key "user_timeslots", "users"
 end

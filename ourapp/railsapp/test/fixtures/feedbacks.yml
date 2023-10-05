@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  gives_uid: 1
+  receives_uid: 1
+  category: MyString
+  feedback: MyString
+
+two:
+  gives_uid: 1
+  receives_uid: 1
+  category: MyString
+  feedback: MyString

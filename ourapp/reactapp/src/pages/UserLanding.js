@@ -8,6 +8,7 @@ import ForgotPassword from "./ForgotPassword";
 export default function UserLanding() {
   const [question, setQuestion] = useState("UNINIT");
   const [testUser, setTestUser] = useState("UNINIT");
+
   const {user,setUser} = useContext(UserContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -18,13 +19,18 @@ export default function UserLanding() {
     fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
       .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return response.json();
       })
       .then((data) => {
         if (data) {
-          setUser(data);
+          setUser((prevUser) => ({
+            ...prevUser,
+            name: data.name,
+            id: data.id,
+            birthday: data.birthday,
+          }));
           sessionStorage.setItem("user", JSON.stringify(data));
           console.log("here is data", data);
           console.log(data.name);
@@ -34,9 +40,10 @@ export default function UserLanding() {
         }
       })
       .catch((error) => {
+        // setUser("Failed to login")
         console.error("Failed to initialize user:", error);
       });
-  }
+  };
   useEffect(() => {
     // Check if there's user data in sessionStorage on component initialization
     const storedUser = sessionStorage.getItem("user");
@@ -45,7 +52,7 @@ export default function UserLanding() {
       setLogin(true);
     }
   }, []);
-  
+
   // const fetchQuestion = () => {
   //   fetch(`http://localhost:3000/questions/1`)
   //     .then((response) => response.json())
@@ -71,7 +78,7 @@ export default function UserLanding() {
 
   return (
     <main className="main-container">
-      <h1 className="main-title">{question}</h1>
+      {/* <h1 className="main-title">{question}</h1> */}
       <div className="hero-section">
         <h1 className="hero-title">Welcome to HeartCoded</h1>
         <p className="hero-subtitle">Find your soulmate today!</p>
@@ -94,8 +101,18 @@ export default function UserLanding() {
           <button className="user-init-button" onClick={initializeUser}>
             Initialize User
           </button>
+
           <ForgotPassword/>
           <h2>{login ? `Logged in as: ${user?.name}, Birthday: ${user?.birthday}` : 'Not Logged In'}</h2>
+
+
+          {/* <h2> */}
+            <h2>
+              {login
+                ? `Logged in as: ${user?.name}, Birthday: ${user?.birthday}, ID: ${user?.id}`
+                : "Not Logged In"}
+            {/* </h2> */}
+          </h2>
 
         </div>
       </div>
@@ -113,11 +130,8 @@ export default function UserLanding() {
 
         <Link to="/FindMatch">
           <div className="feature-card">
-            <h2>Find Your Match</h2>
-            <p>
-              Answer tailored questions to help us find the best match for you.
-              New questions added weekly to refine your matches!
-            </p>
+            <h2>View Current Matches</h2>
+            <p>View your current matches!</p>
           </div>
         </Link>
         <Link to="/Chat">
