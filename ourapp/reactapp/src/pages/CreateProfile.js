@@ -4,7 +4,7 @@ import axios from "axios";
 
 export default function CreateProfile() {
   const [users, setUsers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); // State for search input
+  const [searchTerm, setSearchTerm] = useState(""); 
 
   const fetchData = () => {
     fetch(`http://localhost:3000/test_users`)
@@ -33,7 +33,7 @@ export default function CreateProfile() {
     setUsers(sortedUsers);
   };
 
-  // Filter users based on the search term
+  // filter users based on the search term
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
