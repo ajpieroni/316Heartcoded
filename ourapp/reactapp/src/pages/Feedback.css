@@ -1,4 +1,4 @@
-/* UserLanding.css */
+/* inherits fromserLanding.css */
 
 .main-container {
     font-family: Arial, sans-serif;
@@ -59,8 +59,7 @@
   input[type="submit"]:hover {
     background-color: #0056b3;
   }
-  
-  /* If you want some space between form elements */
+
   form > * {
     margin-bottom: 15px;
   }
