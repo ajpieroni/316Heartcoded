@@ -30,6 +30,10 @@ match3 = MatchedWith.create(uid1: 1, uid2: 4, status: true, date: "11-11-2000")
 match4 = MatchedWith.create(uid1: 1, uid2: 5, status: true, date: "11-11-2000")
 match5 = MatchedWith.create(uid1: 1, uid2: 6, status: true, date: "11-11-2000")
 
+
+password1 = Password.create(test_user_id: 1, hashed_password: 1111)
+password2 = Password.create(test_user_id: 2, hashed_password: 1234)
+
 # t.string "name"
 # t.string "join_date"
 # t.string "location"
