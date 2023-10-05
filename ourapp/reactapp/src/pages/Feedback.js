@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useContext } from "react";
 import { UserContext } from "../components/contexts/UserContext";
-// import "./UserLanding.css";
+import "./Feedback.css";
 import axios from "axios";
+
 
 export default function Feedback() {
   const [feedback, setFeedback] = useState();
@@ -34,9 +35,8 @@ export default function Feedback() {
       
       const receiverName = await fetchUserNameById(data.receives_uid);
       console.log("reciever name", receiverName);
-      setReceiver(receiverName); // Now, it's the name
+      setReceiver(receiverName); 
   
-      // Fetch the sender's name (optional, if sender is not the current user)
       const senderName = await fetchUserNameById(data.gives_uid);
       console.log("sender name", senderName);
       setSender(senderName);
@@ -62,19 +62,15 @@ export default function Feedback() {
       <h1>What is your feedback about {receiver}?</h1>
       <p>
         {" "}
-        Hello {sender}, provide feedback about a specific user: {receiver} in
-        category: {category}
+        Hello {sender}, provide feedback about a specific user, {receiver}
+        {/* , in
+        category: {category} */}
       </p>
 
-      <h1> {feedback}</h1>
+      <p>Your prior feedback was: {feedback}</p>
 
       <h1>User Feedback Form</h1>
-      <p>
-        {" "}
-        Hello {sender}, provide feedback about a specific user: {receiver} in
-        category: {category}
-      </p>
-
+      
       <form action="submit_feedback.php" method="post">
         <label htmlFor="user_to_feedback">
           User to Provide Feedback About: {receiver}
