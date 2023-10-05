@@ -2,7 +2,9 @@
 <!-- list your team members, state that you choose the open project option, and pick a short, catchy name for your team. -->
 # 💞 [Heartcoded](https://github.com/ajpieroni/316Heartcoded-Web-App) Milestone 3
 
-### Tech Stack:
+### [Demo for Milestone 3](https://drive.google.com/file/d/1i6EpLoG3NOWbUDSI5yH01EBABEntnZTM/view?usp=sharing)
+
+## Tech Stack:
 - Docker Containers for each service, custom images
 - **Frontend**: React
 - **Backend**: Ruby on Rails
