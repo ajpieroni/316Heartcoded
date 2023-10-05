@@ -46,11 +46,11 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease; /* Add a transition effect */
+    transition: background-color 0.3s ease; 
   }
   
   .response-button:hover {
-    background-color: #0056b3; /* Change the background color on hover */
+    background-color: #0056b3; /* bg color on hover */
   }
   
   .save-button {
@@ -62,11 +62,11 @@
     border-radius: 5px;
     padding: 10px 20px;
     cursor: pointer;
-    transition: background-color 0.3s ease; /* Add a transition effect */
+    transition: background-color 0.3s ease; 
   }
   
   .save-button:hover {
-    background-color: #1f8c26; /* Change the background color on hover */
+    background-color: #1f8c26; 
   }
   
   .generate-button {
