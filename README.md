@@ -24,9 +24,10 @@
 
 ## How to Run Heartcoded
 1. Clone the repository
-2. `cd ourapp`
-3. `docker-compose build`
-4. `docker-compose up`
+2. Get `.env` files (one in `/ourapp`, one in `/reactapp`) from team members, should be in Code.zip
+3. `cd ourapp`
+4. `docker-compose build`
+5. `docker-compose up`
 
 ### Known Runtime Errors
 If you have an `ENOENT LIFECYCLE` error, it means that you need to `npm install` in the docker terminal, which you can do as follows within your terminal, in /ourapp:
