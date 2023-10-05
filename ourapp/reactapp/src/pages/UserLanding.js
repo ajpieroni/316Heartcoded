@@ -3,6 +3,7 @@ import "./UserLanding.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { UserContext } from "../components/contexts/UserContext";
+import ForgotPassword from "./ForgotPassword";
 
 export default function UserLanding() {
   const [question, setQuestion] = useState("UNINIT");
@@ -57,7 +58,7 @@ export default function UserLanding() {
   // const fetchUserName = () => {
   //   fetch(`http://localhost:3000/test_users/10`)
   //     .then((response) => response.json())
-  //     .then((data) => setTestUser(data.name))
+  //     .then((data) => setTestUser(data.name)) password(data.hashed_p)
   //     .catch((error) => {
   //       console.error("Error fetching the user name:", error);
   //     });
@@ -93,6 +94,7 @@ export default function UserLanding() {
           <button className="user-init-button" onClick={initializeUser}>
             Initialize User
           </button>
+          <ForgotPassword/>
           <h2>{login ? `Logged in as: ${user?.name}, Birthday: ${user?.birthday}` : 'Not Logged In'}</h2>
 
         </div>
