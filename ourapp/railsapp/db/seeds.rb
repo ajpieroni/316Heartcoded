@@ -35,7 +35,12 @@ user6 = TestUser.create(name: "Alex", birthday: "032902")
 
 # *Create sample questions
 
-question1 = Question.create(question: "I believe opposites attract.", category: "1")
+question1 = Question.create(question: "I believe opposites attract.")
+question2 = Question.create(question: "I like dogs.")
+question3 = Question.create(question: "I want children.")
+question4 = Question.create(question: "I like cats.")
+question5 = Question.create(question: "I care about the environment.")
+question6 = Question.create(question: "I'm a homebody.")
 
 match1 = MatchedWith.create(uid1: 1, uid2: 2, status: true, date: "11-11-2000")
 match2 = MatchedWith.create(uid1: 1, uid2: 3, status: true, date: "11-11-2000")
