@@ -9,7 +9,7 @@
   }
   
   .main-title {
-    /* Custom styling if needed */
+/* alex removed since it was overridding other pages */
   }
   
   .hero-section {
@@ -85,7 +85,9 @@
     font-weight: bold;
     margin-bottom: 1rem;
   }
-  /* CSS for User Initialization */
+
+
+  /*! CSS for User Initialization, eventually moved to login page? */
 
 .user-init-container {
   display: flex;
@@ -106,7 +108,7 @@
 
 .user-init-input:focus {
   border-color: #EF4444;
-  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.5); /* Corresponding to #EF4444 with opacity */
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.5); 
 }
 
 .user-init-button {
