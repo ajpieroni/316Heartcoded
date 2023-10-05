@@ -66,6 +66,10 @@ message1 = Message.create(chat_order: 1, uid_sender_id: user2.id, uid_receiver_i
 # Create sample feedback
 feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "1", feedback: "I think we are a good match!")
 
+
+password1 = Password.create(test_user_id: 1, hashed_password: 1111)
+password2 = Password.create(test_user_id: 2, hashed_password: 1234)
+
 # t.string "name"
 # t.string "join_date"
 # t.string "location"

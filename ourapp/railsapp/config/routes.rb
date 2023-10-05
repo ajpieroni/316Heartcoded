@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  
+  resources :passwords
+  resources :categories
   # resources :messages
   resources :questions
   resources :faqs
