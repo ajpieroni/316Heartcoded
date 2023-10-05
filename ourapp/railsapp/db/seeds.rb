@@ -5,14 +5,16 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-    #clear existing users
-    TestUser.destroy_all
-    #Question.destroy_all
-    #MatchedWith.destroy_all
-    # user1 = User.create(unique_id: "aa111", first_name: "Firstname", last_name: "Lastname", email: "a@a.com", box_no: "99999", affiliation: "student", display_name: "Aaron Jackson")
-    # user2 = User.create(unique_id: "bb222", first_name: "bbbbb", last_name: "ccccc", email: "b@b.com", box_no: "88888", affiliation: "admin", display_name: "Ria Cai")
-# *Create sample users
+MatchedWith.destroy_all
+Message.destroy_all
+Question.destroy_all
+TestUser.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!('test_users')
+ActiveRecord::Base.connection.reset_pk_sequence!('questions')
+ActiveRecord::Base.connection.reset_pk_sequence!('matched_withs')
+ActiveRecord::Base.connection.reset_pk_sequence!('messages')
 
+# *Create sample users
 
 user1 = TestUser.create(name: "Jacob", location: "MD", bio: "hi my name is Jacob", gender: "M", preferences: "F", birthday: "06/03/2003")
 user2 = TestUser.create(name: "Linda", location: "CA", bio: "hello this is Linda", gender: "F", preferences: "M", birthday: "03/14/2004")
@@ -21,39 +23,39 @@ user4 = TestUser.create(name: "Anna", location: "NJ", bio: "hi there this is Ann
 user5 = TestUser.create(name: "Lily", location: "NC", bio: "hi my name is Lily", gender: "F", preferences: "M", birthday: "11/11/2002")
 user6 = TestUser.create(name: "Alex", location: "NC", bio: "hello my name is Alex", gender: "M", preferences: "F", birthday: "03/29/2002")
 
-
 # *Create sample questions
 
-# question1 = Question.create(question: "I believe opposites attract.", category: "1")
+question1 = Question.create(question: "I believe opposites attract.")
+question2 = Question.create(question: "I like dogs.")
+question3 = Question.create(question: "I want children.")
+question4 = Question.create(question: "I like cats.")
+question5 = Question.create(question: "I care about the environment.")
+question6 = Question.create(question: "I'm a homebody.")
 
-match1 = MatchedWith.create(uid1: 53, uid2: 54, status: true, date: "11-11-2000")
-match2 = MatchedWith.create(uid1: 53, uid2: 55, status: true, date: "11-11-2000")
-match3 = MatchedWith.create(uid1: 53, uid2: 56, status: true, date: "11-11-2000")
-match4 = MatchedWith.create(uid1: 53, uid2: 57, status: true, date: "11-11-2000")
-match5 = MatchedWith.create(uid1: 53, uid2: 58, status: true, date: "11-11-2000")
+match1 = MatchedWith.create(uid1: 1, uid2: 2, status: true, date: "11-11-2000")
+match2 = MatchedWith.create(uid1: 1, uid2: 3, status: true, date: "11-11-2000")
+match3 = MatchedWith.create(uid1: 1, uid2: 4, status: true, date: "11-11-2000")
+match5 = MatchedWith.create(uid1: 2, uid2: 3, status: true, date: "11-11-2000")
+match6 = MatchedWith.create(uid1: 2, uid2: 4, status: true, date: "11-11-2000")
+match7 = MatchedWith.create(uid1: 3, uid2: 5, status: true, date: "11-11-2000")
+match8 = MatchedWith.create(uid1: 4, uid2: 5, status: true, date: "11-11-2000")
+match9 = MatchedWith.create(uid1: 5, uid2: 6, status: true, date: "11-11-2000")
+match10 = MatchedWith.create(uid1: 2, uid2: 6, status: true, date: "11-11-2000")
 
 
+# Create sample messages
+message1 = Message.create(chat_order: 1, uid_sender_id: user1.id, uid_receiver_id: user2.id, timestamp: Time.now, message: "Hey Linda, how's it going?")
+message1 = Message.create(chat_order: 1, uid_sender_id: user2.id, uid_receiver_id: user1.id, timestamp: Time.now + 5.minutes, message: "Hey Jacob, going well!")
 
-# t.string "name"
-# t.string "join_date"
-# t.string "location"
-# t.string "bio"
-# t.string "gender"
-# t.string "preferences"
-# t.string "birthday"
-# t.string "password"
-# t.datetime "created_at", null: false
-# t.datetime "updated_at", null: false
+# message1 = Message.create(chat_order: 1, uid_sender: user1, uid_receiver: user2, timestamp: Time.now, message: "Hey Linda, how's it going?")
+# message2 = Message.create(chat_order: 2, uid_sender: user2, uid_receiver: user1, timestamp: Time.now + 5.minutes, message: "Hey Jacob! I'm good. Just building things.")
+# message3 = Message.create(chat_order: , uid_sender: user1, uid_receiver: user2, timestamp: Time.now, message: "Hey Linda, how's it going?")
+# message4 = Message.create(chat_order: 2, uid_sender: user2, uid_receiver: user1, timestamp: Time.now + 5.minutes, message: "Hey Jacob! I'm good. Just building things.")
 
-#Timeslot.destroy_alls
-#     # Set time zone
-#    timeslots = [
-#     {slot_start: DateTime.new(2023, 6, 15, 9, 0, 0), slot_end: DateTime.new(2023, 6, 15, 10, 0, 0)},
-#     {slot_start: DateTime.new(2023, 6, 15, 10, 0, 0), slot_end: DateTime.new(2023, 6, 15, 11, 0, 0)},
-#     {slot_start: DateTime.new(2023, 6, 15, 11, 0, 0), slot_end: DateTime.new(2023, 6, 15, 12, 0, 0)},
-#    ]
 
-#    timeslots.each do |timeslot|
-#     Timeslot.create(timeslot)
-#    end
+# Create sample feedback
+feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "1", feedback: "I think we are a good match!")
 
+
+password1 = Password.create(test_user_id: 1, hashed_password: 1111)
+password2 = Password.create(test_user_id: 2, hashed_password: 1234)
