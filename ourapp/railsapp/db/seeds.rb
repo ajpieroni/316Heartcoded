@@ -5,33 +5,23 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-    #clear existing users
-    # TestUser.destroy_all
-    # Question.destroy_all
-    # MatchedWith.destroy_all
-    # user1 = User.create(unique_id: "aa111", first_name: "Firstname", last_name: "Lastname", email: "a@a.com", box_no: "99999", affiliation: "student", display_name: "Aaron Jackson")
-    # user2 = User.create(unique_id: "bb222", first_name: "bbbbb", last_name: "ccccc", email: "b@b.com", box_no: "88888", affiliation: "admin", display_name: "Ria Cai")
-# *Create sample users
-
 MatchedWith.destroy_all
 Message.destroy_all
 Question.destroy_all
 TestUser.destroy_all
-
-# This will ensure the primary key starts from 1 for each table
 ActiveRecord::Base.connection.reset_pk_sequence!('test_users')
 ActiveRecord::Base.connection.reset_pk_sequence!('questions')
 ActiveRecord::Base.connection.reset_pk_sequence!('matched_withs')
 ActiveRecord::Base.connection.reset_pk_sequence!('messages')
 
+# *Create sample users
 
-user1 = TestUser.create(name: "Jacob", birthday: "060303")
-user2 = TestUser.create(name: "Linda", birthday: "031404")
-user3 = TestUser.create(name: "Eileen", birthday: "081504")
-user4 = TestUser.create(name: "Anna", birthday: "102903")
-user5 = TestUser.create(name: "Lily", birthday: "111102")
-user6 = TestUser.create(name: "Alex", birthday: "032902")
-
+user1 = TestUser.create(name: "Jacob", location: "MD", bio: "hi my name is Jacob", gender: "M", preferences: "F", birthday: "06/03/2003")
+user2 = TestUser.create(name: "Linda", location: "CA", bio: "hello this is Linda", gender: "F", preferences: "M", birthday: "03/14/2004")
+user3 = TestUser.create(name: "Eileen", location: "CA", bio: "hi my name is Eileen", gender: "F", preferences: "M", birthday: "08/15/2004")
+user4 = TestUser.create(name: "Anna", location: "NJ", bio: "hi there this is Anna", gender: "F", preferences: "M", birthday: "10/29/2003")
+user5 = TestUser.create(name: "Lily", location: "NC", bio: "hi my name is Lily", gender: "F", preferences: "M", birthday: "11/11/2002")
+user6 = TestUser.create(name: "Alex", location: "NC", bio: "hello my name is Alex", gender: "M", preferences: "F", birthday: "03/29/2002")
 
 # *Create sample questions
 
@@ -69,27 +59,3 @@ feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "1", feedba
 
 password1 = Password.create(test_user_id: 1, hashed_password: 1111)
 password2 = Password.create(test_user_id: 2, hashed_password: 1234)
-
-# t.string "name"
-# t.string "join_date"
-# t.string "location"
-# t.string "bio"
-# t.string "gender"
-# t.string "preferences"
-# t.string "birthday"
-# t.string "password"
-# t.datetime "created_at", null: false
-# t.datetime "updated_at", null: false
-
-#Timeslot.destroy_alls
-#     # Set time zone
-#    timeslots = [
-#     {slot_start: DateTime.new(2023, 6, 15, 9, 0, 0), slot_end: DateTime.new(2023, 6, 15, 10, 0, 0)},
-#     {slot_start: DateTime.new(2023, 6, 15, 10, 0, 0), slot_end: DateTime.new(2023, 6, 15, 11, 0, 0)},
-#     {slot_start: DateTime.new(2023, 6, 15, 11, 0, 0), slot_end: DateTime.new(2023, 6, 15, 12, 0, 0)},
-#    ]
-
-#    timeslots.each do |timeslot|
-#     Timeslot.create(timeslot)
-#    end
-
