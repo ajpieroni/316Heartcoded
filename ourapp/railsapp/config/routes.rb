@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :answers
+  resources :weights
   
   resources :passwords
   resources :categories

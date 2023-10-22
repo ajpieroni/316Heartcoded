@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_22_024453) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_22_213106) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answers", force: :cascade do |t|
+    t.bigint "test_user_id", null: false
+    t.bigint "question_id", null: false
+    t.integer "answer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_answers_on_question_id"
+    t.index ["test_user_id"], name: "index_answers_on_test_user_id"
+  end
 
   create_table "categories", id: :serial, force: :cascade do |t|
     t.string "descriptor"
@@ -78,9 +88,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_22_024453) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "weights", force: :cascade do |t|
+    t.bigint "test_user_id", null: false
+    t.bigint "category_id", null: false
+    t.float "weight"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_weights_on_category_id"
+    t.index ["test_user_id"], name: "index_weights_on_test_user_id"
+  end
+
+  add_foreign_key "answers", "questions"
+  add_foreign_key "answers", "test_users"
   add_foreign_key "matched_withs", "test_users", column: "uid1"
   add_foreign_key "matched_withs", "test_users", column: "uid2"
   add_foreign_key "messages", "test_users", column: "uid_receiver_id"
   add_foreign_key "messages", "test_users", column: "uid_sender_id"
   add_foreign_key "questions", "categories"
+  add_foreign_key "weights", "categories"
+  add_foreign_key "weights", "test_users"
 end
