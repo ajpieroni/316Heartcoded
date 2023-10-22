@@ -23,14 +23,7 @@ user4 = TestUser.create(name: "Anna", location: "NJ", bio: "hi there this is Ann
 user5 = TestUser.create(name: "Lily", location: "NC", bio: "hi my name is Lily", gender: "F", preferences: "M", birthday: "11/11/2002")
 user6 = TestUser.create(name: "Alex", location: "NC", bio: "hello my name is Alex", gender: "M", preferences: "F", birthday: "03/29/2002")
 
-# *Create sample questions
 
-question1 = Question.create(question: "I believe opposites attract.")
-question2 = Question.create(question: "I like dogs.")
-question3 = Question.create(question: "I want children.")
-question4 = Question.create(question: "I like cats.")
-question5 = Question.create(question: "I care about the environment.")
-question6 = Question.create(question: "I'm a homebody.")
 
 match1 = MatchedWith.create(uid1: 1, uid2: 2, status: true, date: "11-11-2000")
 match2 = MatchedWith.create(uid1: 1, uid2: 3, status: true, date: "11-11-2000")
