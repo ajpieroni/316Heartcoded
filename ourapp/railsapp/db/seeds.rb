@@ -7,7 +7,6 @@
 #   Character.create(name: "Luke", movie: movies.first)
 MatchedWith.destroy_all
 Message.destroy_all
-Question.destroy_all
 TestUser.destroy_all
 ActiveRecord::Base.connection.reset_pk_sequence!('test_users')
 ActiveRecord::Base.connection.reset_pk_sequence!('questions')
