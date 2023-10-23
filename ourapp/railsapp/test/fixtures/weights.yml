@@ -1,20 +1,5 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-<<<<<<< HEAD
-one:
-  chat_order: 1
-  uid_sender: one
-  uid_receiver: one
-  timestamp: 2023-10-04 05:08:32
-  message: MyText
-
-two:
-  chat_order: 1
-  uid_sender: two
-  uid_receiver: two
-  timestamp: 2023-10-04 05:08:32
-  message: MyText
-=======
 # This model initially had no columns defined. If you add columns to the
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
@@ -24,4 +9,3 @@ one: {}
 #
 two: {}
 # column: value
->>>>>>> 39ffe643d2aa9e9d6e5e36a7cd158b4c63978a80

@@ -10,34 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_04_223825) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_23_180751) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "addresses", force: :cascade do |t|
-    t.string "quad"
-    t.string "house"
-    t.string "street_address"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "admin_messages", force: :cascade do |t|
-    t.string "admin"
-    t.string "message"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "categories", id: :serial, force: :cascade do |t|
     t.string "descriptor"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "faqs", force: :cascade do |t|
-    t.string "question"
-    t.string "answer"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -51,18 +29,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_223825) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "line_statuses", force: :cascade do |t|
-    t.string "admin"
-    t.string "color"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "matched_withs", force: :cascade do |t|
     t.integer "uid1"
     t.integer "uid2"
     t.boolean "status", null: false
-    t.string "date"
+    t.string "date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -106,45 +77,34 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_223825) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "timeslots", force: :cascade do |t|
-    t.datetime "slot_start"
-    t.datetime "slot_end"
-    t.date "date"
+  create_table "weights", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "count", limit: 2, default: 3
-    t.boolean "has_passed"
-  end
-
-  create_table "user_timeslots", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "timeslot_id", null: false
-    t.string "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "selected_date_time"
-    t.integer "num_packages"
-    t.index ["timeslot_id"], name: "index_user_timeslots_on_timeslot_id"
-    t.index ["user_id"], name: "index_user_timeslots_on_user_id"
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "unique_id"
-    t.string "first_name"
-    t.string "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "affiliation"
-    t.string "display_name"
-    t.string "box_no"
-    t.boolean "is_admin"
-    t.datetime "last_login"
+    t.integer "uid"
+    t.decimal "in_1", precision: 4, scale: 2, default: "5.0"
+    t.decimal "in_2", precision: 4, scale: 2, default: "5.0"
+    t.decimal "in_3", precision: 4, scale: 2, default: "5.0"
+    t.decimal "in_4", precision: 4, scale: 2, default: "5.0"
+    t.decimal "in_5", precision: 4, scale: 2, default: "5.0"
+    t.decimal "in_6", precision: 4, scale: 2, default: "5.0"
+    t.decimal "in_7", precision: 4, scale: 2, default: "5.0"
+    t.decimal "in_8", precision: 4, scale: 2, default: "5.0"
+    t.decimal "in_9", precision: 4, scale: 2, default: "5.0"
+    t.decimal "in_10", precision: 4, scale: 2, default: "5.0"
+    t.decimal "out_1", precision: 4, scale: 2, default: "5.0"
+    t.decimal "out_2", precision: 4, scale: 2, default: "5.0"
+    t.decimal "out_3", precision: 4, scale: 2, default: "5.0"
+    t.decimal "out_4", precision: 4, scale: 2, default: "5.0"
+    t.decimal "out_5", precision: 4, scale: 2, default: "5.0"
+    t.decimal "out_6", precision: 4, scale: 2, default: "5.0"
+    t.decimal "out_7", precision: 4, scale: 2, default: "5.0"
+    t.decimal "out_8", precision: 4, scale: 2, default: "5.0"
+    t.decimal "out_9", precision: 4, scale: 2, default: "5.0"
+    t.decimal "out_10", precision: 4, scale: 2, default: "5.0"
   end
 
   add_foreign_key "matched_withs", "test_users", column: "uid1"
   add_foreign_key "matched_withs", "test_users", column: "uid2"
   add_foreign_key "messages", "test_users", column: "uid_receiver_id"
   add_foreign_key "messages", "test_users", column: "uid_sender_id"
-  add_foreign_key "user_timeslots", "timeslots"
-  add_foreign_key "user_timeslots", "users"
 end

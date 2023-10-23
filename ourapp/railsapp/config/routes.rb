@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :weights
   
   resources :passwords
   resources :categories
@@ -7,6 +8,12 @@ Rails.application.routes.draw do
   resources :faqs
   resources :matched_withs
   resources :test_users
+  resources :test_users do
+    member do
+      get 'messages'
+    end
+  end
+  
 
   resources :feedbacks
 
@@ -15,6 +22,11 @@ Rails.application.routes.draw do
       get 'messages'
     end
   end
+
+  get 'unmatch/:uid1/:uid2', to: 'matched_withs#unmatch'
+
+  get 'match/:uid', to: 'test_users#find_matches'
+  
   
 
 
