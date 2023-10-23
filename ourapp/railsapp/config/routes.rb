@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :weights
   
   resources :passwords
   resources :categories
