@@ -14,7 +14,7 @@ export default function FindMatch() {
         try {
             const response = await fetch(`http://localhost:3000/match/${currentUser}`);
             const matches = await response.json();
-            setMyMatches(matches);
+            setMyMatches(prevMatches => [...prevMatches, ...matches]);
         } catch (error) {
             console.error('Error fetching new matches:', error);
         }
