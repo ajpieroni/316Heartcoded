@@ -62,7 +62,7 @@ class QuestionsController < ApplicationController
   def unanswered_questions
     user = TestUser.find(params[:id])
     if user
-      unanswered_questions = Question.where.not(id: Answer.where(test_user_id: user.id).pluck(:question_id))       #retrieves question ids from answer associated with user
+      unanswered_questions = Question.where.not(id: Answer.where(test_user_id: user.id).pluck(:question_id))
       render json: unanswered_questions, status: :ok
     else
       render json: { error: `Question not found` }, status: :not_found
