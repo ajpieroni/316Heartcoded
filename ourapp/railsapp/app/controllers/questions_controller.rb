@@ -59,6 +59,16 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def unanswered_questions
+    user = TestUser.find(params[:id])
+    if user
+      unanswered_questions = Question.where.not(id: Answer.where(test_user_id: user.id).pluck(:question_id))       #retrieves question ids from answer associated with user
+      render json: unanswered_questions, status: :ok
+    else
+      render json: { error: `Question not found` }, status: :not_found
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_question
@@ -67,6 +77,6 @@ class QuestionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def question_params
-      params.require(:question).permit(:question, :category)
+      params.require(:question).permit(:question, :category_id)
     end
 end
