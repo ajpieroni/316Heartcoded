@@ -8,6 +8,18 @@ export default function FindMatch() {
     const currentUser = user?.id;
     const [currentName, setCurrentName] = useState("");
 
+    const newMatches = async () => {
+        if (!currentUser) return;
+
+        try {
+            const response = await fetch(`http://localhost:3000/match/${currentUser}`);
+            const matches = await response.json();
+            setMyMatches(matches);
+        } catch (error) {
+            console.error('Error fetching new matches:', error);
+        }
+    }
+
     const unmatch = async (otherUid) => {
         const currentUid = user?.id;
     
@@ -65,6 +77,7 @@ export default function FindMatch() {
     return (
       <main className="main-container">
         <h1>Hi {currentName}! Here are your current Matches</h1>
+        <button onClick={newMatches}>New matches!</button>
         <ul>
           {myMatches.map((user) => (
             <div key={user.id} className="user-card">

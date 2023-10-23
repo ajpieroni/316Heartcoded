@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   end
 
   get 'unmatch/:uid1/:uid2', to: 'matched_withs#unmatch'
+
+  get 'match/:uid', to: 'test_users#find_matches'
   
   
 
