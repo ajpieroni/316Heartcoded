@@ -14,6 +14,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_050832) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "categories", id: :serial, force: :cascade do |t|
+    t.string "descriptor"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "feedbacks", force: :cascade do |t|
+    t.integer "gives_uid"
+    t.integer "receives_uid"
+    t.string "category"
+    t.string "feedback"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "matched_withs", force: :cascade do |t|
     t.integer "uid1"
     t.integer "uid2"
@@ -35,6 +50,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_050832) do
     t.index ["uid_sender_id"], name: "index_messages_on_uid_sender_id"
   end
 
+  create_table "passwords", force: :cascade do |t|
+    t.bigint "test_user_id", null: false
+    t.string "hashed_password"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["test_user_id"], name: "index_passwords_on_test_user_id"
+  end
+
   create_table "questions", force: :cascade do |t|
     t.string "question"
     t.string "category"
@@ -50,7 +73,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_050832) do
     t.string "gender"
     t.string "preferences"
     t.string "birthday"
-    t.string "password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
