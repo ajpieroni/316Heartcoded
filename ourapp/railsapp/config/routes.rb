@@ -21,6 +21,9 @@ Rails.application.routes.draw do
       get 'messages'
     end
   end
+
+  get 'unmatch/:uid1/:uid2', to: 'matched_withs#unmatch'
+  
   
 
 
