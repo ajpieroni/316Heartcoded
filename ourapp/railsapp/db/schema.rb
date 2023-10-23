@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_04_050832) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_23_180751) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -75,6 +75,32 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_050832) do
     t.string "birthday"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "weights", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "uid"
+    t.decimal "in_1", precision: 4, scale: 2, default: "5.0"
+    t.decimal "in_2", precision: 4, scale: 2, default: "5.0"
+    t.decimal "in_3", precision: 4, scale: 2, default: "5.0"
+    t.decimal "in_4", precision: 4, scale: 2, default: "5.0"
+    t.decimal "in_5", precision: 4, scale: 2, default: "5.0"
+    t.decimal "in_6", precision: 4, scale: 2, default: "5.0"
+    t.decimal "in_7", precision: 4, scale: 2, default: "5.0"
+    t.decimal "in_8", precision: 4, scale: 2, default: "5.0"
+    t.decimal "in_9", precision: 4, scale: 2, default: "5.0"
+    t.decimal "in_10", precision: 4, scale: 2, default: "5.0"
+    t.decimal "out_1", precision: 4, scale: 2, default: "5.0"
+    t.decimal "out_2", precision: 4, scale: 2, default: "5.0"
+    t.decimal "out_3", precision: 4, scale: 2, default: "5.0"
+    t.decimal "out_4", precision: 4, scale: 2, default: "5.0"
+    t.decimal "out_5", precision: 4, scale: 2, default: "5.0"
+    t.decimal "out_6", precision: 4, scale: 2, default: "5.0"
+    t.decimal "out_7", precision: 4, scale: 2, default: "5.0"
+    t.decimal "out_8", precision: 4, scale: 2, default: "5.0"
+    t.decimal "out_9", precision: 4, scale: 2, default: "5.0"
+    t.decimal "out_10", precision: 4, scale: 2, default: "5.0"
   end
 
   add_foreign_key "matched_withs", "test_users", column: "uid1"
