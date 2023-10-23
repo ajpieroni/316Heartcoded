@@ -1,9 +1,10 @@
 class AnswersController < ApplicationController
+  protect_from_forgery with: :null_session
   before_action :set_answer, only: %i[ show edit update destroy ]
 
   # GET /answers or /answers.json
   def index
-    @answers = Answer.all
+    render json: Answer.all
   end
 
   # GET /answers/1 or /answers/1.json
@@ -23,15 +24,10 @@ class AnswersController < ApplicationController
   def create
     @answer = Answer.new(answer_params)
 
-    respond_to do |format|
-      if @answer.save
-        # Weight.calculate_category_weights(@answer.uid)
-        format.html { redirect_to answer_url(@answer), notice: "Answer was successfully created." }
-        format.json { render :show, status: :created, location: @answer }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @answer.errors, status: :unprocessable_entity }
-      end
+    if @answer.save
+      render json: { id: @answer.id }, status: :created
+    else
+      render json: { error: 'Failed to save answer' }, status: :unprocessable_entity
     end
   end
 
@@ -50,11 +46,10 @@ class AnswersController < ApplicationController
 
   # DELETE /answers/1 or /answers/1.json
   def destroy
-    @answer.destroy
-
-    respond_to do |format|
-      format.html { redirect_to answers_url, notice: "Answer was successfully destroyed." }
-      format.json { head :no_content }
+    if @answer.destroy
+      render json: {success: true, message: "The answer successfully deleted", id: @answer.id}
+    else
+      render json: {success: false, message: "There was an error deleting the answer"}
     end
   end
 
