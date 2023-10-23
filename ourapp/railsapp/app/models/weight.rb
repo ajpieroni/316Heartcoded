@@ -4,7 +4,7 @@ class Weight < ApplicationRecord
   
   def calculate_weight(test_user_id, cateogry_id)
     user_answers = Answer.where(test_user_id: test_user_id)
-                          .joins(question: :category)
+                          .joins(question: :category) #returns all answers that have questions that have categories (inner join)
                           .where('categories.id' => category_id)
 
     return 0 if user_answers.empty?
