@@ -4,12 +4,15 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { UserContext } from "../components/contexts/UserContext";
 
+import ForgotPassword from "./ForgotPassword";
+
 export default function UserLanding() {
   const [question, setQuestion] = useState("UNINIT");
   const [testUser, setTestUser] = useState("UNINIT");
-  const { user, setUser } = useContext(UserContext);
 
+  const { user, setUser } = useContext(UserContext);
   const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [login, setLogin] = useState(false);
 
   const initializeUser = () => {
@@ -63,7 +66,7 @@ export default function UserLanding() {
   // const fetchUserName = () => {
   //   fetch(`http://localhost:3000/test_users/10`)
   //     .then((response) => response.json())
-  //     .then((data) => setTestUser(data.name))
+  //     .then((data) => setTestUser(data.name)) password(data.hashed_p)
   //     .catch((error) => {
   //       console.error("Error fetching the user name:", error);
   //     });
@@ -76,6 +79,7 @@ export default function UserLanding() {
 
   return (
     <main className="main-container">
+      {/* <img src={Image}/> */}
       {/* <h1 className="main-title">{question}</h1> */}
       <div className="hero-section">
         <h1 className="hero-title">Welcome to HeartCoded</h1>
@@ -89,15 +93,23 @@ export default function UserLanding() {
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Enter Username"
           />
+          <input
+            type="password"
+            className="user-init-input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter Password"
+          />
           <button className="user-init-button" onClick={initializeUser}>
             Initialize User
           </button>
-          {/* <h2> */}
-            <h2>
-              {login
-                ? `Logged in as: ${user?.name}, Birthday: ${user?.birthday}, ID: ${user?.id}`
-                : "Not Logged In"}
-            {/* </h2> */}
+
+          <ForgotPassword />
+
+          <h2>
+            {login
+              ? `Logged in as: ${user?.name}, Birthday: ${user?.birthday}, ID: ${user?.id}`
+              : "Not Logged In"}
           </h2>
         </div>
       </div>

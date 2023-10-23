@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  
+  resources :passwords
+  resources :categories
   # resources :messages
   resources :questions
   resources :faqs
@@ -10,6 +13,16 @@ Rails.application.routes.draw do
     end
   end
   
+
+  resources :feedbacks
+
+  resources :test_users do
+    member do
+      get 'messages'
+    end
+  end
+  
+
 
   get '/test_users/find_by_username/:name', to: 'test_users#find_by_username'
   get 'test_users/:id', to: 'test_users#show'
