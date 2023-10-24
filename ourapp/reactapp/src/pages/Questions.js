@@ -10,7 +10,6 @@ export default function Questions() {
   const [question, setQuestion] = useState(null);
   const [rating, setRating] = useState(null);
   const [questionGenerated, setQuestionGenerated] = useState(false);
-  const[isButtonSelected, setIsButtonSelected] = useState(false);
 
   console.log("gimme id:", user.id);
   setUser(user);
@@ -30,10 +29,9 @@ export default function Questions() {
       });
   };
 
-  const handleResponse = (response) => {
-    setRating(response);
-    setIsButtonSelected(true);
-  };
+  useEffect(() => {
+    fetchQuestion();
+  }, []);
 
   const saveResponse = () => {
     // Implement the logic to save the user's response here
@@ -55,7 +53,6 @@ export default function Questions() {
           // Handle the response from the server, e.g., show a success message
           console.log("Response from server:", response.data);
           // Reset the selectedButton to null after saving
-          setSelectedButton(null);
         })
         .catch((error) => {
           console.error("Error saving the response:", error);
@@ -80,21 +77,24 @@ export default function Questions() {
           <div className="response-buttons">
             <ButtonGroup 
             variant="contained"
-            size="large">
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((response) => (
-                <Button
-                  key={response}
-                  onClick={() => handleResponse(response)}
-                >
-                  {response}
-                </Button>
-              ))}
+            size="large"
+            color="primary">
+              <Button color={rating === 1 ? "secondary" : "primary"} onClick={() => setRating(1)}>1</Button>
+              <Button color={rating === 2 ? "secondary" : "primary"} onClick={() => setRating(2)}>2</Button>
+              <Button color={rating === 3 ? "secondary" : "primary"} onClick={() => setRating(3)}>3</Button>
+              <Button color={rating === 4 ? "secondary" : "primary"} onClick={() => setRating(4)}>4</Button>
+              <Button color={rating === 5 ? "secondary" : "primary"} onClick={() => setRating(5)}>5</Button>
+              <Button color={rating === 6 ? "secondary" : "primary"} onClick={() => setRating(6)}>6</Button>
+              <Button color={rating === 7 ? "secondary" : "primary"} onClick={() => setRating(7)}>7</Button>
+              <Button color={rating === 8 ? "secondary" : "primary"} onClick={() => setRating(8)}>8</Button>
+              <Button color={rating === 9 ? "secondary" : "primary"} onClick={() => setRating(9)}>9</Button>
+              <Button color={rating === 10 ? "secondary" : "primary"} onClick={() => setRating(10)}>10</Button>
             </ButtonGroup>
           </div>
         </div>
       )}
       <Button variant="contained" className="generate-button" onClick={fetchQuestion}>
-        New Question
+        Skip
       </Button>
       <Button variant="contained" className="generate-button" onClick={saveResponse}>
         Save Response
