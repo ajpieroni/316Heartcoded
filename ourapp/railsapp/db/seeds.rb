@@ -17,6 +17,7 @@ MatchedWith.destroy_all
 Message.destroy_all
 Question.destroy_all
 TestUser.destroy_all
+Feedback.destroy_all
 
 # This will ensure the primary key starts from 1 for each table
 ActiveRecord::Base.connection.reset_pk_sequence!('test_users')
@@ -59,7 +60,8 @@ message1 = Message.create(chat_order: 1, uid_sender_id: user2.id, uid_receiver_i
 
 
 # Create sample feedback
-feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "1", feedback: "I think we are a good match!")
+feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "1", feedback: 5)
+feedback2 = Feedback.create(gives_uid: 2, receives_uid: 1, category: "1", feedback: 5)
 
 # t.string "name"
 # t.string "join_date"
