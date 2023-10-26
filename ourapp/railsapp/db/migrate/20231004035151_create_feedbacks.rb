@@ -3,8 +3,8 @@ class CreateFeedbacks < ActiveRecord::Migration[7.0]
     create_table :feedbacks do |t|
       t.integer :gives_uid
       t.integer :receives_uid
+      t.integer :feedback
       t.string :category
-      t.string :feedback
 
       t.timestamps
     end
