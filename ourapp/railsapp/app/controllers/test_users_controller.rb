@@ -79,6 +79,18 @@ class TestUsersController < ApplicationController
     end
   end
 
+  def update_password
+    @user = TestUser.find(params[:id])
+
+    if @user.update(password: params[:password])
+      # password update successful
+      render json: { message: 'Password updated successfully' }
+    else
+      # handle password update errors
+      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   # DELETE /test_users/1 or /test_users/1.json
   def destroy
     @test_user.destroy

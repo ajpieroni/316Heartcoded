@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
   get '/test_users/find_by_username/:name', to: 'test_users#find_by_username'
   get 'test_users/:id', to: 'test_users#show'
+  post '/test_users', to: 'test_users#create'
 
 
 
