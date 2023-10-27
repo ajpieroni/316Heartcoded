@@ -19,7 +19,7 @@ export default function UserLanding() {
       return;
     }
     const hashedPassword = bcrypt.hash(password, 10);
-    axios.post('http:localhost:3000/test_users', {
+    axios.post("http://localhost:3000/test_users", {
       name: username,
       password: hashedPassword,
     })
