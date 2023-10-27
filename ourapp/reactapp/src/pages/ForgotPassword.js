@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { UserContext } from "../components/contexts/UserContext";
 import { useEffect } from "react";
 import axios from "axios";
+import "./ForgotPassword.css"
 
 
 function ForgotPassword() {
@@ -29,18 +30,21 @@ function ForgotPassword() {
   };
 
   return (
-    <div>
-      <h1>Forgot Password</h1>
-      <p>Enter your username to reset password.</p>
-      <input
+    <div className="forgot-password-container">
+    <h1 className="forgot-password-title">Forgot Password</h1>
+    <p className="forgot-password-instruction">Enter your username to reset password.</p>
+    <input
+        className="username-input"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         placeholder="Username"
-      />
-      <button onClick={requestPasswordReset}>Password Reset</button>
-      <p>{password}</p>
-    </div>
+    />
+    <button className="reset-button" onClick={requestPasswordReset}>Password Reset</button>
+    <p className="password-display">{password}</p>
+</div>
   );
+  
+
 }
 
 export default ForgotPassword;
