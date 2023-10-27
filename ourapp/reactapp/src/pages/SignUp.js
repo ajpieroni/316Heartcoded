@@ -3,16 +3,32 @@ import "./UserLanding.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../components/contexts/UserContext";
+import bcrypt from 'bcryptjs';
 
 export default function UserLanding() {
   const { user, setUser } = useContext(UserContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const[confirmPassword, setConfirmPassword] = useState('');
   const [login, setLogin] = useState(false);
+  const [error, setError] = useState(null);
 
   const signUpUser = () => {
-    // Your sign-in logic here
-    // ...
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+    const hashedPassword = bcrypt.hash(password, 10);
+    axios.post('http:localhost:3000/test_users', {
+      name: username,
+      password: hashedPassword,
+    })
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(error => {
+      setError("Registration failed. Please try again.");
+    });
   };
 
   useEffect(() => {
@@ -43,15 +59,14 @@ export default function UserLanding() {
           <input
             type="password"
             className="user-init-input"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Confirm Password"
           />
+          {error && <p className="error-message">{error}</p>}
           <button className="user-init-button" onClick={signUpUser}>
             Sign Up
           </button>
-          
-      
         </div>
       </div>
     </main>
