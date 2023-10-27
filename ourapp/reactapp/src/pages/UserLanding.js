@@ -4,7 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { UserContext } from "../components/contexts/UserContext";
 
-import ForgotPassword from "./ForgotPassword";
+
 
 
 export default function UserLanding() {
@@ -101,11 +101,20 @@ export default function UserLanding() {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter Password"
           />
-          <button className="user-init-button" onClick={initializeUser}>
-            Initialize User
-          </button>
 
-          <ForgotPassword/>
+          <Link to="/ForgotPassword">
+            Forgot Password?
+          </Link>
+
+          <button className="user-init-button" onClick={initializeUser}>
+            Sign In
+          </button>
+          
+          <Link to ='/SignUp'>
+            Don't have an account yet? Sign up now
+          </Link>
+          
+          
           <h2>{login ? `Logged in as: ${user?.name}, Birthday: ${user?.birthday}` : 'Not Logged In'}</h2>
 
 

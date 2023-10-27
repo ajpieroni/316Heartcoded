@@ -14,6 +14,9 @@ import Feedback from "./pages/Feedback";
 import FindMatch from "./pages/FindMatch";
 import Questions from "./pages/Questions";
 import { UserContext } from "./components/contexts/UserContext";
+import ForgotPassword from "./pages/ForgotPassword";
+import SignUp from "./pages/SignUp";
+
 
 function App() {
 
@@ -40,6 +43,9 @@ function ScrollToTop() {
           <Route exact path="/Feedback" element={<Feedback />} />
           <Route exact path="/FindMatch" element={<FindMatch />} />
           <Route exact path="/Questions" element={<Questions />} />
+          <Route exact path="/SignUp" element={<SignUp />} />
+          <Route exact path="/ForgotPassword" element={<ForgotPassword />} />
+
         </Routes>
       {/* </ScrollToTop> */}
 
