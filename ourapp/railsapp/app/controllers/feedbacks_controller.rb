@@ -1,4 +1,5 @@
 class FeedbacksController < ApplicationController
+  protect_from_forgery with: :null_session
   before_action :set_feedback, only: %i[ show edit update destroy ]
 
   # GET /feedbacks or /feedbacks.json

@@ -12,10 +12,12 @@ export default function Feedback({feedbackForm}) {
     sender: 0,
   });
 
+  const [feedback, setFeedback] = useState(0);
+
   const [formData, setFormData] = useState({
     receives_uid: users.receiver,
     gives_uid: users.sender,
-    feedback: 0,
+    feedback: feedback,
     category: "",
   });
 
@@ -31,7 +33,7 @@ export default function Feedback({feedbackForm}) {
         setFormData({
           receives_uid: data.receives_uid,
           gives_uid: data.gives_uid,
-          feedback: 0,
+          feedback: feedback,
           category: "",
         });
       })
@@ -40,18 +42,23 @@ export default function Feedback({feedbackForm}) {
       });
   };
 
-  const handleInputChange = (e) => {
+  const handleCategoryChange = (e) => {
     const { name, value } = e.target;
-    console.log(name);
-    console.log(value);
+    console.log(name , value);
     setFormData({ ...formData, [name]: value });
   };
+
+  const handleFeedbackChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name , value);
+    setFormData({...formData, feedback: parseInt(value)});
+  }
   
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      console.log(formData);
+      console.log("formData: ", formData);
       const response = await axios.post("http://localhost:3000/feedbacks", formData);
       feedbackForm(response.data);
       setFormData({ feedback: 0, category: ""}); 
@@ -89,8 +96,8 @@ export default function Feedback({feedbackForm}) {
           <Rating
           name="feedback"
           type="number"
-          value={formData.feedback}
-          onChange={handleInputChange}
+          value={parseInt(formData.feedback)}
+          onChange={handleFeedbackChange}
           />
           </label>
 
@@ -102,7 +109,7 @@ export default function Feedback({feedbackForm}) {
               type="text"
               name="category"
               value={formData.category}
-              onChange={handleInputChange}
+              onChange={handleCategoryChange}
             />
           </label>
           
