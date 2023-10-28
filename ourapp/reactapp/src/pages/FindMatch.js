@@ -20,8 +20,9 @@ export default function FindMatch() {
         }
     }
 
-    const unmatch = async (otherUid) => {
+    const unmatch = async (otherUser) => {
         const currentUid = user?.id;
+        const otherUid = otherUser.id;
     
         if (!currentUid || !otherUid) {
             console.error('Either currentUid or otherUid is missing ' + user?.id + ' ' + otherUid);
@@ -35,6 +36,7 @@ export default function FindMatch() {
     
             if (response.ok) {
                 console.log('Successfully unmatched:', data);
+                setMyMatches(prevMatches => prevMatches.filter(match => match.id !== otherUid));
             } else {
                 console.error('Failed to unmatch:', data);
             }
@@ -84,7 +86,7 @@ export default function FindMatch() {
               <h2>{user.name}</h2>
               <p>Birthday: {user.birthday}</p>
               <p>Bio: {user.bio}</p>
-              <button onClick={() => unmatch(user.id)}>Unmatch</button>
+              <button onClick={() => unmatch(user)}>Unmatch</button>
             </div>
           ))}
         </ul>
