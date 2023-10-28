@@ -3,7 +3,7 @@ class FeedbacksController < ApplicationController
 
   # GET /feedbacks or /feedbacks.json
   def index
-    @feedbacks = Feedback.all
+    render json: Feedback.all
   end
 
   # GET /feedbacks/1 or /feedbacks/1.json

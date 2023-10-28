@@ -7,21 +7,15 @@ import { UserContext } from "../components/contexts/UserContext";
 import axios from "axios";
 
 export default function Feedback({feedbackForm}) {
-  /*
-  const [feedback, setFeedback] = useState();
-  const [receiver, setReceiver] = useState();
-  const [sender, setSender] = useState();
-  const [category, setCategory] = useState();
-  */
   const [users, setUsers] = useState({
-    receiver: "",
-    sender: "",
+    receiver: 0,
+    sender: 0,
   });
 
   const [formData, setFormData] = useState({
-    receiver: users.receiver,
-    sender: users.sender,
-    feedback: 2,
+    receives_uid: users.receiver,
+    gives_uid: users.sender,
+    feedback: 0,
     category: "",
   });
 
@@ -33,6 +27,12 @@ export default function Feedback({feedbackForm}) {
         setUsers({
           receiver: data.receives_uid,
           sender: data.gives_uid
+        });
+        setFormData({
+          receives_uid: data.receives_uid,
+          gives_uid: data.gives_uid,
+          feedback: 0,
+          category: "",
         });
       })
       .catch((error) => {
@@ -54,7 +54,7 @@ export default function Feedback({feedbackForm}) {
       console.log(formData);
       const response = await axios.post("http://localhost:3000/feedbacks", formData);
       feedbackForm(response.data);
-      setFormData({ feedback: "", category: ""}); 
+      setFormData({ feedback: 0, category: ""}); 
     } catch (error) {
       console.error("Error adding feedback:", error);
     }
@@ -88,6 +88,7 @@ export default function Feedback({feedbackForm}) {
           <Typography component="legend">Feedback</Typography>
           <Rating
           name="feedback"
+          type="number"
           value={formData.feedback}
           onChange={handleInputChange}
           />

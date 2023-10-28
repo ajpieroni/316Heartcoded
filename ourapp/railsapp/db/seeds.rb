@@ -24,6 +24,7 @@ ActiveRecord::Base.connection.reset_pk_sequence!('test_users')
 ActiveRecord::Base.connection.reset_pk_sequence!('questions')
 ActiveRecord::Base.connection.reset_pk_sequence!('matched_withs')
 ActiveRecord::Base.connection.reset_pk_sequence!('messages')
+ActiveRecord::Base.connection.reset_pk_sequence!('feedbacks')
 
 
 user1 = TestUser.create(name: "Jacob", birthday: "060303")
