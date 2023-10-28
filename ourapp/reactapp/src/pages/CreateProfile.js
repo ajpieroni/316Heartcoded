@@ -117,7 +117,7 @@ function StatesList({ onStateSelected }) {
   return (
     <div>
       <label>
-        Select a State:
+        Select Your Location<span style={{ color: 'red' }}>*</span>: 
         <select onChange={onStateSelected}>
           <option value="">Select a state</option>
           {states.map(state => (
@@ -134,16 +134,16 @@ function StatesList({ onStateSelected }) {
 export default function UserForm({ onUserAdded }) {
   const [formData, setFormData] = useState({
     name: '',
+    gender: '',
     birthday: '',
     bio: '',
-    location: '', // Update the field name to 'location'
+    location: '',
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
   const handleStateSelected = (e) => {
     const selectedState = e.target.value;
     setFormData({ ...formData, location: selectedState }); // Update the field name to 'location'
@@ -155,7 +155,8 @@ export default function UserForm({ onUserAdded }) {
     try {
       const response = await axios.post("http://localhost:3000/test_users", formData);
       onUserAdded(response.data); // Update the user list with the new user
-      setFormData({ name: '', birthday: '', bio: '', location: '' }); // Clear the form
+      setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '' });
+      setSuccessMessage("Form submitted successfully.");
     } catch (error) {
       console.error('Error adding a new user:', error);
     }
@@ -166,32 +167,77 @@ export default function UserForm({ onUserAdded }) {
       <h2>Add New User</h2>
       <form onSubmit={handleSubmit}>
         <label>
-          Name:
+          Name<span style={{ color: 'red' }}>*</span>: 
           <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleInputChange}
+            required
           />
         </label>
         <label>
-          Birthday:
+          Gender<span style={{ color: 'red' }}>*</span>:  
+          <select
+            name="gender"
+            value={formData.gender}
+            onChange={handleInputChange}
+            required
+          >
+            <option value="">Select Gender</option>
+            <option value="F">Female</option>
+            <option value="M">Male</option>
+            <option value="Nonbinary">Nonbinary</option>
+            <option value="other">Other</option>
+          </select>
+        </label>
+
+        {formData.gender === 'other' && (
+          <label>
+            Please self describe your gender: 
+            <input
+              type="text"
+              name="otherGender"
+              value={formData.otherGender}
+              onChange={handleInputChange}
+              required
+            />
+          </label>
+        )}
+        <label>
+          Birthday<span style={{ color: 'red' }}>*</span>: 
           <input
             type="date"
             name="birthday"
             value={formData.birthday}
             onChange={handleInputChange}
+            required
           />
         </label>
+        <StatesList onStateSelected={handleStateSelected} />
         <label>
-          Bio:
+          Who would you like to meet<span style={{ color: 'red' }}>*</span>: 
+          <select
+            name="preferences"
+            value={formData.preferences}
+            onChange={handleInputChange}
+            required
+          >
+            <option value="">Select Gender</option>
+            <option value="F">Female</option>
+            <option value="M">Male</option>
+            <option value="Nonbinary">Nonbinary</option>
+            <option value="Open">Open to any</option>
+          </select>
+        </label>
+        <label>
+          Bio: 
           <textarea
             name="bio"
             value={formData.bio}
             onChange={handleInputChange}
           />
         </label>
-        <StatesList onStateSelected={handleStateSelected} />
         <button type="submit">Add User</button>
       </form>
     </div>
