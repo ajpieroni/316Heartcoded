@@ -14,30 +14,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_223825) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "addresses", force: :cascade do |t|
-    t.string "quad"
-    t.string "house"
-    t.string "street_address"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "admin_messages", force: :cascade do |t|
-    t.string "admin"
-    t.string "message"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "categories", id: :serial, force: :cascade do |t|
     t.string "descriptor"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "faqs", force: :cascade do |t|
-    t.string "question"
-    t.string "answer"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -47,13 +25,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_223825) do
     t.integer "receives_uid"
     t.string "category"
     t.string "feedback"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "line_statuses", force: :cascade do |t|
-    t.string "admin"
-    t.string "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
