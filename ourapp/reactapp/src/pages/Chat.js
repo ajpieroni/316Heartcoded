@@ -105,11 +105,18 @@ export default function Chat() {
     console.log("handleSend triggered");
     // if(newMessage.trim () === "" || !user) return;
 
-    const messageToSend={
+    const messageContent= {
       uid_sender_id: user.id,
+      uid_receiver_id: 3,
       message: newMessage.trim(),
+      chat_order: 1
 
     };
+
+    const messageToSend = {
+      message: messageContent
+    };
+
     console.log("New message:", messageToSend);
     sendMessage(messageToSend)
     .then((sentMessage) => { // 'sentMessage' will receive the data from the 'sendMessage' function's successful promise
