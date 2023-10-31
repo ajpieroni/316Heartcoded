@@ -3,7 +3,7 @@ import "./UserLanding.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../components/contexts/UserContext";
-import bcrypt from 'bcryptjs';
+//import bcrypt from 'bcryptjs';
 
 export default function UserLanding() {
   const { user, setUser } = useContext(UserContext);
@@ -18,7 +18,7 @@ export default function UserLanding() {
       setError("Passwords do not match.");
       return;
     }
-    const hashedPassword = bcrypt.hash(password, 10);
+    //const hashedPassword = bcrypt.hash(password, 10);
     axios.post("http://localhost:3000/test_users", {
       name: username,
       password: password,
