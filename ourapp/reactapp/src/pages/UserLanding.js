@@ -150,7 +150,7 @@ export default function UserLanding() {
             </p>
           </div>
         </Link>
-        <Link to="Feedback">
+        <Link to="SelectUserForFeedback">
           <div className="feature-card">
             <h2>Give Feedback</h2>
             <p>
