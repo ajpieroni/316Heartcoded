@@ -1,9 +1,10 @@
 class FeedbacksController < ApplicationController
+  protect_from_forgery with: :null_session
   before_action :set_feedback, only: %i[ show edit update destroy ]
 
   # GET /feedbacks or /feedbacks.json
   def index
-    @feedbacks = Feedback.all
+    render json: Feedback.all
   end
 
   # GET /feedbacks/1 or /feedbacks/1.json

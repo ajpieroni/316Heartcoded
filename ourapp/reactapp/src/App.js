@@ -14,6 +14,7 @@ import Feedback from "./pages/Feedback";
 import FindMatch from "./pages/FindMatch";
 import Questions from "./pages/Questions";
 import { UserContext } from "./components/contexts/UserContext";
+import SelectUserForFeedback from "./pages/SelectUserForFeedback";
 
 function App() {
 
@@ -38,6 +39,7 @@ function ScrollToTop() {
           <Route exact path="/Chat" element={<Chat />} />
           <Route exact path="/CreateProfile" element={<CreateProfile />} />
           <Route exact path="/Feedback" element={<Feedback />} />
+          <Route exact path="/SelectUserForFeedback" element={<SelectUserForFeedback />} />
           <Route exact path="/FindMatch" element={<FindMatch />} />
           <Route exact path="/Questions" element={<Questions />} />
         </Routes>
