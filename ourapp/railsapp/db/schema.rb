@@ -14,6 +14,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_26_215725) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "categories", id: :serial, force: :cascade do |t|
+    t.string "descriptor"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "feedbacks", force: :cascade do |t|
     t.integer "gives_uid"
     t.integer "receives_uid"
@@ -44,11 +50,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_26_215725) do
     t.index ["uid_sender_id"], name: "index_messages_on_uid_sender_id"
   end
 
-  create_table "questions", force: :cascade do |t|
-    t.string "question"
-    t.string "category"
+  create_table "passwords", force: :cascade do |t|
+    t.bigint "test_user_id", null: false
+    t.string "hashed_password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["test_user_id"], name: "index_passwords_on_test_user_id"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.string "question"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_questions_on_category_id"
   end
 
   create_table "test_users", force: :cascade do |t|
@@ -59,13 +74,62 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_26_215725) do
     t.string "gender"
     t.string "preferences"
     t.string "birthday"
-    t.string "password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "timeslots", force: :cascade do |t|
+    t.datetime "slot_start"
+    t.datetime "slot_end"
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "count", limit: 2, default: 3
+    t.boolean "has_passed"
+  end
+
+  create_table "user_timeslots", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "timeslot_id", null: false
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "selected_date_time"
+    t.integer "num_packages"
+    t.index ["timeslot_id"], name: "index_user_timeslots_on_timeslot_id"
+    t.index ["user_id"], name: "index_user_timeslots_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "unique_id"
+    t.string "first_name"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "affiliation"
+    t.string "display_name"
+    t.string "box_no"
+    t.boolean "is_admin"
+    t.datetime "last_login"
+  end
+
+  create_table "weights", force: :cascade do |t|
+    t.bigint "test_user_id", null: false
+    t.bigint "category_id", null: false
+    t.float "weight"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_weights_on_category_id"
+    t.index ["test_user_id"], name: "index_weights_on_test_user_id"
   end
 
   add_foreign_key "matched_withs", "test_users", column: "uid1"
   add_foreign_key "matched_withs", "test_users", column: "uid2"
   add_foreign_key "messages", "test_users", column: "uid_receiver_id"
   add_foreign_key "messages", "test_users", column: "uid_sender_id"
+  add_foreign_key "questions", "categories"
+  add_foreign_key "user_timeslots", "timeslots"
+  add_foreign_key "user_timeslots", "users"
+  add_foreign_key "weights", "categories"
+  add_foreign_key "weights", "test_users"
 end

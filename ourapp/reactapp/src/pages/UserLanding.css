@@ -7,9 +7,44 @@
     padding: 2rem;
     background: linear-gradient(to bottom, #FBB6CE, #F87171, #EF4444);
   }
+
+  .button-container {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .button-container button {
+    flex: 1;
+    border-color:#FBB6CE;
+    border-width: 5px;
+    width:200px;
+    height:50px;
+    border-radius: 10px;
+    background: #F87171;
+    font: Lato;
+  }
+
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .user-card {
+    width: 300px;
+    border: 5px solid #FBB6CE;
+    border-radius:20px;
+    margin: 10px;
+    padding: 10px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-card h2 {
+    margin-top: 0;
+  }
   
   .main-title {
-    /* Custom styling if needed */
+/* alex removed since it was overridding other pages */
   }
   
   .hero-section {
@@ -58,8 +93,8 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    align-items: start;
-    justify-content: center;
+    /* align-items: start; */
+    /* justify-content: center; */
     width: 20rem;
     gap: 1rem;
   }
@@ -85,7 +120,9 @@
     font-weight: bold;
     margin-bottom: 1rem;
   }
-  /* CSS for User Initialization */
+
+
+  /*! CSS for User Initialization, eventually moved to login page? */
 
 .user-init-container {
   display: flex;
@@ -106,7 +143,7 @@
 
 .user-init-input:focus {
   border-color: #EF4444;
-  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.5); /* Corresponding to #EF4444 with opacity */
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.5); 
 }
 
 .user-init-button {
