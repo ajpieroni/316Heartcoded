@@ -7,7 +7,6 @@
 #   Character.create(name: "Luke", movie: movies.first)
 MatchedWith.destroy_all
 Message.destroy_all
-Question.destroy_all
 TestUser.destroy_all
 ActiveRecord::Base.connection.reset_pk_sequence!('test_users')
 ActiveRecord::Base.connection.reset_pk_sequence!('questions')
@@ -30,14 +29,14 @@ weight1 = Weight.create(uid: 4)
 weight1 = Weight.create(uid: 5)
 weight1 = Weight.create(uid: 6)
 
-# *Create sample questions
+weight1 = Weight.create(uid: 1)
+weight1 = Weight.create(uid: 2)
+weight1 = Weight.create(uid: 3)
+weight1 = Weight.create(uid: 4)
+weight1 = Weight.create(uid: 5)
+weight1 = Weight.create(uid: 6)
 
-question1 = Question.create(question: "I believe opposites attract.")
-question2 = Question.create(question: "I like dogs.")
-question3 = Question.create(question: "I want children.")
-question4 = Question.create(question: "I like cats.")
-question5 = Question.create(question: "I care about the environment.")
-question6 = Question.create(question: "I'm a homebody.")
+
 
 match1 = MatchedWith.create(uid1: 1, uid2: 2, status: true, date: "11-11-2000")
 match2 = MatchedWith.create(uid1: 1, uid2: 3, status: true, date: "11-11-2000")

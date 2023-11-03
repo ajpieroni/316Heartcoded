@@ -9,3 +9,15 @@ one: {}
 #
 two: {}
 # column: value
+
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  test_user: one
+  category: one
+  weight: 1.5
+
+two:
+  test_user: two
+  category: two
+  weight: 1.5

@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_23_180751) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_22_213106) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answers", force: :cascade do |t|
+    t.bigint "test_user_id", null: false
+    t.bigint "question_id", null: false
+    t.integer "answer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_answers_on_question_id"
+    t.index ["test_user_id"], name: "index_answers_on_test_user_id"
+  end
 
   create_table "categories", id: :serial, force: :cascade do |t|
     t.string "descriptor"
@@ -60,9 +70,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_180751) do
 
   create_table "questions", force: :cascade do |t|
     t.string "question"
-    t.string "category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_questions_on_category_id"
   end
 
   create_table "test_users", force: :cascade do |t|
