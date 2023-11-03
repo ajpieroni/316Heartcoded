@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :faqs
   resources :matched_withs
   resources :test_users
+  resources :states
 
   resources :feedbacks
 
