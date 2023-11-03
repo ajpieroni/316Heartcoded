@@ -98,8 +98,12 @@
 //     </main>
 //   );
 // }
+
 import React, { useState, useEffect } from 'react';
+import { useContext } from "react";
 import axios from 'axios';
+import { UserContext } from "../components/contexts/UserContext";
+
 
 function StatesList({ onStateSelected }) {
   const [states, setStates] = useState([]);
@@ -132,13 +136,32 @@ function StatesList({ onStateSelected }) {
 }
 
 export default function UserForm({ onUserAdded }) {
-  const [formData, setFormData] = useState({
-    name: '',
-    gender: '',
-    birthday: '',
-    bio: '',
-    location: '',
-  });
+
+    const { user, setUser } = useContext(UserContext);
+    const currentUser = user?.location;
+    console.log("currentUser",currentUser);
+
+    const initialFormData = user
+    ? {
+        name: user.name || '',
+        gender: user.gender || '',
+        birthday: user.birthday || '',
+        bio: user.bio || '',
+        location: user.location || ''
+      }
+    : {
+        name: '',
+        gender: '',
+        birthday: '',
+        bio: '',
+        location: ''
+      };
+
+  
+  const [formData, setFormData] = useState(initialFormData);
+
+
+  console.log("testing passing name",formData.name);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -156,7 +179,7 @@ export default function UserForm({ onUserAdded }) {
       const response = await axios.post("http://localhost:3000/test_users", formData);
       onUserAdded(response.data); // Update the user list with the new user
       setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '' });
-      setSuccessMessage("Form submitted successfully.");
+      //setSuccessMessage("Form submitted successfully.");
     } catch (error) {
       console.error('Error adding a new user:', error);
     }
