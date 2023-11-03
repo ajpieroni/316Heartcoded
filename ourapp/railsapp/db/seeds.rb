@@ -22,6 +22,13 @@ user4 = TestUser.create(name: "Anna", location: "NJ", bio: "hi there this is Ann
 user5 = TestUser.create(name: "Lily", location: "NC", bio: "hi my name is Lily", gender: "F", preferences: "M", birthday: "11/11/2002")
 user6 = TestUser.create(name: "Alex", location: "NC", bio: "hello my name is Alex", gender: "M", preferences: "F", birthday: "03/29/2002")
 
+weight1 = Weight.create(uid: 1)
+weight1 = Weight.create(uid: 2)
+weight1 = Weight.create(uid: 3)
+weight1 = Weight.create(uid: 4)
+weight1 = Weight.create(uid: 5)
+weight1 = Weight.create(uid: 6)
+
 
 
 match1 = MatchedWith.create(uid1: 1, uid2: 2, status: true, date: "11-11-2000")

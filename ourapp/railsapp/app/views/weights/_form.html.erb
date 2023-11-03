@@ -12,6 +12,23 @@
   <% end %>
 
   <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+<%= form_with(model: weight) do |form| %>
+  <% if weight.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(weight.errors.count, "error") %> prohibited this weight from being saved:</h2>
+
+      <ul>
+        <% weight.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
     <%= form.label :test_user_id, style: "display: block" %>
     <%= form.text_field :test_user_id %>
   </div>
