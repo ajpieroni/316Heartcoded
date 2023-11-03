@@ -41,7 +41,7 @@ export default function SelectUserForFeedback({feedbackForm}) {
             <h1>Hi {currentName}! Here are your current Matches</h1>
             <ul>
                 {matchNames.map((name, index) => (
-                    <Link to="/Feedback" myUID = {currentUser} theirName = {name}>
+                    <Link to="/Feedback" myUID = {currentUser} theirUID = {name}>
                         <li key={index}>{name}</li>
                     </Link>
                 ))}

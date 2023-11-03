@@ -59,14 +59,26 @@ export default function Feedback({feedbackForm}) {
 
     try {
       console.log("formData: ", formData);
-      const response = await axios.post("http://localhost:3000/feedbacks", formData);
-      feedbackForm(response.data);
-      setFormData({ feedback: 0, category: ""}); 
+      const response = await axios.post("http://localhost:3000/feedbacks", {feedback: {
+        "receives_uid": formData.receives_uid,
+		    "gives_uid": formData.gives_uid,
+		    "feedback":  formData.feedback, 
+		    "category": formData.category  
+      }
+    });
+      // feedbackForm(response.data);
+      setFormData({...formData, feedback: 0, category: ""}); 
     } catch (error) {
       console.error("Error adding feedback:", error);
     }
   };
 
+  const fetchUserNameById = (id) => {
+    return fetch(`http://localhost:3000/test_users/${id}`)
+        .then((response) => response.json())
+        .then((data) => data.name)
+        .catch((error) => console.error("Error fetching user:", error));
+  };
 
   useEffect(() => {
     fetchData();
