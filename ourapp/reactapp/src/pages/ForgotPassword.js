@@ -25,7 +25,7 @@ function ForgotPassword() {
         setPassword(response.data.hashed_password);
     })
     .catch((error) => {
-        console.error("error getting username", error);
+        console.error("No matching username", error);
     });
   };
 

@@ -67,8 +67,8 @@ match10 = MatchedWith.create(uid1: 2, uid2: 6, status: true, date: "11-11-2000")
 feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "1", feedback: "I think we are a good match!")
 
 
-password1 = Password.create(test_user_id: 1, hashed_password: 1111)
-password2 = Password.create(test_user_id: 2, hashed_password: 1234)
+password1 = Password.create(test_user_id: 1, hashed_password: "1111")
+password2 = Password.create(test_user_id: 2, hashed_password: "1234")
 
 # t.string "name"
 # t.string "join_date"

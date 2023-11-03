@@ -19,16 +19,21 @@ export default function UserLanding() {
       return;
     }
     //const hashedPassword = bcrypt.hash(password, 10);
-    axios.post("http://localhost:3000/test_users", {
-      name: username,
-      password: password,
+    axios.post("http://localhost:3000/passwords", {
+      test_user_id: username,
+      hashed_password: password,
     })
     .then(response => {
       console.log(response.data);
     })
     .catch(error => {
+      console.error(error.response.data);
       setError("Registration failed. Please try again.");
     });
+    /*
+    .catch(error => {
+      setError("Registration failed. Please try again.");
+    });*/
   };
 
   useEffect(() => {
