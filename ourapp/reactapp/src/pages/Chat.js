@@ -103,13 +103,21 @@ export default function Chat() {
 
   const handleSend = () => {
     console.log("handleSend triggered");
+    const timestamp = Date.now();
+    console.log("here's timestamp", timestamp);
+    console.log("here's timestamp locale", timestamp.toLocaleString());
+
+
     // if(newMessage.trim () === "" || !user) return;
 
     const messageContent= {
       uid_sender_id: user.id,
+      // !to do: dynamic
       uid_receiver_id: 3,
       message: newMessage.trim(),
-      chat_order: 1
+      chat_order: 1,
+      // timestamp: timestamp,
+
 
     };
 
@@ -154,23 +162,23 @@ export default function Chat() {
 }
 
 function MessageList({ messages, currentUser, users }) {
-  console.log('Received messages:', messages); 
-  console.log('Current User:', currentUser);    
-  console.log('Users:', users);                 
+  // console.log('Received messages:', messages); 
+  // console.log('Current User:', currentUser);    
+  // console.log('Users:', users);                 
 
   return (
     <div className="message-list">
       {messages.map((msg) => {
-        console.log('Current Message:', msg);   // message currently being processed
+        // console.log('Current Message:', msg);   // message currently being processed
 
         const isSender = msg.uid_sender_id === currentUser.id;
-        console.log('Is current user the sender?', isSender); // current user is the sender or not
+        // console.log('Is current user the sender?', isSender); // current user is the sender or not
 
         const senderName = users[msg.uid_sender_id] || "Unknown";
-        console.log('Sender Name:', senderName);  // sender's name
+        // console.log('Sender Name:', senderName);  // sender's name
 
         const receiverName = users[msg.uid_receiver_id] || "Unknown";
-        console.log('Receiver Name:', receiverName); // receiver's name
+        // console.log('Receiver Name:', receiverName); // receiver's name
 
         return (
           <div key={msg.id} className={`message ${isSender ? 'sent' : 'received'}`}>
