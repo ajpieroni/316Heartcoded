@@ -10,6 +10,7 @@ export default function Chat() {
   const { user, setUser } = useContext(UserContext);
   const [newMessage, setNewMessage] = useState("");
   const botId = 100; 
+  const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
@@ -50,6 +51,7 @@ export default function Chat() {
 
   const handleSend = async () => {
     if(newMessage.trim() === "") return;
+    setIsSending(true);
 
     const userMessage = {
       id: messages.length + 1, // simplistic way to generate a unique ID
@@ -71,6 +73,7 @@ export default function Chat() {
         isBot: true
       };
       setMessages(prevMessages => [...prevMessages, botMessage]);
+      setIsSending(false); 
     }
 
     // Clear the input field
@@ -97,7 +100,7 @@ export default function Chat() {
             );
           })}
         </div>
-        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+        {isSending && (<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>)}
 
         <div className="message-input-container">
           <input
