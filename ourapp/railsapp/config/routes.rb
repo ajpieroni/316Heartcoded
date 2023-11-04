@@ -8,19 +8,21 @@ Rails.application.routes.draw do
   resources :questions
   resources :faqs
   resources :matched_withs
-  resources :test_users
+  # resources :test_users
   resources :test_users do
     member do
       get 'messages'
     end
   end
   
+  resources :states
 
   resources :feedbacks
 
   resources :test_users do
     member do
       get 'messages'
+      post 'messages', to: 'test_users#create_message'
     end
   end
 
