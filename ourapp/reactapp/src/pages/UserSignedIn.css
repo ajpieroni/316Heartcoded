@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Open Sans', sans-serif;
+  background: linear-gradient(to bottom, #FBB6CE, #F87171, #EF4444);
+}
+  
+.welcome-message {
+    text-align: center;
+    color: white;
+    margin-top: 2rem;
+    font-size: 2rem;
+}
+  
+.features {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+}
+  
+.feature-card {
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    min-width: 385px;
+    max-width: 385px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+  
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+  
+.feature-card h2 {
+    color: #333;
+    margin: 0 0 1rem 0;
+}
+  
+.feature-card p {
+    color: #666;
+}
+  
+.features a {
+    text-decoration: none;
+    color: inherit;
+}
+  
+.features a:visited {
+    color: inherit;
+}
+  
+@media (max-width: 768px) {
+    .feature-card {
+      width: 90%;
+    }
+}
