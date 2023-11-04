@@ -7,6 +7,8 @@
 #   Character.create(name: "Luke", movie: movies.first)
 MatchedWith.destroy_all
 Message.destroy_all
+Weight.destroy_all
+Answer.destroy_all
 TestUser.destroy_all
 Feedback.destroy_all
 
@@ -18,7 +20,7 @@ ActiveRecord::Base.connection.reset_pk_sequence!('messages')
 ActiveRecord::Base.connection.reset_pk_sequence!('feedbacks')
 
 # *Create sample users
-
+user0 = TestUser.create(name: "Wingman", join_date: Date.today, location: "Omnipotent", bio: "Here to help you find love!", gender: "X", preferences: "F", birthday: "2003-06-03")
 user1 = TestUser.create(name: "Jacob Lee", join_date: Date.today, location: "Maryland", bio: "hi my name is Jacob", gender: "M", preferences: "F", birthday: "2003-06-03")
 user2 = TestUser.create(name: "Linda Wang", join_date: Date.today, location: "California", bio: "hello this is Linda", gender: "F", preferences: "M", birthday: "2004-03-14")
 user3 = TestUser.create(name: "Eileen Cai", join_date: Date.today, location: "California", bio: "hi my name is Eileen", gender: "F", preferences: "M", birthday: "2004-08-15")
