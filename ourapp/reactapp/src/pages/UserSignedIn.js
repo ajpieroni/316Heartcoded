@@ -41,7 +41,7 @@ return(
     <div>
 <div className="features">
   <Header />
-        <div class = "welcome-message"> Welcome, {user?.name}</div>
+        <div class = "welcome-message"> Dashboard, {user?.name}</div>
       
     
       <Link to={{
