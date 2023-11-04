@@ -15,6 +15,14 @@ export default function FindMatch() {
     const [reciever, setReciever] = useState();
     const [loading, setLoading] = useState(true);
     const { user, setUser } = useContext(UserContext);
+    const [ellipsisDots, setEllipsisDots] = useState(1);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setEllipsisDots((dots) => (dots < 3 ? dots + 1 : 1));
+    }, 200);
+
+    return () => clearInterval(interval);
+  }, []);
     const currentUser = user?.id;
     const [currentName, setCurrentName] = useState("");
     useEffect(() => {
@@ -110,10 +118,12 @@ export default function FindMatch() {
         <main className="main-container">
           <Header />
           {loading ? (
-            <div class = "loading">Loading...</div>
+            <div className="loading">
+            Loading{".".repeat(ellipsisDots)}
+          </div>
           ) : (
             <>
-              <h1>Hi {user?.name}! Here are your Current Matches</h1>
+              <h1>{user?.name.split(" ")[0]}'s Current Matches</h1>
               <button onClick={newMatches}>New matches!</button>
       
               <ul>
