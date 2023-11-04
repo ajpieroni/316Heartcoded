@@ -53,16 +53,23 @@ export default function UserLogin() {
           sessionStorage.setItem("user", JSON.stringify(data));
           navigate("/UserSignedIn");
           setLogin(true);
+          clearInputFields();
         } else {
           setErrorMessage("Invalid username or password. Please try again.");
-
+          clearInputFields();
           // Handle non-existing user logic
         }
       })
       .catch((error) => console.error("Failed to initialize user:", error));
     // console.error("Failed to initialize user:", error);
     setErrorMessage("There was an issue logging in. Please try again.");
+    clearInputFields();
   };
+
+  const clearInputFields = () =>{
+    setUsername('');
+    setPassword('');
+  }
 
   // Effects
   useEffect(() => {
