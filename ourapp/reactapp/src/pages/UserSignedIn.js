@@ -40,9 +40,9 @@ useEffect(() => {
 return(
     <div>
 <div className="features">
-{user && user.name && ( // Check if user and user.name are not null before rendering
-        <h1> Welcome, {user.name}</h1>
-      )}
+{/* {user && user.name && ( // Check if user and user.name are not null before rendering */}
+        <h1> Welcome, {user?.name}</h1>
+      
     
       <Link to={{
         pathname: '/CreateProfile',
