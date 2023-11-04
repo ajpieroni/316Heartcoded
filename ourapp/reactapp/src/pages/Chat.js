@@ -46,23 +46,20 @@ export default function Chat() {
       body: JSON.stringify(messageObject) // Convert your message object into a JSON string
     };
   
-    // Make sure to return the fetch promise so that you can use .then() when calling sendMessage.
     return fetch(url, requestOptions)
       .then(response => {
         if (!response.ok) {
           console.log(response)
           throw new Error('Network response was not ok');
         }
-        return response.json(); // This parses the JSON of the response body
+        return response.json(); 
       })
       .then(data => {
         console.log('Message sent:', data);
-        return data; // This will be the resolved value of the promise
+        return data; 
       })
       .catch(error => {
         console.error('Error sending message:', error);
-        // If you want to keep chaining promises after catching an error, 
-        // you need to return a rejected promise here:
         return Promise.reject(error);
       });
   };

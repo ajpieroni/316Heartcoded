@@ -1,17 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useContext } from "react";
 import { UserContext } from "../components/contexts/UserContext";
 import axios from "axios";
 // import "./Chat.css";
 import "./Wingman.css"
+// import React, {useRef } from 'react';
 
 export default function Chat() {
     const apiToken = process.env.REACT_APP_API_TOKEN;
   const [messages, setMessages] = useState([]);
   const { user, setUser } = useContext(UserContext);
   const [newMessage, setNewMessage] = useState("");
-  const botId = 100; 
+  const botId = 63; 
   const [isSending, setIsSending] = useState(false);
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]); 
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
@@ -21,11 +31,13 @@ export default function Chat() {
   }, []);
 
   const fetchMessages = () => {
-    axios.get(`http://localhost:3000/messages/${user?.id}/${botId}`)
-      .then(response => {
-        setMessages(response.data);
+    fetch(`http://localhost:3000/test_users/${user?.id}/messages`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Fetched messages:", data);
+        setMessages(data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error fetching the messages:", error);
       });
   };
@@ -92,7 +104,7 @@ export default function Chat() {
     <main className="main-container">
       <h1>Chat with your Wingman</h1>
       <div className="chat-container">
-        <div className="message-list">
+        <div className="message-list" ref={messagesEndRef}>
           {messages.map((msg, index) => {
             const isSender = msg.uid_sender_id === user.id;
             return (
