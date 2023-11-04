@@ -7,7 +7,14 @@ export const UserContext = React.createContext({
       username: '',
       id: null,
       name: '',
-      birthday: null
+      birthday: null,
+      bio: '',
+      gender: '',
+      id: null,
+      join_date: '',
+      location: '',
+      preferences: ''
+
     },
     setUser: () => {}
   });

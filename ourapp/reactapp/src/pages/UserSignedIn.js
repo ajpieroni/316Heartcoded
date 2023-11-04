@@ -21,12 +21,29 @@ export default function UserSignedIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState(false);
+  console.log("UserContext:", UserContext);
+console.log("User from context:", user);
+
+useEffect(() => {
+    // When the component mounts, check if the user is stored in sessionStorage
+    const storedUser = sessionStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser)); // Parse the string back to an object and set it in the context
+      setLogin(true); // If necessary, set the login state
+    }
+  }, [setUser]); // Dependency array to run the effect when setUser changes, which is likely only on mount
+  
+
 
   // const history = useHistory();
   const navigate = useNavigate();
 return(
     <div>
 <div className="features">
+{user && user.name && ( // Check if user and user.name are not null before rendering
+        <h1> Welcome, {user.name}</h1>
+      )}
+    
       <Link to={{
         pathname: '/CreateProfile',
         state: { data: user }

@@ -37,13 +37,21 @@ export default function UserLogin() {
       })
       .then((data) => {
         if (data) {
-          setUser((prevUser) => ({
-            ...prevUser,
-            name: data.name,
+          setUser(prevUser => ({
+            ...prevUser, // This ensures we keep the existing fields and only update what's necessary
+            username: data.username, // Or any other relevant field from your data
             id: data.id,
+            name: data.name,
             birthday: data.birthday,
+            bio: data.bio,
+            gender: data.gender,
+            join_date: data.join_date,
+            location: data.location,
+            preferences: data.preferences,
+            // ... any other fields you need to update from the response
           }));
           sessionStorage.setItem("user", JSON.stringify(data));
+       
           // setTestUser(user)
           // history.push("/signed-in");
           navigate('/UserSignedIn');
