@@ -186,3 +186,9 @@ body {
   outline: none;
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
+
+/* Add to your CSS file */
+.error-message {
+  color: white;
+  margin: 10px;
+}
