@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import "./UserLogin.css";
 import { useNavigate } from 'react-router-dom';
 import Conversations from "./Conversations";
+import "./UserSignedIn.css"
 
 import axios from "axios";
 import { useHistory } from "react-router-dom"; 
@@ -60,7 +61,7 @@ return(
         <Link to="/FindMatch">
           <div className="feature-card">
             <h2>View Current Matches</h2>
-            <p>View your current matches!</p>
+            <p>View your current matches! </p>
           </div>
         </Link>
         <Link to="/Conversations">
