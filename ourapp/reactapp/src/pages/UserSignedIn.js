@@ -42,7 +42,7 @@ return(
     <div>
 <div className="features">
 {/* {user && user.name && ( // Check if user and user.name are not null before rendering */}
-        <h1> Welcome, {user?.name}</h1>
+        <div class = "welcome-message"> Welcome, {user?.name}</div>
       
     
       <Link to={{
