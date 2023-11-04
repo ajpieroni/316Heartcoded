@@ -1,5 +1,4 @@
 class MatchingService
-    CUTOFF_SCORE = 13  # Desired threshold
     MAX_MATCHES = 2
     
     def compute_score(user1, user2)
@@ -32,31 +31,35 @@ class MatchingService
     end
   
     def find_matches_for(user)
-      all_users = TestUser.all.shuffle # Shuffle to get random order
+      all_users = TestUser.all
       matched_count = 0
       potential_matches = []
-
-  
+    
       all_users.each do |other_user|
         break if matched_count >= MAX_MATCHES
-  
-        # Ensure they're not the same user
+    
+        # not the same user
         next if user == other_user
-  
-        # Check if they're already matched
+    
+        # already matched
         next if already_matched?(user, other_user)
-  
+    
         score = compute_score(user, other_user)
-  
-        if score <= CUTOFF_SCORE
-          potential_matches.push(other_user)
-          matched_count += 1
-          # Create a new entry in the MatchedWith table
-          MatchedWith.create(uid1: user.id, uid2: other_user.id, status: true, date: Date.today.strftime("%m-%d-%Y"))
-        end
+    
+        potential_matches.push({ user: other_user, score: score })
+        matched_count += 1
       end
-  
-      potential_matches
+    
+      # sort potential matches by score in ascending order
+      sorted_matches = potential_matches.sort_by { |match| match[:score] }
+    
+      # create entries in the MatchedWith table for the matches w lowest dif score
+      sorted_matches[0..1].each do |match|
+        MatchedWith.create(uid1: user.id, uid2: match[:user].id, status: true, date: Date.today.strftime("%m-%d-%Y"))
+      end
+    
+      # Return the sorted potential matches
+      sorted_matches[0..1].map { |match| match[:user] }
     rescue => e
       Rails.logger.error "Error in MatchingService for user ID #{user.id}: #{e.message}"
       []  # Return an empty array or any other default value
