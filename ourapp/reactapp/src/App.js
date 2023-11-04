@@ -18,6 +18,7 @@ import { UserContext } from "./components/contexts/UserContext";
 import SelectUserForFeedback from "./pages/SelectUserForFeedback";
 import UserSignedIn from "./pages/UserSignedIn"
 import Conversations from "./pages/Conversations";
+import Wingman from "./pages/Wingman";
 
 function App() {
   function ScrollToTop() {
@@ -47,6 +48,7 @@ function App() {
             path="/SelectUserForFeedback"
             element={<SelectUserForFeedback />}
           />
+          <Route exact path = "/Wingman" element = {<Wingman />}/>
           <Route exact path="/FindMatch" element={<FindMatch />} />
           <Route exact path="/Conversations" element={<Conversations />} />
           <Route exact path="/Questions" element={<Questions />} />

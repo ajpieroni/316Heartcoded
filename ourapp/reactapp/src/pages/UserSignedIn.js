@@ -72,6 +72,14 @@ return(
             </p>
           </div>
         </Link>
+        <Link to="/Wingman">
+          <div className="feature-card">
+            <h2>Wingman</h2>
+            <p>
+              Talk to your Wingman!
+            </p>
+          </div>
+        </Link>
         {/* <Link to="/Chat">
           <div className="feature-card">
             <h2>Chat & Connect</h2>
@@ -91,7 +99,7 @@ return(
             </p>
           </div>
         </Link>
-        <Link to="SelectUserForFeedback">
+        <Link to="/SelectUserForFeedback">
           <div className="feature-card">
             <h2>Give Feedback</h2>
             <p>
