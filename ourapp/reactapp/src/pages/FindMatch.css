@@ -1,0 +1,65 @@
+.main-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+    background-color: #f5f5f5;
+  }
+  
+  .main-container h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .user-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    position: relative;
+  }
+  
+  .user-card h2 {
+    color: #555;
+    margin: 0 0 10px 0;
+  }
+  
+  .user-card p {
+    color: #666;
+    margin: 5px 0;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .ChatIcon {
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: #007bff;
+  }
+  
+  .ChatIcon:hover {
+    color: #0056b3;
+  }
+  
