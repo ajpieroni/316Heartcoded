@@ -41,7 +41,7 @@ return(
     <div>
 <div className="features">
   <Header />
-        <div class = "welcome-message"> Dashboard, {user?.name}</div>
+        <div class = "welcome-message"> {user?.name.split(' ')[0]}'s Dashboard</div>
       
     
       <Link to={{
