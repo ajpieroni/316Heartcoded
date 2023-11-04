@@ -9,12 +9,9 @@ MatchedWith.destroy_all
 Message.destroy_all
 Question.destroy_all
 TestUser.destroy_all
-<<<<<<< HEAD
 Feedback.destroy_all
 
 # This will ensure the primary key starts from 1 for each table
-=======
->>>>>>> m4
 ActiveRecord::Base.connection.reset_pk_sequence!('test_users')
 ActiveRecord::Base.connection.reset_pk_sequence!('questions')
 ActiveRecord::Base.connection.reset_pk_sequence!('matched_withs')
@@ -54,7 +51,7 @@ user28 = TestUser.create(name: "Charlotte Lee", join_date: Date.today, location:
 user29 = TestUser.create(name: "Benjamin Scott", join_date: Date.today, location: "Texas", bio: "Tech geek and space enthusiast!", gender: "M", preferences: "F", birthday: "2005-05-14")
 user30 = TestUser.create(name: "Amelia Clark", join_date: Date.today, location: "California", bio: "Life's a gamble, enjoy the thrill!", gender: "F", preferences: "M", birthday: "2002-12-28")
 user31 = TestUser.create(name: "Sophie Miller", join_date: Date.today, location: "Texas", bio: "Country girl with a love for BBQ!", gender: "F", preferences: "M", birthday: "2004-04-03")
-user32 = TestUser create(name: "Mason Hughes", join_date: Date.today, location: "Colorado", bio: "Outdoor adventurer and ski enthusiast!", gender: "M", preferences: "F", birthday: "2002-11-12")
+user32 = TestUser.create(name: "Mason Hughes", join_date: Date.today, location: "Colorado", bio: "Outdoor adventurer and ski enthusiast!", gender: "M", preferences: "F", birthday: "2002-11-12")
 user33 = TestUser.create(name: "Grace Turner", join_date: Date.today, location: "Georgia", bio: "Southern belle with a passion for peaches!", gender: "F", preferences: "M", birthday: "2001-09-15")
 user34 = TestUser.create(name: "Ethan Wilson", join_date: Date.today, location: "California", bio: "Surfer dude riding the waves!", gender: "M", preferences: "F", birthday: "2000-07-18")
 user35 = TestUser.create(name: "Lily Parker", join_date: Date.today, location: "Florida", bio: "Sunshine state beach lover!", gender: "F", preferences: "M", birthday: "2003-05-22")
