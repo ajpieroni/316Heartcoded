@@ -8,6 +8,15 @@ import axios from "axios";
 
 
 export default function Feedback({feedbackForm}) {
+  const [loading, setLoading] = useState(true);
+  const [ellipsisDots, setEllipsisDots] = useState(1);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setEllipsisDots((dots) => (dots < 3 ? dots + 1 : 1));
+    }, 200);
+
+    return () => clearInterval(interval);
+  }, []);
   const [users, setUsers] = useState({
     receiver: 0,
     sender: 0,

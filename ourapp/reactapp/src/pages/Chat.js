@@ -132,10 +132,8 @@ export default function Chat() {
     sendMessage(messageToSend)
     .then((sentMessage) => { // 'sentMessage' will receive the data from the 'sendMessage' function's successful promise
       console.log('Sent message:', sentMessage);
-      // Update state with the new message; you should use a function to update the state based on the previous state to avoid issues due to state updates batching
       setMessages(prevMessages => [...prevMessages, sentMessage]);
       
-      // Clear the input field
       setNewMessage("");
     })
     .catch((error) => {
