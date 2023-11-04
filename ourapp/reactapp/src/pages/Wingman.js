@@ -1,98 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useContext } from "react";
 import { UserContext } from "../components/contexts/UserContext";
-import { useLocation } from 'react-router-dom';
 import axios from "axios";
-import "./Chat.css";
+// import "./Chat.css";
+import "./Wingman.css"
 
-
-export default function Wingman() {
-  const location = useLocation();
-  const reciever = location.state.reciever;
-  // console.log("reciever test", recievertest)
-  
+export default function Chat() {
   const [messages, setMessages] = useState([]);
   const { user, setUser } = useContext(UserContext);
   const [newMessage, setNewMessage] = useState("");
-  const [users, setUsers] = useState({});
-
-  const fetchMessages = () => {
-    fetch(`http://localhost:3000/test_users/${user?.id}/messages`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Fetched messages:", data);
-        setMessages(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching the messages:", error);
-      });
-  };
-
-  const fetchUserNameById = (id) => {
-    return fetch(`http://localhost:3000/test_users/${id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        return data.name; 
-      })
-      .catch((error) => console.error("Error fetching user:", error));
-  };
-
-  const sendMessage = (messageObject) => {
-    const url = `http://localhost:3000/test_users/${user?.id}/messages`;
-  
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(messageObject) // Convert your message object into a JSON string
-    };
-  
-    // Make sure to return the fetch promise so that you can use .then() when calling sendMessage.
-    return fetch(url, requestOptions)
-      .then(response => {
-        if (!response.ok) {
-          console.log(response)
-          throw new Error('Network response was not ok');
-        }
-        return response.json(); // This parses the JSON of the response body
-      })
-      .then(data => {
-        console.log('Message sent:', data);
-        return data; // This will be the resolved value of the promise
-      })
-      .catch(error => {
-        console.error('Error sending message:', error);
-        // If you want to keep chaining promises after catching an error, 
-        // you need to return a rejected promise here:
-        return Promise.reject(error);
-      });
-  };
-  
-  
-  useEffect(() => {
-    // fetch unique user IDs from messages
-    const userIds = [
-      ...new Set(
-        messages
-          .map((msg) => msg.uid_sender_id)
-          .concat(messages.map((msg) => msg.uid_receiver_id))
-      ),
-    ];
-
-    // for each id in set fetch the name
-    Promise.all(userIds.map((id) => fetchUserNameById(id)))
-      // then ret is names
-      .then((names) => {
-        // keys are user ids, values are names
-        const usersObj = userIds.reduce((acc, id, index) => {
-          // for each userid set name
-          acc[id] = names[index];
-          //  ret accumulator
-          return acc;
-        }, {});
-        setUsers(usersObj);
-      });
-    //  dependent on new messages
-  }, [messages]);
+  const botId = 100; 
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
@@ -101,63 +18,91 @@ export default function Wingman() {
     }
   }, []);
 
+  const fetchMessages = () => {
+    axios.get(`http://localhost:3000/messages/${user?.id}/${botId}`)
+      .then(response => {
+        setMessages(response.data);
+      })
+      .catch(error => {
+        console.error("Error fetching the messages:", error);
+      });
+  };
+  const sendMessageToBot = async (text) => {
+    try {
+      const data = {
+        inputs: {
+          past_user_inputs: messages.map(msg => msg.message),
+          generated_responses: messages.map(msg => msg.isBot ? msg.message : null).filter(msg => msg),
+          text: text
+        }
+      };
+      const response = await fetch("https://api-inference.huggingface.co/models/abhiramtirumala/DialoGPT-sarcastic", {
+        headers: { Authorization: "Bearer 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" }, 
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error('Error sending message to the bot:', error);
+    }
+  };
+
+  const handleSend = async () => {
+    if(newMessage.trim() === "") return;
+
+    const userMessage = {
+      id: messages.length + 1, // simplistic way to generate a unique ID
+      uid_sender_id: user.id,
+      message: newMessage.trim(),
+      timestamp: Date.now(),
+    };
+    setMessages(prevMessages => [...prevMessages, userMessage]);
+
+    // wait for response
+    const botResponse = await sendMessageToBot(newMessage.trim());
+
+    if (botResponse) {
+      const botMessage = {
+        id: messages.length + 2, // simplistic way to generate a unique ID
+        uid_sender_id: "AI_BOT_ID",
+        message: botResponse.generated_text, // You might need to adjust this depending on the shape of your response
+        timestamp: Date.now(),
+        isBot: true
+      };
+      setMessages(prevMessages => [...prevMessages, botMessage]);
+    }
+
+    // Clear the input field
+    setNewMessage("");
+  };
   useEffect(() => {
-    if (user && user.id) {
+    if (user?.id) {
       fetchMessages();
     }
   }, [user]);
 
-  const handleSend = () => {
-    console.log("handleSend triggered");
-    const timestamp = Date.now();
-    console.log("here's timestamp", timestamp);
-    console.log("here's timestamp locale", timestamp.toLocaleString());
-
-
-    // if(newMessage.trim () === "" || !user) return;
-
-    const messageContent= {
-      uid_sender_id: user.id,
-      // !to do: dynamic
-      uid_receiver_id: reciever.id,
-      message: newMessage.trim(),
-      chat_order: 1,
-      // timestamp: timestamp,
-
-
-    };
-
-    const messageToSend = {
-      message: messageContent
-    };
-
-    console.log("New message:", messageToSend);
-    sendMessage(messageToSend)
-    .then((sentMessage) => { // 'sentMessage' will receive the data from the 'sendMessage' function's successful promise
-      console.log('Sent message:', sentMessage);
-      // Update state with the new message; you should use a function to update the state based on the previous state to avoid issues due to state updates batching
-      setMessages(prevMessages => [...prevMessages, sentMessage]);
-      
-      // Clear the input field
-      setNewMessage("");
-    })
-    .catch((error) => {
-      console.error("There was an error sending the message:", error);
-    });
-  };
-
   return (
     <main className="main-container">
-      <h1>Chat</h1>
-      <h2>Welcome, {user?.name}</h2>
+      <h1>Chat with your Wingman</h1>
       <div className="chat-container">
-        <MessageList messages={messages} currentUser={user} users={users} reciever={reciever} />
+        <div className="message-list">
+          {messages.map((msg, index) => {
+            const isSender = msg.uid_sender_id === user.id;
+            return (
+              <div key={index} className={`message ${isSender ? 'sent' : 'received'}`}>
+                <p>{isSender ? `You: ${msg.message}` : `Your Wingman: ${msg.message}`}</p>
+                <span className="timestamp">{new Date(msg.timestamp).toLocaleString()}</span>
+              </div>
+            );
+          })}
+        </div>
+        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
 
         <div className="message-input-container">
           <input
             type="text"
             value={newMessage}
-            
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder="Type a message..."
             onKeyDown={(e) => {
@@ -172,35 +117,3 @@ export default function Wingman() {
     </main>
   );
 }
-
-function MessageList({ messages, currentUser, users, reciever }) {
-  console.log("here's reciever", reciever);
-
-  return (
-    <div className="message-list">
-      <h1>{reciever?.name}</h1>
-      {messages
-        .filter(msg => 
-          (msg.uid_sender_id === currentUser.id && msg.uid_receiver_id === reciever.id) || 
-          (msg.uid_sender_id === reciever.id && msg.uid_receiver_id === currentUser.id))
-        .map((msg) => {
-          const isSender = msg.uid_sender_id === currentUser.id;
-          const senderName = users[msg.uid_sender_id] || "Unknown";
-
-          return (
-            <div key={msg.id} className={`message ${isSender ? 'sent' : 'received'}`}>
-              <p>
-                {isSender ? 
-                 `You: ${msg.message}` : 
-                 `${senderName}: ${msg.message}`}
-              </p>
-              <span className="timestamp">{new Date(msg.timestamp).toLocaleString()}</span>
-            </div>
-          );
-        })}
-    </div>
-  );
-}
-
-
-
