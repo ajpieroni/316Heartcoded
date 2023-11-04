@@ -93,20 +93,24 @@ export default function FindMatch() {
     }
 
     return (
-      <main className="main-container">
+        <main className="main-container">
         <h1>Hi {user?.name}! Here are your Current Matches</h1>
         <button onClick={newMatches}>New matches!</button>
         <ul>
-          {myMatches.map((user) => (
-            <div key={user.id} className="user-card">
-              <h2>{user.name}</h2>
-              <p>Birthday: {user.birthday}</p>
-              <p>Bio: {user.bio}</p>
-              <ChatIcon onClick= {openConversations }/>
-              <button onClick={() => unmatch(user)}>Unmatch</button>
+          {myMatches.map((matchUser) => (
+            <div key={matchUser.id} className="user-card">
+              <h2>{matchUser.name}</h2>
+              <p>Birthday: {matchUser.birthday}</p>
+              <p>Bio: {matchUser.bio}</p>
+              <div className="chat-section">
+                <ChatIcon onClick={() => openConversations()}/>
+                <span className="chat-text" onClick={() => openConversations()}>Chat with {matchUser.name}</span>
+              </div>
+              <button onClick={() => unmatch(matchUser)}>Unmatch</button>
             </div>
           ))}
         </ul>
       </main>
+      
     );
 }
