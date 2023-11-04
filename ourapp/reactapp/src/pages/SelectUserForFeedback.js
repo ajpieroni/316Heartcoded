@@ -11,8 +11,21 @@ import axios from "axios";
 export default function SelectUserForFeedback({feedbackForm}) {
     const [matchNames, setMatchNames] = useState([]);
     const { user, setUser } = useContext(UserContext);
+    // const currentUser = user?.id;
+    // const [currentName, setCurrentName] = useState("");
+    // const { user, setUser } = useContext(UserContext);
+    const [ellipsisDots, setEllipsisDots] = useState(1);
+ 
     const currentUser = user?.id;
     const [currentName, setCurrentName] = useState("");
+    useEffect(() => {
+        // When the component mounts, check if the user is stored in sessionStorage
+        const storedUser = sessionStorage.getItem('user');
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
+        //   setLogin(true); // If necessary, set the login state
+        }
+      }, [setUser]); 
 
     const fetchUserNameById = (id) => {
         return fetch(`http://localhost:3000/test_users/${id}`)
