@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../components/contexts/UserContext";
 
 import ForgotPassword from "./ForgotPassword";
+import CreateProfile from "./CreateProfile.js";
 
 export default function UserLanding() {
   const [question, setQuestion] = useState("UNINIT");
@@ -115,7 +116,10 @@ export default function UserLanding() {
       </div>
 
       <div className="features">
-        <Link to="/CreateProfile">
+      <Link to={{
+        pathname: '/CreateProfile',
+        state: { data: user }
+      }}>
           <div className="feature-card">
             <h2>Create Profile</h2>
             <p>
@@ -150,7 +154,7 @@ export default function UserLanding() {
             </p>
           </div>
         </Link>
-        <Link to="Feedback">
+        <Link to="SelectUserForFeedback">
           <div className="feature-card">
             <h2>Give Feedback</h2>
             <p>
