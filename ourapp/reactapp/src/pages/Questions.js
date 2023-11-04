@@ -10,9 +10,18 @@ export default function Questions() {
   const [question, setQuestion] = useState(null);
   const [rating, setRating] = useState(null);
   const [questionGenerated, setQuestionGenerated] = useState(false);
+  useEffect(() => {
+    // When the component mounts, check if the user is stored in sessionStorage
+    const storedUser = sessionStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    //   setLogin(true); // If necessary, set the login state
+    }
+  }, [setUser]); 
 
-  console.log("gimme id:", user.id);
-  setUser(user);
+
+  console.log("gimme id:", user?.id);
+  // setUser(user);
   const fetchQuestion = () => {
     axios
       .get(`http://localhost:3000/questions/unanswered_questions/${user.id}`) 
@@ -30,8 +39,11 @@ export default function Questions() {
   };
 
   useEffect(() => {
-    fetchQuestion();
-  }, []);
+    if (user?.id) {
+      fetchQuestion();
+    }
+  }, [user?.id]);
+  
 
   const saveResponse = () => {
     // Implement the logic to save the user's response here
