@@ -1,86 +1,87 @@
-/* Base styles */
-:root {
-  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  --font-size-base: 1rem; /* 16px */
-  --font-size-md: 1.125rem; /* 18px */
-  --font-size-lg: 1.5rem; /* 24px */
-  --primary-color: #007bff;
-  --success-color: #28a745;
-  --hover-darken-factor: 0.85; /* darken color by 15% on hover */
-  --border-radius: 0.3125rem; /* 5px */
-  --box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  --spacing-unit: 0.625rem; /* 10px */
-}
-
-html {
-  font-family: var(--font-family);
-  font-size: var(--font-size-base);
-}
-
 .main-container {
-  text-align: center;
-  padding: var(--spacing-unit) 0;
-}
-
-.main-title {
-  font-size: var(--font-size-lg);
-  margin-bottom: 1.25rem; /* 20px */
-}
-
-.question-container,
-.response-container {
-  margin-top: 1.25rem; /* 20px */
-}
-
-.question-title,
-.response-title {
-  font-size: var(--font-size-md);
-  margin-bottom: var(--spacing-unit);
-}
-
-.question-text {
-  font-size: var(--font-size-base);
-  margin-top: var(--spacing-unit);
-  line-height: 1.6;
-}
-
-.response-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--spacing-unit);
-}
-
-.button {
-  font-size: var(--font-size-base);
-  padding: var(--spacing-unit) 1.25rem; /* 10px 20px */
-  margin: var(--spacing-unit);
-  color: #fff;
-  background-color: var(--primary-color);
-  border: 1px solid transparent;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.button:hover, .button:focus {
-  background-color: darken(var(--primary-color), var(--hover-darken-factor));
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.save-button {
-  background-color: var(--success-color);
-}
-
-.save-button:hover, .save-button:focus {
-  background-color: darken(var(--success-color), var(--hover-darken-factor));
-}
-
-.generate-button {
-  /* This class can remain the same as .button styles are already applied */
-}
-
-.generate-button:hover, .generate-button:focus {
-  /* Hover styles are covered by .button:hover */
-}
+    text-align: center;
+    /* background-color: #f0f0f0; */
+    /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); */
+  }
+  
+  .main-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .question-container {
+    margin-top: 20px;
+  }
+  
+  .question-title {
+    font-size: 18px;
+  }
+  
+  .question-text {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  .response-container {
+    margin-top: 20px;
+  }
+  
+  .response-title {
+    font-size: 18px;
+  }
+  
+  .response-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  /* .response-button {
+    font-size: 16px;
+    padding: 5px 10px;
+    margin: 5px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; 
+  } */
+  
+  .response-button:hover {
+    background-color: #0056b3; /* bg color on hover */
+  }
+  
+  .save-button {
+    font-size: 18px;
+    margin-top: 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; 
+  }
+  
+  .save-button:hover {
+    background-color: #1f8c26; 
+  }
+  
+  .generate-button {
+    font-size: 18px;
+    margin-top: 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /*fade in???*/
+  }
+  
+  .generate-button:hover {
+    background-color: #0056b3;
+  }
+  
+  
