@@ -1,5 +1,4 @@
 class MatchingService
-    MAX_MATCHES = 2
     
     def compute_score(user1, user2)
       score_difference = {}
@@ -32,12 +31,9 @@ class MatchingService
   
     def find_matches_for(user)
       all_users = TestUser.all
-      matched_count = 0
       potential_matches = []
     
       all_users.each do |other_user|
-        break if matched_count >= MAX_MATCHES
-    
         # not the same user
         next if user == other_user
     
@@ -47,7 +43,6 @@ class MatchingService
         score = compute_score(user, other_user)
     
         potential_matches.push({ user: other_user, score: score })
-        matched_count += 1
       end
     
       # sort potential matches by score in ascending order
@@ -58,7 +53,7 @@ class MatchingService
         MatchedWith.create(uid1: user.id, uid2: match[:user].id, status: true, date: Date.today.strftime("%m-%d-%Y"))
       end
     
-      # Return the sorted potential matches
+      # sorted potential matches
       sorted_matches[0..1].map { |match| match[:user] }
     rescue => e
       Rails.logger.error "Error in MatchingService for user ID #{user.id}: #{e.message}"
