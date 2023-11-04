@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { UserContext } from "../components/contexts/UserContext";
 import ChatIcon from '@mui/icons-material/Chat';
 import "./FindMatch.css"
+import Header from '../components/Header';
 
 export default function FindMatch() {
     const [myMatches, setMyMatches] = useState([]);
@@ -94,6 +95,8 @@ export default function FindMatch() {
 
     return (
         <main className="main-container">
+        <Header />
+
         <h1>Hi {user?.name}! Here are your Current Matches</h1>
         <button onClick={newMatches}>New matches!</button>
         <ul>
