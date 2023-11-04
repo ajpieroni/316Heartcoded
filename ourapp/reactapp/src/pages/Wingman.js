@@ -50,7 +50,10 @@ export default function Chat() {
     }
   };
 
+
   const handleSend = async () => {
+    setNewMessage("");
+
     if(newMessage.trim() === "") return;
     setIsSending(true);
 
@@ -78,7 +81,6 @@ export default function Chat() {
     }
 
     // Clear the input field
-    setNewMessage("");
   };
   useEffect(() => {
     if (user?.id) {
