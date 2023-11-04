@@ -49,7 +49,7 @@ return(
         state: { data: user }
       }}>
           <div className="feature-card">
-            <h2>Create Profile</h2>
+            <h2>Edit Profile</h2>
             <p>
               Personalize your space. Add a profile picture, write a bio, and
               list your interests for potential matches to see.

@@ -88,7 +88,7 @@ export default function UserForm({ onUserAdded }) {
 
   return (
     <div className="user-form">
-      <h2>Edit Current Profile</h2>
+      <h2>Edit Current Profile NEEDS TO BE IMPLEMENTED</h2>
       <form onSubmit={handleSubmit}>
         <label>
           Name<span style={{ color: 'red' }}>*</span>: 
