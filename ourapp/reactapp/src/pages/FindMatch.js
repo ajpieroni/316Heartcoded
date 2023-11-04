@@ -87,9 +87,13 @@ export default function FindMatch() {
             .catch((error) => console.error("Error fetching matches:", error));
     }, [currentUser]);
 
+    function openConversations(){
+        console.log("clicked conversations")
+    }
+
     return (
       <main className="main-container">
-        <h1>Hi {user?.name}! Here are your current Matches</h1>
+        <h1>Hi {user?.name}! Here are your Current Matches</h1>
         <button onClick={newMatches}>New matches!</button>
         <ul>
           {myMatches.map((user) => (
@@ -97,7 +101,7 @@ export default function FindMatch() {
               <h2>{user.name}</h2>
               <p>Birthday: {user.birthday}</p>
               <p>Bio: {user.bio}</p>
-              <ChatIcon/>
+              <ChatIcon onClick= {openConversations }/>
               <button onClick={() => unmatch(user)}>Unmatch</button>
             </div>
           ))}
