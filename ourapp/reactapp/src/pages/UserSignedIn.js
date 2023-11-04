@@ -72,7 +72,7 @@ return(
             </p>
           </div>
         </Link>
-        <Link to="/Chat">
+        {/* <Link to="/Chat">
           <div className="feature-card">
             <h2>Chat & Connect</h2>
             <p>
@@ -80,7 +80,7 @@ return(
               decide if you're ready to take the next step with your match.
             </p>
           </div>
-        </Link>
+        </Link> */}
         <Link to="/Questions">
           <div className="feature-card">
             <h2>Dynamic Questions</h2>
