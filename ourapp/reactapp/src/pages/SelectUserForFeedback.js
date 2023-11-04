@@ -14,6 +14,14 @@ export default function SelectUserForFeedback({ feedbackForm }) {
   // const [currentName, setCurrentName] = useState("");
   // const { user, setUser } = useContext(UserContext);
   const [ellipsisDots, setEllipsisDots] = useState(1);
+  //   !Loading
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setEllipsisDots((dots) => (dots < 3 ? dots + 1 : 1));
+    }, 200);
+    return () => clearInterval(interval);
+  }, []);
 
   const currentUser = user?.id;
   const [currentName, setCurrentName] = useState("");
@@ -47,18 +55,21 @@ export default function SelectUserForFeedback({ feedbackForm }) {
       }
       setMatchNames(names);
     })
-    .catch((error) => console.error("Error fetching matches:", error));
-
+    .catch((error) => console.error("Error fetching matches:", error))
+    .finally(()=> setLoading(false));
   return (
     <main className="main-container">
       <h1>Hi {currentName}! Here are your current Matches</h1>
-      <ul>
+      {loading ? (<div className="loading">
+            Loading{".".repeat(ellipsisDots)}
+          </div>): ( <ul>
         {matchNames.map((name, index) => (
           <Link to="/Feedback" myUID={currentUser} theirUID={name}>
             <li key={index}>{name}</li>
           </Link>
         ))}
-      </ul>
+      </ul>)}
+     
     </main>
   );
 }
