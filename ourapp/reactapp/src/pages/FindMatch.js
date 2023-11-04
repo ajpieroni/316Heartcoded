@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useContext } from "react";
 import { UserContext } from "../components/contexts/UserContext";
 import ChatIcon from '@mui/icons-material/Chat';
+import "./FindMatch.css"
 
 export default function FindMatch() {
     const [myMatches, setMyMatches] = useState([]);
