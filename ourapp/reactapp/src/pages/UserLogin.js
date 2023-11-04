@@ -27,8 +27,13 @@ export default function UserLogin() {
     setShowSignUp(false);
   };
   const toggleSignUp = () => {
-    setShowSignUp(!showSignUp);
-    setShowSignIn(false);
+    const willShowSignUp = !showSignUp;
+    setShowSignUp(willShowSignUp);
+    if (willShowSignUp) {
+      navigate('/CreateProfile'); 
+    } else {
+      setShowSignIn(true); 
+    }
   };
   const handleSignUp = () => {
     // TODO: SignUp logic
