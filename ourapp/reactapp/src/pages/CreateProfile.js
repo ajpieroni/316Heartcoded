@@ -99,6 +99,7 @@
 //   );
 // }
 
+import "./CreateProfile.css";
 import React, { useState, useEffect } from 'react';
 import { useContext } from "react";
 import axios from 'axios';
@@ -191,7 +192,7 @@ export default function UserForm({ onUserAdded }) {
 
   return (
     <div className="user-form">
-      <h2>Add New User, {user.id}</h2>
+      <h2>Nice to see you, {user.name.split(' ')[0]}!</h2>
       <form onSubmit={handleSubmit}>
         <label>
           Name<span style={{ color: 'red' }}>*</span>: 
@@ -253,7 +254,7 @@ export default function UserForm({ onUserAdded }) {
             onChange={handleInputChange}
           />
         </label>
-        <button type="submit">Add User</button>
+        <button type="submit">Submit Info</button>
       </form>
     </div>
   );
