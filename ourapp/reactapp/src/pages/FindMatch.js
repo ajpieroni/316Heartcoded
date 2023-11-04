@@ -1,12 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useContext } from "react";
 import { UserContext } from "../components/contexts/UserContext";
+import ChatIcon from '@mui/icons-material/Chat';
 
 export default function FindMatch() {
     const [myMatches, setMyMatches] = useState([]);
     const { user, setUser } = useContext(UserContext);
     const currentUser = user?.id;
     const [currentName, setCurrentName] = useState("");
+    useEffect(() => {
+        // When the component mounts, check if the user is stored in sessionStorage
+        const storedUser = sessionStorage.getItem('user');
+        if (storedUser) {
+          setUser(JSON.parse(storedUser)); // Parse the string back to an object and set it in the context
+        //   setLogin(true); // If necessary, set the login state
+        }
+      }, [setUser]); // Dependency array to run the effect when setUser changes, which is likely only on mount
+      
+    
 
     const newMatches = async () => {
         if (!currentUser) return;
@@ -78,7 +89,7 @@ export default function FindMatch() {
 
     return (
       <main className="main-container">
-        <h1>Hi {currentName}! Here are your current Matches</h1>
+        <h1>Hi {user?.name}! Here are your current Matches</h1>
         <button onClick={newMatches}>New matches!</button>
         <ul>
           {myMatches.map((user) => (
@@ -86,6 +97,7 @@ export default function FindMatch() {
               <h2>{user.name}</h2>
               <p>Birthday: {user.birthday}</p>
               <p>Bio: {user.bio}</p>
+              <ChatIcon/>
               <button onClick={() => unmatch(user)}>Unmatch</button>
             </div>
           ))}
