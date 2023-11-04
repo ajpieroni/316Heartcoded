@@ -13,6 +13,7 @@ export default function FindMatch() {
     // const history  = useHistory();
     const [myMatches, setMyMatches] = useState([]);
     const [reciever, setReciever] = useState();
+    const [loading, setLoading] = useState(true);
     const { user, setUser } = useContext(UserContext);
     const currentUser = user?.id;
     const [currentName, setCurrentName] = useState("");
@@ -92,7 +93,8 @@ export default function FindMatch() {
                 }
                 setMyMatches(matchesArray);
             })
-            .catch((error) => console.error("Error fetching matches:", error));
+            .catch((error) => console.error("Error fetching matches:", error))
+            .finally(()=> setLoading(false));
     }, [currentUser]);
 
     function openConversations(matchUser){
@@ -106,25 +108,31 @@ export default function FindMatch() {
 
     return (
         <main className="main-container">
-        <Header />
-
-        <h1>Hi {user?.name}! Here are your Current Matches</h1>
-        <button onClick={newMatches}>New matches!</button>
-        <ul>
-          {myMatches.map((matchUser) => (
-            <div key={matchUser.id} className="user-card">
-              <h2>{matchUser.name}</h2>
-              <p>Birthday: {matchUser.birthday}</p>
-              <p>Bio: {matchUser.bio}</p>
-              <div className="chat-section">
-                <ChatIcon onClick={() => openConversations(matchUser)}/>
-                <span className="chat-text" onClick={() => openConversations(matchUser)}>Chat with {matchUser.name}</span>
-              </div>
-              <button onClick={() => unmatch(matchUser)}>Unmatch</button>
-            </div>
-          ))}
-        </ul>
-      </main>
+          <Header />
+          {loading ? (
+            <div class = "loading">Loading...</div>
+          ) : (
+            <>
+              <h1>Hi {user?.name}! Here are your Current Matches</h1>
+              <button onClick={newMatches}>New matches!</button>
       
-    );
+              <ul>
+                {myMatches.map((matchUser) => (
+                  <div key={matchUser.id} className="user-card">
+                    <h2>{matchUser.name}</h2>
+                    <p>Birthday: {matchUser.birthday}</p>
+                    <p>Bio: {matchUser.bio}</p>
+                    <div className="chat-section">
+                      <ChatIcon onClick={() => openConversations(matchUser)} />
+                      <span className="chat-text" onClick={() => openConversations(matchUser)}>Chat with {matchUser.name}</span>
+                    </div>
+                    <button onClick={() => unmatch(matchUser)}>Unmatch</button>
+                  </div>
+                ))}
+              </ul>
+            </>
+          )}
+        </main>
+      );
+      
 }
