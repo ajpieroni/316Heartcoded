@@ -12,6 +12,7 @@ import { UserContext } from "../components/contexts/UserContext";
 
 import ForgotPassword from "./ForgotPassword";
 import CreateProfile from "./CreateProfile.js";
+import Header from "../components/Header";
 
 export default function UserSignedIn() {
 
@@ -26,14 +27,12 @@ export default function UserSignedIn() {
 console.log("User from context:", user);
 
 useEffect(() => {
-    // When the component mounts, check if the user is stored in sessionStorage
     const storedUser = sessionStorage.getItem('user');
     if (storedUser) {
-      setUser(JSON.parse(storedUser)); // Parse the string back to an object and set it in the context
-      setLogin(true); // If necessary, set the login state
+      setUser(JSON.parse(storedUser)); 
+      setLogin(true); 
     }
-  }, [setUser]); // Dependency array to run the effect when setUser changes, which is likely only on mount
-  
+  }, [setUser]); 
 
 
   // const history = useHistory();
@@ -41,7 +40,7 @@ useEffect(() => {
 return(
     <div>
 <div className="features">
-{/* {user && user.name && ( // Check if user and user.name are not null before rendering */}
+  <Header />
         <div class = "welcome-message"> Welcome, {user?.name}</div>
       
     
