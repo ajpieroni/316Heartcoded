@@ -13,6 +13,7 @@ export default function UserLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Context
   const { user, setUser } = useContext(UserContext);
@@ -53,10 +54,14 @@ export default function UserLogin() {
           navigate("/UserSignedIn");
           setLogin(true);
         } else {
+          setErrorMessage("Invalid username or password. Please try again.");
+
           // Handle non-existing user logic
         }
       })
       .catch((error) => console.error("Failed to initialize user:", error));
+    // console.error("Failed to initialize user:", error);
+    setErrorMessage("There was an issue logging in. Please try again.");
   };
 
   // Effects
@@ -99,6 +104,10 @@ export default function UserLogin() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter Password"
               />
+              {errorMessage && (
+                <div className="error-message">{errorMessage}</div>
+              )}
+
               <button className="user-init-button" onClick={initializeUser}>
                 Sign In
               </button>
