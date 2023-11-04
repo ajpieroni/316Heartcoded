@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../components/contexts/UserContext";
 import ForgotPassword from "./ForgotPassword";
 import CreateProfile from "./CreateProfile.js";
@@ -21,7 +21,7 @@ export default function UserLogin() {
   const navigate = useNavigate();
 
   // Handlers
-  const toggleForgotPassword = () => setShowForgotPassword(prev => !prev);
+  const toggleForgotPassword = () => setShowForgotPassword((prev) => !prev);
   const toggleSignIn = () => {
     setShowSignIn(!showSignIn);
     setShowSignUp(false);
@@ -30,9 +30,9 @@ export default function UserLogin() {
     const willShowSignUp = !showSignUp;
     setShowSignUp(willShowSignUp);
     if (willShowSignUp) {
-      navigate('/CreateProfile'); 
+      navigate("/CreateProfile");
     } else {
-      setShowSignIn(true); 
+      setShowSignIn(true);
     }
   };
   const handleSignUp = () => {
@@ -42,21 +42,21 @@ export default function UserLogin() {
   const initializeUser = () => {
     // User initialization logic
     fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
-      .then(response => {
+      .then((response) => {
         if (!response.ok) throw new Error("Network response was not ok");
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         if (data) {
-          setUser(prevUser => ({ ...prevUser, ...data }));
+          setUser((prevUser) => ({ ...prevUser, ...data }));
           sessionStorage.setItem("user", JSON.stringify(data));
-          navigate('/UserSignedIn');
+          navigate("/UserSignedIn");
           setLogin(true);
         } else {
           // Handle non-existing user logic
         }
       })
-      .catch(error => console.error("Failed to initialize user:", error));
+      .catch((error) => console.error("Failed to initialize user:", error));
   };
 
   // Effects
@@ -69,34 +69,34 @@ export default function UserLogin() {
   }, [setUser]);
 
   // Render helpers
-  const renderSignUpButton = () => (
-    showSignIn && !showForgotPassword && (
-      <button className="sign-up-button" onClick={toggleSignUp}>
+  const renderSignUpButton = () =>
+    showSignIn &&
+    !showForgotPassword && (
+      <button className="user-init-button" onClick={toggleSignUp}>
         Sign Up
       </button>
-    )
-  );
+    );
 
   // Component render
   return (
-    <main className="main-container">
-      <div className="hero-section">
-        <h1 className="hero-title">Welcome to HeartCoded</h1>
-        <p className="hero-subtitle">Find your soulmate today!</p>
-        <div className="user-init-container">
+    <main className="main-login-container">
+      <div className="hero-login-section">
+        <h1 className="hero-login-title">Welcome to HeartCoded</h1>
+        <p className="hero-login-subtitle">Find your soulmate today!</p>
+        <div className="user-login-init-container">
           {showSignIn && (
             <div>
               <input
                 className="user-init-input"
                 value={username}
-                onChange={e => setUsername(e.target.value)}
+                onChange={(e) => setUsername(e.target.value)}
                 placeholder="Enter Username"
               />
               <input
                 type="password"
                 className="user-init-input"
                 value={password}
-                onChange={e => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter Password"
               />
               <button className="user-init-button" onClick={initializeUser}>
@@ -106,7 +106,10 @@ export default function UserLogin() {
           )}
           {showSignIn && (
             <>
-              <button className="forgot-password-toggle" onClick={toggleForgotPassword}>
+              <button
+                className="forgot-password-toggle"
+                onClick={toggleForgotPassword}
+              >
                 Forgot Password?
               </button>
               {showForgotPassword && <ForgotPassword />}
@@ -116,10 +119,12 @@ export default function UserLogin() {
           {showSignUp && (
             <>
               <CreateProfile />
-              <button onClick={toggleSignIn}>Already have an account? Sign In</button>
+              <button onClick={toggleSignIn}>
+                Already have an account? Sign In
+              </button>
             </>
           )}
-          {showForgotPassword && <ForgotPassword />}
+          {/* {showForgotPassword && <ForgotPassword />} */}
         </div>
       </div>
     </main>

@@ -1,163 +1,188 @@
-.main-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    min-height: 100vh;
-    padding: 2rem;
-    background: linear-gradient(to bottom, #FBB6CE, #F87171, #EF4444);
-  }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Lato', sans-serif;
+  background: linear-gradient(to bottom, #FBB6CE, #F87171, #EF4444);
+}
 
-  .button-container {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .button-container button {
-    flex: 1;
-    border-color:#FBB6CE;
-    border-width: 5px;
-    width:200px;
-    height:50px;
-    border-radius: 10px;
-    background: #F87171;
-    font: Lato;
-  }
-
-  .card-container {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .user-card {
-    width: 300px;
-    border: 5px solid #FBB6CE;
-    border-radius:20px;
-    margin: 10px;
-    padding: 10px;
-    background-color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .user-card h2 {
-    margin-top: 0;
-  }
-  
-  .main-title {
-/* alex removed since it was overridding other pages */
-  }
-  
-  .hero-section {
-    text-align: center;
-    margin-top: 5rem;
-    color: white;
-  }
-  
-  .hero-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
-  
-  .hero-subtitle {
-    font-size: 1.25rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .cta-button {
-    background-color: white;
-    color: #EF4444;
-    padding: 0.5rem 1.5rem;
-    border-radius: 9999px;
-    font-weight: 600;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .cta-button:hover {
-    background-color: #EF4444;
-    color: white;
-  }
-  
-  .features {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 4rem;
-    gap: 2rem;
-  }
-  
-  .feature-card {
-    background-color: white;
-    padding: 1.5rem;
-    border-radius: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    /* align-items: start; */
-    /* justify-content: center; */
-    width: 20rem;
-    gap: 1rem;
-  }
-  
-  .feature-card h2 {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #2D3748;
-  }
-  
-  .feature-card p {
-    color: #4A5568;
-  }
-  
-  .cta-section {
-    text-align: center;
-    color: white;
-    margin-bottom: 5rem;
-  }
-  
-  .cta-section h2 {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
-
-
-  /*! CSS for User Initialization, eventually moved to login page? */
-
-.user-init-container {
+.main-login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 2rem;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  color: #333;
+}
+
+.button-container {
+  display: flex;
   gap: 1rem;
+  margin-bottom: 2rem;
 }
 
-.user-init-input {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border: none;
+.button-container button {
+  border: 2px solid #FBB6CE;
+  padding: 0.75rem 1.5rem;
   border-radius: 9999px;
-  outline: none;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  background: #F87171;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
 }
 
-.user-init-input:focus {
+.button-container button:hover,
+.button-container button:focus {
+  background-color: #EF4444;
+  transform: translateY(-2px);
+}
+
+.user-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.user-init-input,
+.user-init-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+}
+
+.user-init-input:focus,
+.user-init-button:focus {
+  outline: none;
   border-color: #EF4444;
-  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.5); 
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.5);
+}
+
+.cta-button {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.forgot-password-toggle {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.forgot-password-toggle:hover,
+.forgot-password-toggle:focus {
+  color: #FBB6CE;
+}
+
+.hero-login-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.hero-login-title {
+  margin-bottom: 0.25rem;
+  font-size: 2.5rem;
+  color: #FFFFFF;
+}
+
+.hero-login-subtitle {
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  color: #FFFFFF;
+}
+
+.user-login-init-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.user-init-input,
+.user-init-button,
+.forgot-password-toggle,
+.sign-up-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  border: none;
+  font-size: 1rem;
+  margin: 0.25rem 0;
+  width: 100%;
+}
+
+.hero-login-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.hero-login-title {
+  margin-bottom: 0.25rem;
+  font-size: 2.5rem;
+  color: #FFFFFF;
+}
+
+.hero-login-subtitle {
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  color: #FFFFFF;
+}
+
+.user-login-init-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.user-init-input,
+.user-init-button,
+.forgot-password-toggle,
+.sign-up-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  border: none;
+  font-size: 1rem;
+  margin: 0.25rem 0;
+  width: 75%;
+}
+
+.forgot-password-toggle {
+  background: none;
+  color: #FFFFFF;
+  text-decoration: underline;
+  font-size: 0.9rem;
+  font-weight: normal;
+  margin-top: 1rem;
 }
 
 .user-init-button {
-  background-color: white;
-  color: #EF4444;
-  padding: 0.5rem 1.5rem;
-  border: none;
-  border-radius: 9999px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
+  background-color: #EF4444;
+  color: #FFFFFF;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 75%;
 }
 
-.user-init-button:hover {
-  background-color: #EF4444;
-  color: white;
+.user-init-button:hover,
+.user-init-button:focus,
+.forgot-password-toggle:hover,
+.forgot-password-toggle:focus {
+  background-color: #F87171;
+  outline: none;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
