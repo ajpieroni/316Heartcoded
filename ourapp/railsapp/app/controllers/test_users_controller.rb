@@ -93,6 +93,20 @@ class TestUsersController < ApplicationController
     end
   end
 
+  def find_matches
+    begin
+      user = TestUser.find(params[:id])
+      matches = MatchingService.run(user)
+      render json: matches
+    rescue ActiveRecord::RecordNotFound => e
+      logger.error "Error finding user with ID #{params[:id]}: #{e.message}"
+      render json: { error: "User not found" }, status: :not_found
+    rescue => e
+      logger.error "Error fetching matches: #{e.message}"
+      render json: { error: "Internal server error" }, status: :internal_server_error
+    end
+  end 
+
   # DELETE /test_users/1 or /test_users/1.json
   def destroy
     @test_user.destroy
