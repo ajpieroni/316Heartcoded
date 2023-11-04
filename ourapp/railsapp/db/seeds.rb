@@ -7,7 +7,6 @@
 #   Character.create(name: "Luke", movie: movies.first)
 MatchedWith.destroy_all
 Message.destroy_all
-Question.destroy_all
 TestUser.destroy_all
 Feedback.destroy_all
 
@@ -82,14 +81,7 @@ user59 = TestUser.create(name: "Isabella Miller", join_date: Date.today, locatio
 user60 = TestUser.create(name: "Noah Patel", join_date: Date.today, location: "Austin", bio: "Outdoor sports enthusiast and BBQ lover!", gender: "M", preferences: "F", birthday: "2000-06-24")
 
 
-# *Create sample questions
 
-question1 = Question.create(question: "I believe opposites attract.")
-question2 = Question.create(question: "I like dogs.")
-question3 = Question.create(question: "I want children.")
-question4 = Question.create(question: "I like cats.")
-question5 = Question.create(question: "I care about the environment.")
-question6 = Question.create(question: "I'm a homebody.")
 
 match1 = MatchedWith.create(uid1: 1, uid2: 2, status: true, date: "11-11-2000")
 match2 = MatchedWith.create(uid1: 1, uid2: 3, status: true, date: "11-11-2000")

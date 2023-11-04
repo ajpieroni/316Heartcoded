@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :answers
+  resources :weights
   
   resources :passwords
   resources :categories
@@ -6,7 +8,13 @@ Rails.application.routes.draw do
   resources :questions
   resources :faqs
   resources :matched_withs
-  resources :test_users
+  # resources :test_users
+  resources :test_users do
+    member do
+      get 'messages'
+    end
+  end
+  
   resources :states
 
   resources :feedbacks
@@ -17,12 +25,17 @@ Rails.application.routes.draw do
       post 'messages', to: 'test_users#create_message'
     end
   end
+
+  get 'unmatch/:uid1/:uid2', to: 'matched_withs#unmatch'
+
+  get 'match/:id', to: 'test_users#find_matches'
+  
   
 
 
   get '/test_users/find_by_username/:name', to: 'test_users#find_by_username'
   get 'test_users/:id', to: 'test_users#show'
-
+  get 'questions/unanswered_questions/:id', to: 'questions#unanswered_questions'
 
 
   # namespace :api do
