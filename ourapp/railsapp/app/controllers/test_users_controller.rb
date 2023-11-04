@@ -30,13 +30,27 @@ class TestUsersController < ApplicationController
       render json: { error: 'User not found' }, status: 404
     end
   end
+  def create_message
+    @test_user = TestUser.find(params[:id])
+  
+    # Here, we'll assume you're creating a sent message.
+    # The method is now aligned with the actual relationship defined in your TestUser model.
+    @message = @test_user.sent_messages.new(message_params)
+  
+    if @message.save
+      render json: @message, status: :created
+    else
+      render json: @message.errors, status: :unprocessable_entity
+    end
+  end
   
   def messages
     @test_user = TestUser.find(params[:id])
     @sent_messages = @test_user.sent_messages
     @received_messages = @test_user.received_messages
     # You can merge and sort them if needed
-    @all_messages = (@sent_messages + @received_messages).sort_by(&:timestamp)
+    @all_messages = (@sent_messages + @received_messages).sort_by { |m| m.timestamp || Time.at(0) }
+
     
     # Depending on your frontend, you may want to render as JSON:
     render json: @all_messages
@@ -99,4 +113,11 @@ class TestUsersController < ApplicationController
     def test_user_params
       params.require(:test_user).permit(:name, :join_date, :location, :bio, :gender, :preferences, :birthday, :password)
     end
+    # Add this within the private section of your controller
+    def message_params
+      # These are example fields that your Message model might contain. 
+      # Please replace :content, :uid_sender_id, and :uid_receiver_id with the actual field names of your Message model.
+      params.require(:message).permit(:message, :uid_sender_id, :uid_receiver_id)
+    end
+
 end
