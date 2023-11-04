@@ -105,63 +105,61 @@ import axios from 'axios';
 import { UserContext } from "../components/contexts/UserContext";
 
 
-function StatesList({ onStateSelected }) {
-  const [states, setStates] = useState([]);
-
-  useEffect(() => {
-    axios.get('http://localhost:3000/states')
-      .then(response => {
-        setStates(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching states:', error);
-      });
-  }, []);
-
-  return (
-    <div>
-      <label>
-        Select Your Location<span style={{ color: 'red' }}>*</span>: 
-        <select onChange={onStateSelected}>
-          <option value="">Select a state</option>
-          {states.map(state => (
-            <option key={state.id} value={state.name}>
-              {state.name}
-            </option>
-          ))}
-        </select>
-      </label>
-    </div>
-  );
-}
-
 export default function UserForm({ onUserAdded }) {
 
-    const { user, setUser } = useContext(UserContext);
-    const currentUser = user?.location;
-    console.log("currentUser",currentUser);
-
-    const initialFormData = user
-    ? {
+    const { user } = useContext(UserContext);
+    const [formData, setFormData] = useState({
+      name: user.name || '',
+      gender: user.gender || '',
+      birthday: user.birthday || '',
+      bio: user.bio || '',
+      location: user.location || '',
+      preferences: user.preferences || ''
+    });
+  
+    useEffect(() => {
+      setFormData({
         name: user.name || '',
         gender: user.gender || '',
         birthday: user.birthday || '',
         bio: user.bio || '',
-        location: user.location || ''
-      }
-    : {
-        name: '',
-        gender: '',
-        birthday: '',
-        bio: '',
-        location: ''
-      };
+        location: user.location || '',
+        preferences: user.preferences || ''
+      });
+    }, [user]);
 
-  
-  const [formData, setFormData] = useState(initialFormData);
+    function StatesList({ onStateSelected }) {
+      const [states, setStates] = useState([]);
+    
+      useEffect(() => {
+        axios.get('http://localhost:3000/states')
+          .then(response => {
+            setStates(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching states:', error);
+          });
+      }, []);
+    
+      return (
+        <div>
+          <label>
+            Select Your Location<span style={{ color: 'red' }}>*</span>: 
+            <select onChange={onStateSelected} required value={formData.location}>
+              <option value="">Select a state</option>
+              {states.map(state => (
+                <option key={state.id} value={state.name}>
+                  {state.name}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+      );
+    }
 
-
-  console.log("testing passing name",formData.name);
+  const url = `http://localhost:3000/test_users/${user.id}`;
+  console.log('PATCH URL:', url);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -176,8 +174,14 @@ export default function UserForm({ onUserAdded }) {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/test_users", formData);
-      onUserAdded(response.data); // Update the user list with the new user
+      if (user.id){
+        const response = await axios.patch(`http://localhost:3000/test_users/${user.id}`, formData);
+        onUserAdded(response.data);
+      }
+      else{
+        const response = await axios.post(`http://localhost:3000/test_users`, formData);
+        onUserAdded(response.data);
+      }
       setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '' });
       //setSuccessMessage("Form submitted successfully.");
     } catch (error) {
@@ -187,7 +191,7 @@ export default function UserForm({ onUserAdded }) {
 
   return (
     <div className="user-form">
-      <h2>Add New User</h2>
+      <h2>Add New User, {user.id}</h2>
       <form onSubmit={handleSubmit}>
         <label>
           Name<span style={{ color: 'red' }}>*</span>: 
@@ -215,18 +219,6 @@ export default function UserForm({ onUserAdded }) {
           </select>
         </label>
 
-        {formData.gender === 'other' && (
-          <label>
-            Please self describe your gender: 
-            <input
-              type="text"
-              name="otherGender"
-              value={formData.otherGender}
-              onChange={handleInputChange}
-              required
-            />
-          </label>
-        )}
         <label>
           Birthday<span style={{ color: 'red' }}>*</span>: 
           <input

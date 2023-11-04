@@ -32,6 +32,10 @@ export default function UserLanding() {
             name: data.name,
             id: data.id,
             birthday: data.birthday,
+            gender: data.gender,
+            preferences: data.preferences,
+            bio: data.bio,
+            location: data.location,
           }));
           sessionStorage.setItem("user", JSON.stringify(data));
           console.log("here is data", data);
@@ -154,7 +158,7 @@ export default function UserLanding() {
             </p>
           </div>
         </Link>
-        <Link to="SelectUserForFeedback">
+        <Link to="Feedback">
           <div className="feature-card">
             <h2>Give Feedback</h2>
             <p>
@@ -173,3 +177,4 @@ export default function UserLanding() {
     </main>
   );
 }
+
