@@ -29,11 +29,10 @@ export default function FindMatch() {
         // When the component mounts, check if the user is stored in sessionStorage
         const storedUser = sessionStorage.getItem('user');
         if (storedUser) {
-          setUser(JSON.parse(storedUser)); // Parse the string back to an object and set it in the context
+          setUser(JSON.parse(storedUser));
         //   setLogin(true); // If necessary, set the login state
         }
-      }, [setUser]); // Dependency array to run the effect when setUser changes, which is likely only on mount
-      
+      }, [setUser]); 
     
 
     const newMatches = async () => {
