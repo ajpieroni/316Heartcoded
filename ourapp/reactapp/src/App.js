@@ -16,6 +16,7 @@ import Questions from "./pages/Questions";
 import { UserContext } from "./components/contexts/UserContext";
 import SelectUserForFeedback from "./pages/SelectUserForFeedback";
 import UserSignedIn from "./pages/UserSignedIn"
+import Conversations from "./pages/Conversations";
 
 function App() {
   function ScrollToTop() {
@@ -45,6 +46,7 @@ function App() {
             element={<SelectUserForFeedback />}
           />
           <Route exact path="/FindMatch" element={<FindMatch />} />
+          <Route exact path="/Conversations" element={<Conversations />} />
           <Route exact path="/Questions" element={<Questions />} />
           <Route exact path="/UserSignedIn" element={<UserSignedIn />} />'
           {/* <Route path="/signed-in">
