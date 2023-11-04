@@ -81,11 +81,11 @@ class TestUsersController < ApplicationController
 
   def find_matches
     begin
-      user = TestUser.find(params[:uid])
+      user = TestUser.find(params[:id])
       matches = MatchingService.run(user)
       render json: matches
     rescue ActiveRecord::RecordNotFound => e
-      logger.error "Error finding user with ID #{params[:uid]}: #{e.message}"
+      logger.error "Error finding user with ID #{params[:id]}: #{e.message}"
       render json: { error: "User not found" }, status: :not_found
     rescue => e
       logger.error "Error fetching matches: #{e.message}"

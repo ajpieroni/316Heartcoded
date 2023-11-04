@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :weights
   resources :answers
   resources :weights
   
@@ -27,7 +26,7 @@ Rails.application.routes.draw do
 
   get 'unmatch/:uid1/:uid2', to: 'matched_withs#unmatch'
 
-  get 'match/:uid', to: 'test_users#find_matches'
+  get 'match/:id', to: 'test_users#find_matches'
   
   
 
