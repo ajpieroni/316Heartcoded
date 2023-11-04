@@ -43,7 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_180849) do
     t.integer "uid1"
     t.integer "uid2"
     t.boolean "status", null: false
-    t.string "date", null: false
+    t.string "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

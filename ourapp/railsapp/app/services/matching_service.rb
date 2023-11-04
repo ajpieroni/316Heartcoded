@@ -1,15 +1,31 @@
 class MatchingService
-    CUTOFF_SCORE = 2500  # Desired threshold
+    CUTOFF_SCORE = 13  # Desired threshold
     MAX_MATCHES = 2
     
-    def compute_score(user1_weights, user2_weights)
+    def compute_score(user1, user2)
+      score_difference = {}
       score = 0
-      (1..10).each do |i|
-        in_key = "in_#{i}".to_sym
-        out_key = "out_#{i}".to_sym
-        score += (user1_weights[in_key] - user2_weights[in_key]).abs * user1_weights[out_key] * user2_weights[out_key]
+
+      categories = Category.all
+      categories.each do |category|
+        id = category.id
+        user1_weight = Weight.find_by(test_user_id: user1.id, category_id: id)&.weight || 0.0
+
+        user2_weight = Weight.find_by(test_user_id: user2.id, category_id: id)&.weight || 0.0
+      Rails.logger.debug("Category ID: #{id}, User1 Weight: #{user1_weight}, User2 Weight: #{user2_weight}")
+
+        if user1_weight && user2_weight
+          score_difference[id] = (user1_weight - user2_weight).abs
+        else
+          score_difference[category_id] = nil
+        end
       end
-      score
+
+      score_difference.each do |dif|
+        if dif
+          score += dif
+        end
+        score
     end
   
     def already_matched?(user1, user2)
@@ -23,8 +39,7 @@ class MatchingService
       all_users = TestUser.all.shuffle # Shuffle to get random order
       matched_count = 0
       potential_matches = []
-  
-      user1_weights = Weight.find_by(uid: user.id)
+
   
       all_users.each do |other_user|
         break if matched_count >= MAX_MATCHES
@@ -35,8 +50,7 @@ class MatchingService
         # Check if they're already matched
         next if already_matched?(user, other_user)
   
-        user2_weights = Weight.find_by(uid: other_user.id)
-        score = compute_score(user1_weights, user2_weights)
+        score = compute_score(user, other_user)
   
         if score <= CUTOFF_SCORE
           potential_matches.push(other_user)

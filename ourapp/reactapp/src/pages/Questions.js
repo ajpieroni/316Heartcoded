@@ -52,6 +52,7 @@ export default function Questions() {
         .then((response) => {
           // Handle the response from the server, e.g., show a success message
           console.log("Response from server:", response.data);
+          fetchQuestion();
           // Reset the selectedButton to null after saving
         })
         .catch((error) => {
