@@ -24,7 +24,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_26_215725) do
     t.integer "gives_uid"
     t.integer "receives_uid"
     t.string "category"
+<<<<<<< HEAD
     t.integer "feedback"
+=======
+    t.string "feedback"
+>>>>>>> origin/33_chatmvp
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

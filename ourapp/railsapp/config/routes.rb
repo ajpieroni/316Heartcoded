@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :test_users do
     member do
       get 'messages'
+      post 'messages', to: 'test_users#create_message'
     end
   end
   
