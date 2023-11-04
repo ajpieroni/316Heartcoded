@@ -17,15 +17,11 @@ class MatchingService
         if user1_weight && user2_weight
           score_difference[id] = (user1_weight - user2_weight).abs
         else
-          score_difference[category_id] = nil
+          score_difference[id] = nil
         end
       end
 
-      score_difference.each do |dif|
-        if dif
-          score += dif
-        end
-        score
+      score = score_difference.values.compact.sum # calc score by summing non-nil values in score_difference
     end
   
     def already_matched?(user1, user2)
