@@ -1,20 +1,30 @@
 import React, { useState, useEffect, useContext } from "react";
-import "./UserLanding.css";
+import "./UserLogin.css";
+import { useNavigate } from 'react-router-dom';
+
+
 import axios from "axios";
+import { useHistory } from "react-router-dom"; 
+// const history = useHistory();
 import { Link } from "react-router-dom";
 import { UserContext } from "../components/contexts/UserContext";
 
 import ForgotPassword from "./ForgotPassword";
 import CreateProfile from "./CreateProfile.js";
 
-export default function UserLanding() {
-  const [question, setQuestion] = useState("UNINIT");
+export default function UserLogin() {
+  
+  // const [question, setQuestion] = useState("UNINIT");
   const [testUser, setTestUser] = useState("UNINIT");
 
   const { user, setUser } = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState(false);
+
+  // const history = useHistory();
+  const navigate = useNavigate();
+
 
   const initializeUser = () => {
     console.log("pressed");
@@ -34,6 +44,9 @@ export default function UserLanding() {
             birthday: data.birthday,
           }));
           sessionStorage.setItem("user", JSON.stringify(data));
+          // setTestUser(user)
+          // history.push("/signed-in");
+          navigate('/UserSignedIn');
           console.log("here is data", data);
           console.log(data.name);
           setLogin(true);
@@ -54,24 +67,6 @@ export default function UserLanding() {
       setLogin(true);
     }
   }, []);
-
-  // const fetchQuestion = () => {
-  //   fetch(`http://localhost:3000/questions/1`)
-  //     .then((response) => response.json())
-  //     .then((data) => setQuestion(data.question))
-  //     .catch((error) => {
-  //       console.error("Error fetching the question:", error);
-  //     });
-  // };
-
-  // const fetchUserName = () => {
-  //   fetch(`http://localhost:3000/test_users/10`)
-  //     .then((response) => response.json())
-  //     .then((data) => setTestUser(data.name)) password(data.hashed_p)
-  //     .catch((error) => {
-  //       console.error("Error fetching the user name:", error);
-  //     });
-  // };
 
   // useEffect(() => {
   //   fetchUserName();
@@ -115,56 +110,7 @@ export default function UserLanding() {
         </div>
       </div>
 
-      <div className="features">
-      <Link to={{
-        pathname: '/CreateProfile',
-        state: { data: user }
-      }}>
-          <div className="feature-card">
-            <h2>Create Profile</h2>
-            <p>
-              Personalize your space. Add a profile picture, write a bio, and
-              list your interests for potential matches to see.
-            </p>
-          </div>
-        </Link>
-
-        <Link to="/FindMatch">
-          <div className="feature-card">
-            <h2>View Current Matches</h2>
-            <p>View your current matches!</p>
-          </div>
-        </Link>
-        <Link to="/Chat">
-          <div className="feature-card">
-            <h2>Chat & Connect</h2>
-            <p>
-              Engage in live chats, get prompted conversation starters, and
-              decide if you're ready to take the next step with your match.
-            </p>
-          </div>
-        </Link>
-        <Link to="/Questions">
-          <div className="feature-card">
-            <h2>Dynamic Questions</h2>
-            <p>
-              Our system ensures a variety of questions for you. Plus, you can
-              answer new ones as they come, keeping your profile fresh and
-              engaging.
-            </p>
-          </div>
-        </Link>
-        <Link to="SelectUserForFeedback">
-          <div className="feature-card">
-            <h2>Give Feedback</h2>
-            <p>
-              Rate your matches and share your thoughts. Your feedback helps us
-              refine the matching process for an enhanced experience.
-            </p>
-          </div>
-        </Link>
-        {/* hello */}
-      </div>
+      
 
       <div className="cta-section">
         <h2 className="cta-title">Ready to find your match?</h2>
