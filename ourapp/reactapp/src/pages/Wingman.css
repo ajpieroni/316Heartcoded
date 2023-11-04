@@ -18,14 +18,18 @@
     border-radius: 8px !important;
     margin: 5px 0 !important;
 }
-
 .message.sent {
     background-color: #e9f5fe !important;
-    text-align: right !important;
+    text-align: right !important; 
+    margin-left: auto !important; 
+    margin-right: 0 !important;   
 }
 
 .message.received {
     background-color: #f4f4f4 !important;
+    text-align: left !important; 
+    margin-right: auto !important; 
+    margin-left: 0 !important;    
 }
 
 .timestamp {
