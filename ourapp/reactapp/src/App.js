@@ -10,6 +10,7 @@ import "./App.css";
 import axios from "axios";
 import Chat from "./pages/Chat";
 import CreateProfile from "./pages/CreateProfile";
+import EditProfile from "./pages/EditProfile";
 import Feedback from "./pages/Feedback";
 import FindMatch from "./pages/FindMatch";
 import Questions from "./pages/Questions";
@@ -39,6 +40,7 @@ function App() {
           <Route exact path="/" element={<UserLogin />} />
           <Route exact path="/Chat" element={<Chat />} />
           <Route exact path="/CreateProfile" element={<CreateProfile />} />
+          <Route exact path="/EditProfile" element={<EditProfile />} />
           <Route exact path="/Feedback" element={<Feedback />} />
           <Route
             exact

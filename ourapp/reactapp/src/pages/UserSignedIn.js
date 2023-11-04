@@ -45,7 +45,7 @@ return(
       
     
       <Link to={{
-        pathname: '/CreateProfile',
+        pathname: '/EditProfile',
         state: { data: user }
       }}>
           <div className="feature-card">
