@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./UserLogin.css";
 import { useNavigate } from 'react-router-dom';
-
+import Conversations from "./Conversations";
 
 import axios from "axios";
 import { useHistory } from "react-router-dom"; 
@@ -61,6 +61,15 @@ return(
           <div className="feature-card">
             <h2>View Current Matches</h2>
             <p>View your current matches!</p>
+          </div>
+        </Link>
+        <Link to="/Conversations">
+          <div className="feature-card">
+            <h2>View All Messages</h2>
+            <p>
+              Engage in live chats, get prompted conversation starters, and
+              decide if you're ready to take the next step with your match.
+            </p>
           </div>
         </Link>
         <Link to="/Chat">
