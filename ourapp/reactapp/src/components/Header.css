@@ -12,6 +12,18 @@
   color: white;
   font-size: 1.5em;
 }
+ 
+.header {
+  margin-bottom: 20px; 
+}
+
+
+.logout-button {
+  position: absolute; 
+  right: 20px;
+  top: 20px;
+}
+
 
 .logout-button {
   background-color: white;
