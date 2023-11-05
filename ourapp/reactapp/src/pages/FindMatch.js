@@ -122,7 +122,8 @@ export default function FindMatch() {
           </div>
           ) : (
             <>
-              <h1>{user?.name.split(" ")[0]}'s Current Matches</h1>
+             <div class = "welcome-message"> {user?.name.split(' ')[0]}'s Current Matches</div>
+              {/* <h1>{user?.name.split(" ")[0]}'s Current Matches</h1> */}
               <button onClick={newMatches}>New matches!</button>
               <div class = "card-container">
       

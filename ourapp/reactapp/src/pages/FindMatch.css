@@ -12,6 +12,12 @@
     background-color: transparent;
     font-size: 16px;
   }
+  .welcome-message {
+    text-align: center;
+    color: white;
+    margin-top: 2rem;
+    font-size: 2rem;
+}
   .card-container {
     /* background-color: red; */
     display: flex;
