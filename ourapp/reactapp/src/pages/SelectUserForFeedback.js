@@ -59,7 +59,7 @@ export default function SelectUserForFeedback({ feedbackForm }) {
     .finally(()=> setLoading(false));
   return (
     <main className="main-container">
-      <h1>Hi {currentName}! Here are your current Matches</h1>
+      <h1>Hi {user?.name}! Here are your current Matches</h1>
       {loading ? (<div className="loading">
             Loading{".".repeat(ellipsisDots)}
           </div>): ( <ul>
