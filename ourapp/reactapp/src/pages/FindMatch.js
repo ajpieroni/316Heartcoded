@@ -116,6 +116,7 @@ export default function FindMatch() {
     console.log(`clicked conversations with ${matchUser?.name}`);
     setReciever(matchUser);
     console.log("reciever in match", reciever);
+    
 
     navigate("/Chat", { state: { reciever: matchUser } });
   }

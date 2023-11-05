@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
+import Chat from "../pages/Chat";
 import { UserContext } from "../components/contexts/UserContext";
-import ChatIcon from "@mui/icons-material/Chat";
-// import "./FindMatch.css";
-import Header from "../components/Header";
-import { useHistory } from "react-router-dom";
 export default function MatchList() {
-  const navigate = useNavigate();
+const navigate = useNavigate();
 
   // const history  = useHistory();
   const [myMatches, setMyMatches] = useState([]);
@@ -81,6 +77,7 @@ export default function MatchList() {
   };
   const selectUserForChat = (user) => {
     setSelectedMatch(user);
+        setReciever(user);
   };
 
   const fetchUserNameById = (id) => {
@@ -126,13 +123,13 @@ const ChatInterface = ({ selectedUser }) => {
       .finally(() => setLoading(false));
   }, [currentUser]);
 
-  function openConversations(matchUser) {
-    console.log(`clicked conversations with ${matchUser?.name}`);
-    setReciever(matchUser);
-    console.log("reciever in match", reciever);
+//   function openConversations(matchUser) {
+//     console.log(`clicked conversations with ${matchUser?.name}`);
+//     setReciever(matchUser);
+//     console.log("reciever in match", reciever);
 
-    navigate("/Chat", { state: { reciever: matchUser } });
-  }
+//     navigate("/Chat", { state: { reciever: matchUser } });
+//   }
   function calculateAge(birthDateString) {
     const today = new Date();
     const birthDate = new Date(birthDateString);
@@ -169,7 +166,7 @@ const ChatInterface = ({ selectedUser }) => {
         </div>
         <section className="chat-panel">
           {selectedMatch ? (
-            <ChatInterface selectedUser={selectedMatch} />
+            <Chat selectedUser={selectedMatch} />
           ) : (
             <p>Select a user to start chatting.</p>
           )}
