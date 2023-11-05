@@ -12,6 +12,8 @@ export default function UserLanding() {
   const[confirmPassword, setConfirmPassword] = useState('');
   const [login, setLogin] = useState(false);
   const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState('');
+
 
   const signUpUser = () => {
     if (password !== confirmPassword) {
@@ -19,21 +21,24 @@ export default function UserLanding() {
       return;
     }
     //const hashedPassword = bcrypt.hash(password, 10);
-    axios.post("http://localhost:3000/passwords", {
-      test_user_id: username,
-      hashed_password: password,
+    axios.post("http://localhost:3000/test_users", {
+      test_user: {
+        name: username,
+        password: password,
+      }
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
     })
     .then(response => {
       console.log(response.data);
+      setSuccessMessage("Account successfully created. Please log in and initialize your profile");
     })
     .catch(error => {
       console.error(error.response.data);
       setError("Registration failed. Please try again.");
     });
-    /*
-    .catch(error => {
-      setError("Registration failed. Please try again.");
-    });*/
   };
 
   useEffect(() => {
@@ -73,6 +78,7 @@ export default function UserLanding() {
             Sign Up
           </button>
         </div>
+          {successMessage && <p>{successMessage}</p>}
       </div>
     </main>
   );

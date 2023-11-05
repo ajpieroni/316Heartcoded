@@ -19,10 +19,10 @@ function ForgotPassword() {
   const requestPasswordReset = () => {
     console.log("Requesting password reset for:", username);
     
-    axios.get(`http://localhost:3000/passwords/${user.id}`)
+    axios.get(`http://localhost:3000/test_users/${user.id}`)
     .then((response) => {
         console.log("response", response)
-        setPassword(response.data.hashed_password);
+        setPassword(response.data.password_digest);
     })
     .catch((error) => {
         console.error("No matching username", error);
