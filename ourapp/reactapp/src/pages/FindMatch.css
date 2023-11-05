@@ -35,14 +35,14 @@
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 70px;
     background-color: #fff;
     position: relative;
     max-width: 250px;
     width: 100%;
   }
   .unmatch-button {
-    position: absolute; 
+    /* position: absolute;  */
     bottom: 10px; 
     left: 20px; 
     right: 20px; 
