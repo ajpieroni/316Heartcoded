@@ -12,17 +12,17 @@
 .conversations-container {
     display: flex; 
     justify-content: space-between; 
-    margin: 20px; 
+    /* margin: 20px;  */
  }
   
   .match-list-container {
     flex: 1; 
-    padding: 20px; 
-    margin-right: 20px; 
+    /* padding: 20px;  */
+    /* margin-right: 20px;  */
   }
   
   .chat-conversation-container {
     flex: 2; 
-    padding: 20px; 
+    /* padding: 20px;  */
   }
  
