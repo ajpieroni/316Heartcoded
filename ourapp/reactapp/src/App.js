@@ -19,6 +19,7 @@ import SelectUserForFeedback from "./pages/SelectUserForFeedback";
 import UserSignedIn from "./pages/UserSignedIn"
 import Conversations from "./pages/Conversations";
 import Wingman from "./pages/Wingman";
+import MatchList from "./components/MatchList";
 
 function App() {
   function ScrollToTop() {
@@ -51,6 +52,7 @@ function App() {
           <Route exact path = "/Wingman" element = {<Wingman />}/>
           <Route exact path="/FindMatch" element={<FindMatch />} />
           <Route exact path="/Conversations" element={<Conversations />} />
+          <Route exact path="/MatchList" element={<MatchList />} />
           <Route exact path="/Questions" element={<Questions />} />
           <Route exact path="/UserSignedIn" element={<UserSignedIn />} />'
           {/* <Route path="/signed-in">

@@ -11,6 +11,8 @@ import { UserContext } from "../components/contexts/UserContext";
 
 import ForgotPassword from "./ForgotPassword";
 import CreateProfile from "./CreateProfile.js";
+import MatchList from "../components/MatchList";
+import Header from "../components/Header";
 
 export default function Conversations() {
 
@@ -39,7 +41,9 @@ useEffect(() => {
   const navigate = useNavigate();
 return(
     <div>
+      <Header />
         <h1>{user?.name}'s Conversations 🕺</h1>
+        <MatchList />
 
  
     </div>
