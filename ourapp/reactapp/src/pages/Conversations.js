@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./UserLogin.css";
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
-import { useHistory } from "react-router-dom"; 
+import { useHistory } from "react-router-dom";
 // const history = useHistory();
 import { Link } from "react-router-dom";
 import { UserContext } from "../components/contexts/UserContext";
@@ -14,9 +13,11 @@ import CreateProfile from "./CreateProfile.js";
 import MatchList from "../components/MatchList";
 import Header from "../components/Header";
 import Chat from "./Chat";
+import "./Conversations.css";
+import ChatConversation from "../components/ChatConversation";
 
 export default function Conversations() {
-
+  const [selectedUser, setSelectedUser] = useState(null);
   // const [question, setQuestion] = useState("UNINIT");
   const [testUser, setTestUser] = useState("UNINIT");
 
@@ -25,32 +26,35 @@ export default function Conversations() {
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState(false);
   console.log("UserContext:", UserContext);
-console.log("User from context:", user);
+  console.log("User from context:", user);
 
-useEffect(() => {
-    // When the component mounts, check if the user is stored in sessionStorage
-    const storedUser = sessionStorage.getItem('user');
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
-      setUser(JSON.parse(storedUser)); // Parse the string back to an object and set it in the context
-      setLogin(true); // If necessary, set the login state
+      setUser(JSON.parse(storedUser));
+      setLogin(true);
     }
-  }, [setUser]); // Dependency array to run the effect when setUser changes, which is likely only on mount
-  
-
+  }, [setUser]);
 
   // const history = useHistory();
   const navigate = useNavigate();
-return(
+  return (
     <div>
       <Header />
-        <h1>{user?.name}'s Conversations 🕺</h1>
-        <MatchList />
-        
-        {/* <Chat /> */}
+      {/* <h1>{user?.name}'s Conversations 🕺</h1> */}
+      <div class="welcome-message">
+        {" "}
+        {user?.name.split(" ")[0]}'s Conversations
+      </div>
+      <MatchList
+        onUserSelected={(user) => {
+          console.log("Selected User:", user);
+          setSelectedUser(user);
+        }}
+      />
+      {selectedUser && <ChatConversation selectedUser={selectedUser} />}
 
- 
+      {/* <Chat /> */}
     </div>
-)
-    
-
+  );
 }
