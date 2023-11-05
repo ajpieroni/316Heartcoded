@@ -124,8 +124,9 @@ export default function FindMatch() {
             <>
               <h1>{user?.name.split(" ")[0]}'s Current Matches</h1>
               <button onClick={newMatches}>New matches!</button>
+              <div class = "card-container">
       
-              <ul>
+              
                 {myMatches.map((matchUser) => (
                   <div key={matchUser.id} className="user-card">
                     <h2>{matchUser.name}</h2>
@@ -138,7 +139,7 @@ export default function FindMatch() {
                     <button onClick={() => unmatch(matchUser)}>Unmatch</button>
                   </div>
                 ))}
-              </ul>
+              </div>
             </>
           )}
         </main>

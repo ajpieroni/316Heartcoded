@@ -4,10 +4,14 @@ import { UserContext } from "../components/contexts/UserContext";
 import axios from "axios";
 // import "./Chat.css";
 import "./Wingman.css"
+// import Replicate from "replicate";
 // import React, {useRef } from 'react';
 
-export default function Chat() {
-    const apiToken = process.env.REACT_APP_API_TOKEN;
+export default async function Chat() {
+ 
+
+
+    // const apiToken = process.env.REACT_APP_API_TOKEN;
   const [messages, setMessages] = useState([]);
   const { user, setUser } = useContext(UserContext);
   const [newMessage, setNewMessage] = useState("");
@@ -18,6 +22,7 @@ export default function Chat() {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }
+
 
   useEffect(() => {
     scrollToBottom();
