@@ -41,20 +41,22 @@ export default function Conversations() {
   return (
     <div>
       <Header />
-      {/* <h1>{user?.name}'s Conversations 🕺</h1> */}
-      <div class="welcome-message">
-        {" "}
-        {user?.name.split(" ")[0]}'s Conversations
-      </div>
-      <MatchList
-        onUserSelected={(user) => {
-          console.log("Selected User:", user);
-          setSelectedUser(user);
-        }}
-      />
-      {selectedUser && <ChatConversation selectedUser={selectedUser} />}
+      <div class = "welcome-message">{user?.name.split(" ")[0]}'s Conversations</div>
 
-      {/* <Chat /> */}
+      <div className="conversations-container">
+        <div className="match-list-container">
+          <MatchList
+            onUserSelected={(user) => {
+              console.log("Selected User:", user);
+              setSelectedUser(user); 
+            }}
+          />
+        </div>
+        <div className="chat-conversation-container">
+          {selectedUser && <ChatConversation selectedUser={selectedUser} />}
+        </div>
+      </div>
     </div>
   );
+  
 }

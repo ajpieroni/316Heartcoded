@@ -102,9 +102,7 @@ export default function MatchList({onUserSelected}) {
       .catch((error) => console.error("Error fetching user:", error));
   };
 
-  const ChatInterface = ({ selectedUser }) => {
-    return <div className="chat-interface">Chat with {selectedUser.name}</div>;
-  };
+  
   useEffect(() => {
     fetch(`http://localhost:3000/matched_withs/users/${currentUser}`)
       .then((response) => response.json())
@@ -144,6 +142,7 @@ export default function MatchList({onUserSelected}) {
       ) : (
         <>
           <div className="matches-and-chat-container">
+         
             {/* Left Side Panel */}
             <div className="left-panel">
               <h3>Matches</h3>
@@ -159,13 +158,7 @@ export default function MatchList({onUserSelected}) {
               </ul>
             </div>
 
-            <section className="chat-panel">
-              {selectedMatch ? (
-                <ChatInterface selectedUser={selectedMatch} />
-              ) : (
-                <p>Select a user to start chatting.</p>
-              )}
-            </section>
+           
           </div>
         </>
       )}
