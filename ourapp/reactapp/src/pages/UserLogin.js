@@ -103,6 +103,7 @@ export default function UserLogin() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Enter Username"
+                onKeyDown={(e) => e.key === 'Enter' && initializeUser()}
               />
               <input
                 type="password"
@@ -110,6 +111,7 @@ export default function UserLogin() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter Password"
+                onKeyDown={(e) => e.key === 'Enter' && initializeUser()}
               />
               {errorMessage && (
                 <div className="error-message">{errorMessage}</div>

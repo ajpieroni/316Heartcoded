@@ -13,6 +13,7 @@ import ForgotPassword from "./ForgotPassword";
 import CreateProfile from "./CreateProfile.js";
 import MatchList from "../components/MatchList";
 import Header from "../components/Header";
+import Chat from "./Chat";
 
 export default function Conversations() {
 
@@ -44,6 +45,8 @@ return(
       <Header />
         <h1>{user?.name}'s Conversations 🕺</h1>
         <MatchList />
+        
+        {/* <Chat /> */}
 
  
     </div>
