@@ -7,7 +7,8 @@ import ChatIcon from "@mui/icons-material/Chat";
 // import "./FindMatch.css";
 import Header from "../components/Header";
 import { useHistory } from "react-router-dom";
-export default function MatchList() {
+import "./MatchList.css";
+export default function MatchList({onUserSelected}) {
   const navigate = useNavigate();
 
   // const history  = useHistory();
@@ -24,6 +25,7 @@ export default function MatchList() {
 
     return () => clearInterval(interval);
   }, []);
+
   const currentUser = user?.id;
   const [currentName, setCurrentName] = useState("");
   useEffect(() => {
@@ -81,6 +83,9 @@ export default function MatchList() {
   };
   const selectUserForChat = (user) => {
     setSelectedMatch(user);
+    if (onUserSelected) {
+      onUserSelected(user); 
+    }
   };
 
   const fetchUserNameById = (id) => {
@@ -97,15 +102,8 @@ export default function MatchList() {
       .catch((error) => console.error("Error fetching user:", error));
   };
 
-
-const ChatInterface = ({ selectedUser }) => {
-    // Placeholder component for the actual chat interface
-    return (
-      <div className="chat-interface">
-        {/* Render the chat interface here based on the selectedUser */}
-        Chat with {selectedUser.name}
-      </div>
-    );
+  const ChatInterface = ({ selectedUser }) => {
+    return <div className="chat-interface">Chat with {selectedUser.name}</div>;
   };
   useEffect(() => {
     fetch(`http://localhost:3000/matched_withs/users/${currentUser}`)
@@ -126,13 +124,6 @@ const ChatInterface = ({ selectedUser }) => {
       .finally(() => setLoading(false));
   }, [currentUser]);
 
-  function openConversations(matchUser) {
-    console.log(`clicked conversations with ${matchUser?.name}`);
-    setReciever(matchUser);
-    console.log("reciever in match", reciever);
-
-    navigate("/Chat", { state: { reciever: matchUser } });
-  }
   function calculateAge(birthDateString) {
     const today = new Date();
     const birthDate = new Date(birthDateString);
@@ -146,35 +137,36 @@ const ChatInterface = ({ selectedUser }) => {
     return age;
   }
 
-
-
   return (
     <main className="main-container">
-      {/* <Header /> */}
       {loading ? (
         <div className="loading">Loading{".".repeat(ellipsisDots)}</div>
       ) : (
         <>
-          <div class="welcome-message">
-          </div>
-
           <div className="matches-and-chat-container">
-        <div className="matches-container">
-          {myMatches.map((matchUser) => (
-            <div key={matchUser.id} className="match-user-card" onClick={() => selectUserForChat(matchUser)}>
-              <h2>{matchUser.name}</h2>
+            {/* Left Side Panel */}
+            <div className="left-panel">
+              <h3>Matches</h3>
+              <ul className="matches-list">
+                {myMatches.map((matchUser) => (
+                  <li
+                    key={matchUser.id}
+                    onClick={() => selectUserForChat(matchUser)}
+                  >
+                    {matchUser.name}
+                  </li>
+                ))}
+              </ul>
             </div>
-          ))}
-        </div>
-        <section className="chat-panel">
-          {selectedMatch ? (
-            <ChatInterface selectedUser={selectedMatch} />
-          ) : (
-            <p>Select a user to start chatting.</p>
-          )}
-        </section>
-        </div>
 
+            <section className="chat-panel">
+              {selectedMatch ? (
+                <ChatInterface selectedUser={selectedMatch} />
+              ) : (
+                <p>Select a user to start chatting.</p>
+              )}
+            </section>
+          </div>
         </>
       )}
     </main>
