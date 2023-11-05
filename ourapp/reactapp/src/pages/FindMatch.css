@@ -41,6 +41,13 @@
     max-width: 250px;
     width: 100%;
   }
+  .unmatch-button {
+    position: absolute; 
+    bottom: 10px; 
+    left: 20px; 
+    right: 20px; 
+    width: calc(100% - 40px)
+}
   
   .user-card h2 {
     color: #555;
