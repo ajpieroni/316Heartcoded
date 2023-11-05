@@ -26,7 +26,8 @@ function Header() {
 
   return (
     <header className="header">
-      Welcome, {user?.name}
+      <div class = "user-welcome">Welcome, {user?.name}</div>
+
       {/* Logout Button */}
       <button onClick={handleLogout} className="logout-button">
         Logout
