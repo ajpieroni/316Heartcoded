@@ -1,72 +1,46 @@
 Rails.application.routes.draw do
   resources :answers
   resources :weights
-  
   resources :passwords
   resources :categories
   # resources :messages
   resources :questions
   resources :faqs
   resources :matched_withs
-  # resources :test_users
-  resources :test_users do
-    member do
-      get 'messages'
-    end
-  end
   
-  resources :states
-
-  resources :feedbacks
-
+  # Consolidate test_users resource
   resources :test_users do
     member do
       get 'messages'
       post 'messages', to: 'test_users#create_message'
     end
+    # Custom collection route
+    collection do
+      get 'find_by_username/:name', to: 'test_users#find_by_username'
+      get 'find_matches/:id', to: 'test_users#find_matches'
+    end
   end
-
+  
+  resources :states
+  resources :feedbacks
+  
+  # Define custom routes for matched_withs
   get 'unmatch/:uid1/:uid2', to: 'matched_withs#unmatch'
-
-  get 'match/:id', to: 'test_users#find_matches'
+  get 'matched_withs/users/:id', to: 'matched_withs#by_user_id'
   
-  
-
-
-  get '/test_users/find_by_username/:name', to: 'test_users#find_by_username'
-  get 'test_users/:id', to: 'test_users#show'
-  get 'questions/unanswered_questions/:id', to: 'questions#unanswered_questions'  post '/test_users', to: 'test_users#create'
-  post '/passwords', to: 'passwords#create'
+  # Custom routes for passwords
   get 'passwords/:id', to: 'passwords#show'
-
-  # namespace :api do
-  #   post '/send_timeslot_confirmation_email', to: 'api#send_timeslot_confirmation_email'
-  # end
-
-  namespace :api do
-    # get '/timeslots/condensed_timeslots', to: 'timeslots#condensed_timeslots'
-    # resources :admin_messages
-    # resources :line_statuses
-    # resources :user_timeslots, defaults: { format: :json } do
-    #     member do
-    #       put 'update_status_by_timeslot/:timeslot_id', action: 'update_status_by_timeslot', as: 'update_status_by_timeslot'
-    #     end
-    # end
-  end
+  post '/passwords', to: 'passwords#create'
   
+  # Custom routes for questions
+  get 'questions/unanswered_questions/:id', to: 'questions#unanswered_questions'
+
+  # Route for Sidekiq Web UI
   require "sidekiq/web"
   mount Sidekiq::Web => "/sidekiq"
 
-  # getting all the tuples in matched_withs based on userid
-  get 'matched_withs/users/:id', to: 'matched_withs#by_user_id'
+  # Uncomment or add other routes as needed...
 
-  # Add the contact_us route for form mailing
-  # post '/contact_us', to: 'contacts#create'
-
-  # Other routes...
-  # Load in current user:
-
-  # get /user_timeslots/tocsv/{startdate}/{enddate}
-  # Defines the root path route ("/")
-  # root "articles#index
+  # Define the root path route ("/")
+  # root "articles#index"
 end
