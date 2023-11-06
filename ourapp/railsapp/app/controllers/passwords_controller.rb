@@ -8,7 +8,8 @@ class PasswordsController < ApplicationController
 
   # GET /passwords/1 or /passwords/1.json
   def show
-    render json: @password 
+    test_user_id = params[:id]
+    render json: { hashed_password: 'new_hashed_password' }
   end
 
   # GET /passwords/new
