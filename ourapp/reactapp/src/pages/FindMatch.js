@@ -17,6 +17,7 @@ export default function FindMatch() {
   const [loading, setLoading] = useState(true);
   const { user, setUser } = useContext(UserContext);
   const [ellipsisDots, setEllipsisDots] = useState(1);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setEllipsisDots((dots) => (dots < 3 ? dots + 1 : 1));
@@ -24,8 +25,10 @@ export default function FindMatch() {
 
     return () => clearInterval(interval);
   }, []);
+
   const currentUser = user?.id;
   const [currentName, setCurrentName] = useState("");
+
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
@@ -34,6 +37,10 @@ export default function FindMatch() {
   }, [setUser]);
 
   const newMatches = async () => {
+    if(myMatches.length >=10){
+        console.log("Too many matches already!");
+        return;
+    }
     if (!currentUser) return;
 
     try {
@@ -41,13 +48,16 @@ export default function FindMatch() {
         `http://localhost:3000/match/${currentUser}`
       );
       const matches = await response.json();
-      setMyMatches((prevMatches) => [...prevMatches, ...matches]);
     } catch (error) {
       console.error("Error fetching new matches:", error);
     }
+    fetchMatches();
   };
 
   const unmatch = async (otherUser) => {
+    if(otherUser?.id === 0){
+        console.log("you can't unmatch with wingman!");
+    }
     const currentUid = user?.id;
     const otherUid = otherUser.id;
 
@@ -76,6 +86,7 @@ export default function FindMatch() {
     } catch (error) {
       console.error("Error making the fetch call:", error);
     }
+    fetchMatches();
   };
 
   const fetchUserNameById = (id) => {
@@ -92,7 +103,7 @@ export default function FindMatch() {
       .catch((error) => console.error("Error fetching user:", error));
   };
 
-  useEffect(() => {
+  const fetchMatches = async => {
     fetch(`http://localhost:3000/matched_withs/users/${currentUser}`)
       .then((response) => response.json())
       .then(async (matches) => {
@@ -109,6 +120,10 @@ export default function FindMatch() {
       })
       .catch((error) => console.error("Error fetching matches:", error))
       .finally(() => setLoading(false));
+  }
+
+  useEffect(() => {
+    fetchMatches()
   }, [currentUser]);
 
   function openConversations(matchUser) {
@@ -168,23 +183,28 @@ export default function FindMatch() {
                   </span>
                 </div>
 
-                <div className="feedback-section">
-                <InsightsIcon onClick={() => openFeedback(matchUser)}/>
-                <span
-                    className="feedback-text"
-                    onClick={() => openFeedback(matchUser)}
-                  >
-                    Feedback with {matchUser.name}
-                  </span>
-                  
-                </div>
                 
-                <button
-                  class="unmatch-button"
-                  onClick={() => unmatch(matchUser)}
-                >
-                  Unmatch
-                </button>
+                
+                {matchUser.id !== 1 ? (
+                    <>
+                    <div className="feedback-section">
+                    <InsightsIcon onClick={() => openFeedback(matchUser)}/>
+                    <span
+                        className="feedback-text"
+                        onClick={() => openFeedback(matchUser)}
+                      >
+                        Feedback with {matchUser.name}
+                      </span>
+                      
+                    </div>
+  <button
+    className="unmatch-button"
+    onClick={() => unmatch(matchUser)}
+  >
+    Unmatch
+  </button>
+  </>
+) : null}
               </div>
             ))}</>)}
             
