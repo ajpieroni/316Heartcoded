@@ -1,29 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
-import { useContext } from "react";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 import { UserContext } from "../components/contexts/UserContext";
 import "./Feedback.css";
-import axios from "axios";
 
+export default function Feedback({ feedbackForm }) {
+  const location = useLocation();
+  const { receiver } = location.state || {};
 
-export default function Feedback({feedbackForm}) {
+  // current user
+  const { user, setUser } = useContext(UserContext);
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, [setUser]);
+
+  // states
   const [loading, setLoading] = useState(true);
   const [ellipsisDots, setEllipsisDots] = useState(1);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setEllipsisDots((dots) => (dots < 3 ? dots + 1 : 1));
-    }, 200);
-
-    return () => clearInterval(interval);
-  }, []);
   const [users, setUsers] = useState({
-    receiver: 0,
-    sender: 0,
+    receiver: receiver?.id || 0,
+    // !TODO: change sender to current user
+    sender: user?.id, 
   });
-
   const [feedback, setFeedback] = useState(0);
-
   const [formData, setFormData] = useState({
     receives_uid: users.receiver,
     gives_uid: users.sender,
@@ -31,65 +35,22 @@ export default function Feedback({feedbackForm}) {
     category: "",
   });
 
-// GET /feedbacks/find_feedback?gives_uid=1&receives_uid=2
-// http://localhost:3000/feedbacks/find_feedback?gives_uid=1&receives_uid=2
-  const fetchData = () => {
-    fetch(`http://localhost:3000/feedbacks/1`)
-      .then((response) => response.json())
-      .then((data) => {
-        setUsers({
-          receiver: data.receives_uid,
-          sender: data.gives_uid
-        });
-        setFormData({
-          receives_uid: data.receives_uid,
-          gives_uid: data.gives_uid,
-          feedback: feedback,
-          category: "",
-        });
-      })
-      .catch((error) => {
-        console.error("Error fetching the feedback:", error);
-      });
-  };
+  // effects
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setEllipsisDots(dots => (dots < 3 ? dots + 1 : 1));
+    }, 200);
+    return () => clearInterval(interval);
+  }, []);
 
-  const handleCategoryChange = (e) => {
-    const { name, value } = e.target;
-    console.log(name , value);
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleFeedbackChange = (e) => {
-    const { name, value } = e.target;
-    console.log(name , value);
-    setFormData({...formData, feedback: parseInt(value)});
-  }
-  
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      console.log("formData: ", formData);
-      const response = await axios.post("http://localhost:3000/feedbacks", {feedback: {
-        "receives_uid": formData.receives_uid,
-		    "gives_uid": formData.gives_uid,
-		    "feedback":  formData.feedback, 
-		    "category": formData.category  
-      }
-    });
-      // feedbackForm(response.data);
-      setFormData({...formData, feedback: 0, category: ""}); 
-    } catch (error) {
-      console.error("Error adding feedback:", error);
+  useEffect(() => {
+    if (receiver) {
+      setUsers(prev => ({
+        ...prev,
+        receiver: receiver.id
+      }));
     }
-  };
-
-  const fetchUserNameById = (id) => {
-    return fetch(`http://localhost:3000/test_users/${id}`)
-        .then((response) => response.json())
-        .then((data) => data.name)
-        .catch((error) => console.error("Error fetching user:", error));
-  };
+  }, [receiver]);
 
   useEffect(() => {
     fetchData();
@@ -97,17 +58,61 @@ export default function Feedback({feedbackForm}) {
     console.log("formData: ", formData);
   }, []);
 
-  // set sender to user?.name
+  // functions
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/feedbacks/1`);
+      const data = await response.json();
+      setUsers({
+        receiver: data.receives_uid,
+        sender: data.gives_uid
+      });
+      setFormData({
+        ...formData,
+        receives_uid: data.receives_uid,
+        gives_uid: data.gives_uid,
+      });
+    } catch (error) {
+      console.error("Error fetching the feedback:", error);
+    }
+  };
+
+  const handleCategoryChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleFeedbackChange = (e) => {
+    const { value } = e.target;
+    setFormData({ ...formData, feedback: parseInt(value, 10) });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:3000/feedbacks", {
+        feedback: {
+          "receives_uid": formData.receives_uid,
+          "gives_uid": formData.gives_uid,
+          "feedback": formData.feedback,
+          "category": formData.category
+        }
+      });
+      setFormData({ ...formData, feedback: 0, category: "" });
+    } catch (error) {
+      console.error("Error adding feedback:", error);
+    }
+  };
 
   return (
     <main className="main-container">
         <h1>Feedback</h1>
-        <h1>What is your feedback about {users.receiver}?</h1>
+        <h1>What is your feedback about {receiver?.name}?</h1>
 
         <h1> {formData.feedback}</h1>
 
         <h1>User Feedback Form</h1>
-        <p> Hello {users.sender}, provide feedback about a specific user: {users.receiver} in category: 1</p>
+        <p> Hello {user?.name}, provide feedback about a specific user: {users.receiver} in category: 1</p>
 
         <form onSubmit={handleSubmit}>
           <label htmlFor="user_to_feedback">User to Provide Feedback About: {users.receiver}</label>
