@@ -7,44 +7,9 @@
     padding: 2rem;
     background: linear-gradient(to bottom, #FBB6CE, #F87171, #EF4444);
   }
-
-  .button-container {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .button-container button {
-    flex: 1;
-    border-color:#FBB6CE;
-    border-width: 5px;
-    width:200px;
-    height:50px;
-    border-radius: 10px;
-    background: #F87171;
-    font: Lato;
-  }
-
-  .card-container {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .user-card {
-    width: 300px;
-    border: 5px solid #FBB6CE;
-    border-radius:20px;
-    margin: 10px;
-    padding: 10px;
-    background-color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .user-card h2 {
-    margin-top: 0;
-  }
   
   .main-title {
-/* alex removed since it was overridding other pages */
+    /* Custom styling if needed */
   }
   
   .hero-section {
@@ -67,7 +32,7 @@
   .cta-button {
     background-color: white;
     color: #EF4444;
-    padding: 0.5rem 1.5rem;
+    padding: 0.5rem 3rem;
     border-radius: 9999px;
     font-weight: 600;
     transition: background-color 0.3s, color 0.3s;
@@ -93,8 +58,8 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    /* align-items: start; */
-    /* justify-content: center; */
+    align-items: start;
+    justify-content: center;
     width: 20rem;
     gap: 1rem;
   }
@@ -120,9 +85,7 @@
     font-weight: bold;
     margin-bottom: 1rem;
   }
-
-
-  /*! CSS for User Initialization, eventually moved to login page? */
+  /* CSS for User Initialization */
 
 .user-init-container {
   display: flex;
@@ -143,7 +106,7 @@
 
 .user-init-input:focus {
   border-color: #EF4444;
-  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.5); 
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.5); /* Corresponding to #EF4444 with opacity */
 }
 
 .user-init-button {

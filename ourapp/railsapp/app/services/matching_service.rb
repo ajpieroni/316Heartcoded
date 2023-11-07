@@ -1,15 +1,25 @@
 class MatchingService
-    CUTOFF_SCORE = 250  # Desired threshold
-    MAX_MATCHES = 2
-  
-    def compute_score(user1_weights, user2_weights)
+    
+    def compute_score(user1, user2)
+      score_difference = {}
       score = 0
-      (1..10).each do |i|
-        in_key = "in_#{i}".to_sym
-        out_key = "out_#{i}".to_sym
-        score += (user1_weights[in_key] - user2_weights[in_key]).abs * user1_weights[out_key] * user2_weights[out_key]
+
+      categories = Category.all
+      categories.each do |category|
+        id = category.id
+        user1_weight = Weight.find_by(test_user_id: user1.id, category_id: id)&.weight || 0.0
+
+        user2_weight = Weight.find_by(test_user_id: user2.id, category_id: id)&.weight || 0.0
+      Rails.logger.debug("Category ID: #{id}, User1 Weight: #{user1_weight}, User2 Weight: #{user2_weight}")
+
+        if user1_weight && user2_weight
+          score_difference[id] = (user1_weight - user2_weight).abs
+        else
+          score_difference[id] = nil
+        end
       end
-      score
+
+      score = score_difference.values.compact.sum # calc score by summing non-nil values in score_difference
     end
   
     def already_matched?(user1, user2)
@@ -20,33 +30,31 @@ class MatchingService
     end
   
     def find_matches_for(user)
-      all_users = TestUser.all.shuffle # Shuffle to get random order
-      matched_count = 0
+      all_users = TestUser.all
       potential_matches = []
-  
-      user1_weights = Weight.find_by(uid: user.id)
-  
+    
       all_users.each do |other_user|
-        break if matched_count >= MAX_MATCHES
-  
-        # Ensure they're not the same user
+        # not the same user
         next if user == other_user
-  
-        # Check if they're already matched
+    
+        # already matched
         next if already_matched?(user, other_user)
-  
-        user2_weights = Weight.find_by(uid: other_user.id)
-        score = compute_score(user1_weights, user2_weights)
-  
-        if score <= CUTOFF_SCORE
-          potential_matches.push(other_user)
-          matched_count += 1
-          # Create a new entry in the MatchedWith table
-          MatchedWith.create(uid1: user.id, uid2: other_user.id, status: true, date: Date.today.strftime("%m-%d-%Y"))
-        end
+    
+        score = compute_score(user, other_user)
+    
+        potential_matches.push({ user: other_user, score: score })
       end
-  
-      potential_matches
+    
+      # sort potential matches by score in ascending order
+      sorted_matches = potential_matches.sort_by { |match| match[:score] }
+    
+      # create entries in the MatchedWith table for the matches w lowest dif score
+      sorted_matches[0..1].each do |match|
+        MatchedWith.create(uid1: user.id, uid2: match[:user].id, status: true, date: Date.today.strftime("%m-%d-%Y"))
+      end
+    
+      # sorted potential matches
+      sorted_matches[0..1].map { |match| match[:user] }
     rescue => e
       Rails.logger.error "Error in MatchingService for user ID #{user.id}: #{e.message}"
       []  # Return an empty array or any other default value

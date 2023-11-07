@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Raleway&display=swap');
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Bebas Neue', sans-serif;
+  background: linear-gradient(to bottom, #FBB6CE, #F87171, #EF4444);
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+
+.hero-login-title {
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 5em;
+  margin-bottom: 0.25rem;
+  color: #FFFFFF;
+
+
+  font-family: 'Bebas Neue', sans-serif;
+  animation: typing 3s steps(40, end) forwards;
+}
+
+
+
+
+.main-login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: #333;
+}
+
+.button-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.button-container button {
+  border: 2px solid #FBB6CE;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  background: #F87171;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+}
+
+.button-container button:hover,
+.button-container button:focus {
+  background-color: #EF4444;
+  transform: translateY(-2px);
+}
+
+.user-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.user-init-input,
+.user-init-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+}
+
+.user-init-input:focus,
+.user-init-button:focus {
+  outline: none;
+  border-color: #EF4444;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.5);
+}
+
+.cta-button {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.forgot-password-toggle {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.forgot-password-toggle:hover,
+.forgot-password-toggle:focus {
+  color: #FBB6CE;
+}
+
+.hero-login-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.hero-login-subtitle {
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  color: #FFFFFF;
+}
+
+.user-login-init-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.user-init-input,
+.user-init-button,
+.forgot-password-toggle,
+.sign-up-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  border: none;
+  font-size: 1rem;
+  margin: 0.25rem 0;
+  width: 100%;
+}
+
+.hero-login-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+
+
+.hero-login-subtitle {
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  color: #FFFFFF;
+}
+
+.user-login-init-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.user-init-input,
+.user-init-button,
+.forgot-password-toggle,
+.sign-up-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  border: none;
+  font-size: 1rem;
+  margin: 0.25rem 0;
+  width: 75%;
+}
+
+.forgot-password-toggle {
+  background: none;
+  color: #FFFFFF;
+  text-decoration: underline;
+  font-size: 0.9rem;
+  font-weight: normal;
+  margin-top: 1rem;
+}
+
+.user-init-button {
+  background-color: #EF4444;
+  color: #FFFFFF;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 75%;
+}
+
+.user-init-button:hover,
+.user-init-button:focus,
+.forgot-password-toggle:hover,
+.forgot-password-toggle:focus {
+  background-color: #F87171;
+  outline: none;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.error-message {
+  color: white;
+  margin: 10px;
+}

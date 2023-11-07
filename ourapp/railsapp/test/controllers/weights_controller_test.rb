@@ -17,7 +17,7 @@ class WeightsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create weight" do
     assert_difference("Weight.count") do
-      post weights_url, params: { weight: {  } }
+      post weights_url, params: { weight: { category_id: @weight.category_id, test_user_id: @weight.test_user_id, weight: @weight.weight } }
     end
 
     assert_redirected_to weight_url(Weight.last)
@@ -34,7 +34,7 @@ class WeightsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update weight" do
-    patch weight_url(@weight), params: { weight: {  } }
+    patch weight_url(@weight), params: { weight: { category_id: @weight.category_id, test_user_id: @weight.test_user_id, weight: @weight.weight } }
     assert_redirected_to weight_url(@weight)
   end
 
