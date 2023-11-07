@@ -31,7 +31,8 @@ export default function Feedback({feedbackForm}) {
     category: "",
   });
 
-
+// GET /feedbacks/find_feedback?gives_uid=1&receives_uid=2
+// http://localhost:3000/feedbacks/find_feedback?gives_uid=1&receives_uid=2
   const fetchData = () => {
     fetch(`http://localhost:3000/feedbacks/1`)
       .then((response) => response.json())
