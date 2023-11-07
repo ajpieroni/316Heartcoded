@@ -1,0 +1,120 @@
+.main-container {
+    justify-content: flex-start !important;
+}
+
+.chat-container {
+    border: 1px solid #e0e0e0 !important;
+    padding: 10px !important;
+    border-radius: 8px !important;
+}
+
+.message-list {
+    max-height: 400px !important;
+    overflow-y: auto !important;
+}
+
+.message {
+    padding: 10px !important;
+    border-radius: 8px !important;
+    margin: 5px 0 !important;
+}
+.message.sent {
+    background-color: #e9f5fe !important;
+    text-align: right !important; 
+    margin-left: auto !important; 
+    margin-right: 0 !important;   
+}
+
+.message.received {
+    background-color: #f4f4f4 !important;
+    text-align: left !important; 
+    margin-right: auto !important; 
+    margin-left: 0 !important;    
+}
+
+.timestamp {
+    font-size: 0.8em !important;
+    color: gray !important;
+}
+
+.message-input-container {
+    display: flex !important;
+    margin-top: 10px !important;
+}
+
+.message-input-container input {
+    flex: 1 !important;
+    padding: 10px !important;
+    border-radius: 8px !important;
+    border: 1px solid #e0e0e0 !important;
+}
+
+.message-input-container button {
+    padding: 10px 20px !important;
+    border: none !important;
+    background-color: #007BFF !important;
+    color: white !important;
+    border-radius: 8px !important;
+    margin-left: 10px !important;
+    cursor: pointer !important;
+}
+
+.lds-ellipsis,
+.lds-ellipsis div {
+  box-sizing: border-box;
+}
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 33.33333px;
+  width: 13.33333px;
+  height: 13.33333px;
+  border-radius: 50%;
+  background: white;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
