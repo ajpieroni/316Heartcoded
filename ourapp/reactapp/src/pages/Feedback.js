@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../components/contexts/UserContext";
 import { Link, useLocation } from "react-router-dom";
@@ -34,9 +34,9 @@ export default function Feedback({ feedbackForm }) {
   });
   const [feedback, setFeedback] = useState(0);
   const [formData, setFormData] = useState({
-    receives_uid: theirUID,
-    gives_uid: myUID,
-    feedback: 0,
+    receives_uid: users.receiver,
+    gives_uid: users.sender,
+    feedback: feedback,
     category: "",
   });
 
