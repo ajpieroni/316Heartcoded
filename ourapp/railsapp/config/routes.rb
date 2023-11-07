@@ -1,50 +1,55 @@
 Rails.application.routes.draw do
+  # Define all RESTful resources
   resources :answers
   resources :weights
   resources :passwords
   resources :categories
-  # resources :messages
   resources :questions
   resources :faqs
   resources :matched_withs
-  
-  # Consolidate test_users resource
-  resources :test_users do
-    member do
-      get 'messages'
-      post 'messages', to: 'test_users#create_message'
-    end
-    # Custom collection route
-    collection do
-      get 'find_by_username/:name', to: 'test_users#find_by_username'
-      get 'find_matches/:id', to: 'test_users#find_matches'
-    end
-  end
-  
   resources :states
   resources :feedbacks do
     collection do
       get 'find_feedback'
     end
   end
-  
-  # Define custom routes for matched_withs
-  get 'unmatch/:uid1/:uid2', to: 'matched_withs#unmatch'
-  get 'matched_withs/users/:id', to: 'matched_withs#by_user_id'
-  
-  # Custom routes for passwords
-  get 'passwords/:id', to: 'passwords#show'
-  post '/passwords', to: 'passwords#create'
-  
-  # Custom routes for questions
-  get 'questions/unanswered_questions/:id', to: 'questions#unanswered_questions'
 
-  # Route for Sidekiq Web UI
+  # Define all RESTful routes for test_users and custom member/collection routes
+  resources :test_users do
+    member do
+      get 'messages'
+      post 'messages', to: 'test_users#create_message'
+    end
+    collection do
+      get 'find_by_username/:name', to: 'test_users#find_by_username'
+      get 'unanswered_questions/:id', to: 'questions#unanswered_questions'
+    end
+  end
+
+  # Define custom routes outside of the resources block
+  get 'unmatch/:uid1/:uid2', to: 'matched_withs#unmatch'
+  get 'match/:id', to: 'test_users#find_matches'
+  get 'matched_withs/users/:id', to: 'matched_withs#by_user_id'
+
+  # Uncomment the following if you're using these APIs and ensure their correct placement within the namespace
+  # namespace :api do
+  #   post '/send_timeslot_confirmation_email', to: 'api#send_timeslot_confirmation_email'
+  #   get '/timeslots/condensed_timeslots', to: 'timeslots#condensed_timeslots'
+  #   resources :admin_messages
+  #   resources :line_statuses
+  #   resources :user_timeslots, defaults: { format: :json } do
+  #     member do
+  #       put 'update_status_by_timeslot/:timeslot_id', action: 'update_status_by_timeslot', as: 'update_status_by_timeslot'
+  #     end
+  #   end
+  # end
+  
+  # For Sidekiq Web UI
   require "sidekiq/web"
   mount Sidekiq::Web => "/sidekiq"
 
-  # Uncomment or add other routes as needed...
+  # If you have other routes, they should be added here...
 
-  # Define the root path route ("/")
-  # root "articles#index"
+  # Define the root path route if necessary
+  # root "controller#action"
 end

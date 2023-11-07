@@ -21,6 +21,19 @@ class FeedbacksController < ApplicationController
   def edit
   end
 
+  def find_feedback
+    gives_uid = params[:gives_uid]
+    receives_uid = params[:receives_uid]
+    
+    feedback = Feedback.find_by(gives_uid: gives_uid, receives_uid: receives_uid)
+    
+    if feedback
+      render json: feedback
+    else
+      render json: { error: "Feedback not found" }, status: :not_found
+    end
+  end
+
   # POST /feedbacks or /feedbacks.json
   def create
     @feedback = Feedback.new(feedback_params)
