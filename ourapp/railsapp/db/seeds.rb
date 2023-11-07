@@ -98,13 +98,15 @@ match10 = MatchedWith.create(uid1: 2, uid2: 6, status: true, date: "11-11-2000")
 
 # Create sample messages
 message1 = Message.create(chat_order: 1, uid_sender_id: user1.id, uid_receiver_id: user2.id, timestamp: Time.now, message: "Hey Linda, how's it going?")
-message1 = Message.create(chat_order: 1, uid_sender_id: user2.id, uid_receiver_id: user1.id, timestamp: Time.now + 5.minutes, message: "Hey Jacob, going well!")
-
-# message1 = Message.create(chat_order: 1, uid_sender: user1, uid_receiver: user2, timestamp: Time.now, message: "Hey Linda, how's it going?")
-# message2 = Message.create(chat_order: 2, uid_sender: user2, uid_receiver: user1, timestamp: Time.now + 5.minutes, message: "Hey Jacob! I'm good. Just building things.")
-# message3 = Message.create(chat_order: , uid_sender: user1, uid_receiver: user2, timestamp: Time.now, message: "Hey Linda, how's it going?")
-# message4 = Message.create(chat_order: 2, uid_sender: user2, uid_receiver: user1, timestamp: Time.now + 5.minutes, message: "Hey Jacob! I'm good. Just building things.")
-
+message2 = Message.create(chat_order: 2, uid_sender_id: user2.id, uid_receiver_id: user1.id, timestamp: Time.now + 5.minutes, message: "Hey Jacob, going well! Just got back from my trip to Iceland. Have you ever been?")
+message3 = Message.create(chat_order: 3, uid_sender_id: user1.id, uid_receiver_id: user2.id, timestamp: Time.now + 10.minutes, message: "No, I haven't! That sounds amazing. I'd love to see the Northern Lights. Did you get to see them?")
+message4 = Message.create(chat_order: 4, uid_sender_id: user2.id, uid_receiver_id: user1.id, timestamp: Time.now + 15.minutes, message: "Absolutely, it was a breathtaking experience! I even went glacier hiking. Iceland is definitely a place for adventure lovers.")
+message5 = Message.create(chat_order: 5, uid_sender_id: user1.id, uid_receiver_id: user2.id, timestamp: Time.now + 20.minutes, message: "Wow, glacier hiking sounds intense. What else would you recommend doing there?")
+message6 = Message.create(chat_order: 6, uid_sender_id: user2.id, uid_receiver_id: user1.id, timestamp: Time.now + 25.minutes, message: "You should definitely try the geothermal spas and visit some volcanoes. Oh, and the food is incredible – try the seafood!")
+message7 = Message.create(chat_order: 7, uid_sender_id: user1.id, uid_receiver_id: user2.id, timestamp: Time.now + 30.minutes, message: "Thanks for the tips, Linda! I'll definitely keep them in mind for when I plan my trip. Speaking of food, are we still on for dinner next week?")
+message8 = Message.create(chat_order: 8, uid_sender_id: user2.id, uid_receiver_id: user1.id, timestamp: Time.now + 35.minutes, message: "Of course, dinner is still on! Let's try that new seafood place downtown, I'm in the mood for it after my trip.")
+message9 = Message.create(chat_order: 9, uid_sender_id: user1.id, uid_receiver_id: user2.id, timestamp: Time.now + 40.minutes, message: "Perfect, it's a date. Looking forward to it, Linda. I'll text you the details later. Have a great day!")
+message10 = Message.create(chat_order: 10, uid_sender_id: user2.id, uid_receiver_id: user1.id, timestamp: Time.now + 45.minutes, message: "Great, looking forward to it too, Jacob. Enjoy your day!")
 
 # Create sample feedback
 feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "1", feedback: 5)
