@@ -22,7 +22,11 @@ Rails.application.routes.draw do
   end
   
   resources :states
-  resources :feedbacks
+  resources :feedbacks do
+    collection do
+      get 'find_feedback'
+    end
+  end
   
   # Define custom routes for matched_withs
   get 'unmatch/:uid1/:uid2', to: 'matched_withs#unmatch'

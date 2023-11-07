@@ -10,6 +10,8 @@ import axios from "axios";
 export default function Feedback({feedbackForm}) {
   const [loading, setLoading] = useState(true);
   const [ellipsisDots, setEllipsisDots] = useState(1);
+  const { user, setUser } = useContext(UserContext);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setEllipsisDots((dots) => (dots < 3 ? dots + 1 : 1));
@@ -17,10 +19,23 @@ export default function Feedback({feedbackForm}) {
 
     return () => clearInterval(interval);
   }, []);
+
+  // *User init
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, [setUser]);
+  // console.log("here's user", user);
+
   const [users, setUsers] = useState({
-    receiver: 0,
-    sender: 0,
+    receiver: 1,
+    sender: user?.id,
   });
+
+  // GET /feedbacks/find_feedback?gives_uid=1&receives_uid=2
+// http://localhost:3000/feedbacks/find_feedback?gives_uid=1&receives_uid=2
 
   const [feedback, setFeedback] = useState(0);
 
@@ -33,7 +48,7 @@ export default function Feedback({feedbackForm}) {
 
 
   const fetchData = () => {
-    fetch(`http://localhost:3000/feedbacks/1`)
+    fetch(`http://localhost:3000/feedbacks/${user?.id}`)
       .then((response) => response.json())
       .then((data) => {
         setUsers({
@@ -51,6 +66,7 @@ export default function Feedback({feedbackForm}) {
         console.error("Error fetching the feedback:", error);
       });
   };
+
 
   const handleCategoryChange = (e) => {
     const { name, value } = e.target;
