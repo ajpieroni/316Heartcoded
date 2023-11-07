@@ -90,10 +90,8 @@ class TestUsersController < ApplicationController
     @user = TestUser.find(params[:id])
 
     if @user.update(password: params[:password])
-      # password update successful
       render json: { message: 'Password updated successfully' }
     else
-      # handle password update errors
       render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
     end
   end

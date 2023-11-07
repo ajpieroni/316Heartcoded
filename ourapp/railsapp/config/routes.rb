@@ -21,9 +21,8 @@ Rails.application.routes.draw do
   get '/test_users/find_by_username/:name', to: 'test_users#find_by_username'
   get 'test_users/:id', to: 'test_users#show'
   post '/test_users', to: 'test_users#create'
-  post '/passwords', to: 'passwords#create'
-  get 'passwords/:id', to: 'passwords#show'
-
+  put '/test_users/:id/update_password', to: 'test_users#update_password'  
+  
   # namespace :api do
   #   post '/send_timeslot_confirmation_email', to: 'api#send_timeslot_confirmation_email'
   # end
