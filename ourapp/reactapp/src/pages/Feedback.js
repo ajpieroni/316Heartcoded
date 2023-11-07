@@ -6,6 +6,7 @@ import { UserContext } from "../components/contexts/UserContext";
 import "./Feedback.css";
 import axios from "axios";
 
+// navigate("/Feedback", { state: { reciever: matchUser } });
 
 export default function Feedback({feedbackForm}) {
   const [loading, setLoading] = useState(true);
