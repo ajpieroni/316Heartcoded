@@ -71,6 +71,7 @@ class MatchedWithsController < ApplicationController
     end
   end
 
+
   # DELETE /matched_withs/1 or /matched_withs/1.json
   def destroy
     @matched_with.destroy

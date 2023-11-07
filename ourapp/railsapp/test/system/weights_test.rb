@@ -14,6 +14,9 @@ class WeightsTest < ApplicationSystemTestCase
     visit weights_url
     click_on "New weight"
 
+    fill_in "Category", with: @weight.category_id
+    fill_in "Test user", with: @weight.test_user_id
+    fill_in "Weight", with: @weight.weight
     click_on "Create Weight"
 
     assert_text "Weight was successfully created"
@@ -24,6 +27,9 @@ class WeightsTest < ApplicationSystemTestCase
     visit weight_url(@weight)
     click_on "Edit this weight", match: :first
 
+    fill_in "Category", with: @weight.category_id
+    fill_in "Test user", with: @weight.test_user_id
+    fill_in "Weight", with: @weight.weight
     click_on "Update Weight"
 
     assert_text "Weight was successfully updated"

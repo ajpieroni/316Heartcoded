@@ -1,9 +1,10 @@
 class FeedbacksController < ApplicationController
+  protect_from_forgery with: :null_session
   before_action :set_feedback, only: %i[ show edit update destroy ]
 
   # GET /feedbacks or /feedbacks.json
   def index
-    @feedbacks = Feedback.all
+    render json: Feedback.all
   end
 
   # GET /feedbacks/1 or /feedbacks/1.json
@@ -20,6 +21,19 @@ class FeedbacksController < ApplicationController
   def edit
   end
 
+  def find_feedback
+    gives_uid = params[:gives_uid]
+    receives_uid = params[:receives_uid]
+    
+    feedback = Feedback.find_by(gives_uid: gives_uid, receives_uid: receives_uid)
+    
+    if feedback
+      render json: feedback
+    else
+      render json: { error: "Feedback not found" }, status: :not_found
+    end
+  end
+
   # POST /feedbacks or /feedbacks.json
   def create
     @feedback = Feedback.new(feedback_params)
@@ -32,6 +46,19 @@ class FeedbacksController < ApplicationController
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @feedback.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def find_feedback
+    gives_uid = params[:gives_uid]
+    receives_uid = params[:receives_uid]
+    
+    feedback = Feedback.find_by(gives_uid: gives_uid, receives_uid: receives_uid)
+    
+    if feedback
+      render json: feedback
+    else
+      render json: { error: "Feedback not found" }, status: :not_found
     end
   end
 

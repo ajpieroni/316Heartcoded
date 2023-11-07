@@ -12,6 +12,21 @@
   <% end %>
 
   <div>
+    <%= form.label :test_user_id, style: "display: block" %>
+    <%= form.text_field :test_user_id %>
+  </div>
+
+  <div>
+    <%= form.label :category_id, style: "display: block" %>
+    <%= form.text_field :category_id %>
+  </div>
+
+  <div>
+    <%= form.label :weight, style: "display: block" %>
+    <%= form.text_field :weight %>
+  </div>
+
+  <div>
     <%= form.submit %>
   </div>
 <% end %>
