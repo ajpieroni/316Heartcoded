@@ -57,13 +57,15 @@ export default function Feedback({ feedbackForm }) {
     }
   }, [receiver]);
 
+  /*
   useEffect(() => {
     fetchData();
     console.log("users: ", users);
     console.log("formData: ", formData);
   }, []);
-
+  */
   // functions
+  /*
   const fetchData = async () => {
     try {
       const response = await fetch(`http://localhost:3000/feedbacks/1`);
@@ -81,7 +83,7 @@ export default function Feedback({ feedbackForm }) {
       console.error("Error fetching the feedback:", error);
     }
   };
-  
+  */
 
 
   const handleCategoryChange = (e) => {
