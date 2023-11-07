@@ -27,11 +27,9 @@ export default function FindMatch() {
   const currentUser = user?.id;
   const [currentName, setCurrentName] = useState("");
   useEffect(() => {
-    // When the component mounts, check if the user is stored in sessionStorage
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
-      //   setLogin(true); // If necessary, set the login state
     }
   }, [setUser]);
 
