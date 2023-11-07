@@ -1,7 +1,7 @@
 class MatchingService
-    CUTOFF_SCORE = 2500  # Desired threshold
+    CUTOFF_SCORE = 5000  # Desired threshold
     MAX_MATCHES = 2
-    
+
     def compute_score(user1_weights, user2_weights)
       score = 0
       (1..10).each do |i|

@@ -59,22 +59,30 @@ export default function FindMatch() {
             .catch((error) => console.error("Error fetching user:", error));
     }
 
-    useEffect(() => {
-        fetch(`http://localhost:3000/matched_withs/users/${currentUser}`)
-            .then((response) => response.json())
-            .then(async (matches) => {
-                const myName = await fetchUserNameById(currentUser);
-                setCurrentName(myName);
-                const matchesArray = [];
-                for (let match of matches) {
-                    const otherUserId = match.uid1 === currentUser ? match.uid2 : match.uid1;
-                    const currMatch = await fetchUserById(otherUserId);
-                    matchesArray.push(currMatch);
-                }
-                setMyMatches(matchesArray);
-            })
-            .catch((error) => console.error("Error fetching matches:", error));
-    }, [currentUser]);
+    const fetchMatches = async () => {
+        try {
+          const response = await fetch(`http://localhost:3000/matched_withs/users/${currentUser}`);
+          const matches = await response.json();
+          const myName = await fetchUserNameById(currentUser);
+          setCurrentName(myName);
+          const matchesArray = [];
+          for (let match of matches) {
+            const otherUserId = match.uid1 === currentUser ? match.uid2 : match.uid1;
+            const currMatch = await fetchUserById(otherUserId);
+            matchesArray.push(currMatch);
+          }
+        //   setMyMatches(matchesArray);
+          console.log(matchesArray);
+        } catch (error) {
+          console.error("Error fetching matches:", error);
+        }
+        fetchMatches();
+        console.log(myMatches);
+      };
+
+      useEffect(() => {
+        fetchMatches();
+      });
 
     return (
       <main className="main-container">
