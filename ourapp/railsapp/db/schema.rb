@@ -10,28 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_04_223825) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_04_113230) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "addresses", force: :cascade do |t|
-    t.string "quad"
-    t.string "house"
-    t.string "street_address"
+  create_table "answers", force: :cascade do |t|
+    t.bigint "test_user_id", null: false
+    t.bigint "question_id", null: false
+    t.integer "answer"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_answers_on_question_id"
+    t.index ["test_user_id"], name: "index_answers_on_test_user_id"
   end
 
-  create_table "admin_messages", force: :cascade do |t|
-    t.string "admin"
-    t.string "message"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "faqs", force: :cascade do |t|
-    t.string "question"
-    t.string "answer"
+  create_table "categories", id: :serial, force: :cascade do |t|
+    t.string "descriptor"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -40,14 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_223825) do
     t.integer "gives_uid"
     t.integer "receives_uid"
     t.string "category"
-    t.string "feedback"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "line_statuses", force: :cascade do |t|
-    t.string "admin"
-    t.string "color"
+    t.integer "feedback"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -71,7 +58,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_223825) do
     t.datetime "updated_at", null: false
     t.index ["uid_receiver_id"], name: "index_messages_on_uid_receiver_id"
     t.index ["uid_sender_id"], name: "index_messages_on_uid_sender_id"
+  end
 
+  create_table "passwords", force: :cascade do |t|
+    t.string "test_user_id", null: false
+    t.string "hashed_password"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["test_user_id"], name: "index_passwords_on_test_user_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -98,46 +92,26 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_223825) do
     t.string "birthday"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "password_digest"
   end
 
-  create_table "timeslots", force: :cascade do |t|
-    t.datetime "slot_start"
-    t.datetime "slot_end"
-    t.date "date"
+  create_table "weights", force: :cascade do |t|
+    t.bigint "test_user_id", null: false
+    t.bigint "category_id", null: false
+    t.float "weight"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "count", limit: 2, default: 3
-    t.boolean "has_passed"
+    t.index ["category_id"], name: "index_weights_on_category_id"
+    t.index ["test_user_id"], name: "index_weights_on_test_user_id"
   end
 
-  create_table "user_timeslots", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "timeslot_id", null: false
-    t.string "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "selected_date_time"
-    t.integer "num_packages"
-    t.index ["timeslot_id"], name: "index_user_timeslots_on_timeslot_id"
-    t.index ["user_id"], name: "index_user_timeslots_on_user_id"
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "unique_id"
-    t.string "first_name"
-    t.string "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "affiliation"
-    t.string "display_name"
-    t.string "box_no"
-    t.boolean "is_admin"
-    t.datetime "last_login"
-  end
-
+  add_foreign_key "answers", "questions"
+  add_foreign_key "answers", "test_users"
   add_foreign_key "matched_withs", "test_users", column: "uid1"
   add_foreign_key "matched_withs", "test_users", column: "uid2"
   add_foreign_key "messages", "test_users", column: "uid_receiver_id"
   add_foreign_key "messages", "test_users", column: "uid_sender_id"
-
+  add_foreign_key "questions", "categories"
+  add_foreign_key "weights", "categories"
+  add_foreign_key "weights", "test_users"
 end
