@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { UserContext } from "../components/contexts/UserContext";
 import ChatIcon from "@mui/icons-material/Chat";
+import InsightsIcon from '@mui/icons-material/Insights';
 import "./FindMatch.css";
 import Header from "../components/Header";
 import { useHistory } from "react-router-dom";
@@ -116,10 +117,17 @@ export default function FindMatch() {
     console.log(`clicked conversations with ${matchUser?.name}`);
     setReciever(matchUser);
     console.log("reciever in match", reciever);
-    
 
     navigate("/Chat", { state: { reciever: matchUser } });
   }
+  function openFeedback(matchUser) {
+    console.log(`clicked feedback with ${matchUser?.name}`);
+    setReciever(matchUser);
+    console.log("reciever in feedback", reciever);
+
+    navigate("/Feedback", { state: { reciever: matchUser } });
+  }
+
   function calculateAge(birthDateString) {
     const today = new Date();
     const birthDate = new Date(birthDateString);
@@ -132,8 +140,6 @@ export default function FindMatch() {
 
     return age;
   }
-
-
 
   return (
     <main className="main-container">
@@ -163,6 +169,18 @@ export default function FindMatch() {
                     Chat with {matchUser.name}
                   </span>
                 </div>
+
+                <div className="feedback-section">
+                <InsightsIcon onClick={() => openFeedback(matchUser)}/>
+                <span
+                    className="feedback-text"
+                    onClick={() => openFeedback(matchUser)}
+                  >
+                    Feedback with {matchUser.name}
+                  </span>
+                  
+                </div>
+                
                 <button
                   class="unmatch-button"
                   onClick={() => unmatch(matchUser)}
