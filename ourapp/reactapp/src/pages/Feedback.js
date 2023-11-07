@@ -5,10 +5,18 @@ import { useContext } from "react";
 import { UserContext } from "../components/contexts/UserContext";
 import "./Feedback.css";
 import axios from "axios";
+import {useLocation} from "react-router-dom";
+
 
 // navigate("/Feedback", { state: { reciever: matchUser } });
 
 export default function Feedback({feedbackForm}) {
+
+  const location = useLocation();
+  const receiver = location.state?.receiver;
+  
+
+  // *loading
   const [loading, setLoading] = useState(true);
   const [ellipsisDots, setEllipsisDots] = useState(1);
   useEffect(() => {
@@ -18,8 +26,9 @@ export default function Feedback({feedbackForm}) {
 
     return () => clearInterval(interval);
   }, []);
+
   const [users, setUsers] = useState({
-    receiver: 0,
+    receiver: receiver?.id || 0,
     sender: 0,
   });
 
@@ -31,6 +40,18 @@ export default function Feedback({feedbackForm}) {
     feedback: feedback,
     category: "",
   });
+
+  useEffect(() => {
+    // If receiver has content, then update the users state
+    if(receiver) {
+      setUsers(prev => ({
+        ...prev,
+        receiver: receiver.id
+      }));
+    }
+    // fetchData() and other initializations...
+  }, [receiver]); // Ensure useEffect is dependent on `receiver`
+  
 
 // GET /feedbacks/find_feedback?gives_uid=1&receives_uid=2
 // http://localhost:3000/feedbacks/find_feedback?gives_uid=1&receives_uid=2
