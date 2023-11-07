@@ -113,5 +113,5 @@ feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "1", feedba
 feedback2 = Feedback.create(gives_uid: 2, receives_uid: 1, category: "1", feedback: 5)
 
 
-password1 = Password.create(test_user_id: 1, hashed_password: 1111)
-password2 = Password.create(test_user_id: 2, hashed_password: 1234)
+password1 = Password.create(test_user_id: 1, hashed_password: "1111")
+password2 = Password.create(test_user_id: 2, hashed_password: "1234")

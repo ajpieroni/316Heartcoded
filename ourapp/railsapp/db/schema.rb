@@ -61,7 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_04_113230) do
   end
 
   create_table "passwords", force: :cascade do |t|
-    t.bigint "test_user_id", null: false
+    t.string "test_user_id", null: false
     t.string "hashed_password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -92,6 +92,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_04_113230) do
     t.string "birthday"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "password_digest"
   end
 
   create_table "weights", force: :cascade do |t|

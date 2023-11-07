@@ -153,7 +153,7 @@ export default function FindMatch() {
           {/* <h1>{user?.name.split(" ")[0]}'s Current Matches</h1> */}
           <button onClick={newMatches}>New matches!</button>
           <div class="card-container">
-            {myMatches.map((matchUser) => (
+            {myMatches.length === 0 ?(<p>You have no matches, get some!</p>):(<>{myMatches.map((matchUser) => (
               <div key={matchUser.id} className="user-card">
                 <h2>{matchUser.name}</h2>
                 <p>Age: {calculateAge(matchUser.birthday)}</p>
@@ -186,7 +186,8 @@ export default function FindMatch() {
                   Unmatch
                 </button>
               </div>
-            ))}
+            ))}</>)}
+            
           </div>
         </>
       )}
