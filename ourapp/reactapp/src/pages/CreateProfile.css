@@ -20,3 +20,29 @@ label, input, select, textarea{
     outline: none;
     transition: border-color 0.3s, box-shadow 0.3s;
 }
+
+.profile-button{
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    /* background: linear-gradient(to right, #FBB6CE , #f0709d); */
+    background:white;
+    border-radius:9999px;
+    cursor:pointer;
+}
+
+.selected-flag {
+    display: inline-block;
+    background-color: #FBB6CE;
+    color: white;
+    font-weight:bold;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    margin: 5px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  
+  .selected-flag:hover {
+    background-color: #f97ba7;
+  }

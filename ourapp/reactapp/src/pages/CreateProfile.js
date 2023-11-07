@@ -1,104 +1,3 @@
-// import React, { useState, useEffect } from "react";
-// import "./UserLanding.css";
-// import axios from "axios";
-
-// export default function CreateProfile() {
-//   const [users, setUsers] = useState([]);
-//   const [searchTerm, setSearchTerm] = useState(""); 
-
-//   const fetchData = () => {
-//     fetch(`http://localhost:3000/test_users`)
-//       .then((response) => response.json())
-//       .then((data) => setUsers(data))
-//       .catch((error) => {
-//         console.error("Error fetching the question:", error);
-//       });
-//   };
-
-//   useEffect(() => {
-//     fetchData();
-//   }, []);
-
-//   const sortByName = () => {
-//     const sortedUsers = [...users].sort((a, b) => a.name.localeCompare(b.name));
-//     setUsers(sortedUsers);
-//   };
-
-//   const sortByBirthday = () => {
-//     const sortedUsers = [...users].sort((a, b) => {
-//       const dateA = new Date(a.birthday);
-//       const dateB = new Date(b.birthday);
-//       return dateA - dateB;
-//     });
-//     setUsers(sortedUsers);
-//   };
-
-//   // filter users based on the search term
-//   const filteredUsers = users.filter((user) =>
-//     user.name.toLowerCase().includes(searchTerm.toLowerCase())
-//   );
-
-// // export default function UserForm({ onUserAdded }) {
-// //   const [formData, setFormData] = useState({
-// //     name: "",
-// //     birthday: "",
-// //     bio: "",
-// //   });
-
-// //   const handleInputChange = (e) => {
-// //     const { name, value } = e.target;
-// //     setFormData({ ...formData, [name]: value });
-// //   };
-
-// //   const handleSubmit = async (e) => {
-// //     e.preventDefault();
-
-// //     try {
-// //       const response = await axios.post("http://localhost:3000/test_users", formData);
-// //       onUserAdded(response.data); // Update the user list with the new user
-// //       setFormData({ name: "", birthday: "", bio: "" }); // Clear the form
-// //     } catch (error) {
-// //       console.error("Error adding a new user:", error);
-// //     }
-// //   };
-
-//   return (
-//     <main className="main-container">
-  
-//       <h1>List of Users from Admin View</h1>
-//       {/* <Link to="/AddProfile">
-//           <div>
-//             <h2>Add Profile</h2>
-//             <p>Tell us about who you are so we can help you find good matches!</p>
-//           </div>
-//         </Link> */}
-//       <input
-//         type="text"
-//         placeholder="Search by name"
-//         value={searchTerm}
-//         onChange={(e) => setSearchTerm(e.target.value)}
-//       />
-//       <div className="button-container">
-//         <button onClick={sortByName}>Sort by Name</button>
-//         <button onClick={sortByBirthday}>Sort by Birthday</button>
-//       </div>
-//       <div className="card-container">
-//         {filteredUsers.length > 0 ? (
-//           filteredUsers.map((user) => (
-//             <div key={user.id} className="user-card">
-//               <h2>{user.name}</h2>
-//               <p>Birthday: {user.birthday}</p>
-//               <p>Bio: {user.bio}</p>
-//             </div>
-//           ))
-//         ) : (
-//           <p>No users found.</p>
-//         )}
-//       </div>
-//     </main>
-//   );
-// }
-
 import "./CreateProfile.css";
 import React, { useState, useEffect } from 'react';
 import { useContext } from "react";
@@ -115,7 +14,9 @@ export default function UserForm({ onUserAdded }) {
       birthday: user.birthday || '',
       bio: user.bio || '',
       location: user.location || '',
-      preferences: user.preferences || ''
+      preferences: user.preferences || '',
+      password: user.password || '',
+      red_flags: user.red_flags || []
     });
   
     useEffect(() => {
@@ -125,7 +26,9 @@ export default function UserForm({ onUserAdded }) {
         birthday: user.birthday || '',
         bio: user.bio || '',
         location: user.location || '',
-        preferences: user.preferences || ''
+        preferences: user.preferences || '',
+        password: user.password || '',
+        red_flags: user.red_flags || []
       });
     }, [user]);
 
@@ -168,7 +71,7 @@ export default function UserForm({ onUserAdded }) {
   };
   const handleStateSelected = (e) => {
     const selectedState = e.target.value;
-    setFormData({ ...formData, location: selectedState }); // Update the field name to 'location'
+    setFormData({ ...formData, location: selectedState });
   };
 
   const handleSubmit = async (e) => {
@@ -183,11 +86,36 @@ export default function UserForm({ onUserAdded }) {
         const response = await axios.post(`http://localhost:3000/test_users`, formData);
         onUserAdded(response.data);
       }
-      setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '' });
+      setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '', red_flags: [], password: '' });
       //setSuccessMessage("Form submitted successfully.");
     } catch (error) {
       console.error('Error adding a new user:', error);
     }
+  };
+
+  const [isPasswordUpdateVisible, setPasswordUpdateVisible] = useState(false);
+
+  const [selectedRedFlags, setSelectedRedFlags] = useState(user.red_flags || []);
+
+  const redFlagsOptions = [
+    "Vanity",
+    "Environmental Consciousness",
+    "Spirituality",
+    "Family",
+    "Career",
+    "Adventure",
+    "Trustfulness",
+    "Frugality",
+    "Sentimentality",
+    "Creativity",
+    "Traditionalism",
+    "Assertiveness"
+  ];
+
+  const handleRedFlagsChange = (e) => {
+    const selectedOptions = Array.from(e.target.selectedOptions, (option) => option.value);
+    setSelectedRedFlags(selectedOptions);
+    setFormData({ ...formData, red_flags: selectedOptions });
   };
 
   return (
@@ -254,7 +182,51 @@ export default function UserForm({ onUserAdded }) {
             onChange={handleInputChange}
           />
         </label>
-        <button type="submit">Submit Info</button>
+        <label>
+          What are your red flags?
+          <select
+            multiple
+            name="red_flags"
+            value={formData.red_flags}
+            onChange={handleRedFlagsChange}
+          >
+            {redFlagsOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </label>
+        <div>
+          {/* <p>Selected Red Flags:</p> */}
+          <div>
+            {selectedRedFlags.map((flag) => (
+              <div key={flag} className="selected-flag">
+                {flag}
+              </div>
+            ))}
+          </div>
+        </div>
+        <button className="profile-button"
+        type="button"
+        onClick={() => setPasswordUpdateVisible(!isPasswordUpdateVisible)}
+      >
+        Update password?
+      </button>
+      {isPasswordUpdateVisible && (
+        <label>
+          Update Password: 
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
+            // required
+          />
+        </label>
+        )}
+        <br></br>
+        <button className="profile-button" type="submit">Submit Info</button>
       </form>
     </div>
   );
