@@ -116,13 +116,14 @@ export default function Feedback({ feedbackForm }) {
         <h1>Feedback</h1>
         <h1>What is your feedback about {receiver?.name}?</h1>
 
-        <h1> {formData.feedback}</h1>
+        <h1> Feedback: {formData.feedback}</h1>
 
         <h1>User Feedback Form</h1>
-        <p> Hello {user?.name}, provide feedback about a specific user: {users.receiver} in category: 1</p>
+        {/* !TODO: make sure that you aren't heart<3coding category !!! allow a user to select */}
+        <p> Hello {user?.name.split(" ")[0]}, provide feedback about a specific user: {receiver?.name} in category: 1</p>
 
         <form onSubmit={handleSubmit}>
-          <label htmlFor="user_to_feedback">User to Provide Feedback About: {receiver?.username}</label>
+          <label htmlFor="user_to_feedback">User to Provide Feedback About: {receiver?.name.split(" ")[0]}</label>
 
           <br></br>
 
