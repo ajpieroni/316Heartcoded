@@ -52,7 +52,7 @@ export default function UserLogin() {
           setUser((prevUser) => ({ ...prevUser, ...data }));
           sessionStorage.setItem("user", JSON.stringify(data));
           navigate("/UserSignedIn");
-          setLogin(true);
+        setLogin(true);
           clearInputFields();
         } else {
           setErrorMessage("Invalid username or password. Please try again.");

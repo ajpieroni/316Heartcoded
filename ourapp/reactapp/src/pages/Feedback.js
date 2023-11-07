@@ -29,9 +29,10 @@ export default function Feedback({feedbackForm}) {
   }, [setUser]);
   // console.log("here's user", user);
 
+  
   const [users, setUsers] = useState({
-    receiver: 1,
-    sender: user?.id,
+    receiver: 0,
+    sender: 0,
   });
 
   // GET /feedbacks/find_feedback?gives_uid=1&receives_uid=2

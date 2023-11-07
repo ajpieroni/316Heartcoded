@@ -45,7 +45,7 @@ export default function SelectUserForFeedback({ feedbackForm }) {
   //     .then((data) => data.name)
   //     .catch((error) => console.error("Error fetching user:", error));
   // };
-
+  // !TODO: alex fix with loading whole user object
 
   fetch(`http://localhost:3000/matched_withs/users/${currentUser}`)
     .then((response) => response.json())
@@ -64,6 +64,7 @@ export default function SelectUserForFeedback({ feedbackForm }) {
     })
     .catch((error) => console.error("Error fetching matches:", error))
     .finally(()=> setLoading(false));
+
   return (
     <main className="main-container">
       <h1>Hi {user?.name}! Here are your current Matches</h1>

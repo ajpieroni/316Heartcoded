@@ -11,7 +11,7 @@ Weight.destroy_all
 Answer.destroy_all
 TestUser.destroy_all
 Feedback.destroy_all
-
+# *IF ERROR WITH NO SEEEDING: check test_users model for validation
 # This will ensure the primary key starts from 1 for each table
 ActiveRecord::Base.connection.reset_pk_sequence!('test_users')
 ActiveRecord::Base.connection.reset_pk_sequence!('questions')
@@ -108,6 +108,17 @@ match10 = MatchedWith.create(uid1: 2, uid2: 6, status: true, date: "11-11-2000")
 
 # Create sample feedback
 feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "1", feedback: 5)
+feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "2", feedback: 5)
+feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "3", feedback: 5)
+feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "4", feedback: 5)
+feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "5", feedback: 5)
+feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "6", feedback: 5)
+feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "7", feedback: 5)
+feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "8", feedback: 5)
+feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "9", feedback: 5)
+feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "10", feedback: 5)
+feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "11", feedback: 5)
+feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "12", feedback: 5)
 feedback2 = Feedback.create(gives_uid: 2, receives_uid: 1, category: "1", feedback: 5)
 
 
