@@ -125,7 +125,7 @@ export default function FindMatch() {
     setReciever(matchUser);
     console.log("reciever in feedback", reciever);
 
-    navigate("/Feedback", { state: { reciever: matchUser } });
+    navigate("/Feedback", { state: { receiver: matchUser } });
   }
 
   function calculateAge(birthDateString) {
