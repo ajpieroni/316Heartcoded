@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 import { useContext } from "react";
 import { UserContext } from "../components/contexts/UserContext";
+import { Link, useLocation } from "react-router-dom";
 import "./Feedback.css";
 import axios from "axios";
 
@@ -17,24 +18,44 @@ export default function Feedback({feedbackForm}) {
 
     return () => clearInterval(interval);
   }, []);
-  const [users, setUsers] = useState({
-    receiver: 0,
-    sender: 0,
-  });
 
-  const [feedback, setFeedback] = useState(0);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const myUID = parseInt(searchParams.get("myUID"));
+  const theirUID = parseInt(searchParams.get("theirUID"));
+
+  const { user, setUser } = useContext(UserContext);
+  const [receiver, setReceiver] = useState(null);
+
+  //GET http://localhost:3000/test_users/{theirUID}
+  useEffect(() => {
+    fetch(`http://localhost:3000/test_users/4`)
+      .then(response => response.json())
+      .then(data => {
+        setReceiver(data);
+      })
+      .catch(error => {
+        console.error("Error fetching receiver:", error);
+      });
+  }, []);
+
+
+  //const [feedback, setFeedback] = useState(0);
 
   const [formData, setFormData] = useState({
-    receives_uid: users.receiver,
-    gives_uid: users.sender,
-    feedback: feedback,
+    receives_uid: theirUID,
+    gives_uid: myUID,
+    feedback: 0,
     category: "",
   });
 
+
 // GET /feedbacks/find_feedback?gives_uid=1&receives_uid=2
 // http://localhost:3000/feedbacks/find_feedback?gives_uid=1&receives_uid=2
+
+  /*
   const fetchData = () => {
-    fetch(`http://localhost:3000/feedbacks/1`)
+    fetch(`http://localhost:3000/feedbacks/find_feedback?gives_uid=1&receives_uid=2`)
       .then((response) => response.json())
       .then((data) => {
         setUsers({
@@ -52,6 +73,7 @@ export default function Feedback({feedbackForm}) {
         console.error("Error fetching the feedback:", error);
       });
   };
+  */
 
   const handleCategoryChange = (e) => {
     const { name, value } = e.target;
@@ -84,33 +106,32 @@ export default function Feedback({feedbackForm}) {
     }
   };
 
-  const fetchUserNameById = (id) => {
-    return fetch(`http://localhost:3000/test_users/${id}`)
-        .then((response) => response.json())
-        .then((data) => data.name)
-        .catch((error) => console.error("Error fetching user:", error));
-  };
-
+  /*
   useEffect(() => {
     fetchData();
     console.log("users: ", users);
     console.log("formData: ", formData);
   }, []);
 
+  const fetchUserNameById = (id) => {
+    return fetch(`http://localhost:3000/test_users/${id}`)
+        .then((response) => response.json())
+        .then((data) => data.name)
+        .catch((error) => console.error("Error fetching user:", error));
+  };
+  */
+
   // set sender to user?.name
 
   return (
     <main className="main-container">
         <h1>Feedback</h1>
-        <h1>What is your feedback about {users.receiver}?</h1>
-
-        <h1> {formData.feedback}</h1>
+        <h1>Hello {user?.username}, provide feedback about a specific user: {receiver?.username}</h1>
 
         <h1>User Feedback Form</h1>
-        <p> Hello {users.sender}, provide feedback about a specific user: {users.receiver} in category: 1</p>
 
         <form onSubmit={handleSubmit}>
-          <label htmlFor="user_to_feedback">User to Provide Feedback About: {users.receiver}</label>
+          <label htmlFor="user_to_feedback">User to Provide Feedback About: {receiver?.username}</label>
 
           <br></br>
 

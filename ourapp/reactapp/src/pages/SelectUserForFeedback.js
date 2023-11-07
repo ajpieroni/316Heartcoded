@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default function SelectUserForFeedback({ feedbackForm }) {
-  const [matchNames, setMatchNames] = useState([]);
+  const [matchIds, setMatchIds] = useState([]);
   const { user, setUser } = useContext(UserContext);
   // const currentUser = user?.id;
   // const [currentName, setCurrentName] = useState("");
@@ -46,14 +46,13 @@ export default function SelectUserForFeedback({ feedbackForm }) {
     .then(async (matches) => {
       const myName = await fetchUserNameById(currentUser);
       setCurrentName(myName);
-      const names = [];
+      const ids = [];
       for (let match of matches) {
         const otherUserId =
           match.uid1 === currentUser ? match.uid2 : match.uid1;
-        const name = await fetchUserNameById(otherUserId);
-        names.push(name);
+        ids.push(otherUserId);
       }
-      setMatchNames(names);
+      setMatchIds(ids);
     })
     .catch((error) => console.error("Error fetching matches:", error))
     .finally(()=> setLoading(false));
@@ -63,9 +62,9 @@ export default function SelectUserForFeedback({ feedbackForm }) {
       {loading ? (<div className="loading">
             Loading{".".repeat(ellipsisDots)}
           </div>): ( <ul>
-        {matchNames.map((name, index) => (
-          <Link to="/Feedback" myUID={currentUser} theirUID={name}>
-            <li key={index}>{name}</li>
+        {matchIds.map((id, index) => (
+          <Link to={`/Feedback?myUID=${currentUser}&theirUID=${id}`}>
+            <li key={index}>{id}</li>
           </Link>
         ))}
       </ul>)}
