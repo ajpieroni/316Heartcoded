@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_23_180751) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_04_113230) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answers", force: :cascade do |t|
+    t.bigint "test_user_id", null: false
+    t.bigint "question_id", null: false
+    t.integer "answer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_answers_on_question_id"
+    t.index ["test_user_id"], name: "index_answers_on_test_user_id"
+  end
 
   create_table "categories", id: :serial, force: :cascade do |t|
     t.string "descriptor"
@@ -24,7 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_180751) do
     t.integer "gives_uid"
     t.integer "receives_uid"
     t.string "category"
-    t.string "feedback"
+    t.integer "feedback"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -33,7 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_180751) do
     t.integer "uid1"
     t.integer "uid2"
     t.boolean "status", null: false
-    t.string "date", null: false
+    t.string "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -51,7 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_180751) do
   end
 
   create_table "passwords", force: :cascade do |t|
-    t.bigint "test_user_id", null: false
+    t.string "test_user_id", null: false
     t.string "hashed_password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -60,9 +70,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_180751) do
 
   create_table "questions", force: :cascade do |t|
     t.string "question"
-    t.string "category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "category_id"
+    t.string "category"
+    t.index ["category_id"], name: "index_questions_on_category_id"
+  end
+
+  create_table "states", force: :cascade do |t|
+    t.string "name"
+    t.string "abbreviation"
   end
 
   create_table "test_users", force: :cascade do |t|
@@ -75,36 +92,26 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_180751) do
     t.string "birthday"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "password_digest"
   end
 
   create_table "weights", force: :cascade do |t|
+    t.bigint "test_user_id", null: false
+    t.bigint "category_id", null: false
+    t.float "weight"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "uid"
-    t.decimal "in_1", precision: 4, scale: 2, default: "5.0"
-    t.decimal "in_2", precision: 4, scale: 2, default: "5.0"
-    t.decimal "in_3", precision: 4, scale: 2, default: "5.0"
-    t.decimal "in_4", precision: 4, scale: 2, default: "5.0"
-    t.decimal "in_5", precision: 4, scale: 2, default: "5.0"
-    t.decimal "in_6", precision: 4, scale: 2, default: "5.0"
-    t.decimal "in_7", precision: 4, scale: 2, default: "5.0"
-    t.decimal "in_8", precision: 4, scale: 2, default: "5.0"
-    t.decimal "in_9", precision: 4, scale: 2, default: "5.0"
-    t.decimal "in_10", precision: 4, scale: 2, default: "5.0"
-    t.decimal "out_1", precision: 4, scale: 2, default: "5.0"
-    t.decimal "out_2", precision: 4, scale: 2, default: "5.0"
-    t.decimal "out_3", precision: 4, scale: 2, default: "5.0"
-    t.decimal "out_4", precision: 4, scale: 2, default: "5.0"
-    t.decimal "out_5", precision: 4, scale: 2, default: "5.0"
-    t.decimal "out_6", precision: 4, scale: 2, default: "5.0"
-    t.decimal "out_7", precision: 4, scale: 2, default: "5.0"
-    t.decimal "out_8", precision: 4, scale: 2, default: "5.0"
-    t.decimal "out_9", precision: 4, scale: 2, default: "5.0"
-    t.decimal "out_10", precision: 4, scale: 2, default: "5.0"
+    t.index ["category_id"], name: "index_weights_on_category_id"
+    t.index ["test_user_id"], name: "index_weights_on_test_user_id"
   end
 
+  add_foreign_key "answers", "questions"
+  add_foreign_key "answers", "test_users"
   add_foreign_key "matched_withs", "test_users", column: "uid1"
   add_foreign_key "matched_withs", "test_users", column: "uid2"
   add_foreign_key "messages", "test_users", column: "uid_receiver_id"
   add_foreign_key "messages", "test_users", column: "uid_sender_id"
+  add_foreign_key "questions", "categories"
+  add_foreign_key "weights", "categories"
+  add_foreign_key "weights", "test_users"
 end
