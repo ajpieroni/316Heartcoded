@@ -97,6 +97,6 @@ class TestUsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def test_user_params
-      params.require(:test_user).permit(:name, :join_date, :location, :bio, :gender, :preferences, :birthday, :password)
+      params.require(:test_user).permit(:name, :join_date, :location, :bio, :gender, :preferences, :birthday, :password, :red_flags => [])
     end
 end
