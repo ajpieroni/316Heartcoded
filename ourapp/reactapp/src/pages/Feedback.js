@@ -144,12 +144,21 @@ export default function Feedback({ feedbackForm }) {
 
           <label>
             Category
-            <input
-              type="text"
-              name="category"
-              value={formData.category}
-              onChange={handleCategoryChange}
-            />
+            <select name="category" value={formData.category} onChange={handleCategoryChange}>
+              <option value="">Select a category</option>
+              <option value="1">Vanity</option>
+              <option value="2">Environmental Consciousness</option>
+              <option value="3">Spirituality</option>
+              <option value="4">Family</option>
+              <option value="5">Career</option>
+              <option value="6">Adventure</option>
+              <option value="7">Trustfulness</option>
+              <option value="8">Frugality</option>
+              <option value="9">Sentimentality</option>
+              <option value="10">Creativity</option>
+              <option value="11">Traditionalism</option>
+              <option value="12">Assertiveness</option>
+            </select>
           </label>
           
           <input type="submit" value="Submit Feedback"/>
