@@ -80,6 +80,7 @@ export default function Feedback({ feedbackForm }) {
     }
   };
 
+
   const handleCategoryChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
