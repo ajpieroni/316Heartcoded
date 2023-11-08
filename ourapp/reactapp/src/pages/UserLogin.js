@@ -31,7 +31,7 @@ export default function UserLogin() {
     const willShowSignUp = !showSignUp;
     setShowSignUp(willShowSignUp);
     if (willShowSignUp) {
-      navigate("/CreateProfile");
+      navigate("/SignUp");
     } else {
       setShowSignIn(true);
     }
