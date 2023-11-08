@@ -93,6 +93,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_224535) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "password_digest"
+    t.string "password"
     t.string "red_flags", default: [], array: true
   end
 

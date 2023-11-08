@@ -1,5 +1,7 @@
-class AddRedFlagsToTestUsers < ActiveRecord::Migration[7.0]
+class AddRedFlagsToTestUsers < ActiveRecord::Migration[6.0]
   def change
-    add_column :test_users, :red_flags, :string, array: true, default: []
+    unless column_exists? :test_users, :red_flags
+      add_column :test_users, :red_flags, :string, array: true, default: []
+    end
   end
 end
