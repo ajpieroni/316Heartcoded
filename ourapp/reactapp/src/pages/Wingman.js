@@ -6,7 +6,7 @@ import axios from "axios";
 import "./Wingman.css"
 
 export default function Chat() {
-    const apiToken = process.env.REACT_APP_API_TOKEN;
+  const apiToken = process.env.REACT_APP_API_TOKEN;
   const [messages, setMessages] = useState([]);
   const { user, setUser } = useContext(UserContext);
   const [newMessage, setNewMessage] = useState("");
@@ -39,7 +39,7 @@ export default function Chat() {
         }
       };
       const response = await fetch("https://api-inference.huggingface.co/models/microsoft/DialoGPT-medium", {
-        headers: { Authorization: "Bearer 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" }, 
+        headers: { Authorization: `Bearer ${apiToken}` }, 
         method: "POST",
         body: JSON.stringify(data),
       });
