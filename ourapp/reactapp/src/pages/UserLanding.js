@@ -16,37 +16,37 @@ export default function UserLanding() {
   const [password, setPassword] = useState('');
   const [login, setLogin] = useState(false);
 
-  const initializeUser = () => {
-    console.log("pressed");
-    fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data && bcrypt.compareSync(password, data.password_digest)) {
-          setUser((prevUser) => ({
-            ...prevUser,
-            name: data.name,
-            id: data.id,
-            birthday: data.birthday,
-          }));
-          sessionStorage.setItem("user", JSON.stringify(data));
-          console.log("User authenticated successfully:", data);
-          setLogin(true);
-        } else {
-          console.log("Invalid username or password");
-          setError("Invalid username or password. Please try again.");
-        }
-      })
-      .catch((error) => {
-        console.error("Failed to initialize user:", error);
-      });
-    };
+  // const initializeUser = () => {
+  //   console.log("pressed");
+  //   fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       if (data && bcrypt.compareSync(password, data.password_digest)) {
+  //         setUser((prevUser) => ({
+  //           ...prevUser,
+  //           name: data.name,
+  //           id: data.id,
+  //           birthday: data.birthday,
+  //         }));
+  //         sessionStorage.setItem("user", JSON.stringify(data));
+  //         console.log("User authenticated successfully:", data);
+  //         setLogin(true);
+  //       } else {
+  //         console.log("Invalid username or password");
+  //         setError("Invalid username or password. Please try again.");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Failed to initialize user:", error);
+  //     });
+  //   };
 
-/*
+
   const initializeUser = () => {
     console.log("pressed");
     fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
@@ -63,6 +63,12 @@ export default function UserLanding() {
             name: data.name,
             id: data.id,
             birthday: data.birthday,
+            gender: data.gender,
+            preferences: data.preferences,
+            bio: data.bio,
+            location: data.location,
+            password_digest: data.password_digest,
+            red_flags: data.red_flags
           }));
           sessionStorage.setItem("user", JSON.stringify(data));
           console.log("here is data", data);
@@ -86,7 +92,6 @@ export default function UserLanding() {
     }
   }, []);
 
-  */
 
   // const fetchQuestion = () => {
   //   fetch(`http://localhost:3000/questions/1`)
@@ -163,7 +168,7 @@ export default function UserLanding() {
       <div className="features">
         <Link to="/CreateProfile">
           <div className="feature-card">
-            <h2>Create Profile</h2>
+            <h2>Edit Profile</h2>
             <p>
               Personalize your space. Add a profile picture, write a bio, and
               list your interests for potential matches to see.
@@ -215,3 +220,4 @@ export default function UserLanding() {
     </main>
   );
 }
+

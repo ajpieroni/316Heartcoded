@@ -6,4 +6,6 @@ class TestUser < ApplicationRecord
         Message.where("uid_sender_id = :id OR uid_receiver_id = :id", id: id)
       end
 
+    attribute :red_flags, :string, array: true
+
 end

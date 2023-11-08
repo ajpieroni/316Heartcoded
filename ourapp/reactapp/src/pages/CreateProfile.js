@@ -1,167 +1,61 @@
-// import React, { useState, useEffect } from "react";
-// import "./UserLogin.css";
-// import axios from "axios";
-
-// export default function CreateProfile() {
-//   const [users, setUsers] = useState([]);
-//   const [searchTerm, setSearchTerm] = useState(""); 
-
-//   const fetchData = () => {
-//     fetch(`http://localhost:3000/test_users`)
-//       .then((response) => response.json())
-//       .then((data) => setUsers(data))
-//       .catch((error) => {
-//         console.error("Error fetching the question:", error);
-//       });
-//   };
-
-//   useEffect(() => {
-//     fetchData();
-//   }, []);
-
-//   const sortByName = () => {
-//     const sortedUsers = [...users].sort((a, b) => a.name.localeCompare(b.name));
-//     setUsers(sortedUsers);
-//   };
-
-//   const sortByBirthday = () => {
-//     const sortedUsers = [...users].sort((a, b) => {
-//       const dateA = new Date(a.birthday);
-//       const dateB = new Date(b.birthday);
-//       return dateA - dateB;
-//     });
-//     setUsers(sortedUsers);
-//   };
-
-//   // filter users based on the search term
-//   const filteredUsers = users.filter((user) =>
-//     user.name.toLowerCase().includes(searchTerm.toLowerCase())
-//   );
-
-// // export default function UserForm({ onUserAdded }) {
-// //   const [formData, setFormData] = useState({
-// //     name: "",
-// //     birthday: "",
-// //     bio: "",
-// //   });
-
-// //   const handleInputChange = (e) => {
-// //     const { name, value } = e.target;
-// //     setFormData({ ...formData, [name]: value });
-// //   };
-
-// //   const handleSubmit = async (e) => {
-// //     e.preventDefault();
-
-// //     try {
-// //       const response = await axios.post("http://localhost:3000/test_users", formData);
-// //       onUserAdded(response.data); // Update the user list with the new user
-// //       setFormData({ name: "", birthday: "", bio: "" }); // Clear the form
-// //     } catch (error) {
-// //       console.error("Error adding a new user:", error);
-// //     }
-// //   };
-
-//   return (
-//     <main className="main-container">
-  
-//       <h1>List of Users from Admin View</h1>
-//       {/* <Link to="/AddProfile">
-//           <div>
-//             <h2>Add Profile</h2>
-//             <p>Tell us about who you are so we can help you find good matches!</p>
-//           </div>
-//         </Link> */}
-//       <input
-//         type="text"
-//         placeholder="Search by name"
-//         value={searchTerm}
-//         onChange={(e) => setSearchTerm(e.target.value)}
-//       />
-//       <div className="button-container">
-//         <button onClick={sortByName}>Sort by Name</button>
-//         <button onClick={sortByBirthday}>Sort by Birthday</button>
-//       </div>
-//       <div className="card-container">
-//         {filteredUsers.length > 0 ? (
-//           filteredUsers.map((user) => (
-//             <div key={user.id} className="user-card">
-//               <h2>{user.name}</h2>
-//               <p>Birthday: {user.birthday}</p>
-//               <p>Bio: {user.bio}</p>
-//             </div>
-//           ))
-//         ) : (
-//           <p>No users found.</p>
-//         )}
-//       </div>
-//     </main>
-//   );
-// }
-
+import "./CreateProfile.css";
 import React, { useState, useEffect } from 'react';
 import { useContext } from "react";
 import axios from 'axios';
-import { UserContext } from "../components/contexts/UserContext";
+import SuccessModal from "../components/SuccessModal";
 
-
-function StatesList({ onStateSelected }) {
-  const [states, setStates] = useState([]);
-
-  useEffect(() => {
-    axios.get('http://localhost:3000/states')
-      .then(response => {
-        setStates(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching states:', error);
-      });
-  }, []);
-
-  return (
-    <div>
-      <label>
-        Select Your Location<span style={{ color: 'red' }}>*</span>: 
-        <select onChange={onStateSelected}>
-          <option value="">Select a state</option>
-          {states.map(state => (
-            <option key={state.id} value={state.name}>
-              {state.name}
-            </option>
-          ))}
-        </select>
-      </label>
-    </div>
-  );
-}
 
 export default function UserForm({ onUserAdded }) {
 
-    const { user, setUser } = useContext(UserContext);
-    const currentUser = user?.location;
-    console.log("currentUser",currentUser);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
-    const initialFormData = user
-    ? {
-        name: user.name || '',
-        gender: user.gender || '',
-        birthday: user.birthday || '',
-        bio: user.bio || '',
-        location: user.location || ''
-      }
-    : {
-        name: '',
-        gender: '',
-        birthday: '',
-        bio: '',
-        location: ''
-      };
-
-  
-  const [formData, setFormData] = useState(initialFormData);
+  const handleSuccessModalClose = () => {
+    setIsSuccessModalOpen(false);
+  };
 
 
-  console.log("testing passing name",formData.name);
+  const [formData, setFormData] = useState({
+    name: '',
+    gender: '',
+    birthday: '',
+    bio: '',
+    location: '',
+    preferences: '',
+    password_digest: '',
+    red_flags: []
+  });
+
+
+    function StatesList({ onStateSelected }) {
+      const [states, setStates] = useState([]);
+    
+      useEffect(() => {
+        axios.get('http://localhost:3000/states')
+          .then(response => {
+            setStates(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching states:', error);
+          });
+      }, []);
+    
+      return (
+        <div>
+          <label>
+            Select Your Location<span style={{ color: 'red' }}>*</span>: 
+            <select onChange={onStateSelected} required value={formData.location}>
+              <option value="">Select a state</option>
+              {states.map(state => (
+                <option key={state.id} value={state.name}>
+                  {state.name}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+      );
+    }
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -169,25 +63,53 @@ export default function UserForm({ onUserAdded }) {
   };
   const handleStateSelected = (e) => {
     const selectedState = e.target.value;
-    setFormData({ ...formData, location: selectedState }); // Update the field name to 'location'
+    setFormData({ ...formData, location: selectedState });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/test_users", formData);
-      onUserAdded(response.data); // Update the user list with the new user
-      setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '' });
-      //setSuccessMessage("Form submitted successfully.");
+      const response = await axios.post(`http://localhost:3000/test_users`, formData);
+      onUserAdded(response.data);
+      setIsSuccessModalOpen(true);
+      setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '', red_flags: [], password_digest: '' });
     } catch (error) {
+      setIsSuccessModalOpen(true);
       console.error('Error adding a new user:', error);
     }
   };
 
+  //const [isPasswordUpdateVisible, setPasswordUpdateVisible] = useState(false);
+
+  const [selectedRedFlags, setSelectedRedFlags] = useState([]);
+
+  const redFlagsOptions = [
+    "Vanity",
+    "Environmental Consciousness",
+    "Spirituality",
+    "Family",
+    "Career",
+    "Adventure",
+    "Trustfulness",
+    "Frugality",
+    "Sentimentality",
+    "Creativity",
+    "Traditionalism",
+    "Assertiveness"
+  ];
+
+  const handleRedFlagsChange = (e) => {
+    const selectedOptions = Array.from(e.target.selectedOptions, (option) => option.value);
+    setSelectedRedFlags(selectedOptions);
+    console.log(selectedOptions);
+    setFormData({ ...formData, red_flags: selectedOptions });
+    console.log(formData);
+  };
+
   return (
     <div className="user-form">
-      <h2>Add New User</h2>
+      <h2>Welcome to HeartCoded</h2>
       <form onSubmit={handleSubmit}>
         <label>
           Name<span style={{ color: 'red' }}>*</span>: 
@@ -215,18 +137,6 @@ export default function UserForm({ onUserAdded }) {
           </select>
         </label>
 
-        {formData.gender === 'other' && (
-          <label>
-            Please self describe your gender: 
-            <input
-              type="text"
-              name="otherGender"
-              value={formData.otherGender}
-              onChange={handleInputChange}
-              required
-            />
-          </label>
-        )}
         <label>
           Birthday<span style={{ color: 'red' }}>*</span>: 
           <input
@@ -261,7 +171,52 @@ export default function UserForm({ onUserAdded }) {
             onChange={handleInputChange}
           />
         </label>
-        <button type="submit">Add User</button>
+        <label>
+          What are your red flags?
+          <select
+            multiple
+            name="red_flags"
+            value={formData.red_flags}
+            onChange={handleRedFlagsChange}
+          >
+            {redFlagsOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </label>
+        <div>
+          {/* <p>Selected Red Flags:</p> */}
+          <div>
+            {selectedRedFlags.map((flag) => (
+              <div key={flag} className="selected-flag">
+                {flag}
+              </div>
+            ))}
+          </div>
+        </div>
+      <label>
+          Enter Password<span style={{ color: 'red' }}>*</span>:
+          <input
+            type="password"
+            name="password_digest"
+            value={formData.password_digest}
+            onChange={handleInputChange}
+            required
+          />
+      </label>
+
+        <br></br>
+        <button className="profile-button" type="submit">Submit Info</button>
+
+        {isSuccessModalOpen && (
+        <SuccessModal
+          message="Your information was successfully submitted."
+          onClose={handleSuccessModalClose}
+          redirectUrl="/"
+        />
+      )}
       </form>
     </div>
   );
