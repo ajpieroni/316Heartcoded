@@ -24,7 +24,7 @@ export default function Questions() {
   // setUser(user);
   const fetchQuestion = () => {
     axios
-      .get(`http://localhost:3000/questions/unanswered_questions/${user.id}`) 
+      .get(`http://localhost:3000/unanswered_questions/${user.id}`) 
       //TODO: maybe put the logic in the backend
       .then((response) => {
         console.log("response:", response.data.length);
