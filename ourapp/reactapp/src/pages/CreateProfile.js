@@ -15,7 +15,7 @@ export default function UserForm({ onUserAdded }) {
       bio: user.bio || '',
       location: user.location || '',
       preferences: user.preferences || '',
-      password: user.password || '',
+      password_digest: user.password_digest || '',
       red_flags: user.red_flags || []
     });
   
@@ -27,7 +27,7 @@ export default function UserForm({ onUserAdded }) {
         bio: user.bio || '',
         location: user.location || '',
         preferences: user.preferences || '',
-        password: user.password || '',
+        password_digest: user.password_digest || '',
         red_flags: user.red_flags || []
       });
     }, [user]);
@@ -86,7 +86,7 @@ export default function UserForm({ onUserAdded }) {
         const response = await axios.post(`http://localhost:3000/test_users`, formData);
         onUserAdded(response.data);
       }
-      setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '', red_flags: [], password: '' });
+      setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '', red_flags: [], password_digest: '' });
       //setSuccessMessage("Form submitted successfully.");
     } catch (error) {
       console.error('Error adding a new user:', error);
@@ -115,7 +115,9 @@ export default function UserForm({ onUserAdded }) {
   const handleRedFlagsChange = (e) => {
     const selectedOptions = Array.from(e.target.selectedOptions, (option) => option.value);
     setSelectedRedFlags(selectedOptions);
+    console.log(selectedOptions);
     setFormData({ ...formData, red_flags: selectedOptions });
+    console.log(formData);
   };
 
   return (
@@ -218,8 +220,8 @@ export default function UserForm({ onUserAdded }) {
           Update Password: 
           <input
             type="password"
-            name="password"
-            value={formData.password}
+            name="password_digest"
+            value={formData.password_digest}
             onChange={handleInputChange}
             // required
           />

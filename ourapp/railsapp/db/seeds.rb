@@ -20,7 +20,7 @@ ActiveRecord::Base.connection.reset_pk_sequence!('feedbacks')
 
 # *Create sample users
 
-user1 = TestUser.create(name: "Jacob Lee", join_date: Date.today, location: "Maryland", bio: "hi my name is Jacob hello", gender: "M", preferences: "F", birthday: "2003-06-03", red_flags:["vanity"])
+user1 = TestUser.create(name: "Jacob Lee", join_date: Date.today, location: "Maryland", bio: "hi my name is Jacob hello", gender: "M", preferences: "F", birthday: "2003-06-03", password_digest:"1", red_flags:["vanity"])
 user2 = TestUser.create(name: "Linda Wang", join_date: Date.today, location: "California", bio: "hello this is Linda", gender: "F", preferences: "M", birthday: "2004-03-14")
 user3 = TestUser.create(name: "Eileen Cai", join_date: Date.today, location: "California", bio: "hi my name is Eileen", gender: "F", preferences: "M", birthday: "2004-08-15")
 user4 = TestUser.create(name: "Anna Zhang", join_date: Date.today, location: "New Jersey", bio: "hi there this is Anna", gender: "F", preferences: "M", birthday: "2003-10-29")

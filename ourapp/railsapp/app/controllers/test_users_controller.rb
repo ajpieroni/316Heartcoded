@@ -78,6 +78,7 @@ class TestUsersController < ApplicationController
       end
     end
   end
+  
 
   # DELETE /test_users/1 or /test_users/1.json
   def destroy
@@ -97,6 +98,6 @@ class TestUsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def test_user_params
-      params.require(:test_user).permit(:name, :join_date, :location, :bio, :gender, :preferences, :birthday, :password, :red_flags => [])
+      params.require(:test_user).permit(:name, :join_date, :location, :bio, :gender, :preferences, :birthday, :password_digest, red_flags: [])
     end
 end

@@ -36,7 +36,7 @@ export default function UserLanding() {
             preferences: data.preferences,
             bio: data.bio,
             location: data.location,
-            password: data.password,
+            password_digest: data.password_digest,
             red_flags: data.red_flags
           }));
           sessionStorage.setItem("user", JSON.stringify(data));
@@ -127,7 +127,7 @@ export default function UserLanding() {
         state: { data: user }
       }}>
           <div className="feature-card">
-            <h2>Create Profile</h2>
+            <h2>Edit Profile</h2>
             <p>
               Personalize your space. Add a profile picture, write a bio, and
               list your interests for potential matches to see.
