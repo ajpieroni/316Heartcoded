@@ -33,7 +33,8 @@ export default function UserLanding() {
     })
     .then(response => {
       console.log(response.data);
-      setSuccessMessage("Account successfully created. Please log in and initialize your profile");
+      const message = "Account successfully created. Click here to <a href='/CreateProfile'>initialize profile</a>";
+      setSuccessMessage(message);    
     })
     .catch(error => {
       console.error(error.response.data);
@@ -78,7 +79,10 @@ export default function UserLanding() {
             Sign Up
           </button>
         </div>
-          {successMessage && <p>{successMessage}</p>}
+        {successMessage && (
+        <p dangerouslySetInnerHTML={{ __html: successMessage }}></p>
+      )}
+
       </div>
     </main>
   );
