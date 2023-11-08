@@ -7,30 +7,17 @@ import { UserContext } from "../components/contexts/UserContext";
 
 export default function UserForm({ onUserAdded }) {
 
-    const { user } = useContext(UserContext);
-    const [formData, setFormData] = useState({
-      name: user.name || '',
-      gender: user.gender || '',
-      birthday: user.birthday || '',
-      bio: user.bio || '',
-      location: user.location || '',
-      preferences: user.preferences || '',
-      password_digest: user.password_digest || '',
-      red_flags: user.red_flags || []
-    });
-  
-    useEffect(() => {
-      setFormData({
-        name: user.name || '',
-        gender: user.gender || '',
-        birthday: user.birthday || '',
-        bio: user.bio || '',
-        location: user.location || '',
-        preferences: user.preferences || '',
-        password_digest: user.password_digest || '',
-        red_flags: user.red_flags || []
-      });
-    }, [user]);
+  const [formData, setFormData] = useState({
+    name: '',
+    gender: '',
+    birthday: '',
+    bio: '',
+    location: '',
+    preferences: '',
+    password_digest: '',
+    red_flags: []
+  });
+
 
     function StatesList({ onStateSelected }) {
       const [states, setStates] = useState([]);
@@ -62,8 +49,6 @@ export default function UserForm({ onUserAdded }) {
       );
     }
 
-  const url = `http://localhost:3000/test_users/${user.id}`;
-  console.log('PATCH URL:', url);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -78,16 +63,9 @@ export default function UserForm({ onUserAdded }) {
     e.preventDefault();
 
     try {
-      if (user.id){
-        const response = await axios.patch(`http://localhost:3000/test_users/${user.id}`, formData);
-        onUserAdded(response.data);
-      }
-      else{
-        const response = await axios.post(`http://localhost:3000/test_users`, formData);
-        onUserAdded(response.data);
-      }
+      const response = await axios.post(`http://localhost:3000/test_users`, formData);
+      onUserAdded(response.data);
       setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '', red_flags: [], password_digest: '' });
-      //setSuccessMessage("Form submitted successfully.");
     } catch (error) {
       console.error('Error adding a new user:', error);
     }
@@ -95,7 +73,7 @@ export default function UserForm({ onUserAdded }) {
 
   const [isPasswordUpdateVisible, setPasswordUpdateVisible] = useState(false);
 
-  const [selectedRedFlags, setSelectedRedFlags] = useState(user.red_flags || []);
+  const [selectedRedFlags, setSelectedRedFlags] = useState([]);
 
   const redFlagsOptions = [
     "Vanity",
@@ -122,7 +100,7 @@ export default function UserForm({ onUserAdded }) {
 
   return (
     <div className="user-form">
-      <h2>Nice to see you, {user.name.split(' ')[0]}!</h2>
+      <h2>Welcome to HeartCoded</h2>
       <form onSubmit={handleSubmit}>
         <label>
           Name<span style={{ color: 'red' }}>*</span>: 
