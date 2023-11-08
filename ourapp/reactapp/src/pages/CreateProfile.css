@@ -29,6 +29,11 @@ label, input, select, textarea{
     background:white;
     border-radius:9999px;
     cursor:pointer;
+    color:black;
+}
+
+.profile-button:hover{
+    background-color: #F87171;
 }
 
 .selected-flag {

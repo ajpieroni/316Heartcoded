@@ -16,37 +16,37 @@ export default function UserLanding() {
   const [password, setPassword] = useState('');
   const [login, setLogin] = useState(false);
 
-  const initializeUser = () => {
-    console.log("pressed");
-    fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data && bcrypt.compareSync(password, data.password_digest)) {
-          setUser((prevUser) => ({
-            ...prevUser,
-            name: data.name,
-            id: data.id,
-            birthday: data.birthday,
-          }));
-          sessionStorage.setItem("user", JSON.stringify(data));
-          console.log("User authenticated successfully:", data);
-          setLogin(true);
-        } else {
-          console.log("Invalid username or password");
-          setError("Invalid username or password. Please try again.");
-        }
-      })
-      .catch((error) => {
-        console.error("Failed to initialize user:", error);
-      });
-    };
+  // const initializeUser = () => {
+  //   console.log("pressed");
+  //   fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       if (data && bcrypt.compareSync(password, data.password_digest)) {
+  //         setUser((prevUser) => ({
+  //           ...prevUser,
+  //           name: data.name,
+  //           id: data.id,
+  //           birthday: data.birthday,
+  //         }));
+  //         sessionStorage.setItem("user", JSON.stringify(data));
+  //         console.log("User authenticated successfully:", data);
+  //         setLogin(true);
+  //       } else {
+  //         console.log("Invalid username or password");
+  //         setError("Invalid username or password. Please try again.");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Failed to initialize user:", error);
+  //     });
+  //   };
 
-/*
+
   const initializeUser = () => {
     console.log("pressed");
     fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
@@ -92,7 +92,6 @@ export default function UserLanding() {
     }
   }, []);
 
-  */
 
   // const fetchQuestion = () => {
   //   fetch(`http://localhost:3000/questions/1`)
