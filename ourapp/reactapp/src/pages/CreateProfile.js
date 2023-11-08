@@ -2,10 +2,17 @@ import "./CreateProfile.css";
 import React, { useState, useEffect } from 'react';
 import { useContext } from "react";
 import axios from 'axios';
-import { UserContext } from "../components/contexts/UserContext";
+import SuccessModal from "../components/SuccessModal";
 
 
 export default function UserForm({ onUserAdded }) {
+
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+
+  const handleSuccessModalClose = () => {
+    setIsSuccessModalOpen(false);
+  };
+
 
   const [formData, setFormData] = useState({
     name: '',
@@ -65,8 +72,10 @@ export default function UserForm({ onUserAdded }) {
     try {
       const response = await axios.post(`http://localhost:3000/test_users`, formData);
       onUserAdded(response.data);
+      setIsSuccessModalOpen(true);
       setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '', red_flags: [], password_digest: '' });
     } catch (error) {
+      setIsSuccessModalOpen(true);
       console.error('Error adding a new user:', error);
     }
   };
@@ -188,7 +197,7 @@ export default function UserForm({ onUserAdded }) {
           </div>
         </div>
       <label>
-          Enter Password:
+          Enter Password<span style={{ color: 'red' }}>*</span>:
           <input
             type="password"
             name="password_digest"
@@ -200,6 +209,14 @@ export default function UserForm({ onUserAdded }) {
 
         <br></br>
         <button className="profile-button" type="submit">Submit Info</button>
+
+        {isSuccessModalOpen && (
+        <SuccessModal
+          message="Your information was successfully submitted."
+          onClose={handleSuccessModalClose}
+          redirectUrl="/"
+        />
+      )}
       </form>
     </div>
   );
