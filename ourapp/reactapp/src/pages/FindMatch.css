@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+.main-container {
+    padding: 20px;
+    font-family: 'Open Sans', sans-serif;
+    /* max-width: 1200px; */
+    /* margin: auto; */
+    /* background-color: #f5f5f5; */
+  }
+  .loading{
+    min-height: 100vh;
+    background-color: transparent;
+    font-size: 16px;
+  }
+  .welcome-message {
+    text-align: center;
+    color: white;
+    margin-top: 2rem;
+    font-size: 2rem;
+}
+  .card-container {
+    /* background-color: red; */
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    justify-content: space-evenly;
+  }
+  .main-container h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .user-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 70px;
+    background-color: #fff;
+    position: relative;
+    max-width: 250px;
+    width: 100%;
+  }
+  .unmatch-button {
+    /* position: absolute;  */
+    bottom: 10px; 
+    left: 20px; 
+    right: 20px; 
+    width: calc(100% - 40px)
+}
+  
+  .user-card h2 {
+    color: #555;
+    margin: 0 0 10px 0;
+  }
+  
+  .user-card p {
+    color: #666;
+    margin: 5px 0;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .ChatIcon {
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: #007bff;
+  }
+  
+  .ChatIcon:hover {
+    color: #0056b3;
+  }
+  

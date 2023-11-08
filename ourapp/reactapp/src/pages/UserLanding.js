@@ -3,19 +3,50 @@ import "./UserLanding.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { UserContext } from "../components/contexts/UserContext";
+import bcrypt from 'bcryptjs';
 
-import ForgotPassword from "./ForgotPassword";
-import CreateProfile from "./CreateProfile.js";
+
 
 export default function UserLanding() {
   const [question, setQuestion] = useState("UNINIT");
   const [testUser, setTestUser] = useState("UNINIT");
-
-  const { user, setUser } = useContext(UserContext);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const {user,setUser} = useContext(UserContext);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [login, setLogin] = useState(false);
 
+  const initializeUser = () => {
+    console.log("pressed");
+    fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data && bcrypt.compareSync(password, data.password_digest)) {
+          setUser((prevUser) => ({
+            ...prevUser,
+            name: data.name,
+            id: data.id,
+            birthday: data.birthday,
+          }));
+          sessionStorage.setItem("user", JSON.stringify(data));
+          console.log("User authenticated successfully:", data);
+          setLogin(true);
+        } else {
+          console.log("Invalid username or password");
+          setError("Invalid username or password. Please try again.");
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to initialize user:", error);
+      });
+    };
+
+/*
   const initializeUser = () => {
     console.log("pressed");
     fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
@@ -60,6 +91,8 @@ export default function UserLanding() {
       setLogin(true);
     }
   }, []);
+
+  */
 
   // const fetchQuestion = () => {
   //   fetch(`http://localhost:3000/questions/1`)
@@ -107,25 +140,34 @@ export default function UserLanding() {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter Password"
           />
+
+          <Link to="/ForgotPassword">
+            Forgot Password?
+          </Link>
+
           <button className="user-init-button" onClick={initializeUser}>
-            Initialize User
+            Sign In
           </button>
+          
+          <Link to ='/SignUp'>
+            Don't have an account yet? Sign up now
+          </Link>
+          
+          {error && <p className="error-message">{error}</p>}
 
-          <ForgotPassword />
-
-          <h2>
-            {login
-              ? `Logged in as: ${user?.name}, Birthday: ${user?.birthday}, ID: ${user?.id}`
-              : "Not Logged In"}
+          {/* <h2> */}
+            <h2>
+              {login
+                ? `Logged in as: ${user?.name}, Birthday: ${user?.birthday}, ID: ${user?.id}`
+                : "Not Logged In"}
+            {/* </h2> */}
           </h2>
+
         </div>
       </div>
 
       <div className="features">
-      <Link to={{
-        pathname: '/CreateProfile',
-        state: { data: user }
-      }}>
+        <Link to="/CreateProfile">
           <div className="feature-card">
             <h2>Edit Profile</h2>
             <p>
