@@ -1,68 +1,69 @@
-
-
+import "./CreateProfile.css";
 import React, { useState, useEffect } from 'react';
 import { useContext } from "react";
 import axios from 'axios';
 import { UserContext } from "../components/contexts/UserContext";
 
 
-function StatesList({ onStateSelected }) {
-  const [states, setStates] = useState([]);
-
-  useEffect(() => {
-    axios.get('http://localhost:3000/states')
-      .then(response => {
-        setStates(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching states:', error);
-      });
-  }, []);
-
-  return (
-    <div>
-      <label>
-        Select Your Location<span style={{ color: 'red' }}>*</span>: 
-        <select onChange={onStateSelected}>
-          <option value="">Select a state</option>
-          {states.map(state => (
-            <option key={state.id} value={state.name}>
-              {state.name}
-            </option>
-          ))}
-        </select>
-      </label>
-    </div>
-  );
-}
-
 export default function UserForm({ onUserAdded }) {
 
-    const { user, setUser } = useContext(UserContext);
-    const currentUser = user?.location;
-    console.log("currentUser",currentUser);
-
-    const initialFormData = user
-    ? {
+    const { user } = useContext(UserContext);
+    const [formData, setFormData] = useState({
+      name: user.name || '',
+      gender: user.gender || '',
+      birthday: user.birthday || '',
+      bio: user.bio || '',
+      location: user.location || '',
+      preferences: user.preferences || '',
+      password_digest: user.password_digest || '',
+      red_flags: user.red_flags || []
+    });
+  
+    useEffect(() => {
+      setFormData({
         name: user.name || '',
         gender: user.gender || '',
         birthday: user.birthday || '',
         bio: user.bio || '',
-        location: user.location || ''
-      }
-    : {
-        name: '',
-        gender: '',
-        birthday: '',
-        bio: '',
-        location: ''
-      };
+        location: user.location || '',
+        preferences: user.preferences || '',
+        password_digest: user.password_digest || '',
+        red_flags: user.red_flags || []
+      });
+    }, [user]);
 
-  
-  const [formData, setFormData] = useState(initialFormData);
+    function StatesList({ onStateSelected }) {
+      const [states, setStates] = useState([]);
+    
+      useEffect(() => {
+        axios.get('http://localhost:3000/states')
+          .then(response => {
+            setStates(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching states:', error);
+          });
+      }, []);
+    
+      return (
+        <div>
+          <label>
+            Select Your Location<span style={{ color: 'red' }}>*</span>: 
+            <select onChange={onStateSelected} required value={formData.location}>
+              <option value="">Select a state</option>
+              {states.map(state => (
+                <option key={state.id} value={state.name}>
+                  {state.name}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+      );
+    }
 
-
-  console.log("testing passing name",formData.name);
+  const url = `http://localhost:3000/test_users/${user.id}`;
+  console.log('PATCH URL:', url);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -70,25 +71,58 @@ export default function UserForm({ onUserAdded }) {
   };
   const handleStateSelected = (e) => {
     const selectedState = e.target.value;
-    setFormData({ ...formData, location: selectedState }); // Update the field name to 'location'
+    setFormData({ ...formData, location: selectedState });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/test_users", formData);
-      onUserAdded(response.data); // Update the user list with the new user
-      setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '' });
+      if (user.id){
+        const response = await axios.patch(`http://localhost:3000/test_users/${user.id}`, formData);
+        onUserAdded(response.data);
+      }
+      else{
+        const response = await axios.post(`http://localhost:3000/test_users`, formData);
+        onUserAdded(response.data);
+      }
+      setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '', red_flags: [], password_digest: '' });
       //setSuccessMessage("Form submitted successfully.");
     } catch (error) {
       console.error('Error adding a new user:', error);
     }
   };
 
+  const [isPasswordUpdateVisible, setPasswordUpdateVisible] = useState(false);
+
+  const [selectedRedFlags, setSelectedRedFlags] = useState(user.red_flags || []);
+
+  const redFlagsOptions = [
+    "Vanity",
+    "Environmental Consciousness",
+    "Spirituality",
+    "Family",
+    "Career",
+    "Adventure",
+    "Trustfulness",
+    "Frugality",
+    "Sentimentality",
+    "Creativity",
+    "Traditionalism",
+    "Assertiveness"
+  ];
+
+  const handleRedFlagsChange = (e) => {
+    const selectedOptions = Array.from(e.target.selectedOptions, (option) => option.value);
+    setSelectedRedFlags(selectedOptions);
+    console.log(selectedOptions);
+    setFormData({ ...formData, red_flags: selectedOptions });
+    console.log(formData);
+  };
+
   return (
     <div className="user-form">
-      <h2>Edit Current Profile NEEDS TO BE IMPLEMENTED</h2>
+      <h2>Nice to see you, {user.name.split(' ')[0]}!</h2>
       <form onSubmit={handleSubmit}>
         <label>
           Name<span style={{ color: 'red' }}>*</span>: 
@@ -116,18 +150,6 @@ export default function UserForm({ onUserAdded }) {
           </select>
         </label>
 
-        {formData.gender === 'other' && (
-          <label>
-            Please self describe your gender: 
-            <input
-              type="text"
-              name="otherGender"
-              value={formData.otherGender}
-              onChange={handleInputChange}
-              required
-            />
-          </label>
-        )}
         <label>
           Birthday<span style={{ color: 'red' }}>*</span>: 
           <input
@@ -162,7 +184,51 @@ export default function UserForm({ onUserAdded }) {
             onChange={handleInputChange}
           />
         </label>
-        <button type="submit">Update Profile</button>
+        <label>
+          What are your red flags?
+          <select
+            multiple
+            name="red_flags"
+            value={formData.red_flags}
+            onChange={handleRedFlagsChange}
+          >
+            {redFlagsOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </label>
+        <div>
+          {/* <p>Selected Red Flags:</p> */}
+          <div>
+            {selectedRedFlags.map((flag) => (
+              <div key={flag} className="selected-flag">
+                {flag}
+              </div>
+            ))}
+          </div>
+        </div>
+        <button className="profile-button"
+        type="button"
+        onClick={() => setPasswordUpdateVisible(!isPasswordUpdateVisible)}
+      >
+        Update password?
+      </button>
+      {isPasswordUpdateVisible && (
+        <label>
+          Update Password: 
+          <input
+            type="password"
+            name="password_digest"
+            value={formData.password_digest}
+            onChange={handleInputChange}
+            // required
+          />
+        </label>
+        )}
+        <br></br>
+        <button className="profile-button" type="submit">Submit Info</button>
       </form>
     </div>
   );
