@@ -22,7 +22,6 @@ Rails.application.routes.draw do
     end
     collection do
       get 'find_by_username/:name', to: 'test_users#find_by_username'
-      get 'unanswered_questions/:id', to: 'questions#unanswered_questions'
     end
   end
 
@@ -30,6 +29,7 @@ Rails.application.routes.draw do
   get 'unmatch/:uid1/:uid2', to: 'matched_withs#unmatch'
   get 'match/:id', to: 'test_users#find_matches'
   get 'matched_withs/users/:id', to: 'matched_withs#by_user_id'
+  get 'unanswered_questions/:id', to: 'questions#unanswered_questions'
 
   # Uncomment the following if you're using these APIs and ensure their correct placement within the namespace
   # namespace :api do

@@ -59,7 +59,7 @@ export default function FindMatch() {
         console.log("you can't unmatch with wingman!");
     }
     const currentUid = user?.id;
-    const otherUid = otherUser.id;
+    const otherUid = matchUser?.id;
 
     if (!currentUid || !otherUid) {
       console.error(
@@ -107,12 +107,12 @@ export default function FindMatch() {
     fetch(`http://localhost:3000/matched_withs/users/${currentUser}`)
       .then((response) => response.json())
       .then(async (matches) => {
-        const myName = await fetchUserNameById(currentUser);
+        const myName = await fetchUserNameById(user?.id);
         setCurrentName(myName);
         const matchesArray = [];
         for (let match of matches) {
           const otherUserId =
-            match.uid1 === currentUser ? match.uid2 : match.uid1;
+            match.uid1 === user?.id ? match.uid2 : match.uid1;
           const currMatch = await fetchUserById(otherUserId);
           matchesArray.push(currMatch);
         }
