@@ -49,12 +49,13 @@ class MatchingService
       sorted_matches = potential_matches.sort_by { |match| match[:score] }
     
       # create entries in the MatchedWith table for the matches w lowest dif score
-      sorted_matches[0..1].each do |match|
+      if sorted_matches.any?
+        match = sorted_matches.first
         MatchedWith.create(uid1: user.id, uid2: match[:user].id, status: true, date: Date.today.strftime("%m-%d-%Y"))
       end
     
       # sorted potential matches
-      sorted_matches[0..1].map { |match| match[:user] }
+      sorted_matches.first.map { |match| match[:user] }
     rescue => e
       Rails.logger.error "Error in MatchingService for user ID #{user.id}: #{e.message}"
       []  # Return an empty array or any other default value
