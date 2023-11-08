@@ -71,7 +71,7 @@ export default function UserForm({ onUserAdded }) {
     }
   };
 
-  const [isPasswordUpdateVisible, setPasswordUpdateVisible] = useState(false);
+  //const [isPasswordUpdateVisible, setPasswordUpdateVisible] = useState(false);
 
   const [selectedRedFlags, setSelectedRedFlags] = useState([]);
 
@@ -187,24 +187,17 @@ export default function UserForm({ onUserAdded }) {
             ))}
           </div>
         </div>
-        <button className="profile-button"
-        type="button"
-        onClick={() => setPasswordUpdateVisible(!isPasswordUpdateVisible)}
-      >
-        Update password?
-      </button>
-      {isPasswordUpdateVisible && (
-        <label>
-          Update Password: 
+      <label>
+          Enter Password:
           <input
             type="password"
             name="password_digest"
             value={formData.password_digest}
             onChange={handleInputChange}
-            // required
+            required
           />
-        </label>
-        )}
+      </label>
+
         <br></br>
         <button className="profile-button" type="submit">Submit Info</button>
       </form>
