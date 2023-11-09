@@ -3,6 +3,8 @@ import "./UserLanding.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../components/contexts/UserContext";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 //import bcrypt from 'bcryptjs';
 
 export default function UserLanding() {
@@ -12,40 +14,20 @@ export default function UserLanding() {
   const[confirmPassword, setConfirmPassword] = useState('');
   const [login, setLogin] = useState(false);
   const [error, setError] = useState(null);
-  const [successMessage, setSuccessMessage] = useState('');
-
+  const [successMessage, setSuccessMessage] = useState('')
+  const navigate = useNavigate();
 
   const signUpUser = () => {
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
-    //const hashedPassword = bcrypt.hash(password, 10);
-    axios.post("http://localhost:3000/test_users", {
-      test_user: {
-        name: username,
-        password: password,
-      }
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
-    .then(response => {
-      console.log(response.data);
-      const message = "Account successfully created. Click here to <a href='/CreateProfile'>initialize profile</a>";
-      setSuccessMessage(message);    
-    })
-    .catch(error => {
-      console.error(error.response.data);
-      setError("Registration failed. Please try again.");
-    });
+    localStorage.setItem('username', username);
+    navigate("/CreateProfile");
   };
 
   useEffect(() => {
-    // Your existing useEffect code
-    // ...
-  }, []);
+    if (username) {
+      localStorage.setItem('username', username);
+    }
+  }, [username]); 
+  
 
   return (
     <main className="main-container">

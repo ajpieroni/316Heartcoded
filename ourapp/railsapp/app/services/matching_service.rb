@@ -30,6 +30,7 @@ class MatchingService
     end
   
     def find_matches_for(user)
+      
       all_users = TestUser.all
       potential_matches = []
     

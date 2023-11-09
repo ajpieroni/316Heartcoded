@@ -3,9 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { useContext } from "react";
 import axios from 'axios';
 import SuccessModal from "../components/SuccessModal";
+import { useLocation } from 'react-router-dom';
 
+export default function UserForm() {
+  const location = useLocation();
+  const username = localStorage.getItem('username') || 'defaultUsername';
 
-export default function UserForm({ onUserAdded }) {
 
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
@@ -83,7 +86,7 @@ export default function UserForm({ onUserAdded }) {
   //const [isPasswordUpdateVisible, setPasswordUpdateVisible] = useState(false);
 
   const [selectedRedFlags, setSelectedRedFlags] = useState([]);
-
+// !TODO: not hardcoded
   const redFlagsOptions = [
     "Vanity",
     "Environmental Consciousness",
@@ -110,6 +113,7 @@ export default function UserForm({ onUserAdded }) {
   return (
     <div className="user-form">
       <h2>Welcome to HeartCoded</h2>
+      <h2>Your username is {username}</h2>
       <form onSubmit={handleSubmit}>
         <label>
           Name<span style={{ color: 'red' }}>*</span>: 
@@ -196,7 +200,7 @@ export default function UserForm({ onUserAdded }) {
             ))}
           </div>
         </div>
-      <label>
+      {/* <label>
           Enter Password<span style={{ color: 'red' }}>*</span>:
           <input
             type="password"
@@ -205,7 +209,7 @@ export default function UserForm({ onUserAdded }) {
             onChange={handleInputChange}
             required
           />
-      </label>
+      </label> */}
 
         <br></br>
         <button className="profile-button" type="submit">Submit Info</button>
