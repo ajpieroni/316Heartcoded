@@ -10,6 +10,7 @@ import "./Feedback.css";
 export default function Feedback() {
   // Define categories
   const [categories, setCategories] = useState([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -74,6 +75,7 @@ export default function Feedback() {
             "category": categories[i]
           } 
         });
+        setIsSubmitted(true)
       } catch (error) {
         console.error("Error adding feedback:", error);
       }
@@ -83,29 +85,32 @@ export default function Feedback() {
   return (
     <main className="main-container">
         <h1>Feedback</h1>
-        <h1>What is your feedback about {receiver?.name}?</h1>
-
+        {/* <h1>What is your feedback about {receiver?.name}?</h1> */}
         <h1>User Feedback Form</h1>
-        <p> Hello {user?.name.split(" ")[0]}, provide feedback about a specific user: {receiver?.name} </p>
+{!isSubmitted ? (
+  <>
+    <p>Hello {user?.name.split(" ")[0]}, provide feedback about a specific user: {receiver?.name}</p>
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="user_to_feedback">User to Provide Feedback About: {receiver?.name.split(" ")[0]}</label>
+      <br />
+      {categories.map((category) => (
+        <div key={category}>
+          <Typography component="legend">{category}</Typography>
+          <Rating
+            name={category}
+            value={ratings[category]}
+            onChange={(event) => handleRatingChange(category, event)}
+          />
+        </div>
+      ))}
+      <input type="submit" value="Submit Feedback" />
+    </form>
+  </>
+) : (
+  <p>You submitted!</p>
+)}
 
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="user_to_feedback">User to Provide Feedback About: {receiver?.name.split(" ")[0]}</label>
-
-          <br></br>
-
-          {categories.map((category) => (
-            <div key={category}>
-              <Typography component="legend">{category}</Typography>
-              <Rating
-                name={category}
-                value={ratings[category]}
-                onChange={handleRatingChange(category)}
-              />
-            </div>
-          ))}
-          
-          <input type="submit" value="Submit Feedback"/>
-        </form>
+       
 
         
     </main>
