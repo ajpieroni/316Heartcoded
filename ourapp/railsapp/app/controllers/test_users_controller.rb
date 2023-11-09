@@ -80,7 +80,7 @@ class TestUsersController < ApplicationController
 
   def authenticate
     @test_user = TestUser.find_by(name: params[:id])
-
+    
     if @test_user && @test_user.authenticate(params[:password])
       render json: @test_user, status: :ok
     else
