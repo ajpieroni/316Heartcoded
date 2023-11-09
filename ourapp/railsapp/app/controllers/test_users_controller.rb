@@ -1,6 +1,7 @@
 class TestUsersController < ApplicationController
   protect_from_forgery with: :null_session
   before_action :set_test_user, only: %i[ show edit update destroy ]
+  
 
   # GET /test_users or /test_users.json
   def index
@@ -77,8 +78,8 @@ class TestUsersController < ApplicationController
   end
 
 
-  def login
-    @test_user = TestUser.find_by(name: params[:name])
+  def authenticate
+    @test_user = TestUser.find_by(name: params[:id])
 
     if @test_user && @test_user.authenticate(params[:password])
       render json: @test_user, status: :ok
@@ -145,7 +146,7 @@ class TestUsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def test_user_params
-      params.require(:test_user).permit(:name, :join_date, :location, :bio, :gender, :preferences, :birthday, :password_digest, red_flags: [])
+      params.require(:test_user).permit(:name, :join_date, :location, :bio, :gender, :preferences, :birthday, :password, red_flags: [])
     end
     # Add this within the private section of your controller
     def message_params

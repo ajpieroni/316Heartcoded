@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       get 'find_by_username/:name', to: 'test_users#find_by_username'
     end
   end
+  post '/test_users/authenticate', to: 'test_users#authenticate'
 
   # Define custom routes outside of the resources block
   get 'unmatch/:uid1/:uid2', to: 'matched_withs#unmatch'
