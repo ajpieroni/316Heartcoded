@@ -89,12 +89,11 @@ end
 
 
   def authenticate
-    @test_user = TestUser.find_by(name: params[:id])
-
-    if @test_user && @test_user.authenticate(params[:password])
-      render json: @test_user, status: :ok
+    @test_user = TestUser.find_by(name: params[:name])
+    if @test_user && Argon2::Password.verify_password(params[:password], @test_user.password_digest)
+      render json: { authenticated: true, user: user }
     else
-      render json: { error: 'Invalid username or password' }, status: :unauthorized
+      render json: { authenticated: false }, status: :unauthorized
     end
   end
 
