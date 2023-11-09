@@ -1,6 +1,7 @@
 class TestUsersController < ApplicationController
   protect_from_forgery with: :null_session
   before_action :set_test_user, only: %i[ show edit update destroy ]
+  
 
   # GET /test_users or /test_users.json
   def index
@@ -87,8 +88,8 @@ end
   end
 
 
-  def login
-    @test_user = TestUser.find_by(name: params[:name])
+  def authenticate
+    @test_user = TestUser.find_by(name: params[:id])
 
     if @test_user && @test_user.authenticate(params[:password])
       render json: @test_user, status: :ok
