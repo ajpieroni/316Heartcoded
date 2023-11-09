@@ -99,15 +99,19 @@ end
 
   # PATCH/PUT /test_users/1 or /test_users/1.json
   def update
-    respond_to do |format|
+    # respond_to do |format|
       if @test_user.update(test_user_params)
-        format.html { redirect_to test_user_url(@test_user), notice: "Test user was successfully updated." }
-        format.json { render :show, status: :ok, location: @test_user }
+        # format.html { redirect_to test_user_url(@test_user), notice: "Test user was successfully updated." }
+        # format.json { render :show, status: :ok, location: @test_user }
+        render json: {success: true, message: "user successfully updated"}
+
+        
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @test_user.errors, status: :unprocessable_entity }
+        # format.html { render :edit, status: :unprocessable_entity }
+        # format.json { render json: @test_user.errors, status: :unprocessable_entity }
+        render json: {success: false, message: "user NOT successfully updated"}
+
       end
-    end
   end
   
 
