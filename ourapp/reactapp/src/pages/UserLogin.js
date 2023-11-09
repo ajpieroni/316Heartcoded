@@ -4,8 +4,8 @@ import { UserContext } from "../components/contexts/UserContext";
 import ForgotPassword from "./ForgotPassword";
 import CreateProfile from "./CreateProfile.js";
 import axios from "axios";
-import bcrypt from "bcrypt";
 import "./UserLogin.css";
+import argon2 from "argon2";
 
 export default function UserLogin() {
   // State hooks
@@ -41,36 +41,61 @@ export default function UserLogin() {
   const handleSignUp = () => {
     // TODO: SignUp logic
   };
-  
+
   const initializeUser = () => {
-    console.log("pressed");
-    fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
+    fetch(`http://localhost:3000/test_users/find_by_username/${username}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
+        if (!response.ok) throw new Error('Network response was not ok');
         return response.json();
       })
       .then((data) => {
-        if (data && bcrypt.compareSync(password, data.password_digest)) {
-          setUser((prevUser) => ({
-            ...prevUser,
-            name: data.name,
-            id: data.id,
-            birthday: data.birthday,
-          }));
-          sessionStorage.setItem("user", JSON.stringify(data));
-          console.log("User authenticated successfully:", data);
-          setLogin(true);
+        if (data && data.password_digest) {
+          // Data contains hashed password (password_digest) from the server
+          fetch('http://localhost:3000/test_users/authenticate', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name: username, password: password }),
+          })
+            .then((response) => {
+              if (!response.ok) throw new Error('Network response was not ok');
+              return response.json();
+            })
+            .then((authData) => {
+              if (authData.authenticated) {
+                setUser((prevUser) => ({ ...prevUser, ...data }));
+                sessionStorage.setItem('user', JSON.stringify(data));
+                navigate('/UserSignedIn');
+                setLogin(true);
+                clearInputFields();
+              } else {
+                setErrorMessage('Invalid username or password. Please try again.');
+                clearInputFields();
+              }
+            })
+            .catch((error) => {
+              console.error('Failed to authenticate user:', error);
+              setErrorMessage('There was an issue logging in. Please try again.');
+              clearInputFields();
+            });
         } else {
-          console.log("Invalid username or password");
-          setError("Invalid username or password. Please try again.");
+          setErrorMessage('Invalid username or password. Please try again.');
+          clearInputFields();
         }
       })
       .catch((error) => {
-        console.error("Failed to initialize user:", error);
+        console.error('Failed to initialize user:', error);
+        setErrorMessage('There was an issue logging in. Please try again.');
+        clearInputFields();
       });
-    };
+  };
+  
 
    /*
   const initializeUser = () => {
