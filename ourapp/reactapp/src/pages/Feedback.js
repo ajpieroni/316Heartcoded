@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
+
 // import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../components/contexts/UserContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./Feedback.css";
-import Header from "../components/Header";
 
 export default function Feedback() {
   // Define categories
@@ -15,7 +15,6 @@ export default function Feedback() {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      console.log("hello")
       try {
         const response = await fetch(`http://localhost:3000/categories`);
         if (!response.ok) {
@@ -60,7 +59,6 @@ export default function Feedback() {
 
   // Handle rating change
   const handleRatingChange = (category) => (event) => {
-
     setRatings({ ...ratings, [category]: parseInt(event.target.value, 10) });
   };
 
@@ -78,48 +76,48 @@ export default function Feedback() {
             "category": categories[i]
           } 
         });
-        setIsSubmitted(true)
       } catch (error) {
         console.error("Error adding feedback:", error);
       }
+      setIsSubmitted(true)
     }
   };
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
 
   return (
     <main className="main-container">
-        <h1>Feedback</h1>
-        {/* <h1>What is your feedback about {receiver?.name}?</h1> */}
         <h1>User Feedback Form</h1>
-{!isSubmitted ? (
-  <>
-    <p>Hello {user?.name.split(" ")[0]}, provide feedback about a specific user: {receiver?.name}</p>
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="user_to_feedback">User to Provide Feedback About: {receiver?.name.split(" ")[0]}</label>
-      <br />
-      {categories.map((category) => (
-        <div key={category}>
-          <Typography component="legend">{`How much do you think that ${receiver?.name.split(" ")[0]} values ${category}?`}</Typography>
-          <div className="custom">
-          <Rating
-            name={category}
-            value={ratings[category]}
-            onChange={(event) => handleRatingChange(category, event)}
-            size = "large"
-            precision={0.5} 
-          />
-          </div>
-           {/* <Rating name="half-rating" precision={0.5} /> */}
-        </div>
-      ))}
-      <input type="submit" value="Submit Feedback" />
-    </form>
-  </>
-) : (
-  <p>You submitted!</p>
-)}
 
-       
+      {!isSubmitted ? (<><h1>Feedback</h1>
+        {/* <h1>What is your feedback about {receiver?.name}?</h1> */}
 
+        <p> Hello {user?.name.split(" ")[0]}, provide feedback about a specific user: {receiver?.name} </p>
+
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="user_to_feedback">User to Provide Feedback About: {receiver?.name.split(" ")[0]}</label>
+
+          <br></br>
+
+          {categories.map((category) => (
+            <div key={category}>
+              <Typography component="legend">{category}</Typography>
+              <Rating
+                name={category}
+                value={ratings[category]}
+                onChange={handleRatingChange(category)}
+              />
+            </div>
+          ))}
+          
+          <input type="submit" value="Submit Feedback"/>
+        </form>
+</>):(<><p>You've submitted the form!</p> <button onClick={goBack}>Back</button></>)}
+        
         
     </main>
   );
