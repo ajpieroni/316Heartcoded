@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_09_033246) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_09_034440) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,7 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_09_033246) do
     t.integer "gives_uid"
     t.integer "receives_uid"
     t.string "category"
-    t.integer "feedback"
+    t.string "feedback"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -92,9 +92,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_09_033246) do
     t.string "birthday"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "password_digest"
-    t.string "password"
     t.string "red_flags", default: [], array: true
+    t.string "password_digest"
     t.string "username"
   end
 
