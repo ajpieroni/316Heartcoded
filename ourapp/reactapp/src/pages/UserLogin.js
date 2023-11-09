@@ -43,24 +43,54 @@ export default function UserLogin() {
   };
 
   const initializeUser = () => {
-    fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
+    fetch(`http://localhost:3000/test_users/find_by_username/${username}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((response) => {
         if (!response.ok) throw new Error("Network response was not ok");
         return response.json();
       })
       .then((data) => {
-        if (data && bcrypt.compareSync(password, data.password_digest)) {
-          // Passwords match; user is authenticated
-          setUser((prevUser) => ({ ...prevUser, ...data }));
-          sessionStorage.setItem("user", JSON.stringify(data));
-          navigate("/UserSignedIn");
-          setLogin(true);
-          clearInputFields();
+        if (data && data.password_digest) {
+          // Data contains hashed password (password_digest) from the server
+          fetch("http://localhost:3000/test_users/authenticate", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name: username, password: password }),
+          })
+            .then((response) => {
+              if (!response.ok) throw new Error("Network response was not ok");
+              return response.json();
+            })
+            .then((authData) => {
+              if (authData.authenticated) {
+                setUser((prevUser) => ({ ...prevUser, ...data }));
+                sessionStorage.setItem("user", JSON.stringify(data));
+                navigate("/UserSignedIn");
+                setLogin(true);
+                clearInputFields();
+              } else {
+                setErrorMessage(
+                  "Invalid username or password. Please try again."
+                );
+                clearInputFields();
+              }
+            })
+            .catch((error) => {
+              console.error("Failed to authenticate user:", error);
+              setErrorMessage(
+                "There was an issue logging in. Please try again."
+              );
+              clearInputFields();
+            });
         } else {
-          // Passwords do not match; user authentication failed
           setErrorMessage("Invalid username or password. Please try again.");
           clearInputFields();
-          // Handle non-existing user or incorrect password logic
         }
       })
       .catch((error) => {
@@ -69,7 +99,7 @@ export default function UserLogin() {
         clearInputFields();
       });
   };
-  
+
   /*
   const initializeUser = () => {
     axios.post("http://localhost:3000/test_users/authenticate", {
@@ -148,11 +178,10 @@ export default function UserLogin() {
   };
   */
 
-  const clearInputFields = () =>{
-    setUsername('');
-    setPassword('');
-  }
-
+  const clearInputFields = () => {
+    setUsername("");
+    setPassword("");
+  };
 
   // Effects
   useEffect(() => {
@@ -186,7 +215,7 @@ export default function UserLogin() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Enter Username"
-                onKeyDown={(e) => e.key === 'Enter' && initializeUser()}
+                onKeyDown={(e) => e.key === "Enter" && initializeUser()}
               />
               <input
                 type="password"
@@ -194,7 +223,7 @@ export default function UserLogin() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter Password"
-                onKeyDown={(e) => e.key === 'Enter' && initializeUser()}
+                onKeyDown={(e) => e.key === "Enter" && initializeUser()}
               />
               {errorMessage && (
                 <div className="error-message">{errorMessage}</div>
