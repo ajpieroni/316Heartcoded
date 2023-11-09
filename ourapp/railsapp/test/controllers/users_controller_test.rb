@@ -25,7 +25,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
           bio: "This is a test bio",
           location: "Test Location",
           preferences: "Open to any",
-          password_digest: "my_password",
+          password: "my_password",
           red_flags: ["Vanity", "Family"]
         }
       }
@@ -53,7 +53,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
         bio: "Updated Bio",
         location: "Updated Location",
         preferences: "Updated Preferences",
-        password_digest: "new_password",
+        password: "new_password",
         red_flags: ["Career"]
       }
     }

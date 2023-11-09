@@ -54,7 +54,7 @@ export default function UserLogin() {
         return response.json();
       })
       .then((data) => {
-        if (data && data.password_digest) {
+        if (data && data.password) {
           // Data contains hashed password (password_digest) from the server
           fetch("http://localhost:3000/test_users/authenticate", {
             method: "POST",

@@ -24,7 +24,7 @@ export default function UserForm() {
     bio: '',
     location: '',
     preferences: '',
-    password_digest: '',
+    password: '',
     red_flags: [],
     username: username
   });
@@ -78,7 +78,7 @@ export default function UserForm() {
       const response = await axios.post(`http://localhost:3000/test_users`, formData);
       // onUserAdded(response.data);
       setIsSuccessModalOpen(true);
-      setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '', red_flags: [], password_digest: '', username: '', password: ''});
+      setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '', red_flags: [], password: '', username: '', password: ''});
     } catch (error) {
       setIsSuccessModalOpen(true);
       console.error('Error adding a new user:', error);
@@ -202,16 +202,7 @@ export default function UserForm() {
             ))}
           </div>
         </div>
-      {/* <label>
-          Enter Password<span style={{ color: 'red' }}>*</span>:
-          <input
-            type="password"
-            name="password_digest"
-            value={formData.password_digest}
-            onChange={handleInputChange}
-            required
-          />
-      </label> */}
+
 
         <br></br>
         <button className="profile-button" type="submit">Submit Info</button>
