@@ -27,6 +27,7 @@ export default function UserForm() {
       })
       .then((data) => {
         console.log(data);
+        console.log(data.id);
         setUserId(data.id);
       })
       .catch((error) => {
@@ -73,7 +74,7 @@ export default function UserForm() {
     bio: "",
     location: "",
     preferences: "",
-    password: "",
+    // password: "",
     red_flags: [],
     username: username,
   });
@@ -135,9 +136,9 @@ export default function UserForm() {
         bio: "",
         location: "",
         red_flags: [],
-        password: "",
+        // password: "",
         username: "",
-        password: "",
+        // password: "",
       });
     } catch (error) {
       setIsSuccessModalOpen(true);
