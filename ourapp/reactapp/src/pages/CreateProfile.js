@@ -71,7 +71,7 @@ export default function UserForm({ onUserAdded }) {
 
     try {
       const response = await axios.post(`http://localhost:3000/test_users`, formData);
-      onUserAdded(response.data);
+      // onUserAdded(response.data);
       setIsSuccessModalOpen(true);
       setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '', red_flags: [], password_digest: '' });
     } catch (error) {
