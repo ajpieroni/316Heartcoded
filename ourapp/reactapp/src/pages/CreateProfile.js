@@ -25,7 +25,8 @@ export default function UserForm() {
     location: '',
     preferences: '',
     password_digest: '',
-    red_flags: []
+    red_flags: [],
+    username: username
   });
 
 
