@@ -12,7 +12,7 @@ export default function FindMatch() {
   const navigate = useNavigate(); // const history  = useHistory();
 
   const [myMatches, setMyMatches] = useState([]);
-  const [reciever, setReciever] = useState();
+  const [receiver, setReciever] = useState();
   const [loading, setLoading] = useState(true);
   const { user, setUser } = useContext(UserContext);
   const [ellipsisDots, setEllipsisDots] = useState(1);
@@ -128,14 +128,15 @@ export default function FindMatch() {
   function openConversations(matchUser) {
     console.log(`clicked conversations with ${matchUser?.name}`);
     setReciever(matchUser);
-    console.log("reciever in match", reciever);
+    console.log("receiver in match", receiver);
 
-    navigate("/Chat", { state: { reciever: matchUser } });
+    navigate("/Chat", { state: { receiver: matchUser } });
   }
+
   function openFeedback(matchUser) {
     console.log(`clicked feedback with ${matchUser?.name}`);
     setReciever(matchUser);
-    console.log("reciever in feedback", reciever);
+    console.log("receiver in feedback", receiver);
 
     navigate("/Feedback", { state: { receiver: matchUser } });
   }

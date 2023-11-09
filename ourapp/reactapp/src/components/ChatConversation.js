@@ -7,8 +7,8 @@ import axios from "axios";
 
 
 export default function ChatConversation({selectedUser}) {
-const reciever = selectedUser;
-  // console.log("reciever test", recievertest)
+const receiver = selectedUser;
+  // console.log("receiver test", receivertest)
   
   const [messages, setMessages] = useState([]);
   const { user, setUser } = useContext(UserContext);
@@ -115,7 +115,7 @@ const reciever = selectedUser;
     const messageContent= {
       uid_sender_id: user.id,
       // !to do: dynamic
-      uid_receiver_id: reciever.id,
+      uid_receiver_id: receiver.id,
       message: newMessage.trim(),
       chat_order: 1,
       // timestamp: timestamp,
@@ -145,7 +145,7 @@ const reciever = selectedUser;
       {/* <h1>Chat</h1> */}
       {/* <h2>Welcome, {user?.name}</h2> */}
       <div className="chat-container">
-        <MessageList messages={messages} currentUser={user} users={users} reciever={reciever} />
+        <MessageList messages={messages} currentUser={user} users={users} receiver={receiver} />
 
         <div className="message-input-container">
           <input
@@ -167,16 +167,16 @@ const reciever = selectedUser;
   );
 }
 
-function MessageList({ messages, currentUser, users, reciever }) {
-  console.log("here's reciever", reciever);
+function MessageList({ messages, currentUser, users, receiver }) {
+  console.log("here's receiver", receiver);
 
   return (
     <div className="message-list">
-      <h1>{reciever?.name}</h1>
+      <h1>{receiver?.name}</h1>
       {messages
         .filter(msg => 
-          (msg.uid_sender_id === currentUser.id && msg.uid_receiver_id === reciever.id) || 
-          (msg.uid_sender_id === reciever.id && msg.uid_receiver_id === currentUser.id))
+          (msg.uid_sender_id === currentUser.id && msg.uid_receiver_id === receiver.id) || 
+          (msg.uid_sender_id === receiver.id && msg.uid_receiver_id === currentUser.id))
         .map((msg) => {
           const isSender = msg.uid_sender_id === currentUser.id;
           const senderName = users[msg.uid_sender_id] || "Unknown";

@@ -13,7 +13,7 @@ export default function MatchList({onUserSelected}) {
 
   // const history  = useHistory();
   const [myMatches, setMyMatches] = useState([]);
-  const [reciever, setReciever] = useState();
+  const [receiver, setReciever] = useState();
   const [loading, setLoading] = useState(true);
   const { user, setUser } = useContext(UserContext);
   const [selectedMatch, setSelectedMatch] = useState(null);
