@@ -17,13 +17,32 @@ export default function UserLanding() {
   const [successMessage, setSuccessMessage] = useState('')
   const navigate = useNavigate();
 
-  const signUpUser = () => {
+  const signUpUser = async () => {
+    setError(null);
+    setSuccessMessage('');
+
     if (!username || !password || !confirmPassword) {
       setError('Please fill in all fields before signing up.');
-    } else {
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
+    const isAvailable = await checkUsernameAvailability(username);
+    if (!isAvailable) {
+      setError('Username is already taken.');
+      return;
+    }
+
+    try {
       localStorage.setItem('username', username);
       navigate("/CreateProfile");
-      setError(null);
+    } catch (error) {
+      setError('There was an error signing up.');
+      console.error('Sign up error: ', error);
     }
   };
 
@@ -33,6 +52,19 @@ export default function UserLanding() {
     }
   }, [username]); 
   
+  const checkUsernameAvailability = async (username) => {
+    try {
+      const response = await axios.get(`/test_users/check_username`, {
+        params: { username: username }
+      });
+      if (response.data.message.includes('is available')) {
+        return true;
+      }
+    } catch (error) {
+      console.error('There was an error checking the username: ', error);
+    }
+    return false;
+  };
 
   return (
     <main className="main-container">
