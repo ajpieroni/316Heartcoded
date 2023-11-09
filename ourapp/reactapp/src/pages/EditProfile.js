@@ -21,7 +21,7 @@ export default function UserForm({ onUserAdded }) {
     bio: '',
     location: '',
     preferences: '',
-    password_digest: '',
+    password: '',
     red_flags: []
   });
 
@@ -37,7 +37,7 @@ export default function UserForm({ onUserAdded }) {
             bio: user.bio || '',
             location: user.location || '',
             preferences: user.preferences || '',
-            password_digest: user.password_digest || '',
+            password: user.password|| '',
             red_flags: user.red_flags || []
           });
         })
@@ -102,7 +102,7 @@ export default function UserForm({ onUserAdded }) {
         onUserAdded(response.data);
         setIsSuccessModalOpen(true);
       }
-      setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '', red_flags: [], password_digest: '' });
+      setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '', red_flags: [], password: '' });
       //setSuccessMessage("Form submitted successfully.");
     } catch (error) {
       console.error('Error adding a new user:', error);
@@ -242,8 +242,8 @@ export default function UserForm({ onUserAdded }) {
           Update Password: 
           <input
             type="password"
-            name="password_digest"
-            value={formData.password_digest}
+            name="password"
+            value={formData.password}
             onChange={handleInputChange}
             // required
           />

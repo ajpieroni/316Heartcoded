@@ -67,7 +67,7 @@ export default function UserLanding() {
             preferences: data.preferences,
             bio: data.bio,
             location: data.location,
-            password_digest: data.password_digest,
+            password: data.password,
             red_flags: data.red_flags
           }));
           sessionStorage.setItem("user", JSON.stringify(data));

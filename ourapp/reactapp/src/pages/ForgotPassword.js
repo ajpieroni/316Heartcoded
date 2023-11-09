@@ -22,7 +22,7 @@ function ForgotPassword() {
     axios.get(`http://localhost:3000/test_users/${user.id}`)
     .then((response) => {
         console.log("response", response)
-        setPassword(response.data.password_digest);
+        setPassword(response.data.password);
     })
     .catch((error) => {
         console.error("No matching username", error);
