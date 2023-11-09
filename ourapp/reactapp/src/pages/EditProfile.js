@@ -14,30 +14,37 @@ export default function UserForm({ onUserAdded }) {
     setIsSuccessModalOpen(false);
   };
 
+  const [formData, setFormData] = useState({
+    name: '',
+    gender: '',
+    birthday: '',
+    bio: '',
+    location: '',
+    preferences: '',
+    password_digest: '',
+    red_flags: []
+  });
+
     const { user } = useContext(UserContext);
-    const [formData, setFormData] = useState({
-      name: user.name || '',
-      gender: user.gender || '',
-      birthday: user.birthday || '',
-      bio: user.bio || '',
-      location: user.location || '',
-      preferences: user.preferences || '',
-      password_digest: user.password_digest || '',
-      red_flags: user.red_flags || []
-    });
-  
     useEffect(() => {
-      setFormData({
-        name: user.name || '',
-        gender: user.gender || '',
-        birthday: user.birthday || '',
-        bio: user.bio || '',
-        location: user.location || '',
-        preferences: user.preferences || '',
-        password_digest: user.password_digest || '',
-        red_flags: user.red_flags || []
-      });
-    }, [user]);
+      axios.get(`http://localhost:3000/test_users/${user.id}`)
+        .then(response => {
+        let user = response.data;
+          setFormData({
+            name: user.name || '',
+            gender: user.gender || '',
+            birthday: user.birthday || '',
+            bio: user.bio || '',
+            location: user.location || '',
+            preferences: user.preferences || '',
+            password_digest: user.password_digest || '',
+            red_flags: user.red_flags || []
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching user data:', error);
+        });
+    }, []);
 
     function StatesList({ onStateSelected }) {
       const [states, setStates] = useState([]);
@@ -103,9 +110,14 @@ export default function UserForm({ onUserAdded }) {
     }
   };
 
+
   const [isPasswordUpdateVisible, setPasswordUpdateVisible] = useState(false);
 
-  const [selectedRedFlags, setSelectedRedFlags] = useState(user.red_flags || []);
+  const [selectedRedFlags, setSelectedRedFlags] = useState(formData.red_flags || []);
+
+  useEffect(() => {
+    setSelectedRedFlags(formData.red_flags || []);
+  }, [formData.red_flags]);
 
   const redFlagsOptions = [
     "Vanity",
