@@ -61,7 +61,7 @@ export default function Feedback() {
 
   // Handle rating change
   const handleRatingChange = (category) => (event) => {
-    setRatings({ ...ratings, [category]: parseInt(event.target.value, 10) });
+    setRatings({ ...ratings, [category]: parseInt(event.target.value, 10) || 0});
   };
 
   // Handle submit
@@ -72,12 +72,12 @@ export default function Feedback() {
       e.preventDefault();
       try {
         console.log(categories[i]);
-        console.log(ratings[categories[i]] || 0);
+        console.log(ratings[categories[i]]);
         await axios.post("http://localhost:3000/feedbacks", {
           feedback: {
             "receives_uid": users.receiver,
             "gives_uid": users.sender,
-            "feedback": ratings[categories[i]] || 0,
+            "feedback": ratings[categories[i]],
             "category": categories[i]
           } 
         });
