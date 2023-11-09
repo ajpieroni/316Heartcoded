@@ -1,13 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
-import Typography from "@mui/material/Typography";
-import Rating from "@mui/material/Rating";
-import { useLocation } from "react-router-dom";
+import Typography from '@mui/material/Typography';
+import Rating from '@mui/material/Rating';
+// import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../components/contexts/UserContext";
+import { Link, useLocation } from "react-router-dom";
 import "./Feedback.css";
 import Header from "../components/Header";
 
 export default function Feedback({ feedbackForm }) {
+  // !Routes to be added:
+  // GET /feedbacks/find_feedback?gives_uid=1&receives_uid=2
+// http://localhost:3000/feedbacks/find_feedback?gives_uid=1&receives_uid=2
+
   const location = useLocation();
   const { receiver } = location.state || {};
 
@@ -53,13 +58,15 @@ export default function Feedback({ feedbackForm }) {
     }
   }, [receiver]);
 
+  /*
   useEffect(() => {
     fetchData();
     console.log("users: ", users);
     console.log("formData: ", formData);
   }, []);
-
+  */
   // functions
+  /*
   const fetchData = async () => {
     try {
       const response = await fetch(`http://localhost:3000/feedbacks/1`);
@@ -79,6 +86,7 @@ export default function Feedback({ feedbackForm }) {
       setLoading(false);
     }
   };
+  */
 
 
   const handleCategoryChange = (e) => {
@@ -118,19 +126,14 @@ export default function Feedback({ feedbackForm }) {
           <h1>Feedback</h1>
           <h1>What is your feedback about {receiver?.name}?</h1>
 
-          <h1> {formData.feedback}</h1>
+        <h1> Feedback: {formData.feedback}</h1>
 
-          <h1>User Feedback Form</h1>
-          <p>
-            {" "}
-            Hello {user?.name}, provide feedback about a specific user:{" "}
-            {users.receiver} in category: 1
-          </p>
+        <h1>User Feedback Form</h1>
+        {/* !TODO: make sure that you aren't heart<3coding category !!! allow a user to select */}
+        <p> Hello {user?.name.split(" ")[0]}, provide feedback about a specific user: {receiver?.name} in category: 1</p>
 
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="user_to_feedback">
-              User to Provide Feedback About: {users.receiver}
-            </label>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="user_to_feedback">User to Provide Feedback About: {receiver?.name.split(" ")[0]}</label>
 
             <br></br>
 
@@ -147,20 +150,29 @@ export default function Feedback({ feedbackForm }) {
 
             <br></br>
 
-            <label>
-              Category
-              <input
-                type="text"
-                name="category"
-                value={formData.category}
-                onChange={handleCategoryChange}
-              />
-            </label>
+          <label>
+            Category
+            <select name="category" value={formData.category} onChange={handleCategoryChange}>
+              <option value="">Select a category</option>
+              <option value="1">Vanity</option>
+              <option value="2">Environmental Consciousness</option>
+              <option value="3">Spirituality</option>
+              <option value="4">Family</option>
+              <option value="5">Career</option>
+              <option value="6">Adventure</option>
+              <option value="7">Trustfulness</option>
+              <option value="8">Frugality</option>
+              <option value="9">Sentimentality</option>
+              <option value="10">Creativity</option>
+              <option value="11">Traditionalism</option>
+              <option value="12">Assertiveness</option>
+            </select>
+          </label>
+          
+          <input type="submit" value="Submit Feedback"/>
+        </form>
 
-            <input type="submit" value="Submit Feedback" />
-          </form>
-        </>
-      )}
+        
     </main>
   );
 }
