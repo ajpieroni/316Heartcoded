@@ -5,6 +5,7 @@ import Rating from '@mui/material/Rating';
 import axios from "axios";
 import { UserContext } from "../components/contexts/UserContext";
 import { useLocation } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import "./Feedback.css";
 import Header from "../components/Header";
 
@@ -82,6 +83,13 @@ export default function Feedback() {
       }
     }
   };
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
+
 
   return (
     <main className="main-container">
@@ -108,7 +116,10 @@ export default function Feedback() {
     </form>
   </>
 ) : (
+  <>
   <p>You submitted!</p>
+  <button onClick={goBack}>Back</button>
+  </>
 )}
 
        
