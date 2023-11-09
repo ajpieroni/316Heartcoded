@@ -4,19 +4,19 @@ import { useNavigate } from "react-router-dom";
 
 import { UserContext } from "../components/contexts/UserContext";
 import ChatIcon from "@mui/icons-material/Chat";
-import InsightsIcon from '@mui/icons-material/Insights';
+import InsightsIcon from "@mui/icons-material/Insights";
 import "./FindMatch.css";
 import Header from "../components/Header";
 import { useHistory } from "react-router-dom";
 export default function FindMatch() {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // const history  = useHistory();
 
-  // const history  = useHistory();
   const [myMatches, setMyMatches] = useState([]);
   const [reciever, setReciever] = useState();
   const [loading, setLoading] = useState(true);
   const { user, setUser } = useContext(UserContext);
   const [ellipsisDots, setEllipsisDots] = useState(1);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setEllipsisDots((dots) => (dots < 3 ? dots + 1 : 1));
@@ -24,8 +24,10 @@ export default function FindMatch() {
 
     return () => clearInterval(interval);
   }, []);
+
   const currentUser = user?.id;
   const [currentName, setCurrentName] = useState("");
+
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
@@ -34,6 +36,10 @@ export default function FindMatch() {
   }, [setUser]);
 
   const newMatches = async () => {
+    if (myMatches.length >= 10) {
+      console.log("Too many matches already!");
+      return;
+    }
     if (!currentUser) return;
 
     try {
@@ -41,13 +47,16 @@ export default function FindMatch() {
         `http://localhost:3000/match/${currentUser}`
       );
       const matches = await response.json();
-      setMyMatches((prevMatches) => [...prevMatches, ...matches]);
     } catch (error) {
       console.error("Error fetching new matches:", error);
     }
+    fetchMatches();
   };
 
   const unmatch = async (otherUser) => {
+    if (otherUser?.id === 0) {
+      console.log("you can't unmatch with wingman!");
+    }
     const currentUid = user?.id;
     const otherUid = otherUser.id;
 
@@ -76,6 +85,7 @@ export default function FindMatch() {
     } catch (error) {
       console.error("Error making the fetch call:", error);
     }
+    fetchMatches();
   };
 
   const fetchUserNameById = (id) => {
@@ -92,7 +102,7 @@ export default function FindMatch() {
       .catch((error) => console.error("Error fetching user:", error));
   };
 
-  useEffect(() => {
+  const fetchMatches = (async) => {
     fetch(`http://localhost:3000/matched_withs/users/${currentUser}`)
       .then((response) => response.json())
       .then(async (matches) => {
@@ -109,6 +119,10 @@ export default function FindMatch() {
       })
       .catch((error) => console.error("Error fetching matches:", error))
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    fetchMatches();
   }, [currentUser]);
 
   function openConversations(matchUser) {
@@ -142,51 +156,68 @@ export default function FindMatch() {
   return (
     <main className="main-container">
       <Header />
+
       {loading ? (
         <div className="loading">Loading{".".repeat(ellipsisDots)}</div>
       ) : (
         <>
           <div class="welcome-message">
-            {" "}
             {user?.name.split(" ")[0]}'s Current Matches
           </div>
+
           {/* <h1>{user?.name.split(" ")[0]}'s Current Matches</h1> */}
           <button onClick={newMatches}>New matches!</button>
-          <div class="card-container">
-            {myMatches.map((matchUser) => (
-              <div key={matchUser.id} className="user-card">
-                <h2>{matchUser.name}</h2>
-                <p>Age: {calculateAge(matchUser.birthday)}</p>
-                <p>Bio: {matchUser.bio}</p>
-                <div className="chat-section">
-                  <ChatIcon onClick={() => openConversations(matchUser)} />
-                  <span
-                    className="chat-text"
-                    onClick={() => openConversations(matchUser)}
-                  >
-                    Chat with {matchUser.name}
-                  </span>
-                </div>
 
-                <div className="feedback-section">
-                <InsightsIcon onClick={() => openFeedback(matchUser)}/>
-                <span
-                    className="feedback-text"
-                    onClick={() => openFeedback(matchUser)}
-                  >
-                    Feedback with {matchUser.name}
-                  </span>
-                  
-                </div>
-                
-                <button
-                  class="unmatch-button"
-                  onClick={() => unmatch(matchUser)}
-                >
-                  Unmatch
-                </button>
-              </div>
-            ))}
+          <div class="card-container">
+            {myMatches.length === 0 ? (
+              <p>You have no matches, get some!</p>
+            ) : (
+              <>
+                {myMatches.map((matchUser) => (
+                  <div key={matchUser.id} className="user-card">
+                    <h2>{matchUser.name}</h2>
+
+                    <p>Age: {calculateAge(matchUser.birthday)}</p>
+                    <p>Bio: {matchUser.bio}</p>
+
+                    <div className="chat-section">
+                      <ChatIcon onClick={() => openConversations(matchUser)} />
+
+                      <span
+                        className="chat-text"
+                        onClick={() => openConversations(matchUser)}
+                      >
+                        Chat with {matchUser.name}
+                      </span>
+                    </div>
+
+                    {matchUser && matchUser.id !== 1 ? (
+                      <>
+                        <div className="feedback-section">
+                          <InsightsIcon
+                            onClick={() => openFeedback(matchUser)}
+                          />
+
+                          <span
+                            className="feedback-text"
+                            onClick={() => openFeedback(matchUser)}
+                          >
+                            Feedback with {matchUser.name}
+                          </span>
+                        </div>
+
+                        <button
+                          className="unmatch-button"
+                          onClick={() => unmatch(matchUser)}
+                        >
+                          Unmatch
+                        </button>
+                      </>
+                    ) : null}
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         </>
       )}

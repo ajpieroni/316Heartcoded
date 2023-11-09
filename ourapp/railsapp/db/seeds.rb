@@ -21,7 +21,7 @@ ActiveRecord::Base.connection.reset_pk_sequence!('feedbacks')
 
 # *Create sample users
 user0 = TestUser.create(name: "Wingman", join_date: Date.today, location: "Omnipotent", bio: "Here to help you find love!", gender: "X", preferences: "F", birthday: "2003-06-03")
-user1 = TestUser.create(name: "Jacob Lee", join_date: Date.today, location: "Maryland", bio: "hi my name is Jacob", gender: "M", preferences: "F", birthday: "2003-06-03")
+user1 = TestUser.create(name: "Jacob Lee", join_date: Date.today, location: "Maryland", bio: "hi my name is Jacob hello", gender: "M", preferences: "F", birthday: "2003-06-03", password_digest:"1", red_flags:["vanity"])
 user2 = TestUser.create(name: "Linda Wang", join_date: Date.today, location: "California", bio: "hello this is Linda", gender: "F", preferences: "M", birthday: "2004-03-14")
 user3 = TestUser.create(name: "Eileen Cai", join_date: Date.today, location: "California", bio: "hi my name is Eileen", gender: "F", preferences: "M", birthday: "2004-08-15")
 user4 = TestUser.create(name: "Anna Zhang", join_date: Date.today, location: "New Jersey", bio: "hi there this is Anna", gender: "F", preferences: "M", birthday: "2003-10-29")
@@ -109,9 +109,10 @@ message9 = Message.create(chat_order: 9, uid_sender_id: user1.id, uid_receiver_i
 message10 = Message.create(chat_order: 10, uid_sender_id: user2.id, uid_receiver_id: user1.id, timestamp: Time.now + 45.minutes, message: "Great, looking forward to it too, Jacob. Enjoy your day!")
 
 # Create sample feedback
-feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "1", feedback: 5)
-feedback2 = Feedback.create(gives_uid: 2, receives_uid: 1, category: "1", feedback: 5)
+# feedback1 = Feedback.create(gives_uid: 1, receives_uid: 2, category: "1", feedback: 5)
+# feedback2 = Feedback.create(gives_uid: 2, receives_uid: 1, category: "1", feedback: 5)
 
 
 password1 = Password.create(test_user_id: 1, hashed_password: 1111)
 password2 = Password.create(test_user_id: 2, hashed_password: 1234)
+
