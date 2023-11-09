@@ -20,6 +20,9 @@ import UserSignedIn from "./pages/UserSignedIn"
 import Conversations from "./pages/Conversations";
 import Wingman from "./pages/Wingman";
 import MatchList from "./components/MatchList";
+import ForgotPassword from "./pages/ForgotPassword";
+import SignUp from "./pages/SignUp";
+
 
 function App() {
   function ScrollToTop() {
@@ -58,6 +61,9 @@ function App() {
           {/* <Route path="/signed-in">
             <UserSignedIn />
           </Route> */}
+          <Route exact path="/SignUp" element={<SignUp />} />
+          <Route exact path="/ForgotPassword" element={<ForgotPassword />} />
+
         </Routes>
         {/* </ScrollToTop> */}
       </Router>

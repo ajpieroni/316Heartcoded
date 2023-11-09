@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_04_113230) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_07_224535) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,7 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_04_113230) do
   end
 
   create_table "passwords", force: :cascade do |t|
-    t.bigint "test_user_id", null: false
+    t.string "test_user_id", null: false
     t.string "hashed_password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -92,6 +92,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_04_113230) do
     t.string "birthday"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "password_digest"
+    t.string "password"
+    t.string "red_flags", default: [], array: true
   end
 
   create_table "weights", force: :cascade do |t|

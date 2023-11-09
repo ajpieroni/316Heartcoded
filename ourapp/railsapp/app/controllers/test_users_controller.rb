@@ -69,14 +69,21 @@ class TestUsersController < ApplicationController
   def create
     @test_user = TestUser.new(test_user_params)
 
-    respond_to do |format|
-      if @test_user.save
-        format.html { redirect_to test_user_url(@test_user), notice: "Test user was successfully created." }
-        format.json { render :show, status: :created, location: @test_user }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @test_user.errors, status: :unprocessable_entity }
-      end
+    if @test_user.save
+      render json: {success: true, message: "user successfully created"}
+    else
+      render json: {success: false, message: "error creating user", errors: @test_user.errors.full_messages }
+    end
+  end
+
+
+  def login
+    @test_user = TestUser.find_by(name: params[:name])
+
+    if @test_user && @test_user.authenticate(params[:password])
+      render json: @test_user, status: :ok
+    else
+      render json: { error: 'Invalid username or password' }, status: :unauthorized
     end
   end
 
@@ -92,6 +99,7 @@ class TestUsersController < ApplicationController
       end
     end
   end
+  
 
   def find_matches
     begin
@@ -106,6 +114,18 @@ class TestUsersController < ApplicationController
       render json: { error: "Internal server error" }, status: :internal_server_error
     end
   end 
+
+  def update_password
+    @user = TestUser.find(params[:id])
+
+    if @user.update(password: params[:password])
+      # password update successful
+      render json: { message: 'Password updated successfully' }
+    else
+      # handle password update errors
+      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
 
   # DELETE /test_users/1 or /test_users/1.json
   def destroy
@@ -125,7 +145,7 @@ class TestUsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def test_user_params
-      params.require(:test_user).permit(:name, :join_date, :location, :bio, :gender, :preferences, :birthday, :password)
+      params.require(:test_user).permit(:name, :join_date, :location, :bio, :gender, :preferences, :birthday, :password_digest, red_flags: [])
     end
     # Add this within the private section of your controller
     def message_params

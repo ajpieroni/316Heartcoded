@@ -26,7 +26,6 @@ export default function SelectUserForFeedback({ feedbackForm }) {
   const currentUser = user?.id;
   const [currentName, setCurrentName] = useState("");
   useEffect(() => {
-    // When the component mounts, check if the user is stored in sessionStorage
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -40,6 +39,13 @@ export default function SelectUserForFeedback({ feedbackForm }) {
       .then((data) => data.name)
       .catch((error) => console.error("Error fetching user:", error));
   };
+  // const fetchUserById = (id) => {
+  //   return fetch(`http://localhost:3000/test_users/${id}`)
+  //     .then((response) => response.json())
+  //     .then((data) => data.name)
+  //     .catch((error) => console.error("Error fetching user:", error));
+  // };
+
 
   fetch(`http://localhost:3000/matched_withs/users/${currentUser}`)
     .then((response) => response.json())
