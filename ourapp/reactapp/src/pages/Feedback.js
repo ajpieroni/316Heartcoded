@@ -6,6 +6,7 @@ import axios from "axios";
 import { UserContext } from "../components/contexts/UserContext";
 import { Link, useLocation } from "react-router-dom";
 import "./Feedback.css";
+import Header from "../components/Header";
 
 export default function Feedback({ feedbackForm }) {
   // !Routes to be added:
@@ -30,7 +31,7 @@ export default function Feedback({ feedbackForm }) {
   const [users, setUsers] = useState({
     receiver: receiver?.id || 0,
     // !TODO: change sender to current user
-    sender: user?.id, 
+    sender: user?.id,
   });
   const [feedback, setFeedback] = useState(0);
   const [formData, setFormData] = useState({
@@ -43,16 +44,16 @@ export default function Feedback({ feedbackForm }) {
   // effects
   useEffect(() => {
     const interval = setInterval(() => {
-      setEllipsisDots(dots => (dots < 3 ? dots + 1 : 1));
+      setEllipsisDots((dots) => (dots < 3 ? dots + 1 : 1));
     }, 200);
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
     if (receiver) {
-      setUsers(prev => ({
+      setUsers((prev) => ({
         ...prev,
-        receiver: receiver.id
+        receiver: receiver.id,
       }));
     }
   }, [receiver]);
@@ -72,7 +73,7 @@ export default function Feedback({ feedbackForm }) {
       const data = await response.json();
       setUsers({
         receiver: data.receives_uid,
-        sender: data.gives_uid
+        sender: data.gives_uid,
       });
       setFormData({
         ...formData,
@@ -81,6 +82,8 @@ export default function Feedback({ feedbackForm }) {
       });
     } catch (error) {
       console.error("Error fetching the feedback:", error);
+    } finally {
+      setLoading(false);
     }
   };
   */
@@ -101,11 +104,11 @@ export default function Feedback({ feedbackForm }) {
     try {
       const response = await axios.post("http://localhost:3000/feedbacks", {
         feedback: {
-          "receives_uid": formData.receives_uid,
-          "gives_uid": formData.gives_uid,
-          "feedback": formData.feedback,
-          "category": formData.category
-        }
+          receives_uid: formData.receives_uid,
+          gives_uid: formData.gives_uid,
+          feedback: formData.feedback,
+          category: formData.category,
+        },
       });
       setFormData({ ...formData, feedback: 0, category: "" });
     } catch (error) {
@@ -115,8 +118,13 @@ export default function Feedback({ feedbackForm }) {
 
   return (
     <main className="main-container">
-        <h1>Feedback</h1>
-        <h1>What is your feedback about {receiver?.name}?</h1>
+      <Header />
+      {loading ? (
+        <div className="loading">Loading{".".repeat(ellipsisDots)}</div>
+      ) : (
+        <>
+          <h1>Feedback</h1>
+          <h1>What is your feedback about {receiver?.name}?</h1>
 
         <h1> Feedback: {formData.feedback}</h1>
 
@@ -127,20 +135,20 @@ export default function Feedback({ feedbackForm }) {
         <form onSubmit={handleSubmit}>
           <label htmlFor="user_to_feedback">User to Provide Feedback About: {receiver?.name.split(" ")[0]}</label>
 
-          <br></br>
+            <br></br>
 
-          <label>
-            Feedback
-          <Typography component="legend">Feedback</Typography>
-          <Rating
-          name="feedback"
-          type="number"
-          value={parseInt(formData.feedback)}
-          onChange={handleFeedbackChange}
-          />
-          </label>
+            <label>
+              Feedback
+              <Typography component="legend">Feedback</Typography>
+              <Rating
+                name="feedback"
+                type="number"
+                value={parseInt(formData.feedback)}
+                onChange={handleFeedbackChange}
+              />
+            </label>
 
-          <br></br>
+            <br></br>
 
           <label>
             Category
@@ -168,4 +176,3 @@ export default function Feedback({ feedbackForm }) {
     </main>
   );
 }
-
