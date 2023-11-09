@@ -21,7 +21,7 @@ Rails.application.routes.draw do
       post 'messages', to: 'test_users#create_message'
     end
     collection do
-      get 'find_by_username/:name', to: 'test_users#find_by_username'
+      get 'find_by_username/:username', to: 'test_users#find_by_username'
     end
   end
 

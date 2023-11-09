@@ -22,7 +22,7 @@ class TestUsersController < ApplicationController
  
 # *Find by username
   def find_by_username
-    test_user = TestUser.find_by(name: params[:name])
+    test_user = TestUser.find_by(username: params[:username])
     
     if test_user
       render json: test_user
