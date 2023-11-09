@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     end
     collection do
       get 'find_by_username/:username', to: 'test_users#find_by_username'
+      get 'check_username', to: 'test_users#check_username'
     end
   end
 

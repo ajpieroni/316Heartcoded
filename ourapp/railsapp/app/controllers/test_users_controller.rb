@@ -20,6 +20,16 @@ class TestUsersController < ApplicationController
     end
  end
  
+ def check_username
+  new_username = params[:username]
+
+  if TestUser.exists?(username: new_username)
+    render json: { message: "The username #{new_username} already exists." }, status: :unprocessable_entity
+  else
+    render json: { message: "The username #{new_username} is available." }, status: :ok
+  end
+end
+
 # *Find by username
   def find_by_username
     test_user = TestUser.find_by(username: params[:username])
