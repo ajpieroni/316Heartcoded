@@ -1,48 +1,71 @@
 require "test_helper"
 
-class TestUsersControllerTest < ActionDispatch::IntegrationTest
+class UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @test_user = test_users(:one)
+    @user = users(:one)
   end
 
   test "should get index" do
-    get test_users_url
+    get users_url
     assert_response :success
   end
 
   test "should get new" do
-    get new_test_user_url
+    get new_user_url
     assert_response :success
   end
 
-  test "should create test_user" do
-    assert_difference("TestUser.count") do
-      post test_users_url, params: { test_user: { bio: @test_user.bio, birthday: @test_user.birthday, gender: @test_user.gender, join_date: @test_user.join_date, location: @test_user.location, name: @test_user.name, password: @test_user.password, preferences: @test_user.preferences } }
+  test "should create user" do
+    assert_difference("User.count") do
+      post users_url, params: {
+        user: {
+          name: "John Doe",
+          gender: "Male",
+          birthday: Date.today,
+          bio: "This is a test bio",
+          location: "Test Location",
+          preferences: "Open to any",
+          password_digest: "my_password",
+          red_flags: ["Vanity", "Family"]
+        }
+      }
     end
 
-    assert_redirected_to test_user_url(TestUser.last)
+    assert_redirected_to user_url(User.last)
   end
 
-  test "should show test_user" do
-    get test_user_url(@test_user)
+  test "should show user" do
+    get user_url(@user)
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_test_user_url(@test_user)
+    get edit_user_url(@user)
     assert_response :success
   end
 
-  test "should update test_user" do
-    patch test_user_url(@test_user), params: { test_user: { bio: @test_user.bio, birthday: @test_user.birthday, gender: @test_user.gender, join_date: @test_user.join_date, location: @test_user.location, name: @test_user.name, password: @test_user.password, preferences: @test_user.preferences } }
-    assert_redirected_to test_user_url(@test_user)
+  test "should update user" do
+    patch user_url(@user), params: {
+      user: {
+        id: @user.id, # Include the user's ID
+        name: "Updated Name",
+        gender: "Updated Gender",
+        birthday: Date.tomorrow,
+        bio: "Updated Bio",
+        location: "Updated Location",
+        preferences: "Updated Preferences",
+        password_digest: "new_password",
+        red_flags: ["Career"]
+      }
+    }
+    assert_redirected_to user_url(@user)
   end
 
-  test "should destroy test_user" do
-    assert_difference("TestUser.count", -1) do
-      delete test_user_url(@test_user)
+  test "should destroy user" do
+    assert_difference("User.count", -1) do
+      delete user_url(@user)
     end
 
-    assert_redirected_to test_users_url
+    assert_redirected_to users_url
   end
 end

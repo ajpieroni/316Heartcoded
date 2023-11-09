@@ -23,7 +23,7 @@ class MatchedWithsController < ApplicationController
 
   def by_user_id
     user_id = params[:id].to_i
-    matched_withs = MatchedWith.where('uid1 = ? OR uid2 = ? AND status = true', user_id, user_id)
+    matched_withs = MatchedWith.where('(uid1 = ? OR uid2 = ?) AND status = true', user_id, user_id)
     render json: matched_withs
   end  
 
@@ -58,13 +58,23 @@ class MatchedWithsController < ApplicationController
   def unmatch
     uid1 = params[:uid1]
     uid2 = params[:uid2]
+
+    if uid1.nil? || uid2.nil?
+      render json: { error: "uid1 and uid2 are required parameters." }, status: :unprocessable_entity
+      return
+    end
   
     # Find the entries in the database where the two uids match either uid1 or uid2
     matched_entries = MatchedWith.where("(uid1 = ? AND uid2 = ?) OR (uid1 = ? AND uid2 = ?)", uid1, uid2, uid2, uid1)
+
+    if matched_entries.empty?
+      render json: { error: "No matching records found." }, status: :not_found
+      return
+    end
   
     if matched_entries.update_all(status: false)
       # Handle successful update logic
-      render json: { message: "Status updated successfully." }, status: :ok
+      render json: { message: "Status updated successfully", updated_entries: matched_entries }, status: :ok
     else
       # Handle error
       render json: { error: "Failed to update status." }, status: :unprocessable_entity

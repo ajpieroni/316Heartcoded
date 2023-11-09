@@ -6,6 +6,7 @@ import axios from "axios";
 import { UserContext } from "../components/contexts/UserContext";
 import { useLocation } from "react-router-dom";
 import "./Feedback.css";
+import Header from "../components/Header";
 
 export default function Feedback() {
   // Define categories
