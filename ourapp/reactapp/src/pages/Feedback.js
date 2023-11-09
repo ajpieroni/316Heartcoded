@@ -5,6 +5,9 @@ import Rating from '@mui/material/Rating';
 import axios from "axios";
 import { UserContext } from "../components/contexts/UserContext";
 import { useLocation } from "react-router-dom";
+// import Rating from '@mui/material/Rating';
+import Stack from '@mui/material/Stack';
+
 import {useNavigate} from "react-router-dom";
 import "./Feedback.css";
 import Header from "../components/Header";
@@ -16,6 +19,7 @@ export default function Feedback() {
 
   useEffect(() => {
     const fetchCategories = async () => {
+      console.log("hello")
       try {
         const response = await fetch(`http://localhost:3000/categories`);
         if (!response.ok) {
@@ -60,6 +64,7 @@ export default function Feedback() {
 
   // Handle rating change
   const handleRatingChange = (category) => (event) => {
+
     setRatings({ ...ratings, [category]: parseInt(event.target.value, 10) });
   };
 
@@ -105,11 +110,16 @@ export default function Feedback() {
       {categories.map((category) => (
         <div key={category}>
           <Typography component="legend">{`How much do you think that ${receiver?.name.split(" ")[0]} values ${category}?`}</Typography>
+          <div className="custom">
           <Rating
             name={category}
             value={ratings[category]}
             onChange={(event) => handleRatingChange(category, event)}
+            size = "large"
+            precision={0.5} 
           />
+          </div>
+           {/* <Rating name="half-rating" precision={0.5} /> */}
         </div>
       ))}
       <input type="submit" value="Submit Feedback" />

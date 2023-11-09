@@ -5,11 +5,11 @@
     /* justify-content: space-between; */
     min-height: 100vh;
     /* padding: 2rem; */
-    background: linear-gradient(to bottom, #FBB6CE, #F87171, #EF4444);
+    /* background: linear-gradient(to bottom, #FBB6CE, #F87171, #EF4444); */
   }
 
 form{
-    background: linear-gradient(to bottom, #FBB6CE, #F87171, #EF4444);
+    /* background: linear-gradient(to bottom, #FBB6CE, #F87171, #EF4444); */
 }
 
 label, input, select, textarea{
