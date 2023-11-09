@@ -18,8 +18,13 @@ export default function UserLanding() {
   const navigate = useNavigate();
 
   const signUpUser = () => {
-    localStorage.setItem('username', username);
-    navigate("/CreateProfile");
+    if (!username || !password || !confirmPassword) {
+      setError('Please fill in all fields before signing up.');
+    } else {
+      localStorage.setItem('username', username);
+      navigate("/CreateProfile");
+      setError(null);
+    }
   };
 
   useEffect(() => {
@@ -41,6 +46,7 @@ export default function UserLanding() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Enter Username"
+            required
           />
           <input
             type="password"
@@ -48,6 +54,7 @@ export default function UserLanding() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Set Password"
+            required
           />
           <input
             type="password"
@@ -55,6 +62,7 @@ export default function UserLanding() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Confirm Password"
+            required
           />
           {error && <p className="error-message">{error}</p>}
           <button className="user-init-button" onClick={signUpUser}>
