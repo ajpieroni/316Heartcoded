@@ -119,23 +119,20 @@ export default function Feedback({ feedbackForm }) {
   return (
     <main className="main-container">
       <Header />
-      {loading ? (
+      {/* {loading ? (
         <div className="loading">Loading{".".repeat(ellipsisDots)}</div>
-      ) : (
+      ) : ( */}
         <>
           <h1>Feedback</h1>
           <h1>What is your feedback about {receiver?.name}?</h1>
+          <h1> Feedback: {formData.feedback}</h1>
+          <h1>User Feedback Form</h1>
+          {/* TODO: Make sure that the category is not hardcoded. Allow a user to select */}
+          <p>Hello {user?.name.split(" ")[0]}, provide feedback about a specific user: {receiver?.name} in category: 1</p>
 
-        <h1> Feedback: {formData.feedback}</h1>
-
-        <h1>User Feedback Form</h1>
-        {/* !TODO: make sure that you aren't heart<3coding category !!! allow a user to select */}
-        <p> Hello {user?.name.split(" ")[0]}, provide feedback about a specific user: {receiver?.name} in category: 1</p>
-
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="user_to_feedback">User to Provide Feedback About: {receiver?.name.split(" ")[0]}</label>
-
-            <br></br>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="user_to_feedback">User to Provide Feedback About: {receiver?.name.split(" ")[0]}</label>
+            <br />
 
             <label>
               Feedback
@@ -143,36 +140,35 @@ export default function Feedback({ feedbackForm }) {
               <Rating
                 name="feedback"
                 type="number"
-                value={parseInt(formData.feedback)}
+                value={parseInt(formData.feedback, 10)}
                 onChange={handleFeedbackChange}
               />
             </label>
+            <br />
 
-            <br></br>
-
-          <label>
-            Category
-            <select name="category" value={formData.category} onChange={handleCategoryChange}>
-              <option value="">Select a category</option>
-              <option value="1">Vanity</option>
-              <option value="2">Environmental Consciousness</option>
-              <option value="3">Spirituality</option>
-              <option value="4">Family</option>
-              <option value="5">Career</option>
-              <option value="6">Adventure</option>
-              <option value="7">Trustfulness</option>
-              <option value="8">Frugality</option>
-              <option value="9">Sentimentality</option>
-              <option value="10">Creativity</option>
-              <option value="11">Traditionalism</option>
-              <option value="12">Assertiveness</option>
-            </select>
-          </label>
-          
-          <input type="submit" value="Submit Feedback"/>
-        </form>
-
-        
+            <label>
+              Category
+              <select name="category" value={formData.category} onChange={handleCategoryChange}>
+                <option value="">Select a category</option>
+                <option value="1">Vanity</option>
+                <option value="2">Environmental Consciousness</option>
+                <option value="3">Spirituality</option>
+                <option value="4">Family</option>
+                <option value="5">Career</option>
+                <option value="6">Adventure</option>
+                <option value="7">Trustfulness</option>
+                <option value="8">Frugality</option>
+                <option value="9">Sentimentality</option>
+                <option value="10">Creativity</option>
+                <option value="11">Traditionalism</option>
+                <option value="12">Assertiveness</option>
+              </select>
+            </label>
+            
+            <input type="submit" value="Submit Feedback" />
+          </form>
+        </>
+      {/* )} */}
     </main>
   );
 }
