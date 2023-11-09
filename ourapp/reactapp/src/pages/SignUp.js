@@ -54,10 +54,12 @@ export default function UserLanding() {
   
   const checkUsernameAvailability = async (username) => {
     try {
-      const response = await axios.get(`/test_users/check_username`, {
-        params: { username: username }
-      });
-      if (response.data.message.includes('is available')) {
+      const response = await fetch(`http://localhost:3000/test_users/check_username?username=${encodeURIComponent(username)}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      if (data.message.includes('is available')) {
         return true;
       }
     } catch (error) {
@@ -65,6 +67,7 @@ export default function UserLanding() {
     }
     return false;
   };
+  // check_username?username=AlexZZ
 
   return (
     <main className="main-container">
