@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
+
 // import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../components/contexts/UserContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./Feedback.css";
 
 export default function Feedback() {
   // Define categories
   const [categories, setCategories] = useState([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -77,15 +79,23 @@ export default function Feedback() {
       } catch (error) {
         console.error("Error adding feedback:", error);
       }
+      setIsSubmitted(true)
     }
   };
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
 
   return (
     <main className="main-container">
-        <h1>Feedback</h1>
-        <h1>What is your feedback about {receiver?.name}?</h1>
-
         <h1>User Feedback Form</h1>
+
+      {!isSubmitted ? (<><h1>Feedback</h1>
+        {/* <h1>What is your feedback about {receiver?.name}?</h1> */}
+
         <p> Hello {user?.name.split(" ")[0]}, provide feedback about a specific user: {receiver?.name} </p>
 
         <form onSubmit={handleSubmit}>
@@ -106,7 +116,8 @@ export default function Feedback() {
           
           <input type="submit" value="Submit Feedback"/>
         </form>
-
+</>):(<><p>You've submitted the form!</p> <button onClick={goBack}>Back</button></>)}
+        
         
     </main>
   );
