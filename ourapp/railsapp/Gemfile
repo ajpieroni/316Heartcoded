@@ -30,6 +30,8 @@ gem "redis-namespace"
 
 gem "rack_authenticator", source: "http://adsweb-ci.oit.duke.edu/gems/"
 
+gem "argon2", "~> 2.3"
+
 # gem "webpacker", "~> 5.0"
 
 # gem "foreman", "~> 0.87"
