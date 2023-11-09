@@ -95,7 +95,7 @@ export default function Feedback() {
       <br />
       {categories.map((category) => (
         <div key={category}>
-          <Typography component="legend">{category}</Typography>
+          <Typography component="legend">{`How much do you think that ${receiver?.name.split(" ")[0]} values ${category}?`}</Typography>
           <Rating
             name={category}
             value={ratings[category]}
