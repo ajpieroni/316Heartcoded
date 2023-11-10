@@ -11,6 +11,10 @@ class TestUser < ApplicationRecord
 
     def password=(new_password)
       @password = new_password
+      unless @password.length >= 6 && @password.match?(/\A(?=.*[a-zA-Z])(?=.*[0-9])/)
+        errors.add :password, 'must be at least 6 characters and include at least one letter and one number'
+        return nil
+      end
       self.password_digest = Argon2::Password.create(new_password)
     end
 
