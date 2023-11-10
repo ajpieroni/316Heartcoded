@@ -36,6 +36,28 @@ export default function UserLanding() {
       setError('Username is already taken.');
       return;
     }
+      //const hashedPassword = bcrypt.hash(password, 10);
+      axios.post("http://localhost:3000/test_users", {
+        test_user: {
+          username: username,
+          password: password,
+        }
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      .then(response => {
+        console.log(response.data);
+        const message = "Account successfully created. Click here to <a href='/CreateProfile'>initialize profile</a>";
+        setSuccessMessage(message);
+      })
+      .catch(error => {
+        console.error(error.response.data);
+        setError("Registration failed. Please try again.");
+      });
+  
+
 
     try {
       localStorage.setItem('username', username);
