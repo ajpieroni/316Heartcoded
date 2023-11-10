@@ -9,42 +9,55 @@ import "./ForgotPassword.css"
 function ForgotPassword() {
   const [username, setUsername] = useState('');
   const { user, setUser } = useContext(UserContext);
-  const[password, setPassword] = useState();
+  const[newPassword, setNewPassword] = useState();
+  const [passwordResetResponse, setPasswordResetResponse] = useState('');
   
   useEffect(() => {
     console.log("user:", user);
     console.log("userid", user?.id)
       }, [user]);
 
+
   const requestPasswordReset = () => {
     console.log("Requesting password reset for:", username);
-    
-    axios.get(`http://localhost:3000/test_users/${user.id}`)
-    .then((response) => {
-        console.log("response", response)
-        setPassword(response.data.password);
-    })
-    .catch((error) => {
-        console.error("No matching username", error);
-    });
+
+    axios.patch(`http://localhost:3000/test_users/${user.id}`, {
+        password: newPassword,
+      })
+      .then((response) => {
+        console.log("Password reset successful", response);
+        setPasswordResetResponse('Password reset successful');
+      })
+      .catch((error) => {
+        console.error("Failed to reset password", error);
+        setPasswordResetResponse('Failed to reset password');
+      });
   };
 
   return (
     <div className="forgot-password-container">
-    <h1 className="forgot-password-title">Forgot Password</h1>
-    <p className="forgot-password-instruction">Enter your username to reset password.</p>
-    <input
+      <h1 className="forgot-password-title">Forgot Password</h1>
+      <p className="forgot-password-instruction">Enter your username to reset password.</p>
+      <input
         className="username-input"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         placeholder="Username"
-    />
-    <button className="reset-button" onClick={requestPasswordReset}>Password Reset</button>
-    <p className="password-display">{password}</p>
-</div>
+      />
+      <input
+        type="password"
+        className="new-password-input"
+        value={newPassword}
+        onChange={(e) => setNewPassword(e.target.value)}
+        placeholder="New Password"
+      />
+      <button className="reset-button" onClick={requestPasswordReset}>Password Reset</button>
+      <p className="password-reset-response">{passwordResetResponse}</p>
+    </div>
   );
+};
   
 
-}
+
 
 export default ForgotPassword;
