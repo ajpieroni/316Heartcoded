@@ -1,6 +1,7 @@
 class TestUsersController < ApplicationController
   protect_from_forgery with: :null_session
   before_action :set_test_user, only: %i[ show edit update destroy ]
+  
 
   # GET /test_users or /test_users.json
   def index
@@ -87,27 +88,30 @@ end
   end
 
 
-  def login
+  def authenticate
     @test_user = TestUser.find_by(name: params[:name])
-
-    if @test_user && @test_user.authenticate(params[:password])
-      render json: @test_user, status: :ok
+    if @test_user && Argon2::Password.verify_password(params[:password], @test_user.password_digest)
+      render json: { authenticated: true, user: user }
     else
-      render json: { error: 'Invalid username or password' }, status: :unauthorized
+      render json: { authenticated: false }, status: :unauthorized
     end
   end
 
   # PATCH/PUT /test_users/1 or /test_users/1.json
   def update
-    respond_to do |format|
+    # respond_to do |format|
       if @test_user.update(test_user_params)
-        format.html { redirect_to test_user_url(@test_user), notice: "Test user was successfully updated." }
-        format.json { render :show, status: :ok, location: @test_user }
+        # format.html { redirect_to test_user_url(@test_user), notice: "Test user was successfully updated." }
+        # format.json { render :show, status: :ok, location: @test_user }
+        render json: {success: true, message: "user successfully updated"}
+
+        
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @test_user.errors, status: :unprocessable_entity }
+        # format.html { render :edit, status: :unprocessable_entity }
+        # format.json { render json: @test_user.errors, status: :unprocessable_entity }
+        render json: {success: false, message: "user NOT successfully updated"}
+
       end
-    end
   end
   
 
@@ -155,7 +159,7 @@ end
 
     # Only allow a list of trusted parameters through.
     def test_user_params
-      params.require(:test_user).permit(:name, :username, :join_date, :location, :bio, :gender, :preferences, :birthday, :password_digest, red_flags:[])
+      params.require(:test_user).permit(:name, :username, :join_date, :location, :bio, :gender, :preferences, :birthday, :password, red_flags:[])
 
     end
     # Add this within the private section of your controller
