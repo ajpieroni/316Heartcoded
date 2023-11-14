@@ -19,7 +19,7 @@ class TestUser < ApplicationRecord
     end
 
     def authenticate(password)
-      Argon2::Password.verify_password(password, password_digest)
+      Argon2::Password.verify_password(password, self.password_digest)
     end
     
     def messages
