@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     member do
       get 'messages'
       post 'messages', to: 'test_users#create_message'
+      patch 'update_password', to: 'test_users#update_password'
     end
     collection do
       get 'find_by_username/:username', to: 'test_users#find_by_username'

@@ -1,7 +1,7 @@
 class TestUsersController < ApplicationController
   protect_from_forgery with: :null_session
   before_action :set_test_user, only: %i[ show edit update destroy ]
-  
+  include ActionController::RequestForgeryProtection
 
   # GET /test_users or /test_users.json
   def index
@@ -132,13 +132,13 @@ end
   end 
 
   def update_password
+    Rails.logger.debug("Received params: #{params.inspect}")
     @user = TestUser.find(params[:id])
-
-    if @user.update(password: params[:password])
+    Rails.logger.debug("Received password: #{params[:password]}")
+    if @user && @user.update_password(params[:test_user][:password])
       # password update successful
       render json: { message: 'Password updated successfully' }
     else
-      # handle password update errors
       render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
     end
   end
