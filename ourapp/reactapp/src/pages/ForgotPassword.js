@@ -1,37 +1,60 @@
-import React, { useState } from "react";
-import { useContext } from "react";
-import { UserContext } from "../components/contexts/UserContext";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./ForgotPassword.css"
-
+import "./ForgotPassword.css";
 
 function ForgotPassword() {
   const [username, setUsername] = useState('');
-  const { user, setUser } = useContext(UserContext);
-  const[newPassword, setNewPassword] = useState();
+  const [newPassword, setNewPassword] = useState('');
   const [passwordResetResponse, setPasswordResetResponse] = useState('');
-  
-  useEffect(() => {
-    console.log("user:", user);
-    console.log("userid", user?.id)
-      }, [user]);
+  const [userId, setUserId] = useState('');
 
+  const initializeUser = async () => {
+    console.log("Fetching user data");
+    try {
+      const response = await fetch(`http://localhost:3000/test_users/find_by_username/${username}`);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log(data);
+      console.log(data.id);
+      return data.id;
+    } catch (error) {
+      console.error("Failed to fetch user:", error);
+      return null;
+    }
+  };
 
-  const requestPasswordReset = () => {
-    console.log("Requesting password reset for:", username);
+  const requestPasswordReset = async () => {
+    try {
+      const userId = await initializeUser();
+      if (userId) {
+        console.log("Requesting password reset for user ID:", userId);
 
-    axios.patch(`http://localhost:3000/test_users/${user.id}`, {
-        password: newPassword,
-      })
-      .then((response) => {
-        console.log("Password reset successful", response);
+        const response = await fetch(`http://localhost:3000/test_users/${userId}/update_password`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ 
+            password: newPassword 
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+        console.log("Password reset successful:", data);
         setPasswordResetResponse('Password reset successful');
-      })
-      .catch((error) => {
-        console.error("Failed to reset password", error);
-        setPasswordResetResponse('Failed to reset password');
-      });
+      } else {
+        console.log("UserID not found. Password reset cannot be processed.");
+      }
+    } catch (error) {
+      console.error("Failed to reset password:", error);
+      setPasswordResetResponse('Failed to reset password');
+    }
   };
 
   return (
@@ -55,9 +78,6 @@ function ForgotPassword() {
       <p className="password-reset-response">{passwordResetResponse}</p>
     </div>
   );
-};
-  
-
-
+}
 
 export default ForgotPassword;

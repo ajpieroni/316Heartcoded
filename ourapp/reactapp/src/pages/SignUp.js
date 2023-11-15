@@ -35,7 +35,6 @@ export default function UserLanding() {
       setError('Username is already taken.');
       return;
     }
-      //const hashedPassword = bcrypt.hash(password, 10);
       axios.post("http://localhost:3000/test_users", {
         test_user: {
           username: username,
