@@ -9,12 +9,17 @@ function ForgotPassword() {
   const [userId, setUserId] = useState('');
 
   const initializeUser = async () => {
-    console.log("Fetching user data");
+    console.log("Fetching user data");  
     try {
-      const response = await fetch(`http://localhost:3000/test_users/find_by_username/${username}`);
+      const encodedUsername = encodeURIComponent(username);
+      console.log(encodedUsername);
+      const url = `http://localhost:3000/test_users/find_by_username?username=${encodedUsername}`;
+      const response = await fetch(url);
+  
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+  
       const data = await response.json();
       console.log(data);
       console.log(data.id);
@@ -24,6 +29,7 @@ function ForgotPassword() {
       return null;
     }
   };
+  
 
   const requestPasswordReset = async () => {
     try {

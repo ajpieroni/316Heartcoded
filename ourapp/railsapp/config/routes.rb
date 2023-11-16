@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       patch 'update_password', to: 'test_users#update_password'
     end
     collection do
+      get 'find_by_username', to: 'test_users#find_by_username'
       get 'find_by_username/:username', to: 'test_users#find_by_username'
       get 'check_username', to: 'test_users#check_username'
       post 'authenticate', to: 'test_users#authenticate'
