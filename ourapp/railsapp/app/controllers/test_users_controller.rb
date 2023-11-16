@@ -1,7 +1,7 @@
 class TestUsersController < ApplicationController
   protect_from_forgery with: :null_session
   before_action :set_test_user, only: %i[ show edit update destroy ]
-  
+  include ActionController::RequestForgeryProtection
 
   # GET /test_users or /test_users.json
   def index
@@ -32,15 +32,20 @@ class TestUsersController < ApplicationController
 end
 
 # *Find by username
-  def find_by_username
-    test_user = TestUser.find_by(username: params[:username])
-    
-    if test_user
-      render json: test_user
-    else
-      render json: { error: 'User not found' }, status: 404
-    end
+def find_by_username
+  username = params[:username]
+  decoded_username = URI.decode_www_form_component(username)
+
+  test_user = TestUser.find_by(username: username)
+
+  if test_user
+    render json: test_user
+  else
+    render json: { error: 'User not found' }, status: 404
   end
+end
+
+  
   def create_message
     @test_user = TestUser.find(params[:id])
   
@@ -89,9 +94,11 @@ end
 
 
   def authenticate
-    @test_user = TestUser.find_by(name: params[:name])
-    if @test_user && Argon2::Password.verify_password(params[:password], @test_user.password_digest)
-      render json: { authenticated: true, user: user }
+    @test_user = TestUser.find_by(username: params[:username])
+    #Rails.logger.debug("TestUser after finding: #{@test_user}")    
+
+    if @test_user && @test_user.authenticate(params[:password])
+      render json: { authenticated: true, user: @test_user }
     else
       render json: { authenticated: false }, status: :unauthorized
     end
@@ -130,13 +137,13 @@ end
   end 
 
   def update_password
+    Rails.logger.debug("Received params: #{params.inspect}")
     @user = TestUser.find(params[:id])
-
-    if @user.update(password: params[:password])
+    Rails.logger.debug("Received password: #{params[:test_user][:password]}")
+    if @user && @user.update_password(params[:password])
       # password update successful
       render json: { message: 'Password updated successfully' }
     else
-      # handle password update errors
       render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
     end
   end

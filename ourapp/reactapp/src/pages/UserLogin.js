@@ -43,62 +43,37 @@ export default function UserLogin() {
   };
 
   const initializeUser = () => {
-    fetch(`http://localhost:3000/test_users/find_by_username/${username}`, {
-      method: "GET",
+    fetch("http://localhost:3000/test_users/authenticate", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({ username: username, password: password }),
     })
       .then((response) => {
         if (!response.ok) throw new Error("Network response was not ok");
         return response.json();
       })
-      .then((data) => {
-        if (data && data.password) {
-          // Data contains hashed password (password_digest) from the server
-          fetch("http://localhost:3000/test_users/authenticate", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ name: username, password: password }),
-          })
-            .then((response) => {
-              if (!response.ok) throw new Error("Network response was not ok");
-              return response.json();
-            })
-            .then((authData) => {
-              if (authData.authenticated) {
-                setUser((prevUser) => ({ ...prevUser, ...data }));
-                sessionStorage.setItem("user", JSON.stringify(data));
-                navigate("/UserSignedIn");
-                setLogin(true);
-                clearInputFields();
-              } else {
-                setErrorMessage(
-                  "Invalid username or password. Please try again."
-                );
-                clearInputFields();
-              }
-            })
-            .catch((error) => {
-              console.error("Failed to authenticate user:", error);
-              setErrorMessage(
-                "There was an issue logging in. Please try again."
-              );
-              clearInputFields();
-            });
+      .then((authData) => {
+        if (authData.authenticated) {
+          setUser((prevUser) => ({ ...prevUser, ...authData }));
+          sessionStorage.setItem("user", JSON.stringify(authData));
+          setLogin(true);
+          navigate("/UserSignedIn");
+          clearInputFields();
         } else {
+          // Authentication failed
           setErrorMessage("Invalid username or password. Please try again.");
           clearInputFields();
         }
       })
       .catch((error) => {
-        console.error("Failed to initialize user:", error);
+        console.error("Failed to authenticate user:", error);
         setErrorMessage("There was an issue logging in. Please try again.");
         clearInputFields();
       });
   };
+  
 
   /*
   const initializeUser = () => {
@@ -205,7 +180,7 @@ export default function UserLogin() {
   return (
     <main className="main-login-container">
       <div className="hero-login-section">
-        <div className="hero-login-title">Welcome to Heartcoded.</div>
+        <div className="hero-login-title">Welcome to Heartcoded!!!</div>
         <p className="hero-login-subtitle">Find your soulmate today!</p>
         <div className="user-login-init-container">
           {showSignIn && (

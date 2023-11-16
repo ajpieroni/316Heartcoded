@@ -5,7 +5,6 @@ import axios from "axios";
 import { UserContext } from "../components/contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
-//import bcrypt from 'bcryptjs';
 
 export default function UserLanding() {
   const { user, setUser } = useContext(UserContext);
@@ -36,7 +35,6 @@ export default function UserLanding() {
       setError('Username is already taken.');
       return;
     }
-      //const hashedPassword = bcrypt.hash(password, 10);
       axios.post("http://localhost:3000/test_users", {
         test_user: {
           username: username,

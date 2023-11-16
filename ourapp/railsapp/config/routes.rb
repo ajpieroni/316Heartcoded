@@ -19,13 +19,15 @@ Rails.application.routes.draw do
     member do
       get 'messages'
       post 'messages', to: 'test_users#create_message'
+      patch 'update_password', to: 'test_users#update_password'
     end
     collection do
+      get 'find_by_username', to: 'test_users#find_by_username'
       get 'find_by_username/:username', to: 'test_users#find_by_username'
       get 'check_username', to: 'test_users#check_username'
+      post 'authenticate', to: 'test_users#authenticate'
     end
   end
-  post '/test_users/authenticate', to: 'test_users#authenticate'
 
   # Define custom routes outside of the resources block
   get 'unmatch/:uid1/:uid2', to: 'matched_withs#unmatch'
