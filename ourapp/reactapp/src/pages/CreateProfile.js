@@ -4,40 +4,41 @@ import { useContext } from "react";
 import axios from "axios";
 import SuccessModal from "../components/SuccessModal";
 import { useLocation } from "react-router-dom";
+import { UserContext } from "../components/contexts/UserContext";
 
 export default function UserForm() {
   const location = useLocation();
   const username = localStorage.getItem("username") || "defaultUsername";
-  const [userId, setUserId] = useState("");
+  const { user, setUser } = useContext(UserContext);
+  console.log(user.id);
+
+  // useEffect(() => {
+  //   initializeUser();
+  // }, [username]);
 
 
-  useEffect(() => {
-    initializeUser();
-  }, [username]);
-
-
-  const initializeUser = () => {
-    console.log("Fetching user data");
-    fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        console.log(data.id);
-        setUserId(data.id);
-      })
-      .catch((error) => {
-        console.error("Failed to fetch user:", error);
-      });
-  };
+  // const initializeUser = () => {
+  //   console.log("Fetching user data");
+  //   fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       console.log(data);
+  //       console.log(data.id);
+  //       setUserId(data.id);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Failed to fetch user:", error);
+  //     });
+  // };
 
   const patchUserData = (updatedData) => {
-    if (userId) {
-      fetch(`http://localhost:3000/test_users/${userId}`, {
+    if (user.id) {
+      fetch(`http://localhost:3000/test_users/${user.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
