@@ -57,6 +57,7 @@ export default function UserLanding() {
       })
       .catch(error => {
         console.error(error.response.data);
+        console.log(user);
         setError("Registration failed. Please try again.");
       });
   

@@ -10,11 +10,11 @@ export default function UserForm() {
   const location = useLocation();
   const username = localStorage.getItem("username") || "defaultUsername";
   const { user, setUser } = useContext(UserContext);
-  console.log(user.id);
+  console.log(user?.id);
 
   const patchUserData = (updatedData) => {
-    if (user.id) {
-      fetch(`http://localhost:3000/test_users/${user.id}`, {
+    if (user?.id) {
+      fetch(`http://localhost:3000/test_users/${user?.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
