@@ -134,8 +134,8 @@ end
   def update_password
     Rails.logger.debug("Received params: #{params.inspect}")
     @user = TestUser.find(params[:id])
-    Rails.logger.debug("Received password: #{params[:password]}")
-    if @user && @user.update_password(params[:test_user][:password])
+    Rails.logger.debug("Received password: #{params[:test_user][:password]}")
+    if @user && @user.update_password(params[:password])
       # password update successful
       render json: { message: 'Password updated successfully' }
     else
