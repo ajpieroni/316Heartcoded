@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import Typography from '@mui/material/Typography';
-import Rating from '@mui/material/Rating';
-
-// import { useLocation } from "react-router-dom";
+import Slider from '@mui/material/Slider';
 import axios from "axios";
 import { UserContext } from "../components/contexts/UserContext";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -11,7 +9,6 @@ import "./Feedback.css";
 export default function Feedback() {
   // Define categories
   const [categories, setCategories] = useState([]);
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -43,7 +40,7 @@ export default function Feedback() {
     }
   }, [setUser]);
 
-  // states
+  // users involved in feedback
   const [users, setUsers] = useState({
     receiver: receiver?.id || 0,
     sender: user?.id, 
@@ -57,10 +54,18 @@ export default function Feedback() {
     }, {})
   );
 
+  // Log ratings whenever it changes
+  useEffect(() => {
+    console.log(ratings);
+  }, [ratings]);
+
   // Handle rating change
   const handleRatingChange = (category) => (event) => {
-    setRatings({ ...ratings, [category]: parseInt(event.target.value, 10) });
+    setRatings({ ...ratings, [category]: parseInt(event.target.value, 10) || 0});
   };
+
+  // Handle submit
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = async (e) => {
     for(let i = 0; i < categories.length; i++) {
@@ -82,11 +87,30 @@ export default function Feedback() {
       setIsSubmitted(true)
     }
   };
+
+  // Go back
   const navigate = useNavigate();
 
   const goBack = () => {
     navigate(-1);
   };
+
+  const marks = [
+    {
+      value: 0,
+      label: 'Not at all',
+    },
+    {value: 1}, {value: 2}, {value: 3}, {value: 4},
+    {
+      value: 5,
+      label: 'Average amount',
+    },
+    {value: 6}, {value: 7}, {value: 8}, {value: 9},
+    {
+      value: 10,
+      label: 'A lot',
+    }
+  ];
 
 
   return (
@@ -94,21 +118,25 @@ export default function Feedback() {
         <h1>User Feedback Form</h1>
 
       {!isSubmitted ? (<><h1>Feedback</h1>
-        {/* <h1>What is your feedback about {receiver?.name}?</h1> */}
-
-        <p> Hello {user?.name.split(" ")[0]}, provide feedback about a specific user: {receiver?.name} </p>
+        <p> Hello {user?.name.split(" ")[0]}, provide feedback about your match: {receiver?.name} </p>
 
         <form onSubmit={handleSubmit}>
-          <label htmlFor="user_to_feedback">User to Provide Feedback About: {receiver?.name.split(" ")[0]}</label>
-
-          <br></br>
-
           {categories.map((category) => (
-            <div key={category}>
-              <Typography component="legend">{category}</Typography>
-              <Rating
-                name={category}
-                value={ratings[category]}
+            <div key= {category}>
+              <Typography id="discrete-slider" gutterBottom>
+                How much does {receiver?.name} care about {category?.toLowerCase()}?
+              </Typography>
+              <br></br>
+              <Slider
+                defaultValue={0}
+                value={ratings[category] || 0}
+                aria-labelledby="discrete-slider"
+                valueLabelDisplay="on"
+                step={1}
+                min={0}
+                max={10}
+                marks={marks}
+                color="secondary"
                 onChange={handleRatingChange(category)}
               />
             </div>
