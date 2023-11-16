@@ -49,6 +49,11 @@ export default function UserLanding() {
       })
       .then(response => {
         console.log(response.data);
+        const userId = response.data.id;
+
+      // Update the UserContext with the received user ID
+      setUser({ ...user, id: userId }); // Assuming setUser updates the user context
+
         const message = "Account successfully created. Click here to <a href='/CreateProfile'>initialize profile</a>";
         setSuccessMessage(message);
       })

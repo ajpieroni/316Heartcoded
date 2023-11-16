@@ -81,7 +81,7 @@ end
     @test_user = TestUser.new(test_user_params)
 
     if @test_user.save
-      render json: {success: true, message: "user successfully created"}
+      render json: {success: true, message: "user successfully created", id: @test_user.id }
     else
       render json: {success: false, message: "error creating user", errors: @test_user.errors.full_messages }
     end
