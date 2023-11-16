@@ -12,30 +12,6 @@ export default function UserForm() {
   const { user, setUser } = useContext(UserContext);
   console.log(user.id);
 
-  // useEffect(() => {
-  //   initializeUser();
-  // }, [username]);
-
-
-  // const initializeUser = () => {
-  //   console.log("Fetching user data");
-  //   fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error("Network response was not ok");
-  //       }
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       console.log(data);
-  //       console.log(data.id);
-  //       setUserId(data.id);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Failed to fetch user:", error);
-  //     });
-  // };
-
   const patchUserData = (updatedData) => {
     if (user.id) {
       fetch(`http://localhost:3000/test_users/${user.id}`, {
