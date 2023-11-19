@@ -5,6 +5,8 @@ import axios from "axios";
 import { UserContext } from "../components/contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
+import PasswordRequirements from './PasswordRequirements';
+
 
 export default function UserLanding() {
   const { user, setUser } = useContext(UserContext);
@@ -13,6 +15,7 @@ export default function UserLanding() {
   const[confirmPassword, setConfirmPassword] = useState('');
   const [login, setLogin] = useState(false);
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
   const [successMessage, setSuccessMessage] = useState('')
   const navigate = useNavigate();
 
@@ -35,35 +38,33 @@ export default function UserLanding() {
       setError('Username is already taken.');
       return;
     }
-      axios.post("http://localhost:3000/test_users", {
-        test_user: {
-          username: username,
-          password: password,
-        }
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      })
-      .then(response => {
-        console.log(response.data);
+    axios.post("http://localhost:3000/test_users", {
+      test_user: {
+        username: username,
+        password: password,
+      }
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    .then(response => {
+      console.log(response.data);
+      if (response.data.success === true) {
         const message = "Account successfully created. Click here to <a href='/CreateProfile'>initialize profile</a>";
         setSuccessMessage(message);
-      })
-      .catch(error => {
-        console.error(error.response.data);
-        setError("Registration failed. Please try again.");
-      });
-  
-
-
-    try {
-      localStorage.setItem('username', username);
-      navigate("/CreateProfile");
-    } catch (error) {
-      setError('There was an error signing up.');
-      console.error('Sign up error: ', error);
-    }
+        localStorage.setItem('username', username);
+        navigate("/CreateProfile");
+      }
+      else{
+        setError("Password must be at least 6 characters long and include at least one letter and one number");
+      }      
+    })
+    .catch(error => {
+      console.error(error.response.data);
+      setError("Registration failed. Please try again.");
+    });
+    
   };
 
   useEffect(() => {
@@ -89,6 +90,8 @@ export default function UserLanding() {
   };
   // check_username?username=AlexZZ
 
+
+  
   return (
     <main className="main-container">
       <div className="hero-section">
@@ -103,14 +106,22 @@ export default function UserLanding() {
             placeholder="Enter Username"
             required
           />
-          <input
-            type="password"
-            className="user-init-input"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Set Password"
-            required
-          />
+          <div className="password-input-container">
+            <input
+              type={showPassword ? "text" : "password"}
+              className="user-init-input"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Set Password"
+              required
+            />
+            <button
+              className="show-password-button"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
+          </div>
           <input
             type="password"
             className="user-init-input"
@@ -119,6 +130,7 @@ export default function UserLanding() {
             placeholder="Confirm Password"
             required
           />
+          <PasswordRequirements password={password} />
           {error && <p className="error-message">{error}</p>}
           <button className="user-init-button" onClick={signUpUser}>
             Sign Up
