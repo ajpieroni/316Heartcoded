@@ -10,9 +10,6 @@ import axios from "axios";
 export default function SelectUserForFeedback({ feedbackForm }) {
   const [matchIds, setMatchIds] = useState([]);
   const { user, setUser } = useContext(UserContext);
-  // const currentUser = user?.id;
-  // const [currentName, setCurrentName] = useState("");
-  // const { user, setUser } = useContext(UserContext);
   const [ellipsisDots, setEllipsisDots] = useState(1);
   //   !Loading
   const [loading, setLoading] = useState(true);
@@ -24,7 +21,6 @@ export default function SelectUserForFeedback({ feedbackForm }) {
   }, []);
 
   const currentUser = user?.id;
-  const [currentName, setCurrentName] = useState("");
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
@@ -33,25 +29,10 @@ export default function SelectUserForFeedback({ feedbackForm }) {
     }
   }, [setUser]);
 
-  const fetchUserNameById = (id) => {
-    return fetch(`http://localhost:3000/test_users/${id}`)
-      .then((response) => response.json())
-      .then((data) => data.name)
-      .catch((error) => console.error("Error fetching user:", error));
-  };
-  // const fetchUserById = (id) => {
-  //   return fetch(`http://localhost:3000/test_users/${id}`)
-  //     .then((response) => response.json())
-  //     .then((data) => data.name)
-  //     .catch((error) => console.error("Error fetching user:", error));
-  // };
-
 
   fetch(`http://localhost:3000/matched_withs/users/${currentUser}`)
     .then((response) => response.json())
     .then(async (matches) => {
-      const myName = await fetchUserNameById(currentUser);
-      setCurrentName(myName);
       const ids = [];
       for (let match of matches) {
         const otherUserId =
