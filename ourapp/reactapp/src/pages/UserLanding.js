@@ -157,7 +157,7 @@ export default function UserLanding() {
           {/* <h2> */}
             <h2>
               {login
-                ? `Logged in as: ${user?.user.name}, Birthday: ${user?.birthday}, ID: ${user?.id}`
+                ? `Logged in as: ${user?.name}, Birthday: ${user?.birthday}, ID: ${user?.id}`
                 : "Not Logged In"}
             {/* </h2> */}
           </h2>
