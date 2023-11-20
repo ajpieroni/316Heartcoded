@@ -106,13 +106,16 @@ end
 
   # PATCH/PUT /test_users/1 or /test_users/1.json
   def update
+    threshold = 120
+
+    is_first_update = (@test_user.updated_at - @test_user.created_at).abs <= threshold
     # respond_to do |format|
       if @test_user.update(test_user_params)
         # format.html { redirect_to test_user_url(@test_user), notice: "Test user was successfully updated." }
         # format.json { render :show, status: :ok, location: @test_user }
-        Rails.logger.info "Sending email? #{@test_user.email}"
-        # Rails.console
-        HeartcodedMailer.with(test_user: @test_user).new_user_email.deliver_now
+        if is_first_update
+          HeartcodedMailer.with(test_user: @test_user).new_user_email.deliver_now
+        end
 
         render json: {success: true, message: "user successfully updated"}
 
