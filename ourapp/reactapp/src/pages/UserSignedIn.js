@@ -99,15 +99,6 @@ return(
             </p>
           </div>
         </Link>
-        <Link to="/SelectUserForFeedback">
-          <div className="feature-card">
-            <h2>Give Feedback</h2>
-            <p>
-              Rate your matches and share your thoughts. Your feedback helps us
-              refine the matching process for an enhanced experience.
-            </p>
-          </div>
-        </Link>
         {/* hello */}
       </div>
 
