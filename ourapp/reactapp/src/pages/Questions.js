@@ -4,6 +4,8 @@ import "./Questions.css";
 import { UserContext } from "../components/contexts/UserContext";
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import Typography from '@mui/material/Typography';
+import Slider from '@mui/material/Slider';
 
 export default function Questions() {
   const { user, setUser } = useContext(UserContext);
@@ -48,10 +50,9 @@ export default function Questions() {
   const saveResponse = () => {
     // Implement the logic to save the user's response here
     console.log("User response:", rating);
-    if (rating !== null) {
       const test_user_id = user.id;
       const question_id = question.id;
-      const answer = rating;
+      const answer = rating || 0;
       const requestData = {
         answer: {
           test_user_id,
@@ -70,10 +71,24 @@ export default function Questions() {
         .catch((error) => {
           console.error("Error saving the response:", error);
         });
-    } else {
-      console.log("Please select a ranking before saving.");
-    }
   };
+
+  const marks = [
+    {
+      value: 0,
+      label: 'Not at all',
+    },
+    {value: 1}, {value: 2}, {value: 3}, {value: 4},
+    {
+      value: 5,
+      label: 'Average amount',
+    },
+    {value: 6}, {value: 7}, {value: 8}, {value: 9},
+    {
+      value: 10,
+      label: 'A lot',
+    }
+  ];
 
   return (
     <main className="main-container">
@@ -87,22 +102,18 @@ export default function Questions() {
       {questionGenerated && (
         <div className="response-container">
           <h2 className="response-title">Select a Ranking:</h2>
-          <div className="response-buttons">
-            <ButtonGroup 
-            variant="contained"
-            size="large"
-            color="primary">
-              <Button color={rating === 1 ? "secondary" : "primary"} onClick={() => setRating(1)}>1</Button>
-              <Button color={rating === 2 ? "secondary" : "primary"} onClick={() => setRating(2)}>2</Button>
-              <Button color={rating === 3 ? "secondary" : "primary"} onClick={() => setRating(3)}>3</Button>
-              <Button color={rating === 4 ? "secondary" : "primary"} onClick={() => setRating(4)}>4</Button>
-              <Button color={rating === 5 ? "secondary" : "primary"} onClick={() => setRating(5)}>5</Button>
-              <Button color={rating === 6 ? "secondary" : "primary"} onClick={() => setRating(6)}>6</Button>
-              <Button color={rating === 7 ? "secondary" : "primary"} onClick={() => setRating(7)}>7</Button>
-              <Button color={rating === 8 ? "secondary" : "primary"} onClick={() => setRating(8)}>8</Button>
-              <Button color={rating === 9 ? "secondary" : "primary"} onClick={() => setRating(9)}>9</Button>
-              <Button color={rating === 10 ? "secondary" : "primary"} onClick={() => setRating(10)}>10</Button>
-            </ButtonGroup>
+          <div className="response-slider">
+            <Slider
+              value={rating || 0}
+              aria-labelledby="discrete-slider"
+              valueLabelDisplay="auto"
+              step={1}
+              marks={marks}
+              min={0}
+              max={10}
+              color="secondary"
+              onChange={(event, newValue) => setRating(newValue)}
+            />
           </div>
         </div>
       )}
