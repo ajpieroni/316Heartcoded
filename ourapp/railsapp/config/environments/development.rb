@@ -41,6 +41,14 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  # !Mailer:
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {:address  => "smtp.duke.edu",
+                                        :port  => 25,
+                                        :domain => "duke.edu",
+                                        :authentication => :none,
+                                        :enable_starttls_auto => false}
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
