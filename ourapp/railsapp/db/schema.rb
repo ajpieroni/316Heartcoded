@@ -95,6 +95,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_20_023940) do
     t.string "red_flags", default: [], array: true
     t.string "username"
     t.string "password_digest"
+    t.string "email"
   end
 
   create_table "weights", force: :cascade do |t|
