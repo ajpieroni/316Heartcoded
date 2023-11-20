@@ -98,7 +98,7 @@ end
     #Rails.logger.debug("TestUser after finding: #{@test_user}")    
 
     if @test_user && @test_user.authenticate(params[:password])
-      render json: { authenticated: true, user: @test_user }
+      render json: @test_user
     else
       render json: { authenticated: false }, status: :unauthorized
     end
