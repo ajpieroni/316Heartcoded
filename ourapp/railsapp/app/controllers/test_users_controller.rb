@@ -86,7 +86,6 @@ end
     @test_user = TestUser.new(test_user_params)
 
     if @test_user.save
-      HeartcodedMailer.with(test_user: @test_user).new_user_email.deliver_later
       render json: {success: true, message: "user successfully created", id: @test_user.id }
     else
       render json: {success: false, message: "error creating user", errors: @test_user.errors.full_messages }
@@ -111,6 +110,10 @@ end
       if @test_user.update(test_user_params)
         # format.html { redirect_to test_user_url(@test_user), notice: "Test user was successfully updated." }
         # format.json { render :show, status: :ok, location: @test_user }
+        Rails.logger.info "Sending email? #{@test_user.email}"
+        # Rails.console
+        HeartcodedMailer.with(test_user: @test_user).new_user_email.deliver_now
+
         render json: {success: true, message: "user successfully updated"}
 
         
