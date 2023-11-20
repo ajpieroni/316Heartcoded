@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "dukepostoffice@duke.edu"
-  layout 'mailer'
+  default from: "akp42@duke.edu"
+  # layout 'mailer'
 end
