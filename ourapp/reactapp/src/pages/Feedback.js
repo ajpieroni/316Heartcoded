@@ -77,7 +77,7 @@ export default function Feedback() {
           feedback: {
             "receives_uid": users.receiver,
             "gives_uid": users.sender,
-            "feedback": ratings[categories[i]],
+            "feedback": ratings[categories[i]] || 0,
             "category": categories[i]
           } 
         });
