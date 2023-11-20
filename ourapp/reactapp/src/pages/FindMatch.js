@@ -162,7 +162,7 @@ export default function FindMatch() {
       ) : (
         <>
           <div class="welcome-message">
-            {user?.user.name.split(" ")[0]}'s Current Matches
+            {/* {user?.user.name.split(" ")[0]}'s Current Matches */}
           </div>
 
           {/* <h1>{user?.user.name.split(" ")[0]}'s Current Matches</h1> */}
