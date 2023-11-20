@@ -10,7 +10,16 @@ export default function UserForm() {
   const location = useLocation();
   const username = localStorage.getItem("username") || "defaultUsername";
   const { user, setUser } = useContext(UserContext);
+  const [emailError, setEmailError] = useState('');
   console.log(user?.id);
+
+  const validateEmail = (email) => {
+    if (!email.endsWith('@duke.edu')) {
+      setEmailError('Email must end with @duke.edu');
+    } else {
+      setEmailError('');
+    }
+  };
 
   const patchUserData = (updatedData) => {
     if (user?.id) {
@@ -91,6 +100,9 @@ export default function UserForm() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    if (name === 'email') {
+      validateEmail(value);
+    }
   };
   const handleStateSelected = (e) => {
     const selectedState = e.target.value;
@@ -171,15 +183,16 @@ export default function UserForm() {
           />
         </label>
         <label>
-          Email (@duke.edu)<span style={{ color: "red" }}>*</span>:
-          <input
-            type="text"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
+        Email (@duke.edu)<span style={{ color: "red" }}>*</span>:
+        <input
+          type="text"
+          name="email"
+          value={formData.email}
+          onChange={handleInputChange}
+          required
+        />
+        {emailError && <div style={{ color: "red" }}>{emailError}</div>}
+      </label>
         <label>
           Gender<span style={{ color: "red" }}>*</span>:
           <select
