@@ -126,14 +126,14 @@ export default function FindMatch() {
   }, [currentUser]);
 
   function openConversations(matchUser) {
-    console.log(`clicked conversations with ${matchUser?.name}`);
+    console.log(`clicked conversations with ${matchuser?.user.name}`);
     setReciever(matchUser);
     console.log("reciever in match", reciever);
 
     navigate("/Chat", { state: { reciever: matchUser } });
   }
   function openFeedback(matchUser) {
-    console.log(`clicked feedback with ${matchUser?.name}`);
+    console.log(`clicked feedback with ${matchuser?.user.name}`);
     setReciever(matchUser);
     console.log("reciever in feedback", reciever);
 
@@ -162,10 +162,10 @@ export default function FindMatch() {
       ) : (
         <>
           <div class="welcome-message">
-            {user?.name.split(" ")[0]}'s Current Matches
+            {user?.user.name.split(" ")[0]}'s Current Matches
           </div>
 
-          {/* <h1>{user?.name.split(" ")[0]}'s Current Matches</h1> */}
+          {/* <h1>{user?.user.name.split(" ")[0]}'s Current Matches</h1> */}
           <button onClick={newMatches}>New matches!</button>
 
           <div class="card-container">

@@ -118,7 +118,7 @@ export default function Feedback() {
         <h1>User Feedback Form</h1>
 
       {!isSubmitted ? (<><h1>Feedback</h1>
-        <p> Hello {user?.name.split(" ")[0]}, provide feedback about your match: {receiver?.name} </p>
+        <p> Hello {user?.user.name.split(" ")[0]}, provide feedback about your match: {receiver?.name} </p>
 
         <form onSubmit={handleSubmit}>
           {categories.map((category) => (
