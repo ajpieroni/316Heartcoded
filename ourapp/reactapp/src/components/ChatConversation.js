@@ -143,7 +143,7 @@ const reciever = selectedUser;
   return (
     <main className="main-container">
       {/* <h1>Chat</h1> */}
-      {/* <h2>Welcome, {user?.user.name}</h2> */}
+      {/* <h2>Welcome, {user?.name}</h2> */}
       <div className="chat-container">
         <MessageList messages={messages} currentUser={user} users={users} reciever={reciever} />
 
