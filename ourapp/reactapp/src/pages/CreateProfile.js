@@ -171,7 +171,7 @@ export default function UserForm() {
           />
         </label>
         <label>
-          Email<span style={{ color: "red" }}>*</span>:
+          Email (@duke.edu)<span style={{ color: "red" }}>*</span>:
           <input
             type="text"
             name="email"
