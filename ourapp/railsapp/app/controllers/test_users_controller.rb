@@ -104,6 +104,8 @@ end
     end
   end
 
+
+
   # PATCH/PUT /test_users/1 or /test_users/1.json
   def update
     # respond_to do |format|
@@ -169,10 +171,7 @@ end
       params.require(:test_user).permit(:name, :username, :join_date, :location, :bio, :gender, :preferences, :birthday, :password, red_flags:[])
 
     end
-    # Add this within the private section of your controller
     def message_params
-      # These are example fields that your Message model might contain. 
-      # Please replace :content, :uid_sender_id, and :uid_receiver_id with the actual field names of your Message model.
       params.require(:message).permit(:message, :uid_sender_id, :uid_receiver_id)
     end
 
