@@ -76,8 +76,8 @@ export default function Feedback() {
         await axios.post("http://localhost:3000/feedbacks", {
           feedback: {
             "receives_uid": users.receiver,
-            "gives_uid": users.sender,
-            "feedback": ratings[categories[i]],
+            "gives_uid": user.id,
+            "feedback": ratings[categories[i]] || 0,
             "category": categories[i]
           } 
         });

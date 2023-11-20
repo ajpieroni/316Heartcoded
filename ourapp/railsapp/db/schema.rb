@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_20_025631) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_20_023940) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -104,6 +104,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_20_025631) do
     t.float "weight"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "feedback"
     t.index ["category_id"], name: "index_weights_on_category_id"
     t.index ["test_user_id"], name: "index_weights_on_test_user_id"
   end
