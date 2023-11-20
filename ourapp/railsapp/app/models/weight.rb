@@ -16,4 +16,18 @@ class Weight < ApplicationRecord
     self.weight = sum_of_answers.to_f / (number_of_questions * 10)
     self.save
   end
+
+  def calculate_feedback(test_user_id, category_name)
+    feedback_entries = Feedback.where(receives_uid: test_user_id, category: category_name)
+
+    average_feedback = feedback_entries.average(:feedback) / 10
+
+    if average_feedback.nil?
+      self.feedback = nil
+    else
+      self.feedback = average_feedback.to_f
+    end
+
+    self.save
+  end
 end

@@ -26,7 +26,6 @@ export default function FindMatch() {
   }, []);
 
   const currentUser = user?.id;
-  const [currentName, setCurrentName] = useState("");
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
@@ -36,10 +35,10 @@ export default function FindMatch() {
   }, [setUser]);
 
   const newMatches = async () => {
-    if (myMatches.length >= 10) {
-      console.log("Too many matches already!");
-      return;
-    }
+    // if (myMatches.length >= 10) {
+    //   console.log("Too many matches already!");
+    //   return;
+    // }
     if (!currentUser) return;
 
     try {
@@ -88,13 +87,6 @@ export default function FindMatch() {
     fetchMatches();
   };
 
-  const fetchUserNameById = (id) => {
-    return fetch(`http://localhost:3000/test_users/${id}`)
-      .then((response) => response.json())
-      .then((data) => data.name)
-      .catch((error) => console.error("Error fetching user:", error));
-  };
-
   const fetchUserById = (id) => {
     return fetch(`http://localhost:3000/test_users/${id}`)
       .then((response) => response.json())
@@ -106,8 +98,6 @@ export default function FindMatch() {
     fetch(`http://localhost:3000/matched_withs/users/${currentUser}`)
       .then((response) => response.json())
       .then(async (matches) => {
-        const myName = await fetchUserNameById(currentUser);
-        setCurrentName(myName);
         const matchesArray = [];
         for (let match of matches) {
           const otherUserId =
