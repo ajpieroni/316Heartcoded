@@ -47,6 +47,7 @@ export default function UserLanding() {
       })
       .then(response => {
         console.log(response.data);
+        console.log("password:", password);
         const userId = response.data.id;
 
       // Update the UserContext with the received user ID

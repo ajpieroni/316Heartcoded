@@ -55,7 +55,7 @@ export default function UserLogin() {
         return response.json();
       })
       .then((authData) => {
-        if (authData.authenticated) {
+        if (authData.authenticated != false) {
           setUser((prevUser) => ({ ...prevUser, ...authData }));
           sessionStorage.setItem("user", JSON.stringify(authData));
           setLogin(true);
