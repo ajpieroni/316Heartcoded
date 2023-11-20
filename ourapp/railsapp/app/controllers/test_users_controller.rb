@@ -86,6 +86,7 @@ end
     @test_user = TestUser.new(test_user_params)
 
     if @test_user.save
+      HeartcodedMailer.with(test_user: @test_user).new_user_email.deliver_later
       render json: {success: true, message: "user successfully created", id: @test_user.id }
     else
       render json: {success: false, message: "error creating user", errors: @test_user.errors.full_messages }

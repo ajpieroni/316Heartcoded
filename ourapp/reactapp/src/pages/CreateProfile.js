@@ -54,6 +54,7 @@ export default function UserForm() {
     // password: "",
     red_flags: [],
     username: username,
+    email: "",
   });
 
   function StatesList({ onStateSelected }) {
@@ -115,6 +116,7 @@ export default function UserForm() {
         red_flags: [],
         // password: "",
         username: "",
+        email: "",
         // password: "",
       });
     } catch (error) {
@@ -164,6 +166,16 @@ export default function UserForm() {
             type="text"
             name="name"
             value={formData.name}
+            onChange={handleInputChange}
+            required
+          />
+        </label>
+        <label>
+          Email<span style={{ color: "red" }}>*</span>:
+          <input
+            type="text"
+            name="email"
+            value={formData.email}
             onChange={handleInputChange}
             required
           />
