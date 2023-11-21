@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 const PasswordRequirements = ({ password }) => {
   const [passwordRequirements, setPasswordRequirements] = useState([
-    { id: 1, text: 'Minimum 8 characters', isValid: false },
-    { id: 2, text: 'At least one uppercase letter', isValid: false },
-    { id: 3, text: 'At least one lowercase letter', isValid: false },
+    { id: 1, text: 'Minimum 6 characters', isValid: false },
+    // { id: 2, text: 'At least one uppercase letter', isValid: false },
+    // { id: 3, text: 'At least one lowercase letter', isValid: false },
     { id: 4, text: 'At least one number', isValid: false },
   ]);
 
@@ -19,11 +19,12 @@ const PasswordRequirements = ({ password }) => {
   const checkRequirement = (requirementId) => {
     switch (requirementId) {
       case 1:
-        return password.length >= 8;
-      case 2:
+        return password.length >= 6;
+      /*case 2:
         return /[A-Z]/.test(password);
       case 3:
         return /[a-z]/.test(password);
+      */
       case 4:
         return /\d/.test(password);
       default:
@@ -33,15 +34,15 @@ const PasswordRequirements = ({ password }) => {
 
   return (
     <div>
-      <h2>Password Requirements:</h2>
-      <ul>
+      <h3>Password Requirements:</h3>
+        <ul>
         {passwordRequirements.map((requirement) => (
-          <li key={requirement.id} style={{ color: requirement.isValid ? 'green' : 'red' }}>
+          <li key={requirement.id} style={{ color: requirement.isValid ? 'green' : 'white' }}>
             {requirement.text}
             {requirement.isValid && ' ✓'}
           </li>
         ))}
-      </ul>
+        </ul>
     </div>
   );
 };
