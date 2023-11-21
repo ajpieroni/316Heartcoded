@@ -41,7 +41,7 @@ export default function Conversations() {
   return (
     <div>
       <Header />
-      <div class = "welcome-message">{user?.name.split(" ")[0]}'s Conversations</div>
+      <div class = "welcome-message">{user?.user.name.split(" ")[0]}'s Conversations</div>
 
       <div className="conversations-container">
         <div className="match-list-container">
