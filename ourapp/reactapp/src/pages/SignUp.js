@@ -6,6 +6,10 @@ import { UserContext } from "../components/contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import PasswordRequirements from './PasswordRequirements';
+import IconButton from "@material-ui/core/IconButton";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+
 
 
 export default function UserLanding() {
@@ -16,6 +20,7 @@ export default function UserLanding() {
   const [login, setLogin] = useState(false);
   const [error, setError] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [successMessage, setSuccessMessage] = useState('')
   const navigate = useNavigate();
 
@@ -97,7 +102,7 @@ export default function UserLanding() {
       <div className="hero-section">
         <h1 className="hero-title">Welcome to HeartCoded</h1>
         <p className="hero-subtitle">Sign up to find your soulmate today!</p>
-        
+  
         <div className="user-init-container">
           <input
             className="user-init-input"
@@ -106,41 +111,56 @@ export default function UserLanding() {
             placeholder="Enter Username"
             required
           />
+          
           <div className="password-input-container">
-            <input
-              type={showPassword ? "text" : "password"}
-              className="user-init-input"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Set Password"
-              required
-            />
-            <button
-              className="show-password-button"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? "Hide" : "Show"}
-            </button>
-          </div>
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
+            className="user-init-input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Set Password"
+            required
+          />
+          <IconButton
+            className="show-password-button"
+            onClick={() => setShowPassword(!showPassword)}
+            edge="end"
+          >
+            {showPassword ? <Visibility /> : <VisibilityOff />}
+          </IconButton>
+        </div>
+
+        <div className="password-input-container">
+          <input
+            type={showConfirmPassword ? "text" : "password"}
             className="user-init-input"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Confirm Password"
             required
           />
+          <IconButton
+            className="show-password-button"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            edge="end"
+          >
+            {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+          </IconButton>
+        </div>
+
+  
           <PasswordRequirements password={password} />
           {error && <p className="error-message">{error}</p>}
           <button className="user-init-button" onClick={signUpUser}>
             Sign Up
           </button>
         </div>
+  
         {successMessage && (
-        <p dangerouslySetInnerHTML={{ __html: successMessage }}></p>
-      )}
-
+          <p dangerouslySetInnerHTML={{ __html: successMessage }}></p>
+        )}
       </div>
     </main>
   );
+  
 }
