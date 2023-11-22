@@ -94,11 +94,28 @@ export default function FindMatch() {
       .catch((error) => console.error("Error fetching user:", error));
   };
 
-  const fetchMatches = (async) => {
+  const fetchDefaultMatch = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/test_users/find_by_username?username=Wingman`);
+      const users = await response.json();
+      console.log("default:", users);
+      return users; // Get the first user with username "Wingman"
+    } catch (error) {
+      console.error('Error fetching default match:', error);
+      return null;
+    }
+  };
+
+  const fetchMatches = async () => {
+    const defaultMatch = await fetchDefaultMatch();
+    console.log("default", defaultMatch);
     fetch(`http://localhost:3000/matched_withs/users/${currentUser}`)
       .then((response) => response.json())
       .then(async (matches) => {
         const matchesArray = [];
+        if (defaultMatch) {
+          matchesArray.push(defaultMatch);
+        }
         for (let match of matches) {
           const otherUserId =
             match.uid1 === currentUser ? match.uid2 : match.uid1;
