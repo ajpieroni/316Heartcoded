@@ -24,6 +24,7 @@
   
   .response-container {
     margin-top: 20px;
+    min-width: 75vh;
   }
   
   .response-title {
