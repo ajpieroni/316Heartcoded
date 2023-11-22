@@ -116,14 +116,14 @@ export default function FindMatch() {
   }, [currentUser]);
 
   function openConversations(matchUser) {
-    console.log(`clicked conversations with ${matchuser?.name}`);
+    console.log(`clicked conversations with ${matchUser?.name}`);
     setReciever(matchUser);
     console.log("reciever in match", reciever);
 
     navigate("/Chat", { state: { reciever: matchUser } });
   }
   function openFeedback(matchUser) {
-    console.log(`clicked feedback with ${matchuser?.name}`);
+    console.log(`clicked feedback with ${matchUser?.name}`);
     setReciever(matchUser);
     console.log("reciever in feedback", reciever);
 
