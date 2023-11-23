@@ -9,18 +9,6 @@ import SuccessModal from "../components/SuccessModal"
 export default function UserForm({ onUserAdded }) {
   const [ageError, setAgeError] = useState("");
 
-  const validateAge = (birthdate) => {
-    const today = new Date();
-    const enteredDate = new Date(birthdate);
-    //const age = today.getFullYear() - enteredDate.getFullYear();
-
-    if (today < new Date(enteredDate.getFullYear() + 18, enteredDate.getMonth(), enteredDate.getDate())) {
-      setAgeError("You can't become younger by changing your birthday");
-    } else {
-      setAgeError("");
-    }
-  };
-
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
   const handleSuccessModalClose = () => {
@@ -104,10 +92,29 @@ export default function UserForm({ onUserAdded }) {
     setFormData({ ...formData, location: selectedState });
   };
 
+  const validateAge = (birthdate) => {
+    const today = new Date();
+    const enteredDate = new Date(birthdate);
+    //const age = today.getFullYear() - enteredDate.getFullYear();
+
+    if (today < new Date(enteredDate.getFullYear() + 18, enteredDate.getMonth(), enteredDate.getDate())) {
+      setAgeError("You can't become younger by changing your birthday");
+    } else {
+      setAgeError("");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    validateAge(formData.birthday);
+    if (ageError) {
+      console.error("Age validation failed. Form not submitted.");
+      alert("You are too young");
+      return;
+    }
 
     try {
+
       if (user.id){
         const response = await axios.patch(`http://localhost:3000/test_users/${user.id}`, formData);
         onUserAdded(response.data);
