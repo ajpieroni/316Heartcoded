@@ -22,19 +22,6 @@ export default function UserForm() {
     }
   };
 
-
-  const validateAge = (birthdate) => {
-    const today = new Date();
-    const enteredDate = new Date(birthdate);
-    //const age = today.getFullYear() - enteredDate.getFullYear();
-
-    if (today < new Date(enteredDate.getFullYear() + 18, enteredDate.getMonth(), enteredDate.getDate())) {
-      setAgeError("You are too young, need to be at least 18 years old");
-    } else {
-      setAgeError("");
-    }
-  };
-
   const patchUserData = (updatedData) => {
     if (user?.id) {
       fetch(`http://localhost:3000/test_users/${user?.id}`, {
@@ -127,8 +114,27 @@ export default function UserForm() {
     setFormData({ ...formData, location: selectedState });
   };
 
+  const validateAge = (birthdate) => {
+    const today = new Date();
+    const enteredDate = new Date(birthdate);
+    //const age = today.getFullYear() - enteredDate.getFullYear();
+
+    if (today < new Date(enteredDate.getFullYear() + 18, enteredDate.getMonth(), enteredDate.getDate())) {
+      setAgeError("You need to be at least 18");
+    } else {
+      setAgeError("");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    validateAge(formData.birthday);
+    if (ageError) {
+      console.error("Age validation failed. Form not submitted.");
+      alert("You are too young");
+      return;
+    }
 
     try {
       console.log("here's form data:", formData);
