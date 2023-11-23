@@ -13,6 +13,45 @@ export default function UserForm() {
   const [emailError, setEmailError] = useState("");
   console.log(user?.id);
 
+  const initializeUser = () => {
+    fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data) {
+          setUser({
+            ...user,
+            name: data.name,
+            id: data.id,
+            birthday: data.birthday,
+            gender: data.gender,
+            preferences: data.preferences,
+            bio: data.bio,
+            location: data.location,
+            password: data.password,
+            red_flags: data.red_flags
+          });
+          sessionStorage.setItem("user", JSON.stringify(data));
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to initialize user:", error);
+      });
+  };
+
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      initializeUser(); // Call the initializeUser function if no user data is in sessionStorage
+    }
+  }, [setUser]);
+
   const validateEmail = (email) => {
     if (!email.endsWith("@duke.edu")) {
       setEmailError("Email must end with @duke.edu");
