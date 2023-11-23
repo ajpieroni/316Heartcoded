@@ -29,12 +29,14 @@ export default function UserForm() {
   const initializeUser = () => {
     fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
       .then((response) => {
+        console.log("response:", response);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         return response.json();
       })
       .then((data) => {
+        console.log("dataaa", data);
         if (data) {
           setUser({
             ...user,
@@ -49,14 +51,14 @@ export default function UserForm() {
             red_flags: data.red_flags
           });
           setFormData({
-            name: user.name || '',
-            gender: user.gender || '',
-            birthday: user.birthday || '',
-            bio: user.bio || '',
-            location: user.location || '',
-            preferences: user.preferences || '',
-            password: user.password|| '',
-            red_flags: user.red_flags || []
+            name: data.name || '',
+            gender: data.gender || '',
+            birthday: data.birthday || '',
+            bio: data.bio || '',
+            location: data.location || '',
+            preferences: data.preferences || '',
+            password: data.password|| '',
+            red_flags: data.red_flags || []
           });
           sessionStorage.setItem("user", JSON.stringify(data));
         }
@@ -67,12 +69,7 @@ export default function UserForm() {
   };
 
   useEffect(() => {
-    const storedUser = sessionStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    } else {
       initializeUser(); // Call the initializeUser function if no user data is in sessionStorage
-    }
   }, [setUser]);
 
     // useEffect(() => {
