@@ -36,7 +36,7 @@ export default function UserForm() {
       })
       .then((data) => {
         if (data) {
-          const updatedUser = {
+          setUser({
             ...user,
             name: data.name,
             id: data.id,
@@ -47,24 +47,7 @@ export default function UserForm() {
             location: data.location,
             password: data.password,
             red_flags: data.red_flags
-          };
-          setUser(updatedUser); // Update the context immediately after setting the user data
-          sessionStorage.setItem("user", JSON.stringify(data));
-        }
-      })
-      .catch((error) => {
-        console.error("Failed to initialize user:", error);
-      });
-  };
-    
-      useEffect(() => {
-        initializeUser(); // Call the initializeUser function if no user data is in sessionStorage
-      }, []);
-
-    useEffect(() => {
-      axios.get(`http://localhost:3000/test_users/${user.id}`)
-        .then(response => {
-        let user = response.data;
+          });
           setFormData({
             name: user.name || '',
             gender: user.gender || '',
@@ -75,11 +58,42 @@ export default function UserForm() {
             password: user.password|| '',
             red_flags: user.red_flags || []
           });
-        })
-        .catch(error => {
-          console.error('Error fetching user data:', error);
-        });
-    }, [user]);
+          sessionStorage.setItem("user", JSON.stringify(data));
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to initialize user:", error);
+      });
+  };
+
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      initializeUser(); // Call the initializeUser function if no user data is in sessionStorage
+    }
+  }, [setUser]);
+
+    // useEffect(() => {
+    //   axios.get(`http://localhost:3000/test_users/${user.id}`)
+    //     .then(response => {
+    //     let user = response.data;
+    //       setFormData({
+    //         name: user.name || '',
+    //         gender: user.gender || '',
+    //         birthday: user.birthday || '',
+    //         bio: user.bio || '',
+    //         location: user.location || '',
+    //         preferences: user.preferences || '',
+    //         password: user.password|| '',
+    //         red_flags: user.red_flags || []
+    //       });
+    //     })
+    //     .catch(error => {
+    //       console.error('Error fetching user data:', error);
+    //     });
+    // }, [user]);
 
     function StatesList({ onStateSelected }) {
       const [states, setStates] = useState([]);
