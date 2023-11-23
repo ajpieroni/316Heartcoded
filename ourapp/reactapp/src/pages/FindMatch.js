@@ -136,8 +136,11 @@ export default function FindMatch() {
     console.log(`clicked conversations with ${matchUser?.name}`);
     setReciever(matchUser);
     console.log("reciever in match", reciever);
-
+    if (matchUser.username === 'Wingman') { 
+      navigate("/Wingman");
+    } else {
     navigate("/Chat", { state: { reciever: matchUser } });
+    }
   }
   function openFeedback(matchUser) {
     console.log(`clicked feedback with ${matchUser?.name}`);
