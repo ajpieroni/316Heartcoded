@@ -6,7 +6,9 @@ import { UserContext } from "../components/contexts/UserContext";
 import SuccessModal from "../components/SuccessModal"
 
 
-export default function UserForm() {
+
+export default function UserForm({ onUserAdded }) {
+  const [ageError, setAgeError] = useState("");
 
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
@@ -128,16 +130,38 @@ export default function UserForm() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    if (name === "birthday") {
+      validateAge(value);
+    }
   };
   const handleStateSelected = (e) => {
     const selectedState = e.target.value;
     setFormData({ ...formData, location: selectedState });
   };
 
+  const validateAge = (birthdate) => {
+    const today = new Date();
+    const enteredDate = new Date(birthdate);
+    //const age = today.getFullYear() - enteredDate.getFullYear();
+
+    if (today < new Date(enteredDate.getFullYear() + 18, enteredDate.getMonth(), enteredDate.getDate())) {
+      setAgeError("You can't become younger by changing your birthday");
+    } else {
+      setAgeError("");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    validateAge(formData.birthday);
+    if (ageError) {
+      console.error("Age validation failed. Form not submitted.");
+      alert("You are too young");
+      return;
+    }
 
     try {
+
       if (user.id){
         const response = await axios.patch(`http://localhost:3000/test_users/${user.id}`, formData);
         setIsSuccessModalOpen(true);
@@ -217,15 +241,16 @@ export default function UserForm() {
         </label>
 
         <label>
-          Birthday<span style={{ color: 'red' }}>*</span>: 
-          <input
-            type="date"
-            name="birthday"
-            value={formData.birthday}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
+        Birthday<span style={{ color: "red" }}>*</span>:
+        <input
+          type="date"
+          name="birthday"
+          value={formData.birthday}
+          onChange={handleInputChange}
+          required
+        />
+        {ageError && <div style={{ color: "red" }}>{ageError}</div>}
+      </label>
         <StatesList onStateSelected={handleStateSelected} />
         <label>
           Who would you like to meet<span style={{ color: 'red' }}>*</span>: 
