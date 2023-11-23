@@ -58,6 +58,7 @@ export default function UserLogin() {
         if (authData.authenticated != false) {
           setUser((prevUser) => ({ ...prevUser, ...authData }));
           sessionStorage.setItem("user", JSON.stringify(authData));
+          localStorage.setItem("username", username);
           setLogin(true);
           navigate("/UserSignedIn");
           clearInputFields();
