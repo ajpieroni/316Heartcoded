@@ -7,7 +7,7 @@ import SuccessModal from "../components/SuccessModal"
 
 
 
-export default function UserForm({ onUserAdded }) {
+export default function UserForm() {
   const [ageError, setAgeError] = useState("");
 
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
