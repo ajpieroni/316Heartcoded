@@ -7,18 +7,31 @@ class MatchingService
       categories = Category.all
       categories.each do |category|
         id = category.id
-        user1_weight = Weight.find_by(test_user_id: user1.id, category_id: id)&.weight || 0.0
+        user1_weight = Weight.find_by(test_user_id: user1.id, category_id: id)&.weight
+        user2_weight = Weight.find_by(test_user_id: user2.id, category_id: id)&.weight
+        Rails.logger.debug("Category ID: #{id}, User1 Weight: #{user1_weight}, User2 Weight: #{user2_weight}")
 
-        user2_weight = Weight.find_by(test_user_id: user2.id, category_id: id)&.weight || 0.0
-      Rails.logger.debug("Category ID: #{id}, User1 Weight: #{user1_weight}, User2 Weight: #{user2_weight}")
+        user1_feedback = Weight.find_by(test_user_id: user1.id, category_id: id)&.feedback
+        user2_feedback = Weight.find_by(test_user_id: user2.id, category_id: id)&.feedback
 
-        if user1_weight && user2_weight
-          score_difference[id] = (user1_weight - user2_weight).abs
+        if user1_weight && user1_feedback
+          weight_difference1 = (user1_weight + user1_feedback) / 2
+        elsif user1_weight || user1_feedback
+          weight_difference1 = user1_weight || user1_feedback
+        end
+
+        if user2_weight && user2_feedback
+          weight_difference2 = (user2_weight + user2_feedback) / 2
+        elsif user2_weight || user2_feedback
+          weight_difference2 = user2_weight || user2_feedback
+        end
+        
+        if weight_difference1 && weight_difference2
+          score_difference[id] = (weight_difference1 - weight_difference2).abs
         else
           score_difference[id] = nil
         end
       end
-
       score = score_difference.values.compact.sum # calc score by summing non-nil values in score_difference
     end
   

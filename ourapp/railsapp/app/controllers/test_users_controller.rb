@@ -98,7 +98,7 @@ end
     #Rails.logger.debug("TestUser after finding: #{@test_user}")    
 
     if @test_user && @test_user.authenticate(params[:password])
-      render json: { authenticated: true, user: @test_user }
+      render json: @test_user
     else
       render json: { authenticated: false }, status: :unauthorized
     end
@@ -106,10 +106,17 @@ end
 
   # PATCH/PUT /test_users/1 or /test_users/1.json
   def update
+    threshold = 120
+
+    is_first_update = (@test_user.updated_at - @test_user.created_at).abs <= threshold
     # respond_to do |format|
       if @test_user.update(test_user_params)
         # format.html { redirect_to test_user_url(@test_user), notice: "Test user was successfully updated." }
         # format.json { render :show, status: :ok, location: @test_user }
+        if is_first_update
+          HeartcodedMailer.with(test_user: @test_user).new_user_email.deliver_now
+        end
+
         render json: {success: true, message: "user successfully updated"}
 
         
@@ -166,7 +173,7 @@ end
 
     # Only allow a list of trusted parameters through.
     def test_user_params
-      params.require(:test_user).permit(:name, :username, :join_date, :location, :bio, :gender, :preferences, :birthday, :password, red_flags:[])
+      params.require(:test_user).permit(:name, :username, :join_date, :location, :bio, :gender, :preferences, :birthday, :password, :email, red_flags:[])
 
     end
     # Add this within the private section of your controller

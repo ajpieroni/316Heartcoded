@@ -37,15 +37,10 @@ class FeedbacksController < ApplicationController
   # POST /feedbacks or /feedbacks.json
   def create
     @feedback = Feedback.new(feedback_params)
-
-    respond_to do |format|
-      if @feedback.save
-        format.html { redirect_to feedback_url(@feedback), notice: "Feedback was successfully created." }
-        format.json { render :show, status: :created, location: @feedback }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @feedback.errors, status: :unprocessable_entity }
-      end
+    if @feedback.save
+      render json: { id: @feedback.id }, status: :created
+    else
+      render json: { error: 'Failed to save feedback' }, status: :unprocessable_entity
     end
   end
 
@@ -64,24 +59,19 @@ class FeedbacksController < ApplicationController
 
   # PATCH/PUT /feedbacks/1 or /feedbacks/1.json
   def update
-    respond_to do |format|
       if @feedback.update(feedback_params)
-        format.html { redirect_to feedback_url(@feedback), notice: "Feedback was successfully updated." }
-        format.json { render :show, status: :ok, location: @feedback }
+        render json: { success: true, message: "feedback updated successfully", id: @feedback.id}
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @feedback.errors, status: :unprocessable_entity }
+        render json: { success: fakse, message: "feedback NOT updated"}
       end
-    end
   end
 
   # DELETE /feedbacks/1 or /feedbacks/1.json
   def destroy
-    @feedback.destroy
-
-    respond_to do |format|
-      format.html { redirect_to feedbacks_url, notice: "Feedback was successfully destroyed." }
-      format.json { head :no_content }
+    if @feedback.destroy
+      render json: {success: true, message: "The feedback successfully deleted", id: @feedback.id}
+    else
+      render json: {success: false, message: "There was an error deleting the feedback"}
     end
   end
 
