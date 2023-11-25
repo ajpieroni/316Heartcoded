@@ -157,7 +157,7 @@ export default function UserLanding() {
           {/* <h2> */}
             <h2>
               {login
-                ? `Logged in as: ${user?.user.name}, Birthday: ${user?.birthday}, ID: ${user?.id}`
+                ? `Logged in as: ${user?.name}, Birthday: ${user?.birthday}, ID: ${user?.id}`
                 : "Not Logged In"}
             {/* </h2> */}
           </h2>
@@ -198,15 +198,6 @@ export default function UserLanding() {
               Our system ensures a variety of questions for you. Plus, you can
               answer new ones as they come, keeping your profile fresh and
               engaging.
-            </p>
-          </div>
-        </Link>
-        <Link to="Feedback">
-          <div className="feature-card">
-            <h2>Give Feedback</h2>
-            <p>
-              Rate your matches and share your thoughts. Your feedback helps us
-              refine the matching process for an enhanced experience.
             </p>
           </div>
         </Link>

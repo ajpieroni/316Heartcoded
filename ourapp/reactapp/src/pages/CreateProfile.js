@@ -10,7 +10,56 @@ export default function UserForm() {
   const location = useLocation();
   const username = localStorage.getItem("username") || "defaultUsername";
   const { user, setUser } = useContext(UserContext);
+  const [emailError, setEmailError] = useState("");
+  const [ageError, setAgeError] = useState("");
   console.log(user?.id);
+
+  const initializeUser = () => {
+    fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data) {
+          setUser({
+            ...user,
+            name: data.name,
+            id: data.id,
+            birthday: data.birthday,
+            gender: data.gender,
+            preferences: data.preferences,
+            bio: data.bio,
+            location: data.location,
+            password: data.password,
+            red_flags: data.red_flags
+          });
+          sessionStorage.setItem("user", JSON.stringify(data));
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to initialize user:", error);
+      });
+  };
+
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      initializeUser(); // Call the initializeUser function if no user data is in sessionStorage
+    }
+  }, [setUser]);
+
+  const validateEmail = (email) => {
+    if (!email.endsWith("@duke.edu")) {
+      setEmailError("Email must end with @duke.edu");
+    } else {
+      setEmailError("");
+    }
+  };
 
   const patchUserData = (updatedData) => {
     if (user?.id) {
@@ -54,6 +103,7 @@ export default function UserForm() {
     // password: "",
     red_flags: [],
     username: username,
+    email: "",
   });
 
   function StatesList({ onStateSelected }) {
@@ -90,14 +140,40 @@ export default function UserForm() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    if (name === "birthday") {
+      validateAge(value);
+    }
+
+    if (name === "email") {
+      validateEmail(value);
+    }
   };
   const handleStateSelected = (e) => {
     const selectedState = e.target.value;
     setFormData({ ...formData, location: selectedState });
   };
 
+  const validateAge = (birthdate) => {
+    const today = new Date();
+    const enteredDate = new Date(birthdate);
+    //const age = today.getFullYear() - enteredDate.getFullYear();
+
+    if (today < new Date(enteredDate.getFullYear() + 18, enteredDate.getMonth(), enteredDate.getDate())) {
+      setAgeError("You need to be at least 18");
+    } else {
+      setAgeError("");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    validateAge(formData.birthday);
+    if (ageError) {
+      console.error("Age validation failed. Form not submitted.");
+      alert("You are too young");
+      return;
+    }
 
     try {
       console.log("here's form data:", formData);
@@ -115,6 +191,7 @@ export default function UserForm() {
         red_flags: [],
         // password: "",
         username: "",
+        email: "",
         // password: "",
       });
     } catch (error) {
@@ -169,6 +246,17 @@ export default function UserForm() {
           />
         </label>
         <label>
+          Email (@duke.edu)<span style={{ color: "red" }}>*</span>:
+          <input
+            type="text"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            required
+          />
+          {emailError && <div style={{ color: "red" }}>{emailError}</div>}
+        </label>
+        <label>
           Gender<span style={{ color: "red" }}>*</span>:
           <select
             name="gender"
@@ -185,15 +273,16 @@ export default function UserForm() {
         </label>
 
         <label>
-          Birthday<span style={{ color: "red" }}>*</span>:
-          <input
-            type="date"
-            name="birthday"
-            value={formData.birthday}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
+        Birthday<span style={{ color: "red" }}>*</span>:
+        <input
+          type="date"
+          name="birthday"
+          value={formData.birthday}
+          onChange={handleInputChange}
+          required
+        />
+        {ageError && <div style={{ color: "red" }}>{ageError}</div>}
+      </label>
         <StatesList onStateSelected={handleStateSelected} />
         <label>
           Who would you like to meet<span style={{ color: "red" }}>*</span>:

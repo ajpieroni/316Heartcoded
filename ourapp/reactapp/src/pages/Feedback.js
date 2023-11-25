@@ -76,8 +76,8 @@ export default function Feedback() {
         await axios.post("http://localhost:3000/feedbacks", {
           feedback: {
             "receives_uid": users.receiver,
-            "gives_uid": users.sender,
-            "feedback": ratings[categories[i]],
+            "gives_uid": user.id,
+            "feedback": ratings[categories[i]] || 0,
             "category": categories[i]
           } 
         });
@@ -118,7 +118,7 @@ export default function Feedback() {
         <h1>User Feedback Form</h1>
 
       {!isSubmitted ? (<><h1>Feedback</h1>
-        <p> Hello {user?.user.name.split(" ")[0]}, provide feedback about your match: {receiver?.name} </p>
+        {/* <p> Hello {user?.name.split(" ")[0]}, provide feedback about your match: {receiver?.name} </p> */}
 
         <form onSubmit={handleSubmit}>
           {categories.map((category) => (
