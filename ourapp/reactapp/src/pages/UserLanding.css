@@ -124,3 +124,45 @@
   background-color: #EF4444;
   color: white;
 }
+
+
+/* ... (previous CSS code) */
+
+/* CSS for Password Initialization */
+.password-input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.password-input {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 9999px;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.password-input:focus {
+  border-color: #EF4444;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.5);
+}
+
+.password-button {
+  background-color: #000000;
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 9999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.password-button:hover {
+  background-color: white;
+  color: #EF4444;
+}
+
