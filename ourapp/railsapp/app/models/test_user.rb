@@ -3,6 +3,7 @@ class TestUser < ApplicationRecord
     has_many :sent_messages, class_name: 'Message', foreign_key: 'uid_sender_id'
     has_many :received_messages, class_name: 'Message', foreign_key: 'uid_receiver_id'
     validates :username, presence: true, uniqueness: { case_sensitive: false }
+    has_one_attached :image, dependent: :destroy
 
     def password=(new_password)
       @password = new_password

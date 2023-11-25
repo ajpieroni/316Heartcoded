@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   # Define all RESTful routes for test_users and custom member/collection routes
   resources :test_users do
+    resource :image, only: [:show, :create, :update, :destroy]
     member do
       get 'messages'
       post 'messages', to: 'test_users#create_message'

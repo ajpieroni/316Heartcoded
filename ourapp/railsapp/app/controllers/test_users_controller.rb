@@ -173,7 +173,7 @@ end
 
     # Only allow a list of trusted parameters through.
     def test_user_params
-      params.require(:test_user).permit(:name, :username, :join_date, :location, :bio, :gender, :preferences, :birthday, :password, :email, red_flags:[])
+      params.require(:test_user).permit(:name, :username, :join_date, :location, :bio, :gender, :preferences, :birthday, :password, :email, :image, red_flags:[])
 
     end
     # Add this within the private section of your controller
