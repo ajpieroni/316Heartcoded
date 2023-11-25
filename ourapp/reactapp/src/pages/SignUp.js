@@ -5,7 +5,7 @@ import axios from "axios";
 import { UserContext } from "../components/contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
-import PasswordRequirements from './PasswordRequirements';
+import PasswordRequirements from './PasswordRequirements.js';
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
