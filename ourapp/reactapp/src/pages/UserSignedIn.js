@@ -20,6 +20,12 @@ export default function UserSignedIn() {
   console.log("UserContext:", UserContext);
   console.log("User from context:", user);
 
+  const blob = new Blob([user.profile_image]);
+  console.log(blob);
+
+  const imageUrl = URL.createObjectURL(new Blob([user.profile_image]));
+  console.log("url",imageUrl);
+
   useEffect(() => {
     const storedUser = sessionStorage.getItem('user');
     if (storedUser) {
@@ -42,6 +48,9 @@ export default function UserSignedIn() {
           alt="Profile"
           className="profile-image"
         /> */}
+
+      <img src={imageUrl} alt="Profile" />
+
 
         <Link to={{
           pathname: '/EditProfile',

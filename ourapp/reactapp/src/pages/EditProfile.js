@@ -23,7 +23,8 @@ export default function UserForm({ onUserAdded }) {
     location: '',
     preferences: '',
     password: '',
-    red_flags: []
+    red_flags: [],
+    profile_image: null,
   });
 
     const { user } = useContext(UserContext);
@@ -39,7 +40,8 @@ export default function UserForm({ onUserAdded }) {
             location: user.location || '',
             preferences: user.preferences || '',
             password: user.password|| '',
-            red_flags: user.red_flags || []
+            red_flags: user.red_flags || [],
+            profile_image: user.profile_image || null,
           });
         })
         .catch(error => {
@@ -164,6 +166,9 @@ export default function UserForm({ onUserAdded }) {
     setFormData({ ...formData, red_flags: selectedOptions });
     console.log(formData);
   };
+
+  console.log("formData",formData);
+  const imageUrl = URL.createObjectURL(new Blob([formData.profile_image]));
 
   return (
     <div className="user-form">

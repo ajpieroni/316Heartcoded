@@ -253,10 +253,10 @@ export default function UserForm() {
   
 
   return (
-    <div className="user-form" enctype="multipart/form-data">
+    <div className="user-form">
       <h2>Welcome to HeartCoded</h2>
       <h2>Your username is {username}</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         <label>
           Name<span style={{ color: "red" }}>*</span>:
           <input
