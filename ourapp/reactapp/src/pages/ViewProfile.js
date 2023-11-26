@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from "../components/contexts/UserContext";
 import "./CreateProfile.css";
+import { Link } from "react-router-dom";
+
 
 export default function UserForm({ onUserAdded }) {
   const [ageError, setAgeError] = useState("");
@@ -130,6 +132,17 @@ export default function UserForm({ onUserAdded }) {
     <div className="user-form">
       <form>
         <h1>Hello, {formData.name}! You've been with us since {formData.createdAt.split('T')[0]}</h1>
+        <Link to={{
+        pathname: '/EditProfile',
+        state: { data: user }
+      }}>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+          stroke="black"
+          style={{ width: '30px', height: '30px' }}>
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+</svg>
+</Link>
+
         <p>Last updated at: {formData.updatedAt}</p>
         <label>
           Username: 
@@ -239,12 +252,11 @@ export default function UserForm({ onUserAdded }) {
             ))}
           </div>
         </div>
-        <button
+        {/* <button
           className="profile-button"
           type="button"
           onClick={() => setPasswordUpdateVisible(!isPasswordUpdateVisible)}
           disabled
-          className="disabled-field"
         >
           Update password?
         </button>
@@ -260,7 +272,7 @@ export default function UserForm({ onUserAdded }) {
               className="disabled-field"
             />
           </label>
-        )}
+        )} */}
         <br></br>
       </form>
     </div>
