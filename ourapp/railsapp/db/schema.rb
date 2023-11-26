@@ -10,9 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_20_181651) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_26_015140) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
 
   create_table "answers", force: :cascade do |t|
     t.bigint "test_user_id", null: false
@@ -37,6 +65,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_20_181651) do
     t.integer "feedback"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.bigint "test_users_id"
+    t.binary "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["test_users_id"], name: "index_images_on_test_users_id"
   end
 
   create_table "matched_withs", force: :cascade do |t|
@@ -95,6 +131,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_20_181651) do
     t.string "username"
     t.string "password_digest"
     t.string "email"
+    t.binary "profile_image"
   end
 
   create_table "weights", force: :cascade do |t|
@@ -108,8 +145,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_20_181651) do
     t.index ["test_user_id"], name: "index_weights_on_test_user_id"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "test_users"
+  add_foreign_key "images", "test_users", column: "test_users_id"
   add_foreign_key "matched_withs", "test_users", column: "uid1"
   add_foreign_key "matched_withs", "test_users", column: "uid2"
   add_foreign_key "messages", "test_users", column: "uid_receiver_id"

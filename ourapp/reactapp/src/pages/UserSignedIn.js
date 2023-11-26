@@ -15,18 +15,12 @@ import CreateProfile from "./CreateProfile.js";
 import Header from "../components/Header";
 
 export default function UserSignedIn() {
-
-  // const [question, setQuestion] = useState("UNINIT");
-  const [testUser, setTestUser] = useState("UNINIT");
-
   const { user, setUser } = useContext(UserContext);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [login, setLogin] = useState(false);
   console.log("UserContext:", UserContext);
-console.log("User from context:", user);
+  console.log("User from context:", user);
 
-useEffect(() => {
+  useEffect(() => {
     const storedUser = sessionStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser)); 
@@ -34,20 +28,25 @@ useEffect(() => {
     }
   }, [setUser]); 
 
-
-  // const history = useHistory();
   const navigate = useNavigate();
-return(
+  console.log(user.profile_image);
+
+  return (
     <div>
-<div className="features">
-  <Header />
-        <div class = "welcome-message"> {user?.name}'s Dashboard</div>
-      
-    
-      <Link to={{
-        pathname: '/EditProfile',
-        state: { data: user }
-      }}>
+      <div className="features">
+        <Header />
+        <div className="welcome-message"> {user?.name}'s Dashboard</div>
+        
+        {/* <img
+          src={`data:image/jpeg;base64,${user?.profile_image}`}
+          alt="Profile"
+          className="profile-image"
+        /> */}
+
+        <Link to={{
+          pathname: '/EditProfile',
+          state: { data: user }
+        }}>
           <div className="feature-card">
             <h2>Edit Profile</h2>
             <p>

@@ -22,31 +22,72 @@ export default function UserForm() {
     }
   };
 
-  const patchUserData = (updatedData) => {
+  const patchUserData = async (updatedData) => {
     if (user?.id) {
-      fetch(`http://localhost:3000/test_users/${user?.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ test_user: updatedData }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
+      const formData = new FormData();
+  
+      // Append non-file data to FormData
+      for (const key in updatedData) {
+        if (key !== 'profile_image') {
+          formData.append(`test_user[${key}]`, updatedData[key]);
+        }
+      }
+  
+      // Append the profile_image to FormData
+      if (updatedData.profile_image) {
+        const reader = new FileReader();
+  
+        reader.onload = function () {
+          // Convert the result to ArrayBuffer and append to FormData
+          const arrayBuffer = this.result;
+          formData.append('test_user[profile_image]', new Blob([arrayBuffer]));
+          
+          // Perform the fetch with FormData
+          fetch(`http://localhost:3000/test_users/${user?.id}`, {
+            method: 'PATCH',
+            body: formData,
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log('User updated:', data);
+            })
+            .catch((error) => {
+              console.error('Failed to update user:', error);
+            });
+        };
+  
+        // Read the profile_image as ArrayBuffer
+        reader.readAsArrayBuffer(updatedData.profile_image);
+      } else {
+        // If no profile_image is provided, perform the fetch without it
+        fetch(`http://localhost:3000/test_users/${user?.id}`, {
+          method: 'PATCH',
+          body: formData,
         })
-        .then((data) => {
-          console.log("User updated:", data);
-        })
-        .catch((error) => {
-          console.error("Failed to update user:", error);
-        });
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log('User updated:', data);
+          })
+          .catch((error) => {
+            console.error('Failed to update user:', error);
+          });
+      }
     } else {
-      console.log("User ID not set. User data cannot be patched.");
+      console.log('User ID not set. User data cannot be patched.');
     }
   };
+  
+  
 
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
@@ -65,7 +106,10 @@ export default function UserForm() {
     red_flags: [],
     username: username,
     email: "",
+    profile_image: null,
   });
+
+  console.log(formData);
 
   function StatesList({ onStateSelected }) {
     const [states, setStates] = useState([]);
@@ -191,8 +235,25 @@ export default function UserForm() {
     console.log(formData);
   };
 
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+  
+  //   if (file) {
+  //     const reader = new FileReader();
+  
+  //     reader.onloadend = () => {
+  //       const base64Data = reader.result.split(",")[1];
+  //       setFormData((prevFormData) => ({ ...prevFormData, profile_image: base64Data }));
+  //     };
+  
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+  
+  
+
   return (
-    <div className="user-form">
+    <div className="user-form" enctype="multipart/form-data">
       <h2>Welcome to HeartCoded</h2>
       <h2>Your username is {username}</h2>
       <form onSubmit={handleSubmit}>
@@ -243,6 +304,14 @@ export default function UserForm() {
           required
         />
         {ageError && <div style={{ color: "red" }}>{ageError}</div>}
+      </label>
+      <label>
+        Profile Picture:
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setFormData({ ...formData, profile_image: e.target.files[0] })}
+        />
       </label>
         <StatesList onStateSelected={handleStateSelected} />
         <label>
