@@ -42,7 +42,6 @@ return(
 <div className="features">
   <Header />
         <div class = "welcome-message"> {user?.name}'s Dashboard</div>
-      
     
       <Link to={{
         pathname: '/EditProfile',

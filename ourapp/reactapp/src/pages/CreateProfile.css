@@ -50,3 +50,8 @@ label, input, select, textarea{
   .selected-flag:hover {
     background-color: #f97ba7;
   }
+
+  .disabled-field {
+    background-color: transparent;
+    color: black;
+  }
