@@ -43,7 +43,7 @@ return(
   <Header />
         <div class = "welcome-message"> {user?.name}'s Dashboard</div>
     
-      <Link to={{
+      {/* <Link to={{
         pathname: '/EditProfile',
         state: { data: user }
       }}>
@@ -54,7 +54,7 @@ return(
               list your interests for potential matches to see.
             </p>
           </div>
-        </Link>
+        </Link> */}
 
         <Link to="/FindMatch">
           <div className="feature-card">
