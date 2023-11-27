@@ -47,7 +47,7 @@ label, input, select, textarea{
 }
 
 .profile-form {
-    margin-left: 30px;
+    margin-left: 0px;
     border-style: solid;
     border-color: white;
     border-width: 5px;

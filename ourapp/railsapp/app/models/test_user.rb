@@ -2,6 +2,8 @@ require 'argon2'
 class TestUser < ApplicationRecord
     has_many :sent_messages, class_name: 'Message', foreign_key: 'uid_sender_id'
     has_many :received_messages, class_name: 'Message', foreign_key: 'uid_receiver_id'
+    has_many :matched_withs, foreign_key: 'uid1', dependent: :destroy
+    has_many :matched_withs, foreign_key: 'uid2', dependent: :destroy
     validates :username, presence: true, uniqueness: { case_sensitive: false }
 
     def password=(new_password)
