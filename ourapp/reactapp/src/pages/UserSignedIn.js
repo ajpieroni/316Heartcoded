@@ -34,6 +34,28 @@ useEffect(() => {
     }
   }, [setUser]); 
 
+  console.log("haha",user.id);
+
+  const handleDelete = async () => {
+    try {
+      if (!user || !user.id) {
+        console.error('User ID is not available.');
+        return;
+      }
+  
+      const response = await axios.delete(`http://localhost:3000/test_users/${user.id}`);
+  
+      if (response.status === 200) {
+        console.log('User deleted successfully');
+        // Handle successful deletion, e.g., redirect or update state
+      } else {
+        console.error('Failed to delete user');
+      }
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    }
+  };
+
 
   // const history = useHistory();
   const navigate = useNavigate();
@@ -42,6 +64,17 @@ return(
 <div className="features">
   <Header />
         <div class = "welcome-message"> {user?.name}'s Dashboard</div>
+        <Link to={{
+        pathname: '/',
+        state: { data: user }
+      }}>
+        <button
+            onClick={handleDelete}
+            style={{ marginLeft: '10px', backgroundColor: 'red', color: 'white', cursor: 'pointer' }}
+          >
+            Delete Profile
+          </button>
+          </Link>
     
       {/* <Link to={{
         pathname: '/EditProfile',
@@ -55,6 +88,7 @@ return(
             </p>
           </div>
         </Link> */}
+
 
         <Link to="/FindMatch">
           <div className="feature-card">

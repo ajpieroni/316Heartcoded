@@ -25,6 +25,8 @@ export default function UserForm({ onUserAdded }) {
   const { user } = useContext(UserContext);
   
   useEffect(() => {
+    console.log('User ID in useEffect:', user.id);
+
     axios.get(`http://localhost:3000/test_users/${user.id}`)
       .then(response => {
         let userData = response.data;
@@ -97,6 +99,9 @@ export default function UserForm({ onUserAdded }) {
     setFormData({ ...formData, location: selectedState });
   };
 
+  console.log(user.id);
+
+
   const validateAge = (birthdate) => {
     const today = new Date();
     const enteredDate = new Date(birthdate);
@@ -115,45 +120,26 @@ export default function UserForm({ onUserAdded }) {
     setSelectedRedFlags(formData.red_flags || []);
   }, [formData.red_flags]);
 
-  const redFlagsOptions = [
-    "Vanity",
-    "Environmental Consciousness",
-    "Spirituality",
-    "Family",
-    "Career",
-    "Adventure",
-    "Trustfulness",
-    "Frugality",
-    "Sentimentality",
-    "Creativity",
-    "Traditionalism",
-    "Assertiveness"
-  ];
-
-  const handleRedFlagsChange = (e) => {
-    const selectedOptions = Array.from(e.target.selectedOptions, (option) => option.value);
-    setSelectedRedFlags(selectedOptions);
-    setFormData({ ...formData, red_flags: selectedOptions });
-  };
 
   return (
     <div className="user-profile">
       <form>
         {/* <h1>Hello, {formData.name}! You've been with us since {formData.createdAt.split('T')[0]}</h1> */}
         <h1 className="view-profile-title">Hello, {formData.name}! You've been with us for {days} {days === 1 ? 'day' : 'days'}.</h1>
+        <div className="profile-form">
+        <div style={{ display: 'flex', alignItems: 'center' }}>
         <Link to={{
         pathname: '/EditProfile',
         state: { data: user }
       }}>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-          stroke="black"
+          stroke="white"
           style={{ width: '30px', height: '30px' }}>
   <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
 </svg>
 </Link>
-
-        <p>Last updated at: {formData.updatedAt}</p>
-        <div className="profile-form">
+<p>Last updated at: {formData.updatedAt}</p>
+</div>
         <label>
           Username: 
           <input
@@ -285,6 +271,8 @@ export default function UserForm({ onUserAdded }) {
           </label>
         )} */}
         <br></br>
+        <p>Want to delete your profile?</p>
+
       </form>
     </div>
   );
