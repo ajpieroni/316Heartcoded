@@ -168,6 +168,7 @@ export default function UserForm({ onUserAdded }) {
   return (
     <div className="user-form">
       {/* <h2>Nice to see you, {user.name.split(' ')[0]}!</h2> */}
+      <h1>Edit Your Information</h1>
       <form onSubmit={handleSubmit}>
         <label>
           Name<span style={{ color: 'red' }}>*</span>: 

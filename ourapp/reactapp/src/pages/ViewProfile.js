@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from "../components/contexts/UserContext";
-import "./CreateProfile.css";
+import "./ViewProfile.css";
 import { Link } from "react-router-dom";
 
 
 export default function UserForm({ onUserAdded }) {
   const [ageError, setAgeError] = useState("");
+  const [days, setDays] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     gender: '',
@@ -40,6 +41,13 @@ export default function UserForm({ onUserAdded }) {
           updatedAt: userData.updated_at || '',
           username: userData.username || ''
         });
+
+        const joinedDate = new Date(userData.created_at);
+        const today = new Date();
+        const timeDiff = today - joinedDate;
+        const calculatedDays = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+        setDays(calculatedDays);
+
       })
       .catch(error => {
         console.error('Error fetching user data:', error);
@@ -62,7 +70,7 @@ export default function UserForm({ onUserAdded }) {
     return (
       <div>
         <label>
-          Select Your Location<span style={{ color: 'red' }}>*</span>: 
+          Your Location: 
           <select onChange={onStateSelected} required value={formData.location} disabled className="disabled-field">
             <option value="">Select a state</option>
             {states.map(state => (
@@ -129,9 +137,10 @@ export default function UserForm({ onUserAdded }) {
   };
 
   return (
-    <div className="user-form">
+    <div className="user-profile">
       <form>
-        <h1>Hello, {formData.name}! You've been with us since {formData.createdAt.split('T')[0]}</h1>
+        {/* <h1>Hello, {formData.name}! You've been with us since {formData.createdAt.split('T')[0]}</h1> */}
+        <h1 className="view-profile-title">Hello, {formData.name}! You've been with us for {days} {days === 1 ? 'day' : 'days'}.</h1>
         <Link to={{
         pathname: '/EditProfile',
         state: { data: user }
@@ -144,6 +153,7 @@ export default function UserForm({ onUserAdded }) {
 </Link>
 
         <p>Last updated at: {formData.updatedAt}</p>
+        <div className="profile-form">
         <label>
           Username: 
           <input
@@ -157,7 +167,7 @@ export default function UserForm({ onUserAdded }) {
           />
         </label>
         <label>
-          Name<span style={{ color: 'red' }}>*</span>: 
+          Name: 
           <input
             type="text"
             name="name"
@@ -169,7 +179,7 @@ export default function UserForm({ onUserAdded }) {
           />
         </label>
         <label>
-          Gender<span style={{ color: 'red' }}>*</span>:  
+          Gender:  
           <select
             name="gender"
             value={formData.gender}
@@ -186,7 +196,7 @@ export default function UserForm({ onUserAdded }) {
           </select>
         </label>
         <label>
-          Birthday<span style={{ color: "red" }}>*</span>:
+          Birthday:
           <input
             type="date"
             name="birthday"
@@ -200,7 +210,7 @@ export default function UserForm({ onUserAdded }) {
         </label>
         <StatesList onStateSelected={handleStateSelected} />
         <label>
-          Who would you like to meet<span style={{ color: 'red' }}>*</span>: 
+          Who would you like to meet: 
           <select
             name="preferences"
             value={formData.preferences}
@@ -251,6 +261,7 @@ export default function UserForm({ onUserAdded }) {
               </div>
             ))}
           </div>
+        </div>
         </div>
         {/* <button
           className="profile-button"
