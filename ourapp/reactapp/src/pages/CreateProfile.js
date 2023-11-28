@@ -13,6 +13,71 @@ export default function UserForm() {
   const [emailError, setEmailError] = useState("");
   const [ageError, setAgeError] = useState("");
   console.log(user?.id);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState("");
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+  
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          let maxWidth = 800;
+          let maxHeight = 800;
+  
+          const scalingStep = 0.5; // Resize in steps of 50%
+          while (width > maxWidth || height > maxHeight) {
+            width *= scalingStep;
+            height *= scalingStep;
+          }
+  
+          if (width > height) {
+            if (width > maxWidth) {
+              height *= maxWidth / width;
+              width = maxWidth;
+            }
+          } else {
+            if (height > maxHeight) {
+              width *= maxHeight / height;
+              height = maxHeight;
+            }
+          }
+  
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          
+          ctx.imageSmoothingQuality = 'high';
+  
+          ctx.drawImage(img, 0, 0, width, height);
+  
+          canvas.toBlob((blob) => {
+            const resizedImage = new File([blob], file.name, {
+              type: file.type,
+              lastModified: Date.now(),
+            });
+  
+            setImagePreviewUrl(URL.createObjectURL(resizedImage));
+            setFormData((prevFormData) => ({
+              ...prevFormData,
+              profile_image: resizedImage,
+            }));
+          }, file.type);
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert('Please select a valid image file.');
+    }
+  };
+  
+  
+  
 
   const initializeUser = () => {
     fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
@@ -61,31 +126,72 @@ export default function UserForm() {
     }
   };
 
-  const patchUserData = (updatedData) => {
+  const patchUserData = async (updatedData) => {
     if (user?.id) {
-      fetch(`http://localhost:3000/test_users/${user?.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ test_user: updatedData }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
+      const formData = new FormData();
+  
+      // Append non-file data to FormData
+      for (const key in updatedData) {
+        if (key !== 'profile_image') {
+          formData.append(`test_user[${key}]`, updatedData[key]);
+        }
+      }
+  
+      // Append the profile_image to FormData
+      if (updatedData.profile_image) {
+        const reader = new FileReader();
+  
+        reader.onload = function () {
+          // Convert the result to ArrayBuffer and append to FormData
+          const arrayBuffer = this.result;
+          formData.append('test_user[profile_image]', new Blob([arrayBuffer]));
+          
+          // Perform the fetch with FormData
+          fetch(`http://localhost:3000/test_users/${user?.id}`, {
+            method: 'PATCH',
+            body: formData,
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log('User updated:', data);
+            })
+            .catch((error) => {
+              console.error('Failed to update user:', error);
+            });
+        };
+  
+        // Read the profile_image as ArrayBuffer
+        reader.readAsArrayBuffer(updatedData.profile_image);
+      } else {
+        // If no profile_image is provided, perform the fetch without it
+        fetch(`http://localhost:3000/test_users/${user?.id}`, {
+          method: 'PATCH',
+          body: formData,
         })
-        .then((data) => {
-          console.log("User updated:", data);
-        })
-        .catch((error) => {
-          console.error("Failed to update user:", error);
-        });
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log('User updated:', data);
+          })
+          .catch((error) => {
+            console.error('Failed to update user:', error);
+          });
+      }
     } else {
-      console.log("User ID not set. User data cannot be patched.");
+      console.log('User ID not set. User data cannot be patched.');
     }
   };
+  
+  
 
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
@@ -104,7 +210,10 @@ export default function UserForm() {
     red_flags: [],
     username: username,
     email: "",
+    profile_image: null,
   });
+
+  console.log(formData);
 
   function StatesList({ onStateSelected }) {
     const [states, setStates] = useState([]);
@@ -230,11 +339,28 @@ export default function UserForm() {
     console.log(formData);
   };
 
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+  
+  //   if (file) {
+  //     const reader = new FileReader();
+  
+  //     reader.onloadend = () => {
+  //       const base64Data = reader.result.split(",")[1];
+  //       setFormData((prevFormData) => ({ ...prevFormData, profile_image: base64Data }));
+  //     };
+  
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+  
+  
+
   return (
     <div className="user-form">
       <h2>Welcome to HeartCoded</h2>
       <h2>Your username is {username}</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         <label>
           Name<span style={{ color: "red" }}>*</span>:
           <input
@@ -283,6 +409,14 @@ export default function UserForm() {
         />
         {ageError && <div style={{ color: "red" }}>{ageError}</div>}
       </label>
+      <label>
+        Profile Picture:
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+        />
+      </label>
         <StatesList onStateSelected={handleStateSelected} />
         <label>
           Who would you like to meet<span style={{ color: "red" }}>*</span>:
@@ -307,6 +441,10 @@ export default function UserForm() {
             onChange={handleInputChange}
           />
         </label>
+        {imagePreviewUrl && (
+  <img src={imagePreviewUrl} alt="Profile Preview" className="image-preview" />
+)}
+
         <label>
           What are your red flags?
           <select

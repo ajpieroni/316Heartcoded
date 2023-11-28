@@ -24,7 +24,8 @@ export default function UserForm() {
     location: '',
     preferences: '',
     password: '',
-    red_flags: []
+    red_flags: [],
+    profile_image: null,
   });
   const { user, setUser } = useContext(UserContext);
   const username = localStorage.getItem("username") || "defaultUsername";
@@ -53,46 +54,21 @@ export default function UserForm() {
             red_flags: data.red_flags
           });
           setFormData({
-            name: data.name || '',
-            gender: data.gender || '',
-            birthday: data.birthday || '',
-            bio: data.bio || '',
-            location: data.location || '',
-            preferences: data.preferences || '',
-            password: data.password|| '',
-            red_flags: data.red_flags || []
+            name: user.name || '',
+            gender: user.gender || '',
+            birthday: user.birthday || '',
+            bio: user.bio || '',
+            location: user.location || '',
+            preferences: user.preferences || '',
+            password: user.password|| '',
+            red_flags: user.red_flags || [],
+            profile_image: user.profile_image || null,
           });
-          sessionStorage.setItem("user", JSON.stringify(data));
-        }
-      })
-      .catch((error) => {
-        console.error("Failed to initialize user:", error);
-      });
-  };
-
-  useEffect(() => {
-      initializeUser(); // Call the initializeUser function if no user data is in sessionStorage
-  }, [setUser]);
-
-    // useEffect(() => {
-    //   axios.get(`http://localhost:3000/test_users/${user.id}`)
-    //     .then(response => {
-    //     let user = response.data;
-    //       setFormData({
-    //         name: user.name || '',
-    //         gender: user.gender || '',
-    //         birthday: user.birthday || '',
-    //         bio: user.bio || '',
-    //         location: user.location || '',
-    //         preferences: user.preferences || '',
-    //         password: user.password|| '',
-    //         red_flags: user.red_flags || []
-    //       });
-    //     })
-    //     .catch(error => {
-    //       console.error('Error fetching user data:', error);
-    //     });
-    // }, [user]);
+        })
+        .catch(error => {
+          console.error('Error fetching user data:', error);
+        });
+    }, []);
 
     function StatesList({ onStateSelected }) {
       const [states, setStates] = useState([]);
@@ -209,6 +185,9 @@ export default function UserForm() {
     setFormData({ ...formData, red_flags: selectedOptions });
     console.log(formData);
   };
+
+  console.log("formData",formData);
+  const imageUrl = URL.createObjectURL(new Blob([formData.profile_image]));
 
   return (
     <div className="user-form">

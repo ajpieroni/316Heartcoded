@@ -84,13 +84,21 @@ end
   # POST /test_users or /test_users.json
   def create
     @test_user = TestUser.new(test_user_params)
-
+  
+    profile_image = params[:test_user][:profile_image]
+  
+    if profile_image.present?
+      # Read the binary data from the file and assign it to profile_image
+      @test_user.profile_image = profile_image.read
+    end
+  
     if @test_user.save
-      render json: {success: true, message: "user successfully created", id: @test_user.id }
+      render json: { success: true, message: "user successfully created", id: @test_user.id }
     else
-      render json: {success: false, message: "error creating user", errors: @test_user.errors.full_messages }
+      render json: { success: false, message: "error creating user", errors: @test_user.errors.full_messages }
     end
   end
+  
 
 
   def authenticate
@@ -109,23 +117,20 @@ end
     threshold = 120
 
     is_first_update = (@test_user.updated_at - @test_user.created_at).abs <= threshold
-    # respond_to do |format|
-      if @test_user.update(test_user_params)
-        # format.html { redirect_to test_user_url(@test_user), notice: "Test user was successfully updated." }
-        # format.json { render :show, status: :ok, location: @test_user }
-        if is_first_update
-          HeartcodedMailer.with(test_user: @test_user).new_user_email.deliver_now
-        end
 
-        render json: {success: true, message: "user successfully updated"}
+    # Read the binary data from the file and assign it to profile_image
+    profile_image = params[:test_user][:profile_image]
+    @test_user.profile_image = profile_image.read if profile_image.present?
 
-        
-      else
-        # format.html { render :edit, status: :unprocessable_entity }
-        # format.json { render json: @test_user.errors, status: :unprocessable_entity }
-        render json: {success: false, message: "user NOT successfully updated"}
-
+    if @test_user.update(test_user_params)
+      if is_first_update
+        HeartcodedMailer.with(test_user: @test_user).new_user_email.deliver_now
       end
+
+      render json: { success: true, message: "User successfully updated" }
+    else
+      render json: { success: false, message: "User NOT successfully updated", errors: @test_user.errors.full_messages }
+    end
   end
   
 
@@ -173,8 +178,7 @@ end
 
     # Only allow a list of trusted parameters through.
     def test_user_params
-      params.require(:test_user).permit(:name, :username, :join_date, :location, :bio, :gender, :preferences, :birthday, :password, :email, red_flags:[])
-
+      params.require(:test_user).permit(:name, :username, :join_date, :location, :bio, :gender, :preferences, :birthday, :password, :email, :profile_image, red_flags: [])
     end
     # Add this within the private section of your controller
     def message_params

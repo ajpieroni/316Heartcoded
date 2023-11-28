@@ -15,66 +15,47 @@ import CreateProfile from "./CreateProfile.js";
 import Header from "../components/Header";
 
 export default function UserSignedIn() {
-
-  // const [question, setQuestion] = useState("UNINIT");
-  const [testUser, setTestUser] = useState("UNINIT");
-
   const { user, setUser } = useContext(UserContext);
-  const [password, setPassword] = useState("");
   const [login, setLogin] = useState(false);
   console.log("UserContext:", UserContext);
-console.log("User from context:", user);
+  console.log("User from context:", user);
 
-const username = localStorage.getItem("username") || "defaultUsername";
-const initializeUser = () => {
-  fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      if (data) {
-        const updatedUser = {
-          ...user,
-          name: data.name,
-          id: data.id,
-          birthday: data.birthday,
-          gender: data.gender,
-          preferences: data.preferences,
-          bio: data.bio,
-          location: data.location,
-          password: data.password,
-          red_flags: data.red_flags
-        };
-        setUser(updatedUser); // Update the context immediately after setting the user data
-        sessionStorage.setItem("user", JSON.stringify(data));
-      }
-    })
-    .catch((error) => {
-      console.error("Failed to initialize user:", error);
-    });
-};
-  
-    useEffect(() => {
-      initializeUser(); // Call the initializeUser function if no user data is in sessionStorage
-    }, [setUser]);
+  const blob = new Blob([user.profile_image]);
+  console.log(blob);
 
+  const imageUrl = URL.createObjectURL(new Blob([user.profile_image]));
+  console.log("url",imageUrl);
 
-  // const history = useHistory();
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser)); 
+      setLogin(true); 
+    }
+  }, [setUser]); 
+
   const navigate = useNavigate();
-return(
+  console.log(user.profile_image);
+
+  return (
     <div>
-<div className="features">
-  <Header />
-        <div class = "welcome-message"> {user?.name}'s Dashboard</div>
-      
-    
-      <Link to={{
-        pathname: '/EditProfile',
-        state: { data: user }
-      }}>
+      <div className="features">
+        <Header />
+        <div className="welcome-message"> {user?.name}'s Dashboard</div>
+        
+        {/* <img
+          src={`data:image/jpeg;base64,${user?.profile_image}`}
+          alt="Profile"
+          className="profile-image"
+        /> */}
+
+      <img src={imageUrl} alt="Profile" />
+
+
+        <Link to={{
+          pathname: '/EditProfile',
+          state: { data: user }
+        }}>
           <div className="feature-card">
             <h2>Edit Profile</h2>
             <p>
