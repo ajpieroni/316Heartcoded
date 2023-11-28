@@ -18,17 +18,64 @@ export default function UserForm() {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
   
-    if (file) {
+    if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          let maxWidth = 800;
+          let maxHeight = 800;
   
-      reader.onloadend = () => {
-        setImagePreviewUrl(reader.result);
-        setFormData((prevFormData) => ({ ...prevFormData, profile_image: file }));
+          const scalingStep = 0.5; // Resize in steps of 50%
+          while (width > maxWidth || height > maxHeight) {
+            width *= scalingStep;
+            height *= scalingStep;
+          }
+  
+          if (width > height) {
+            if (width > maxWidth) {
+              height *= maxWidth / width;
+              width = maxWidth;
+            }
+          } else {
+            if (height > maxHeight) {
+              width *= maxHeight / height;
+              height = maxHeight;
+            }
+          }
+  
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          
+          ctx.imageSmoothingQuality = 'high';
+  
+          ctx.drawImage(img, 0, 0, width, height);
+  
+          canvas.toBlob((blob) => {
+            const resizedImage = new File([blob], file.name, {
+              type: file.type,
+              lastModified: Date.now(),
+            });
+  
+            setImagePreviewUrl(URL.createObjectURL(resizedImage));
+            setFormData((prevFormData) => ({
+              ...prevFormData,
+              profile_image: resizedImage,
+            }));
+          }, file.type);
+        };
+        img.src = event.target.result;
       };
-  
-      reader.readAsDataURL(file); 
+      reader.readAsDataURL(file);
+    } else {
+      alert('Please select a valid image file.');
     }
   };
+  
   
   
 
