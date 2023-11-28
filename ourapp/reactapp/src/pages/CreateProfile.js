@@ -13,6 +13,24 @@ export default function UserForm() {
   const [emailError, setEmailError] = useState("");
   const [ageError, setAgeError] = useState("");
   console.log(user?.id);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState("");
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+  
+    if (file) {
+      const reader = new FileReader();
+  
+      reader.onloadend = () => {
+        setImagePreviewUrl(reader.result);
+        setFormData((prevFormData) => ({ ...prevFormData, profile_image: file }));
+      };
+  
+      reader.readAsDataURL(file); 
+    }
+  };
+  
+  
 
   const validateEmail = (email) => {
     if (!email.endsWith("@duke.edu")) {
@@ -310,7 +328,7 @@ export default function UserForm() {
         <input
           type="file"
           accept="image/*"
-          onChange={(e) => setFormData({ ...formData, profile_image: e.target.files[0] })}
+          onChange={handleImageChange}
         />
       </label>
         <StatesList onStateSelected={handleStateSelected} />
@@ -337,6 +355,10 @@ export default function UserForm() {
             onChange={handleInputChange}
           />
         </label>
+        {imagePreviewUrl && (
+  <img src={imagePreviewUrl} alt="Profile Preview" className="image-preview" />
+)}
+
         <label>
           What are your red flags?
           <select
