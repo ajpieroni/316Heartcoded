@@ -72,26 +72,25 @@ export default function Chat() {
           body: JSON.stringify(data),
         }
       );
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const tempresult = await response.json();
-      const result = tempresult[0].generated_text;
-      console.log(result);
-      const regex = /"\s*([^"]*)"/;
-      const match = result.match(regex);
-
-      if (match && match[1]) {
-          console.log(match[1]);
-      } else {
-          console.log("No match found");
-      }
-      // const parsedresult = 
-      return result;
-    } catch (error) {
-      console.error('Error sending message to the bot:', error);
     }
-  };
+
+    const tempresult = await response.json();
+    let fullResponse = tempresult[0].generated_text;
+
+    fullResponse = fullResponse.replace(/"/g, '');
+    console.log(fullResponse);
+    const parts = fullResponse.split('\n');
+    const result = parts[1].trim();
+
+    return fullResponse;
+
+} catch (error) {
+    console.error('Error sending message to the bot:', error);
+}
+};
 
   const handleSend = async () => {
     if(newMessage.trim() === "") return;
@@ -106,7 +105,7 @@ export default function Chat() {
     setMessages(prevMessages => [...prevMessages, userMessage]);
 
     // wait for response
-    const botResponse = await sendMessageToBot(newMessage.trim());
+    const botResponse = await sendMessageToBot("Respond in a conversational style, sarcasticaly, as a dating wingman. Make your response brief: "+newMessage.trim());
 
     if (botResponse) {
       const botMessage = {
