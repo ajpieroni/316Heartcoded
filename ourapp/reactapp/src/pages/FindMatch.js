@@ -164,16 +164,14 @@ export default function FindMatch() {
   }
 
   return (
-    <main className="main-container">
+    <div>
       <Header />
+      <main className="main-container">
 
       {loading ? (
         <div className="loading">Loading{".".repeat(ellipsisDots)}</div>
       ) : (
         <>
-          <div class="welcome-message">
-            {/* {user?.name.split(" ")[0]}'s Current Matches */}
-          </div>
 
           {/* <h1>{user?.name.split(" ")[0]}'s Current Matches</h1> */}
           <button onClick={newMatches}>New matches!</button>
@@ -215,13 +213,14 @@ export default function FindMatch() {
                             Feedback with {matchUser.name}
                           </span>
                         </div>
-
+                        <div className="unmatch">
                         <button
                           className="unmatch-button"
                           onClick={() => unmatch(matchUser)}
                         >
                           Unmatch
                         </button>
+                        </div>
                       </>
                     ) : null}
                   </div>
@@ -232,5 +231,6 @@ export default function FindMatch() {
         </>
       )}
     </main>
+    </div>
   );
 }

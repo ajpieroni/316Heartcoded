@@ -5,6 +5,7 @@ import axios from "axios";
 import { UserContext } from "../components/contexts/UserContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Feedback.css";
+import Header from "../components/Header";
 
 export default function Feedback() {
   // Define categories
@@ -114,6 +115,8 @@ export default function Feedback() {
 
 
   return (
+    <>
+    <Header/>
     <main className="main-container">
         <h1>User Feedback Form</h1>
 
@@ -148,6 +151,7 @@ export default function Feedback() {
         
         
     </main>
+    </>
   );
 }
 
