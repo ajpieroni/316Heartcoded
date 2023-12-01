@@ -52,7 +52,7 @@
   }
   
   .feature-card {
-    background-color: white;
+    background-color: var(--pale);
     padding: 1.5rem;
     border-radius: 1rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -62,12 +62,14 @@
     justify-content: center;
     width: 20rem;
     gap: 1rem;
+    font-family: 'Varela Round', sans-serif;
   }
   
   .feature-card h2 {
     font-size: 2rem;
     font-weight: bold;
     color: #2D3748;
+    font-family: 'Varela Round', sans-serif;
   }
   
   .feature-card p {

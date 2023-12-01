@@ -215,13 +215,14 @@ export default function FindMatch() {
                             Feedback with {matchUser.name}
                           </span>
                         </div>
-
+                        <div className="unmatch">
                         <button
                           className="unmatch-button"
                           onClick={() => unmatch(matchUser)}
                         >
                           Unmatch
                         </button>
+                        </div>
                       </>
                     ) : null}
                   </div>
