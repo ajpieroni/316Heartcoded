@@ -25,14 +25,18 @@ function Header() {
 
 
   return (
-    <header className="header">
-      <div class = "user-welcome">Welcome, {user?.name}</div>
-
-      {/* Logout Button */}
-      <button onClick={handleLogout} className="logout-button">
+    <div className="head-container">
+    <header>
+      <nav className="nav">
+      <div class = "user-welcome">
+        Welcome, {user?.name}
+      </div>
+      <button onClick={handleLogout} className="logout-button"> 
         Logout
-      </button>
+        </button>
+      </nav>
     </header>
+    </div>
   );
 }
 

@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Typography from '@mui/material/Typography';
 import Slider from '@mui/material/Slider';
+import Header from "../components/Header";
 
 export default function Questions() {
   const { user, setUser } = useContext(UserContext);
@@ -91,8 +92,10 @@ export default function Questions() {
   ];
 
   return (
-    <main className="main-container">
-      <h1 className="main-title">Answer Questions</h1>
+    <>
+    <Header/>
+    <h1 className="main-title">Answer Questions</h1>
+    <main className="q-main-container">
       {question && (
         <div className="question-container">
           <h2 className="question-title">Question:</h2>
@@ -117,12 +120,15 @@ export default function Questions() {
           </div>
         </div>
       )}
-      <Button variant="contained" className="generate-button" onClick={fetchQuestion}>
+      <div className="q-response-container">
+      <button className="response-button" onClick={fetchQuestion}>
         Skip
-      </Button>
-      <Button variant="contained" className="generate-button" onClick={saveResponse}>
-        Save Response
-      </Button>
+      </button>
+      <button className="response-button" onClick={saveResponse}>
+        Save
+      </button>
+      </div>
     </main>
+    </>
   );
 }
