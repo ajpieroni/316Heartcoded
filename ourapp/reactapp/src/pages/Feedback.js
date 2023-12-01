@@ -47,6 +47,22 @@ export default function Feedback() {
     sender: user?.id, 
   });
 
+  // check if feedback has already been given
+  const [hasFeedback, setHasFeedback] = useState(false);
+
+  const checkIfHasFeedback = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/feedbacks/find_feedback?gives_uid=${users.sender}&receives_uid=${users.receiver}`);
+      setHasFeedback(true);
+    } catch (error) {
+      setHasFeedback(false);
+    }
+  };
+
+  useEffect(() => {
+    checkIfHasFeedback();
+  }, []);
+
   // Initialize ratings state with categories
   const [ratings, setRatings] = useState(
     categories.reduce((acc, category) => {
@@ -67,7 +83,6 @@ export default function Feedback() {
 
   // Handle submit
   const [isSubmitted, setIsSubmitted] = useState(false);
-
   const handleSubmit = async (e) => {
     for(let i = 0; i < categories.length; i++) {
       e.preventDefault();
@@ -118,11 +133,10 @@ export default function Feedback() {
     <>
     <Header/>
     <main className="main-container">
-        <h1>User Feedback Form</h1>
+      <h1>User Feedback Form</h1>
 
-      {!isSubmitted ? (<><h1>Feedback</h1>
-        {/* <p> Hello {user?.name.split(" ")[0]}, provide feedback about your match: {receiver?.name} </p> */}
-
+      {!isSubmitted && !hasFeedback ? (
+        <><h1>Feedback</h1>
         <form onSubmit={handleSubmit}>
           {categories.map((category) => (
             <div key= {category}>
@@ -147,7 +161,11 @@ export default function Feedback() {
           
           <input type="submit" value="Submit Feedback"/>
         </form>
-</>):(<><p>You've submitted the form!</p> <button onClick={goBack}>Back</button></>)}
+    </>): hasFeedback ? (
+      <><p>You've already submitted feedback about {receiver?.name}!</p> <button onClick={goBack}>Back</button></>
+    ) : (
+      <><p>You've submitted the form!</p> <button onClick={goBack}>Back</button></>
+    )}
         
         
     </main>
