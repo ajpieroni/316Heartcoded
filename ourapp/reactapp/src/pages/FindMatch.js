@@ -94,11 +94,28 @@ export default function FindMatch() {
       .catch((error) => console.error("Error fetching user:", error));
   };
 
-  const fetchMatches = (async) => {
+  const fetchDefaultMatch = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/test_users/find_by_username?username=Wingman`);
+      const users = await response.json();
+      console.log("default:", users);
+      return users; // Get the first user with username "Wingman"
+    } catch (error) {
+      console.error('Error fetching default match:', error);
+      return null;
+    }
+  };
+
+  const fetchMatches = async () => {
+    const defaultMatch = await fetchDefaultMatch();
+    console.log("default", defaultMatch);
     fetch(`http://localhost:3000/matched_withs/users/${currentUser}`)
       .then((response) => response.json())
       .then(async (matches) => {
         const matchesArray = [];
+        if (defaultMatch) {
+          matchesArray.push(defaultMatch);
+        }
         for (let match of matches) {
           const otherUserId =
             match.uid1 === currentUser ? match.uid2 : match.uid1;
@@ -119,8 +136,11 @@ export default function FindMatch() {
     console.log(`clicked conversations with ${matchUser?.name}`);
     setReciever(matchUser);
     console.log("reciever in match", reciever);
-
+    if (matchUser.username === 'Wingman') { 
+      navigate("/Wingman");
+    } else {
     navigate("/Chat", { state: { reciever: matchUser } });
+    }
   }
   function openFeedback(matchUser) {
     console.log(`clicked feedback with ${matchUser?.name}`);
@@ -144,16 +164,14 @@ export default function FindMatch() {
   }
 
   return (
-    <main className="main-container">
+    <div>
       <Header />
+      <main className="main-container">
 
       {loading ? (
         <div className="loading">Loading{".".repeat(ellipsisDots)}</div>
       ) : (
         <>
-          <div class="welcome-message">
-            {/* {user?.name.split(" ")[0]}'s Current Matches */}
-          </div>
 
           {/* <h1>{user?.name.split(" ")[0]}'s Current Matches</h1> */}
           <button onClick={newMatches}>New matches!</button>
@@ -195,13 +213,14 @@ export default function FindMatch() {
                             Feedback with {matchUser.name}
                           </span>
                         </div>
-
+                        <div className="unmatch">
                         <button
                           className="unmatch-button"
                           onClick={() => unmatch(matchUser)}
                         >
                           Unmatch
                         </button>
+                        </div>
                       </>
                     ) : null}
                   </div>
@@ -212,5 +231,6 @@ export default function FindMatch() {
         </>
       )}
     </main>
+    </div>
   );
 }

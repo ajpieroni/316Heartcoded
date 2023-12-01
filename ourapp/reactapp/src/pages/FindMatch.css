@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 
 .main-container {
-    padding: 20px;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Varela Round', sans-serif;
+    display: flex;
+    flex-direction: column;
+    margin-top: 56px;
     /* max-width: 1200px; */
     /* margin: auto; */
     /* background-color: #f5f5f5; */
@@ -36,7 +38,7 @@
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 70px;
-    background-color: #fff;
+    background-color: var(--pale);
     position: relative;
     max-width: 250px;
     width: 100%;
@@ -58,9 +60,14 @@
     color: #666;
     margin: 5px 0;
   }
+
+  .unmatch{
+    display:flex;
+    justify-content:center;
+  }
   
   button {
-    background-color: #007bff;
+    background-color: var(--rose);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -68,10 +75,11 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
+    font-family: 'Varela Round', sans-serif;
   }
   
   button:hover {
-    background-color: #0056b3;
+    background-color: var(--dark);
   }
   
   ul {

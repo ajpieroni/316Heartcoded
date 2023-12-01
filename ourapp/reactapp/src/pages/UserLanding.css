@@ -1,16 +1,10 @@
 .main-container {
-    display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: space-between;
     min-height: 100vh;
-    padding: 2rem;
     background: linear-gradient(to bottom, #FBB6CE, #F87171, #EF4444);
   }
   
-  .main-title {
-    /* Custom styling if needed */
-  }
   
   .hero-section {
     text-align: center;
@@ -45,14 +39,14 @@
   
   .features {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 4rem;
     gap: 2rem;
   }
   
   .feature-card {
-    background-color: white;
+    background-color: var(--pale);
     padding: 1.5rem;
     border-radius: 1rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -62,12 +56,14 @@
     justify-content: center;
     width: 20rem;
     gap: 1rem;
+    font-family: 'Varela Round', sans-serif;
   }
   
   .feature-card h2 {
     font-size: 2rem;
     font-weight: bold;
     color: #2D3748;
+    font-family: 'Varela Round', sans-serif;
   }
   
   .feature-card p {
@@ -124,3 +120,45 @@
   background-color: #EF4444;
   color: white;
 }
+
+
+/* ... (previous CSS code) */
+
+/* CSS for Password Initialization */
+.password-input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.password-input {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 9999px;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.password-input:focus {
+  border-color: #EF4444;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.5);
+}
+
+.password-button {
+  background-color: #000000;
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 9999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.password-button:hover {
+  background-color: white;
+  color: #EF4444;
+}
+
