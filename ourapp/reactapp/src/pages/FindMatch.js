@@ -94,6 +94,14 @@ export default function FindMatch() {
       .catch((error) => console.error("Error fetching user:", error));
   };
 
+  const showUnmatchConfirmation = (otherUser) => {
+    const confirmation = window.confirm(`Are you sure you want to unmatch ${otherUser?.name}?`);
+    
+    if (confirmation) {
+      unmatch(otherUser);
+    }
+  };
+
   const fetchDefaultMatch = async () => {
     try {
       const response = await fetch(`http://localhost:3000/test_users/find_by_username?username=Wingman`);
@@ -214,11 +222,11 @@ export default function FindMatch() {
                         </div>
                         <div className="unmatch">
                         <button
-                          className="unmatch-button"
-                          onClick={() => unmatch(matchUser)}
-                        >
-                          Unmatch
-                        </button>
+  className="unmatch-button"
+  onClick={() => showUnmatchConfirmation(matchUser)}
+>
+  Unmatch
+</button>
                         </div>
                       </>
                     ) : null}
