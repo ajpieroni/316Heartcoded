@@ -135,6 +135,12 @@ export default function UserForm() {
       alert("You are too young");
       return;
     }
+    validateEmail(formData.email);
+    if (emailError){
+      console.error("Email validation failed. Form not submitted.");
+      alert("Please enter a duke email");
+      return ;
+    }
 
     try {
       console.log("here's form data:", formData);
