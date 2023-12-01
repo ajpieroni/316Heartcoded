@@ -1,0 +1,17 @@
+<h1>PasswordResets#edit</h1>
+<p>Find me in app/views/password_resets/edit.html.erb</p>
+
+<!-- app/views/password_resets/edit.html.erb -->
+
+<h1>Password Reset</h1>
+
+<%= form_for @user, url: password_reset_path, method: :patch do |f| %>
+  <!-- Password reset form fields go here -->
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation %>
+
+  <%= f.submit "Reset Password" %>
+<% end %>
