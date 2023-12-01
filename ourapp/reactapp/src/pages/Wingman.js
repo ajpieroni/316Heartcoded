@@ -82,8 +82,8 @@ export default function Chat() {
 
     fullResponse = fullResponse.replace(/"/g, '');
     console.log(fullResponse);
-    const parts = fullResponse.split('\n');
-    const result = parts[1].trim();
+    // const parts = fullResponse.split('\n');
+    // const result = parts[1].trim();
 
     return fullResponse;
 
