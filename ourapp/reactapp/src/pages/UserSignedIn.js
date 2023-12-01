@@ -24,7 +24,10 @@ export default function UserSignedIn() {
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState(false);
   console.log("UserContext:", UserContext);
-console.log("User from context:", user);
+  console.log("User from context:", user);
+
+  const [confirmation, setConfirmation] = useState('');
+  const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
 
 useEffect(() => {
     const storedUser = sessionStorage.getItem('user');
@@ -34,7 +37,6 @@ useEffect(() => {
     }
   }, [setUser]); 
 
-  console.log("haha",user.id);
 
   const handleDelete = async () => {
     try {
@@ -54,6 +56,8 @@ useEffect(() => {
     } catch (error) {
       console.error('Error deleting user:', error);
     }
+    setConfirmation('');
+    setShowConfirmationDialog(false);
   };
 
 
@@ -64,7 +68,7 @@ return(
 <div className="features">
   <Header />
         <div class = "welcome-message"> {user?.name}'s Dashboard</div>
-        <Link to={{
+        {/* <Link to={{
         pathname: '/',
         state: { data: user }
       }}>
@@ -74,7 +78,30 @@ return(
           >
             Delete Profile
           </button>
-          </Link>
+          </Link> */}
+
+
+  <div>
+      <button
+        onClick={() => setShowConfirmationDialog(true)}
+        style={{ marginLeft: '10px', backgroundColor: 'red', color: 'white', cursor: 'pointer' }}
+      >
+        Delete Profile
+      </button>
+
+      {showConfirmationDialog && (
+        <div>
+          <p>Please enter "DELETE" to confirm:</p>
+          <input
+            type="text"
+            value={confirmation}
+            onChange={(e) => setConfirmation(e.target.value)}
+          />
+          <button onClick={handleDelete}>Confirm</button>
+          <button onClick={() => setShowConfirmationDialog(false)}>Cancel</button>
+        </div>
+      )}
+    </div>
     
       {/* <Link to={{
         pathname: '/EditProfile',
