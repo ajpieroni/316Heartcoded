@@ -197,6 +197,12 @@ export default function UserForm() {
     console.log(formData);
   };
 
+  const handleRemoveRedFlag = (flagToRemove) => {
+    const updatedRedFlags = selectedRedFlags.filter((flag) => flag !== flagToRemove);
+    setSelectedRedFlags(updatedRedFlags);
+    setFormData({ ...formData, red_flags: updatedRedFlags });
+  };
+
   return (
     <div className="user-form">
       <h2>Welcome to HeartCoded</h2>
@@ -295,6 +301,13 @@ export default function UserForm() {
             {selectedRedFlags.map((flag) => (
               <div key={flag} className="selected-flag">
                 {flag}
+                <button
+                  type="button"
+                  onClick={() => handleRemoveRedFlag(flag)}
+                  className="remove-flag-button"
+                >
+                  &#x2715; {/* Unicode for a cross (X) */}
+                </button>
               </div>
             ))}
           </div>
