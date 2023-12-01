@@ -39,25 +39,28 @@ useEffect(() => {
 
 
   const handleDelete = async () => {
-    try {
-      if (!user || !user.id) {
-        console.error('User ID is not available.');
-        return;
+    if (confirmation==="DELETE"){
+      try {
+        if (!user || !user.id) {
+          console.error('User ID is not available.');
+          return;
+        }
+
+        const response = await axios.delete(`http://localhost:3000/test_users/${user.id}`);
+    
+        if (response.status === 200) {
+          console.log('User deleted successfully');
+          // Handle successful deletion, e.g., redirect or update state
+        } else {
+          console.error('Failed to delete user');
+        }
+      } catch (error) {
+        console.error('Error deleting user:', error);
       }
-  
-      const response = await axios.delete(`http://localhost:3000/test_users/${user.id}`);
-  
-      if (response.status === 200) {
-        console.log('User deleted successfully');
-        // Handle successful deletion, e.g., redirect or update state
-      } else {
-        console.error('Failed to delete user');
-      }
-    } catch (error) {
-      console.error('Error deleting user:', error);
-    }
-    setConfirmation('');
-    setShowConfirmationDialog(false);
+      setConfirmation('');
+      setShowConfirmationDialog(false);
+      navigate('/');
+  }
   };
 
 
@@ -90,15 +93,22 @@ return(
       </button>
 
       {showConfirmationDialog && (
-        <div>
-          <p>Please enter "DELETE" to confirm:</p>
-          <input
-            type="text"
-            value={confirmation}
-            onChange={(e) => setConfirmation(e.target.value)}
-          />
-          <button onClick={handleDelete}>Confirm</button>
-          <button onClick={() => setShowConfirmationDialog(false)}>Cancel</button>
+        <div className="modal-overlay">
+          <div className="modal">
+            <p>Please enter "DELETE" to confirm:</p>
+            <input
+              type="text"
+              value={confirmation}
+              onChange={(e) => setConfirmation(e.target.value)}
+            />
+            {/* <Link to={{
+            pathname: '/',
+            state: { data: user }
+            }}> */}
+              <button onClick={handleDelete} className="modal-button">Confirm</button>
+            {/* </Link> */}
+            <button onClick={() => setShowConfirmationDialog(false)} className="modal-button">Cancel</button>
+          </div>
         </div>
       )}
     </div>
