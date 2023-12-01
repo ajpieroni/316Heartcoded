@@ -4,7 +4,7 @@ import { useContext } from "react";
 import axios from 'axios';
 import { UserContext } from "../components/contexts/UserContext";
 import SuccessModal from "../components/SuccessModal"
-
+import Header from "../components/Header";
 
 
 export default function UserForm() {
@@ -211,7 +211,9 @@ export default function UserForm() {
   };
 
   return (
-    <div className="user-form">
+    <>
+    <Header/>
+    <div className="user-form-edit">
       {/* <h2>Nice to see you, {user.name.split(' ')[0]}!</h2> */}
       <form onSubmit={handleSubmit}>
         <label>
@@ -330,5 +332,6 @@ export default function UserForm() {
       )}
       </form>
     </div>
+    </>
   );
 }
