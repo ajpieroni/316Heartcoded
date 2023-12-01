@@ -1,16 +1,10 @@
 .main-container {
-    display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: space-between;
     min-height: 100vh;
-    padding: 2rem;
     background: linear-gradient(to bottom, #FBB6CE, #F87171, #EF4444);
   }
   
-  .main-title {
-    /* Custom styling if needed */
-  }
   
   .hero-section {
     text-align: center;
@@ -45,9 +39,9 @@
   
   .features {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 4rem;
     gap: 2rem;
   }
   

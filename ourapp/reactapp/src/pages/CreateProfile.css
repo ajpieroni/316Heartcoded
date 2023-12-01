@@ -15,6 +15,7 @@ label, input, select, textarea{
     border-radius: 9999px;
     outline: none;
     transition: border-color 0.3s, box-shadow 0.3s;
+    font-family: 'Varela Round', sans-serif;
 }
 
 .profile-button{
