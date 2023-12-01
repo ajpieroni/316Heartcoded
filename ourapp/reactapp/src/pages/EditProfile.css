@@ -55,3 +55,19 @@ label, input, select, textarea{
     background-color: transparent;
     color: black;
   }
+
+  .remove-flag-button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: white;
+    font-weight:bold;
+    font-size: 10px;
+    margin-left: 7px;
+    margin-top:-5px;
+    padding:0px;
+  }
+
+  .remove-flag-button:hover {
+    background-color: #f97ba7;
+  }
