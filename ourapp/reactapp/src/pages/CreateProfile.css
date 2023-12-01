@@ -8,10 +8,6 @@
     /* background: linear-gradient(to bottom, #FBB6CE, #F87171, #EF4444); */
   }
 
-form{
-    /* background: linear-gradient(to bottom, #FBB6CE, #F87171, #EF4444); */
-}
-
 label, input, select, textarea{
     padding: 0.5rem 1rem;
     font-size: 1rem;
