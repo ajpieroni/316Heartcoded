@@ -43,22 +43,16 @@ class MatchingService
     end
   
     def find_matches_for(user)
-      
-      all_users = TestUser.all
-      potential_matches = []
-    
-      all_users.each do |other_user|
-        # not the same user
-        next if user == other_user
-    
-        # already matched
-        next if already_matched?(user, other_user)
-    
-        score = compute_score(user, other_user)
-    
-        potential_matches.push({ user: other_user, score: score })
+      all_users = TestUser.all.select do |other_user|
+        user != other_user && !already_matched?(user, other_user) && user.location == other_user.location &&
+          (user.preferences == 'Open' ||  user.preferences == other_user.gender)
       end
     
+      Rails.logger.debug("All Users: #{all_users}")
+    
+      potential_matches = all_users.map do |other_user|
+        { user: other_user, score: compute_score(user, other_user) }
+      end
       # sort potential matches by score in ascending order
       sorted_matches = potential_matches.sort_by { |match| match[:score] }
     
