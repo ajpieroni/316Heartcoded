@@ -173,8 +173,7 @@ export default function FindMatch() {
       ) : (
         <>
 
-          {/* <h1>{user?.name.split(" ")[0]}'s Current Matches</h1> */}
-          <button onClick={newMatches}>New matches!</button>
+          {myMatches.length < 11 && <button onClick={newMatches}>New matches!</button>}
 
           <div class="card-container">
             {myMatches.length === 0 ? (
