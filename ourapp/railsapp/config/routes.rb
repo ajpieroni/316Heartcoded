@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'password_resets/edit'
+  get 'password_resets/update'
   # Define all RESTful resources
   resources :answers
   resources :weights
@@ -13,6 +15,9 @@ Rails.application.routes.draw do
       get 'find_feedback'
     end
   end
+
+  resources :password_resets, only: [:edit, :update]
+
 
   # Define all RESTful routes for test_users and custom member/collection routes
   resources :test_users do
