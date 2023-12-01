@@ -36,7 +36,7 @@
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 70px;
-    background-color: #fff;
+    background-color: var(--pale);
     position: relative;
     max-width: 250px;
     width: 100%;
@@ -58,9 +58,14 @@
     color: #666;
     margin: 5px 0;
   }
+
+  .unmatch{
+    display:flex;
+    justify-content:center;
+  }
   
   button {
-    background-color: #007bff;
+    background-color: var(--rose);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -71,7 +76,7 @@
   }
   
   button:hover {
-    background-color: #0056b3;
+    background-color: var(--dark);
   }
   
   ul {
