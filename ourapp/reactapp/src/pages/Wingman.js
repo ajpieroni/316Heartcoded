@@ -58,16 +58,28 @@ export default function Chat() {
       const tempresult = await response.json();
       let fullResponse = tempresult[0].generated_text;
       console.log(fullResponse);
-      const responseRegex = /"([^"]*)"/;
+      const responseRegex = /\n([\s\S]*)/;
       const reply = fullResponse.match(responseRegex);
+      let botreply = "";
+      let messagetobecut = newMessage.trim();
 
       if (reply) {
         console.log(reply[1]);
+        console.log("set to reply[1]"
+        )
+        botreply = reply[1].replace(/"/g, '');
+        
+        
       } else {
-        console.log("No response found in the string.");
+        const partToRemove = /Respond with a reply, sarcastically, as a dating wingman\. Make your response brief: /;
+        const newMessage = fullResponse.replace(partToRemove, "").trim();
+        const finalMessage = newMessage.replace(messagetobecut, "").trim();
+        console.log("set to regex" )
+        botreply = finalMessage.replace(/"/g, '');
+        console.log(botreply)
       }
 
-      return reply[1];
+      return botreply;
     } catch (error) {
       console.error("Error sending message to the bot:", error);
     }
@@ -90,7 +102,7 @@ export default function Chat() {
 
     // wait for response
     const botResponse = await sendMessageToBot(
-      "Respond in a conversational style, sarcasticaly, as a dating wingman. Make your response brief: " +
+      "Respond with a reply, sarcastically, as a dating wingman. Make your response brief: " +
         newMessage.trim()
     );
 
