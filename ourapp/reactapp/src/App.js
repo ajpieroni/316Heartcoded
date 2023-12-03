@@ -22,6 +22,7 @@ import MatchList from "./components/MatchList";
 import ForgotPassword from "./pages/ForgotPassword";
 import SignUp from "./pages/SignUp";
 import ViewProfile from "./pages/ViewProfile.js";
+import Wrapped from "./pages/Wrapped.js";
 
 
 function App() {
@@ -53,7 +54,8 @@ function App() {
           <Route exact path="/Conversations" element={<Conversations />} />
           <Route exact path="/MatchList" element={<MatchList />} />
           <Route exact path="/Questions" element={<Questions />} />
-          <Route exact path="/UserSignedIn" element={<UserSignedIn />} />'
+          <Route exact path="/UserSignedIn" element={<UserSignedIn />} />
+          <Route exact path="/Wrapped" element={<Wrapped />} />'
           {/* <Route path="/signed-in">
             <UserSignedIn />
           </Route> */}
