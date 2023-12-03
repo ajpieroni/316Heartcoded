@@ -92,6 +92,17 @@ class MatchedWithsController < ApplicationController
     end
   end
 
+  def num_matches
+    user = TestUser.find(params[:id])
+
+    if user
+      matches_count = MatchedWith.where('(uid1 = ? OR uid2 = ?) AND status = ?', user.id, user.id, true).count
+      render json: { num_matches: matches_count }, status: :ok
+    else
+      render json: { error: 'User not found' }, status: :not_found
+    end
+  end
+
 
 
   private
