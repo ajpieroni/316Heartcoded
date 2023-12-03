@@ -90,13 +90,27 @@ export default function ChatConversation({ selectedUser }) {
     //  dependent on new messages
   }, [messages]);
 
+  const [currentPromptIndex, setCurrentPromptIndex] = useState(0);
+  const prompts = [
+    "Generate a short conversation starter, be sarcastic about travel for two single people.",
+    "Generate a short conversation starter about food for two single people.",
+    "Generate a short conversation starter about movies for two single people.",
+    "Generate a short conversation starter about hobbies for two single people.",
+    "Generate a short conversation starter about current events for two single people."
+  ];
+
+  const getNextPrompt = () => {
+    const nextPrompt = prompts[currentPromptIndex];
+    setCurrentPromptIndex((currentPromptIndex + 1) % prompts.length);
+    return nextPrompt;
+  };
+
   const sendMessageToBot = async (text) => {
+
     try {
       setConvLoading(true);
-      const data = {
-        inputs:
-          "Generate a single conversation starter for two single people as a question. Make your response short and only the question:",
-      };
+      const prompt = getNextPrompt();
+      const data = { inputs: prompt };
       console.log("Sending to bot:", data);
 
       const response = await fetch(
