@@ -8,7 +8,9 @@ class MessagesController < ApplicationController
 
   # GET /messages/1 or /messages/1.json
   def show
+    render json: @message
   end
+
 
   # GET /messages/new
   def new
@@ -55,6 +57,16 @@ class MessagesController < ApplicationController
       format.html { redirect_to messages_url, notice: "Message was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+  
+  def messages_between
+    user1_id = params[:user1_id]
+    user2_id = params[:user2_id]
+
+    @messages = Message.where(uid_sender_id: user1_id, uid_receiver_id: user2_id)
+                       .or(Message.where(uid_sender_id: user2_id, uid_receiver_id: user1_id))
+
+    render json: @messages
   end
 
   private

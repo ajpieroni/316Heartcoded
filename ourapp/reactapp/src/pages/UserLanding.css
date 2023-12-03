@@ -121,7 +121,25 @@
   color: white;
 }
 
+.setpassword-input-container{
+  padding: 0.5rem 1rem !important; 
+  font-size: 1rem !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  outline: none !important;
+  transition: border-color 0.3s, box-shadow 0.3s !important;
+  width: 100%;
+}
+.setpass-init-input{
+  padding: 0.5rem 1rem !important; 
+  font-size: 1rem !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  outline: none !important;
+  transition: border-color 0.3s, box-shadow 0.3s !important;
+  width: 67%;
 
+}
 /* ... (previous CSS code) */
 
 /* CSS for Password Initialization */
