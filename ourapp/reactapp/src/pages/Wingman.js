@@ -5,15 +5,14 @@ import axios from "axios";
 import Replicate from "replicate";
 
 // import "./Chat.css";
-import "./Wingman.css"
+import "./Wingman.css";
 
 export default function Chat() {
   const apiToken = process.env.REACT_APP_API_TOKEN;
-  console.log(apiToken)
   const [messages, setMessages] = useState([]);
   const { user, setUser } = useContext(UserContext);
   const [newMessage, setNewMessage] = useState("");
-  const botId = 100; 
+  const botId = 100;
   const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
@@ -27,15 +26,15 @@ export default function Chat() {
   const replicate = new Replicate({
     auth: "r8_Oz4iaoKys1l1aBK9XgNIpZXnoXFvbjr0qdiX3",
   });
-  
+
   async function runModel() {
     try {
       const output = await replicate.run(
         "meta/llama-2-70b-chat:02e509c789964a7ea8736978a43525956ef40397be9033abf9fd2badfe68c9e3",
         {
           input: {
-            prompt: "Can you write a poem about open source machine learning?"
-          }
+            prompt: "Can you write a poem about open source machine learning?",
+          },
         }
       );
       console.log(output);
@@ -43,18 +42,16 @@ export default function Chat() {
       console.error("Error running the model:", error);
     }
   }
-  
 
-  
-
-// !End Llama
+  // !End Llama
 
   const fetchMessages = () => {
-    axios.get(`http://localhost:3000/messages/${user?.id}/${botId}`)
-      .then(response => {
+    axios
+      .get(`http://localhost:3000/messages/${user?.id}/${botId}`)
+      .then((response) => {
         setMessages(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error fetching the messages:", error);
       });
   };
@@ -63,12 +60,15 @@ export default function Chat() {
       const data = {
         inputs: text,
       };
-      console.log('Sending to bot:', data);
-  
+      console.log("Sending to bot:", data);
+
       const response = await fetch(
         "https://api-inference.huggingface.co/models/meta-llama/Llama-2-70b-chat-hf",
         {
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiToken}` }, // Replace with your actual token
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiToken}`,
+          },
           method: "POST",
           body: JSON.stringify(data),
         }
@@ -76,24 +76,30 @@ export default function Chat() {
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const tempresult = await response.json();
+      let fullResponse = tempresult[0].generated_text;
+      console.log(fullResponse);
+      const responseRegex = /"([^"]*)"/;
+      const reply = fullResponse.match(responseRegex);
+
+      if (reply) {
+        console.log(reply[1]);
+      } else {
+        console.log("No response found in the string.");
+      }
+
+      // fullResponse = fullResponse.replace(/"/g, '');
+      // console.log(reply÷);
+      return reply[1];
+    } catch (error) {
+      console.error("Error sending message to the bot:", error);
     }
-
-    const tempresult = await response.json();
-    let fullResponse = tempresult[0].generated_text;
-
-    fullResponse = fullResponse.replace(/"/g, '');
-    console.log(fullResponse);
-    // const parts = fullResponse.split('\n');
-    // const result = parts[1].trim();
-    return fullResponse;
-
-} catch (error) {
-    console.error('Error sending message to the bot:', error);
-}
-};
+  };
 
   const handleSend = async () => {
-    if(newMessage.trim() === "") return;
+    if (newMessage.trim() === "") return;
     setIsSending(true);
 
     const userMessage = {
@@ -102,10 +108,13 @@ export default function Chat() {
       message: newMessage.trim(),
       timestamp: Date.now(),
     };
-    setMessages(prevMessages => [...prevMessages, userMessage]);
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
 
     // wait for response
-    const botResponse = await sendMessageToBot("Respond in a conversational style, sarcasticaly, as a dating wingman. Make your response brief: "+newMessage.trim());
+    const botResponse = await sendMessageToBot(
+      "Respond in a conversational style, sarcasticaly, as a dating wingman. Make your response brief: " +
+        newMessage.trim()
+    );
 
     if (botResponse) {
       const botMessage = {
@@ -113,10 +122,10 @@ export default function Chat() {
         uid_sender_id: "AI_BOT_ID",
         message: botResponse,
         timestamp: Date.now(),
-        isBot: true
+        isBot: true,
       };
-      setMessages(prevMessages => [...prevMessages, botMessage]);
-      setIsSending(false); 
+      setMessages((prevMessages) => [...prevMessages, botMessage]);
+      setIsSending(false);
     }
 
     // Clear the input field
@@ -136,15 +145,31 @@ export default function Chat() {
           {messages.map((msg, index) => {
             const isSender = msg.uid_sender_id === user.id;
             return (
-              <div key={index} className={`message ${isSender ? 'sent' : 'received'}`}>
-                <p>{isSender ? `You: ${msg.message}` : `Your Wingman: ${msg.message}`}</p>
-                <span className="timestamp">{new Date(msg.timestamp).toLocaleString()}</span>
+              <div
+                key={index}
+                className={`message ${isSender ? "sent" : "received"}`}
+              >
+                <p>
+                  {isSender
+                    ? `You: ${msg.message}`
+                    : `Your Wingman: ${msg.message}`}
+                </p>
+                <span className="timestamp">
+                  {new Date(msg.timestamp).toLocaleString()}
+                </span>
               </div>
             );
           })}
         </div>
-        {isSending && (<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>)}
-        <button onClick = {runModel}>RUN MODEL</button>
+        {isSending && (
+          <div className="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        )}
+        <button onClick={runModel}>RUN MODEL</button>
         <div className="message-input-container">
           <input
             type="text"
@@ -152,7 +177,7 @@ export default function Chat() {
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder="Type a message..."
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
+              if (e.key === "Enter") {
                 handleSend();
               }
             }}
