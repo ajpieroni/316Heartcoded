@@ -8,7 +8,8 @@ import Replicate from "replicate";
 import "./Wingman.css"
 
 export default function Chat() {
-    const apiToken = process.env.REACT_APP_API_TOKEN;
+  const apiToken = process.env.REACT_APP_API_TOKEN;
+  console.log(apiToken)
   const [messages, setMessages] = useState([]);
   const { user, setUser } = useContext(UserContext);
   const [newMessage, setNewMessage] = useState("");
@@ -67,7 +68,7 @@ export default function Chat() {
       const response = await fetch(
         "https://api-inference.huggingface.co/models/meta-llama/Llama-2-70b-chat-hf",
         {
-          headers: { 'Content-Type': 'application/json', Authorization: "Bearer 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" }, // Replace with your actual token
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiToken}` }, // Replace with your actual token
           method: "POST",
           body: JSON.stringify(data),
         }
