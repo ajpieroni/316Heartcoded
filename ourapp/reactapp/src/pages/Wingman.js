@@ -35,7 +35,7 @@ export default function Chat() {
   };
 
   const sendMessage = (messageObject) => {
-    console.log(`sending messageObject ${messageObject}`)
+    console.log(`sending messageObject ${messageObject.message}`)
     const url = `http://localhost:3000/test_users/${user?.id}/messages`;
 
     const requestOptions = {
@@ -124,7 +124,11 @@ export default function Chat() {
     const messageToSend = {
       message: botMessage,
     };
-    console.log("sending message")
+    console.log("sending message", messageToSend.message)
+    console.log("sending message, sender id", messageToSend.message.uid_sender_id)
+    console.log("sending message, reciever id", messageToSend.message.uid_receiver_id)
+
+console.log("called send message", messageToSend)
     sendMessage(messageToSend);
   };
 
@@ -158,13 +162,16 @@ export default function Chat() {
     if (botResponse) {
       const botMessage = {
         id: messages.length + 2, // simplistic way to generate a unique ID
-        uid_sender_id: "AI_BOT_ID",
+        uid_sender_id: botId,
+        uid_receiver_id: user.id,
         message: botResponse,
         timestamp: Date.now(),
         isBot: true,
       };
 
       setMessages((prevMessages) => [...prevMessages, botMessage]);
+      console.log("here is message to be sent", botMessage)
+      console.log("called handle bot send")
       handleBotSend(botResponse)
       setIsSending(false);
     }
