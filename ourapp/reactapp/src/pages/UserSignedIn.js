@@ -198,6 +198,14 @@ return(
             </p>
           </div>
         </Link>
+        <Link to="/Wrapped">
+          <div className="feature-card">
+            <h2>Wrapped</h2>
+            <p>
+             
+            </p>
+          </div>
+        </Link>
         {/* hello */}
       </div>
 
