@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useContext } from "react";
 import { UserContext } from "../components/contexts/UserContext";
 import axios from "axios";
-import Replicate from "replicate";
+// import Replicate from "replicate";
 
 // import "./Chat.css";
 import "./Wingman.css";
