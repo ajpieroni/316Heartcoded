@@ -36,7 +36,7 @@ export default function Chat() {
 
   const sendMessage = (messageObject) => {
     console.log(`sending messageObject ${messageObject.message}`)
-    const url = `http://localhost:3000/test_users/${botId}/messages`;
+    const url = `http://localhost:3000/test_users/${user?.id}/messages`;
 
     const requestOptions = {
       method: "POST",
@@ -129,7 +129,34 @@ export default function Chat() {
     console.log("sending message, reciever id", messageToSend.message.uid_receiver_id)
 
 console.log("called send message", messageToSend)
-    sendMessage(messageToSend);
+    sendBotMessage(messageToSend);
+  };
+  const sendBotMessage = (messageObject) => {
+    console.log(`sending messageObject ${messageObject.message}`)
+    const url = `http://localhost:3000/test_users/${botId}/messages`;
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(messageObject), // Convert your message object into a JSON string
+    };
+
+    return fetch(url, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          console.log(response);
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Message sent:", data);
+        return data;
+      })
+      .catch((error) => {
+        console.error("Error sending message:", error);
+        return Promise.reject(error);
+      });
   };
 
   const handleSend = async () => {
