@@ -1,4 +1,4 @@
-import "./CreateProfile.css";
+import "./EditProfile.css";
 import React, { useState, useEffect } from 'react';
 import { useContext } from "react";
 import axios from 'axios';
@@ -210,11 +210,18 @@ export default function UserForm() {
     console.log(formData);
   };
 
+  const handleRemoveRedFlag = (flagToRemove) => {
+    const updatedRedFlags = selectedRedFlags.filter((flag) => flag !== flagToRemove);
+    setSelectedRedFlags(updatedRedFlags);
+    setFormData({ ...formData, red_flags: updatedRedFlags });
+  };
+
   return (
     <>
     <Header/>
     <div className="user-form-edit">
       {/* <h2>Nice to see you, {user.name.split(' ')[0]}!</h2> */}
+      <h1>Edit Your Information</h1>
       <form onSubmit={handleSubmit}>
         <label>
           Name<span style={{ color: 'red' }}>*</span>: 
@@ -298,6 +305,13 @@ export default function UserForm() {
             {selectedRedFlags.map((flag) => (
               <div key={flag} className="selected-flag">
                 {flag}
+                <button
+                  type="button"
+                  onClick={() => handleRemoveRedFlag(flag)}
+                  className="remove-flag-button"
+                >
+                  &#x2715; {/* Unicode for a cross (X) */}
+                </button>
               </div>
             ))}
           </div>

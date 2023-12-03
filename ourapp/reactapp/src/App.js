@@ -21,6 +21,7 @@ import Wingman from "./pages/Wingman";
 import MatchList from "./components/MatchList";
 import ForgotPassword from "./pages/ForgotPassword";
 import SignUp from "./pages/SignUp";
+import ViewProfile from "./pages/ViewProfile.js";
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
           <Route exact path="/" element={<UserLogin />} />
           <Route exact path="/Chat" element={<Chat />} />
           <Route exact path="/CreateProfile" element={<CreateProfile />} />
+          <Route exact path="/ViewProfile" element={<ViewProfile />} />
           <Route exact path="/EditProfile" element={<EditProfile />} />
           <Route exact path="/Feedback" element={<Feedback />} />
           <Route exact path = "/Wingman" element = {<Wingman />}/>
