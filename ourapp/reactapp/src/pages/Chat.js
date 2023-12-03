@@ -9,6 +9,8 @@ import "./Chat.css";
 export default function Chat() {
   const location = useLocation();
   const reciever = location.state.reciever;
+  const apiToken = process.env.REACT_APP_API_TOKEN;
+
   // console.log("reciever test", recievertest)
   
   const [messages, setMessages] = useState([]);
@@ -64,6 +66,56 @@ export default function Chat() {
       });
   };
   
+  const sendMessageToBot = async (text) => {
+    try {
+      const data = {
+        inputs: text,
+      };
+      console.log("Sending to bot:", data);
+
+      const response = await fetch(
+        "https://api-inference.huggingface.co/models/meta-llama/Llama-2-70b-chat-hf",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiToken}`,
+          },
+          method: "POST",
+          body: JSON.stringify(data),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const tempresult = await response.json();
+      let fullResponse = tempresult[0].generated_text;
+      console.log(fullResponse);
+      const responseRegex = /\n([\s\S]*)/;
+      const reply = fullResponse.match(responseRegex);
+      let botreply = "";
+      let messagetobecut = newMessage.trim();
+
+      if (reply) {
+        console.log(reply[1]);
+        console.log("set to reply[1]");
+        botreply = reply[1].replace(/"/g, "");
+      } else {
+        // const partToRemove =
+          // /Respond with a reply, sarcastically, as a dating wingman\. Make your response brief: /;
+        const newMessage = fullResponse.replace(partToRemove, "").trim();
+        const finalMessage = newMessage.replace(messagetobecut, "").trim();
+        console.log("set to regex");
+        botreply = finalMessage.replace(/"/g, "");
+        console.log(botreply);
+      }
+
+      return botreply;
+    } catch (error) {
+      console.error("Error sending message to the bot:", error);
+    }
+  };
   
   useEffect(() => {
     // fetch unique user IDs from messages
@@ -161,7 +213,8 @@ export default function Chat() {
               }
             }}
           />
-          <button onClick={handleSend}>Send</button>
+          
+          <button onClick={handleSend}>Send!!</button>
         </div>
       </div>
     </main>

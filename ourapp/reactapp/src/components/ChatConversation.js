@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useContext } from "react";
 import { UserContext } from "../components/contexts/UserContext";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 // import "./Chat.css";
 
-
-export default function ChatConversation({selectedUser}) {
-const reciever = selectedUser;
+export default function ChatConversation({ selectedUser }) {
+  const reciever = selectedUser;
+  const [convStarter, setConvStarter] = useState("");
+  const [convLoading, setConvLoading] = useState(false);
   // console.log("reciever test", recievertest)
-  
+  const apiToken = process.env.REACT_APP_API_TOKEN;
   const [messages, setMessages] = useState([]);
   const { user, setUser } = useContext(UserContext);
   const [newMessage, setNewMessage] = useState("");
@@ -31,39 +32,38 @@ const reciever = selectedUser;
     return fetch(`http://localhost:3000/test_users/${id}`)
       .then((response) => response.json())
       .then((data) => {
-        return data.name; 
+        return data.name;
       })
       .catch((error) => console.error("Error fetching user:", error));
   };
 
   const sendMessage = (messageObject) => {
     const url = `http://localhost:3000/test_users/${user?.id}/messages`;
-  
+
     const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(messageObject) // Convert your message object into a JSON string
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(messageObject), // Convert your message object into a JSON string
     };
-  
+
     return fetch(url, requestOptions)
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          console.log(response)
-          throw new Error('Network response was not ok');
+          console.log(response);
+          throw new Error("Network response was not ok");
         }
-        return response.json(); 
+        return response.json();
       })
-      .then(data => {
-        console.log('Message sent:', data);
-        return data; 
+      .then((data) => {
+        console.log("Message sent:", data);
+        return data;
       })
-      .catch(error => {
-        console.error('Error sending message:', error);
+      .catch((error) => {
+        console.error("Error sending message:", error);
         return Promise.reject(error);
       });
   };
-  
-  
+
   useEffect(() => {
     // fetch unique user IDs from messages
     const userIds = [
@@ -90,6 +90,62 @@ const reciever = selectedUser;
     //  dependent on new messages
   }, [messages]);
 
+  const sendMessageToBot = async (text) => {
+    try {
+      setConvLoading(true);
+      const data = {
+        inputs:
+          "Generate a single conversation starter for two single people as a question. Make your response short and only the question:",
+      };
+      console.log("Sending to bot:", data);
+
+      const response = await fetch(
+        "https://api-inference.huggingface.co/models/meta-llama/Llama-2-70b-chat-hf",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiToken}`,
+          },
+          method: "POST",
+          body: JSON.stringify(data),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      console.log("response ok")
+
+      const tempresult = await response.json();
+      let fullResponse = tempresult[0].generated_text;
+      console.log(fullResponse);
+      const responseRegex = /\n([\s\S]*)/;
+      const reply = fullResponse.match(responseRegex);
+      let botreply = "";
+      let messagetobecut = newMessage.trim();
+
+      if (reply) {
+        console.log(reply[1]);
+        console.log("set to reply[1]");
+        botreply = reply[1].replace(/"/g, "");
+      } else {
+        const partToRemove =
+          /Generate a conversation starter for a potential couple\.  Be a bit sarcastic: /;
+        const newMessage = fullResponse.replace(partToRemove, "").trim();
+        const finalMessage = newMessage.replace(messagetobecut, "").trim();
+        console.log("set to regex");
+        botreply = finalMessage.replace(/"/g, "");
+        console.log(botreply);
+        setConvStarter(botreply);
+        console.log("conv starter", convStarter);
+      }
+      setConvStarter(botreply);
+      return botreply;
+    } catch (error) {
+      console.error("Error sending message to the bot:", error);
+    }
+  };
+
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
@@ -109,35 +165,33 @@ const reciever = selectedUser;
     console.log("here's timestamp", timestamp);
     console.log("here's timestamp locale", timestamp.toLocaleString());
 
-
     // if(newMessage.trim () === "" || !user) return;
 
-    const messageContent= {
+    const messageContent = {
       uid_sender_id: user.id,
       // !to do: dynamic
       uid_receiver_id: reciever.id,
       message: newMessage.trim(),
       chat_order: 1,
       // timestamp: timestamp,
-
-
     };
 
     const messageToSend = {
-      message: messageContent
+      message: messageContent,
     };
 
     console.log("New message:", messageToSend);
     sendMessage(messageToSend)
-    .then((sentMessage) => { // 'sentMessage' will receive the data from the 'sendMessage' function's successful promise
-      console.log('Sent message:', sentMessage);
-      setMessages(prevMessages => [...prevMessages, sentMessage]);
-      
-      setNewMessage("");
-    })
-    .catch((error) => {
-      console.error("There was an error sending the message:", error);
-    });
+      .then((sentMessage) => {
+        // 'sentMessage' will receive the data from the 'sendMessage' function's successful promise
+        console.log("Sent message:", sentMessage);
+        setMessages((prevMessages) => [...prevMessages, sentMessage]);
+
+        setNewMessage("");
+      })
+      .catch((error) => {
+        console.error("There was an error sending the message:", error);
+      });
   };
 
   return (
@@ -145,56 +199,73 @@ const reciever = selectedUser;
       {/* <h1>Chat</h1> */}
       {/* <h2>Welcome, {user?.name}</h2> */}
       <div className="chat-container">
-        <MessageList messages={messages} currentUser={user} users={users} reciever={reciever} />
+        <MessageList
+          messages={messages}
+          currentUser={user}
+          users={users}
+          reciever={reciever}
+          convStarter={convStarter}
+        />
 
         <div className="message-input-container">
           <input
             type="text"
             value={newMessage}
-            
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder="Type a message..."
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
+              if (e.key === "Enter") {
                 handleSend();
               }
             }}
           />
           <button onClick={handleSend}>Send</button>
+          <button onClick={sendMessageToBot} disabled={convLoading} style={{ backgroundColor: !convLoading ? 'grey' : '', color: !convLoading ? 'white' : '' }}>Get Conversation Starter</button>
         </div>
       </div>
     </main>
   );
 }
 
-function MessageList({ messages, currentUser, users, reciever }) {
+function MessageList({ messages, currentUser, users, reciever, convStarter }) {
   console.log("here's reciever", reciever);
 
   return (
     <div className="message-list">
       <h1>{reciever?.name}</h1>
       {messages
-        .filter(msg => 
-          (msg.uid_sender_id === currentUser.id && msg.uid_receiver_id === reciever.id) || 
-          (msg.uid_sender_id === reciever.id && msg.uid_receiver_id === currentUser.id))
+        .filter(
+          (msg) =>
+            (msg.uid_sender_id === currentUser.id &&
+              msg.uid_receiver_id === reciever.id) ||
+            (msg.uid_sender_id === reciever.id &&
+              msg.uid_receiver_id === currentUser.id)
+        )
         .map((msg) => {
           const isSender = msg.uid_sender_id === currentUser.id;
           const senderName = users[msg.uid_sender_id] || "Unknown";
 
           return (
-            <div key={msg.id} className={`message ${isSender ? 'sent' : 'received'}`}>
+            <div
+              key={msg.id}
+              className={`message ${isSender ? "sent" : "received"}`}
+            >
               <p>
-                {isSender ? 
-                 `You: ${msg.message}` : 
-                 `${senderName}: ${msg.message}`}
+                {isSender
+                  ? `You: ${msg.message}`
+                  : `${senderName}: ${msg.message}`}
               </p>
-              <span className="timestamp">{new Date(msg.timestamp).toLocaleString()}</span>
+              <span className="timestamp">
+                {new Date(msg.timestamp).toLocaleString()}
+              </span>
             </div>
           );
         })}
+      {convStarter && (
+        <div className="bot-reply">
+          <p>Bot: {convStarter}</p>
+        </div>
+      )}
     </div>
   );
 }
-
-
-
