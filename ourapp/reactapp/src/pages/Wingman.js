@@ -35,6 +35,7 @@ export default function Chat() {
   };
 
   const sendMessage = (messageObject) => {
+    console.log(`sending messageObject ${messageObject}`)
     const url = `http://localhost:3000/test_users/${user?.id}/messages`;
 
     const requestOptions = {
@@ -112,6 +113,21 @@ export default function Chat() {
     }
   };
 
+  const handleBotSend = async (text) => {
+    const botMessage = {
+      id: messages.length + 1, // simplistic way to generate a unique ID
+      uid_sender_id: botId,
+      uid_receiver_id: user.id,
+      message: text.trim(),
+      timestamp: Date.now(),
+    };
+    const messageToSend = {
+      message: botMessage,
+    };
+    console.log("sending message")
+    sendMessage(messageToSend);
+  };
+
   const handleSend = async () => {
     setNewMessage("");
     if (newMessage.trim() === "") return;
@@ -149,6 +165,7 @@ export default function Chat() {
       };
 
       setMessages((prevMessages) => [...prevMessages, botMessage]);
+      handleBotSend(botResponse)
       setIsSending(false);
     }
     // Clear the input field
