@@ -45,44 +45,44 @@ class MatchingService
     def find_matches_for(user)
       red_flags = user.red_flags || []
       category_mapping = build_category_mapping
-  
+    
       all_users = TestUser.all.select do |other_user|
         user != other_user && !already_matched?(user, other_user) &&
           user.location == other_user.location &&
-          (user.preferences == 'Open' || user.preferences == other_user.gender)
-          && (other_user.preferences == 'Open' || other_user.preferences == user.gender)
+          (user.preferences == 'Open' || user.preferences == other_user.gender) &&
+          (other_user.preferences == 'Open' || other_user.preferences == user.gender) && other_user.id != 1
       end
-  
+    
       Rails.logger.debug("All Users: #{all_users}")
-  
+    
       potential_matches = all_users.select do |other_user|
         red_flag_ids = red_flags.map { |red_flag| category_mapping[red_flag] }.compact
         weights = Weight.where(test_user_id: other_user.id, category_id: red_flag_ids)
-  
+    
         # Check if any weight for red flag categories is > 0.5 or if any weight is nil
         weights.none? { |weight| weight&.weight.nil? || weight.weight > 0.5 }
       end.map do |other_user|
         { user: other_user, score: compute_score(user, other_user) }
       end
-  
+    
       # sort potential matches by score in ascending order
       sorted_matches = potential_matches.sort_by { |match| match[:score] }
-  
+    
       # create entries in the MatchedWith table for the matches with the lowest difference in score
       sorted_matches[0..1].each do |match|
         MatchedWith.create(uid1: user.id, uid2: match[:user].id, status: true, date: Date.today.strftime("%m-%d-%Y"))
       end
-  
+    
       # sorted potential matches
       sorted_matches[0..1].map { |match| match[:user] }
-    rescue => e
+    rescue StandardError => e
       Rails.logger.error "Error in MatchingService for user ID #{user.id}: #{e.message}"
-      []  # Return an empty array or any other default value
+      [] # Return an empty array or any other default value
     end
-  
+    
     def self.run(user)
       new.find_matches_for(user)
-    end
+    end    
 
     def build_category_mapping
       categories = [
