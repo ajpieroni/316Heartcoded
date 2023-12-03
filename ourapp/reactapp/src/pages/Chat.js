@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useContext } from "react";
 import { UserContext } from "../components/contexts/UserContext";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import "./Chat.css";
-
 
 export default function Chat() {
   const location = useLocation();
   const reciever = location.state.reciever;
   // console.log("reciever test", recievertest)
-  
+
   const [messages, setMessages] = useState([]);
   const { user, setUser } = useContext(UserContext);
   const [newMessage, setNewMessage] = useState("");
@@ -32,39 +31,38 @@ export default function Chat() {
     return fetch(`http://localhost:3000/test_users/${id}`)
       .then((response) => response.json())
       .then((data) => {
-        return data.name; 
+        return data.name;
       })
       .catch((error) => console.error("Error fetching user:", error));
   };
 
   const sendMessage = (messageObject) => {
     const url = `http://localhost:3000/test_users/${user?.id}/messages`;
-  
+
     const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(messageObject) // Convert your message object into a JSON string
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(messageObject), // Convert your message object into a JSON string
     };
-  
+
     return fetch(url, requestOptions)
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          console.log(response)
-          throw new Error('Network response was not ok');
+          console.log(response);
+          throw new Error("Network response was not ok");
         }
-        return response.json(); 
+        return response.json();
       })
-      .then(data => {
-        console.log('Message sent:', data);
-        return data; 
+      .then((data) => {
+        console.log("Message sent:", data);
+        return data;
       })
-      .catch(error => {
-        console.error('Error sending message:', error);
+      .catch((error) => {
+        console.error("Error sending message:", error);
         return Promise.reject(error);
       });
   };
-  
-  
+
   useEffect(() => {
     // fetch unique user IDs from messages
     const userIds = [
@@ -110,35 +108,33 @@ export default function Chat() {
     console.log("here's timestamp", timestamp);
     console.log("here's timestamp locale", timestamp.toLocaleString());
 
-
     // if(newMessage.trim () === "" || !user) return;
 
-    const messageContent= {
+    const messageContent = {
       uid_sender_id: user.id,
       // !to do: dynamic
       uid_receiver_id: reciever.id,
       message: newMessage.trim(),
       chat_order: 1,
       // timestamp: timestamp,
-
-
     };
 
     const messageToSend = {
-      message: messageContent
+      message: messageContent,
     };
 
     console.log("New message:", messageToSend);
     sendMessage(messageToSend)
-    .then((sentMessage) => { // 'sentMessage' will receive the data from the 'sendMessage' function's successful promise
-      console.log('Sent message:', sentMessage);
-      setMessages(prevMessages => [...prevMessages, sentMessage]);
-      
-      setNewMessage("");
-    })
-    .catch((error) => {
-      console.error("There was an error sending the message:", error);
-    });
+      .then((sentMessage) => {
+        // 'sentMessage' will receive the data from the 'sendMessage' function's successful promise
+        console.log("Sent message:", sentMessage);
+        setMessages((prevMessages) => [...prevMessages, sentMessage]);
+
+        setNewMessage("");
+      })
+      .catch((error) => {
+        console.error("There was an error sending the message:", error);
+      });
   };
 
   return (
@@ -146,17 +142,22 @@ export default function Chat() {
       <h1>Chat</h1>
       <h2>Welcome, {user?.name}</h2>
       <div className="chat-container">
-        <MessageList messages={messages} currentUser={user} users={users} reciever={reciever} />
+        
+        <MessageList
+          messages={messages}
+          currentUser={user}
+          users={users}
+          reciever={reciever}
+        />
 
         <div className="message-input-container">
           <input
             type="text"
             value={newMessage}
-            
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder="Type a message..."
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
+              if (e.key === "Enter") {
                 handleSend();
               }
             }}
@@ -175,27 +176,36 @@ function MessageList({ messages, currentUser, users, reciever }) {
     <div className="message-list">
       <h1>{reciever?.name}</h1>
       {messages
-        .filter(msg => 
-          (msg.uid_sender_id === currentUser.id && msg.uid_receiver_id === reciever.id) || 
-          (msg.uid_sender_id === reciever.id && msg.uid_receiver_id === currentUser.id))
+        .filter(
+          (msg) =>
+            ((msg.uid_sender_id === currentUser.id &&
+              msg.uid_receiver_id === reciever.id) ||
+              (msg.uid_sender_id === reciever.id &&
+                msg.uid_receiver_id === currentUser.id)) &&
+            msg.uid_sender_id !== 1 &&
+            msg.uid_receiver_id !== 1
+        )
+
         .map((msg) => {
           const isSender = msg.uid_sender_id === currentUser.id;
           const senderName = users[msg.uid_sender_id] || "Unknown";
 
           return (
-            <div key={msg.id} className={`message ${isSender ? 'sent' : 'received'}`}>
+            <div
+              key={msg.id}
+              className={`message ${isSender ? "sent" : "received"}`}
+            >
               <p>
-                {isSender ? 
-                 `You: ${msg.message}` : 
-                 `${senderName}: ${msg.message}`}
+                {isSender
+                  ? `You: ${msg.message}`
+                  : `${senderName}: ${msg.message}`}
               </p>
-              <span className="timestamp">{new Date(msg.timestamp).toLocaleString()}</span>
+              <span className="timestamp">
+                {new Date(msg.timestamp).toLocaleString()}
+              </span>
             </div>
           );
         })}
     </div>
   );
 }
-
-
-

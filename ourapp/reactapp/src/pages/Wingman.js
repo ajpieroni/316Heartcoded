@@ -138,7 +138,7 @@ console.log("called send message", messageToSend)
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(messageObject), // Convert your message object into a JSON string
+      body: JSON.stringify(messageObject), 
     };
 
     return fetch(url, requestOptions)
