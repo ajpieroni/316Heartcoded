@@ -36,7 +36,7 @@ export default function Chat() {
 
   const sendMessage = (messageObject) => {
     console.log(`sending messageObject ${messageObject.message}`)
-    const url = `http://localhost:3000/test_users/${user?.id}/messages`;
+    const url = `http://localhost:3000/test_users/${botId}/messages`;
 
     const requestOptions = {
       method: "POST",
