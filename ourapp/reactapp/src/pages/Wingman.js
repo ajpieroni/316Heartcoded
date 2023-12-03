@@ -10,6 +10,7 @@ import Header from "../components/Header";
 
 export default function Chat() {
   const apiToken = process.env.REACT_APP_API_TOKEN;
+  // console.log(apiToken)
   const [messages, setMessages] = useState([]);
   const { user, setUser } = useContext(UserContext);
   const [newMessage, setNewMessage] = useState("");
