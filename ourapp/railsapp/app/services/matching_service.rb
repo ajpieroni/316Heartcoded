@@ -1,24 +1,24 @@
 class MatchingService
     
-    def compute_score(user1, user2)
-      score_difference = {}
-      score = 0
+  def compute_score(user1, user2)
+    score_difference = {}
+    score = 0
 
-      categories = Category.all
-      categories.each do |category|
-        id = category.id
-        user1_weight = Weight.find_by(test_user_id: user1.id, category_id: id)&.weight
-        user2_weight = Weight.find_by(test_user_id: user2.id, category_id: id)&.weight
-        Rails.logger.debug("Category ID: #{id}, User1 Weight: #{user1_weight}, User2 Weight: #{user2_weight}")
+    categories = Category.all
+    categories.each do |category|
+      id = category.id
+      user1_weight = Weight.find_by(test_user_id: user1.id, category_id: id)&.weight
+      user2_weight = Weight.find_by(test_user_id: user2.id, category_id: id)&.weight
+      Rails.logger.debug("Category ID: #{id}, User1 Weight: #{user1_weight}, User2 Weight: #{user2_weight}")
 
-        user1_feedback = Weight.find_by(test_user_id: user1.id, category_id: id)&.feedback
-        user2_feedback = Weight.find_by(test_user_id: user2.id, category_id: id)&.feedback
+      user1_feedback = Weight.find_by(test_user_id: user1.id, category_id: id)&.feedback
+      user2_feedback = Weight.find_by(test_user_id: user2.id, category_id: id)&.feedback
 
-        if user1_weight && user1_feedback
-          weight_difference1 = (user1_weight + user1_feedback) / 2
-        elsif user1_weight || user1_feedback
-          weight_difference1 = user1_weight || user1_feedback
-        end
+      if user1_weight && user1_feedback
+        weight_difference1 = (user1_weight + user1_feedback) / 2
+      elsif user1_weight || user1_feedback
+        weight_difference1 = user1_weight || user1_feedback
+      end
 
         if user2_weight && user2_feedback
           weight_difference2 = (user2_weight + user2_feedback) / 2
