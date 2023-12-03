@@ -21,29 +21,6 @@ export default function Chat() {
       setUser(JSON.parse(storedUser));
     }
   }, []);
-  // !API
-
-  const replicate = new Replicate({
-    auth: "r8_Oz4iaoKys1l1aBK9XgNIpZXnoXFvbjr0qdiX3",
-  });
-
-  async function runModel() {
-    try {
-      const output = await replicate.run(
-        "meta/llama-2-70b-chat:02e509c789964a7ea8736978a43525956ef40397be9033abf9fd2badfe68c9e3",
-        {
-          input: {
-            prompt: "Can you write a poem about open source machine learning?",
-          },
-        }
-      );
-      console.log(output);
-    } catch (error) {
-      console.error("Error running the model:", error);
-    }
-  }
-
-  // !End Llama
 
   const fetchMessages = () => {
     axios
@@ -90,8 +67,6 @@ export default function Chat() {
         console.log("No response found in the string.");
       }
 
-      // fullResponse = fullResponse.replace(/"/g, '');
-      // console.log(reply÷);
       return reply[1];
     } catch (error) {
       console.error("Error sending message to the bot:", error);
@@ -99,8 +74,11 @@ export default function Chat() {
   };
 
   const handleSend = async () => {
+    setNewMessage("")
     if (newMessage.trim() === "") return;
     setIsSending(true);
+    
+
 
     const userMessage = {
       id: messages.length + 1, // simplistic way to generate a unique ID
@@ -127,9 +105,7 @@ export default function Chat() {
       setMessages((prevMessages) => [...prevMessages, botMessage]);
       setIsSending(false);
     }
-
     // Clear the input field
-    setNewMessage("");
   };
   useEffect(() => {
     if (user?.id) {
@@ -169,7 +145,6 @@ export default function Chat() {
             <div></div>
           </div>
         )}
-        <button onClick={runModel}>RUN MODEL</button>
         <div className="message-input-container">
           <input
             type="text"
