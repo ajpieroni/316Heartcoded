@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   get 'matched_withs/users/:id', to: 'matched_withs#by_user_id'
   get 'unanswered_questions/:id', to: 'questions#unanswered_questions'
   get 'messages_between/:user1_id/:user2_id', to: 'messages#messages_between'
+  get 'answered_questions_count/:id', to: 'questions#answered_questions_count'
 
   # Uncomment the following if you're using these APIs and ensure their correct placement within the namespace
   # namespace :api do
