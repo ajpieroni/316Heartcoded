@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 services:
   frontend:
     build:
@@ -9,20 +9,24 @@ services:
       - exclude:/app/node_modules
     ports:
       - 3001:3000
-    env_file: ./reactapp/.env
-     
+
+    environment:
+      - REACT_APP_API_TOKEN = ADDHERE
+      - REACT_APP_LOCAL_HOST = ADDHERE
+    # env_file: ./reactapp/.env
+
   db:
     env_file: .env
     image: postgres
     volumes:
-    - postgres:/var/lib/postgresql/data
-  
+      - postgres:/var/lib/postgresql/data
+
   adminer:
     image: adminer
     restart: always
     ports:
       - 4000:8080
-  
+
   backend:
     build:
       context: ./railsapp
@@ -39,7 +43,7 @@ services:
     environment:
       RAILS_ENV: development
       RAILS_MAX_THREADS: 5
-  
+
   sidekiq:
     image: ourapp-backend
     command: bundle exec sidekiq
@@ -52,15 +56,13 @@ services:
       - RAILS_ENV=development
       - RAILS_MAX_THREADS=5
       - DATABASE_PASSWORD=password
-
   redis:
     image: redis:latest
     command: redis-server --save 60 50 --loglevel warning
-    volumes: 
+    volumes:
       - redis_data:/data
     ports:
-      - '6379:6379'
-
+      - "6379:6379"
 volumes:
   exclude:
   postgres:
