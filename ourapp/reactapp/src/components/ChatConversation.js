@@ -7,7 +7,7 @@ import axios from "axios";
 
 export default function ChatConversation({ selectedUser }) {
   const reciever = selectedUser;
-  const [convStarter, setConvStarter] = useState("");
+  const [convStarters, setConvStarters] = useState({});
   const [convLoading, setConvLoading] = useState(false);
   // console.log("reciever test", recievertest)
   const apiToken = process.env.REACT_APP_API_TOKEN;
@@ -114,7 +114,7 @@ export default function ChatConversation({ selectedUser }) {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      console.log("response ok")
+      console.log("response ok");
 
       const tempresult = await response.json();
       let fullResponse = tempresult[0].generated_text;
@@ -136,13 +136,25 @@ export default function ChatConversation({ selectedUser }) {
         console.log("set to regex");
         botreply = finalMessage.replace(/"/g, "");
         console.log(botreply);
-        setConvStarter(botreply);
-        console.log("conv starter", convStarter);
+        const conversationKey = `${user.id}-${reciever.id}`;
+        setConvStarters((prevStarters) => ({
+          ...prevStarters,
+          [conversationKey]: botreply,
+        }));
+        // setConvStarters(botreply);
+        console.log("conv starter", convStarters);
+        setConvLoading(false);
       }
-      setConvStarter(botreply);
+      const conversationKey = `${user.id}-${reciever.id}`;
+      setConvStarters((prevStarters) => ({
+        ...prevStarters,
+        [conversationKey]: botreply,
+      }));
+      setConvLoading(false);
       return botreply;
     } catch (error) {
       console.error("Error sending message to the bot:", error);
+      setConvLoading(false);
     }
   };
 
@@ -204,7 +216,7 @@ export default function ChatConversation({ selectedUser }) {
           currentUser={user}
           users={users}
           reciever={reciever}
-          convStarter={convStarter}
+          convStarters={convStarters}
         />
 
         <div className="message-input-container">
@@ -220,15 +232,25 @@ export default function ChatConversation({ selectedUser }) {
             }}
           />
           <button onClick={handleSend}>Send</button>
-          <button onClick={sendMessageToBot} disabled={convLoading} style={{ backgroundColor: !convLoading ? 'grey' : '', color: !convLoading ? 'white' : '' }}>Get Conversation Starter</button>
+          <button
+            onClick={sendMessageToBot}
+            disabled={convLoading}
+            style={{
+              backgroundColor: !convLoading ? "grey" : "",
+              color: !convLoading ? "white" : "",
+            }}
+          >
+            Get Conversation Starter
+          </button>
         </div>
       </div>
     </main>
   );
 }
 
-function MessageList({ messages, currentUser, users, reciever, convStarter }) {
+function MessageList({ messages, currentUser, users, reciever, convStarters }) {
   console.log("here's reciever", reciever);
+  const conversationKey = `${currentUser.id}-${reciever.id}`;
 
   return (
     <div className="message-list">
@@ -261,9 +283,9 @@ function MessageList({ messages, currentUser, users, reciever, convStarter }) {
             </div>
           );
         })}
-      {convStarter && (
+       {convStarters[conversationKey] && (
         <div className="bot-reply">
-          <p>Bot: {convStarter}</p>
+          <p>Bot: {convStarters[conversationKey]}</p>
         </div>
       )}
     </div>
