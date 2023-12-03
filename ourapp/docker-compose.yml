@@ -11,8 +11,8 @@ services:
       - 3001:3000
       
     environment:
-      - REACT_APP_API_TOKEN = r8_Oz4iaoKys1l1aBK9XgNIpZXnoXFvbjr0qdiX3
-      - REACT_APP_LOCAL_HOST = "http:localhost:3000"
+      - REACT_APP_API_TOKEN = ADDHERE
+      - REACT_APP_LOCAL_HOST = ADDHERE
     # env_file: ./reactapp/.env
     
      
