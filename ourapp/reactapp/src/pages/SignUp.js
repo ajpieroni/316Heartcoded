@@ -112,10 +112,10 @@ export default function UserLanding() {
             required
           />
           
-          <div className="password-input-container">
+          <div className="setpassword-input-container">
           <input
             type={showPassword ? "text" : "password"}
-            className="user-init-input"
+            className="setpass-init-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Set Password"
@@ -130,10 +130,10 @@ export default function UserLanding() {
           </IconButton>
         </div>
 
-        <div className="password-input-container">
+        <div className="setpassword-input-container">
           <input
             type={showConfirmPassword ? "text" : "password"}
-            className="user-init-input"
+            className="setpass-init-input"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Confirm Password"
