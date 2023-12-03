@@ -41,7 +41,8 @@ Rails.application.routes.draw do
   get 'user_least_valued_category/:id', to: 'weights#user_least_valued_category'
   get 'user_most_valued_feedback/:id', to: 'weights#user_most_valued_feedback'
   get 'user_least_valued_feedback/:id', to: 'weights#user_least_valued_feedback'
-  get 'num_matches/:id', to: 'matched_withs#num_matches'
+  get 'num_matches_historic/:id', to: 'matched_withs#num_matches_historic'
+  get 'num_unmatches/:id', to: 'matched_withs#num_unmatches'
 
   # Uncomment the following if you're using these APIs and ensure their correct placement within the namespace
   # namespace :api do

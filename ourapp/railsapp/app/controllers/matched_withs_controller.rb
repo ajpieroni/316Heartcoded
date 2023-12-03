@@ -92,18 +92,27 @@ class MatchedWithsController < ApplicationController
     end
   end
 
-  def num_matches
+  def num_matches_historic
     user = TestUser.find(params[:id])
 
     if user
-      matches_count = MatchedWith.where('(uid1 = ? OR uid2 = ?) AND status = ?', user.id, user.id, true).count
+      matches_count = MatchedWith.where('(uid1 = ? OR uid2 = ?)', user.id, user.id).count
       render json: { num_matches: matches_count }, status: :ok
     else
       render json: { error: 'User not found' }, status: :not_found
     end
   end
 
+  def num_unmatches
+    user = TestUser.find(params[:id])
 
+    if user
+      unmatches_count = MatchedWith.where('(uid1 = ? OR uid2 = ?) AND status = ?', user.id, user.id, false).count
+      render json: { num_unmatches: unmatches_count }, status: :ok
+    else
+      render json: { error: 'User not found' }, status: :not_found
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
