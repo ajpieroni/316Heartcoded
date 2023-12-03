@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :passwords
   resources :categories
   resources :questions
+  # resources :messages
   resources :faqs
   resources :matched_withs
   resources :states
@@ -34,6 +35,7 @@ Rails.application.routes.draw do
   get 'match/:id', to: 'test_users#find_matches'
   get 'matched_withs/users/:id', to: 'matched_withs#by_user_id'
   get 'unanswered_questions/:id', to: 'questions#unanswered_questions'
+  get 'messages_between/:user1_id/:user2_id', to: 'messages#messages_between'
 
   # Uncomment the following if you're using these APIs and ensure their correct placement within the namespace
   # namespace :api do
