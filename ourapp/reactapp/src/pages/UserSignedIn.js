@@ -112,12 +112,14 @@ return(
 
 
   <div>
-      <button
-        onClick={() => setShowConfirmationDialog(true)}
-        style={{ marginLeft: '10px', backgroundColor: 'red', color: 'white', cursor: 'pointer' }}
-      >
-        Delete Profile
-      </button>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <button
+          onClick={() => setShowConfirmationDialog(true)}
+          style={{ backgroundColor: 'red', color: 'white', cursor: 'pointer' }}
+        >
+          Delete Profile
+        </button>
+      </div>
 
       {showConfirmationDialog && (
         <div className="modal-overlay">
