@@ -20,19 +20,46 @@ export default function UserSignedIn() {
   const [testUser, setTestUser] = useState("UNINIT");
 
   const { user, setUser } = useContext(UserContext);
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState(false);
   console.log("UserContext:", UserContext);
 console.log("User from context:", user);
 
-useEffect(() => {
-    const storedUser = sessionStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser)); 
-      setLogin(true); 
-    }
-  }, [setUser]); 
+const username = localStorage.getItem("username") || "defaultUsername";
+const initializeUser = () => {
+  fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data) {
+        const updatedUser = {
+          ...user,
+          name: data.name,
+          id: data.id,
+          birthday: data.birthday,
+          gender: data.gender,
+          preferences: data.preferences,
+          bio: data.bio,
+          location: data.location,
+          password: data.password,
+          red_flags: data.red_flags
+        };
+        setUser(updatedUser); // Update the context immediately after setting the user data
+        sessionStorage.setItem("user", JSON.stringify(data));
+      }
+    })
+    .catch((error) => {
+      console.error("Failed to initialize user:", error);
+    });
+};
+  
+    useEffect(() => {
+      initializeUser(); // Call the initializeUser function if no user data is in sessionStorage
+    }, [setUser]);
 
 
   // const history = useHistory();
@@ -96,15 +123,6 @@ return(
               Our system ensures a variety of questions for you. Plus, you can
               answer new ones as they come, keeping your profile fresh and
               engaging.
-            </p>
-          </div>
-        </Link>
-        <Link to="/SelectUserForFeedback">
-          <div className="feature-card">
-            <h2>Give Feedback</h2>
-            <p>
-              Rate your matches and share your thoughts. Your feedback helps us
-              refine the matching process for an enhanced experience.
             </p>
           </div>
         </Link>

@@ -15,7 +15,6 @@ import Feedback from "./pages/Feedback";
 import FindMatch from "./pages/FindMatch";
 import Questions from "./pages/Questions";
 import { UserContext } from "./components/contexts/UserContext";
-import SelectUserForFeedback from "./pages/SelectUserForFeedback";
 import UserSignedIn from "./pages/UserSignedIn"
 import Conversations from "./pages/Conversations";
 import Wingman from "./pages/Wingman";
@@ -47,11 +46,6 @@ function App() {
           <Route exact path="/CreateProfile" element={<CreateProfile />} />
           <Route exact path="/EditProfile" element={<EditProfile />} />
           <Route exact path="/Feedback" element={<Feedback />} />
-          <Route
-            exact
-            path="/SelectUserForFeedback"
-            element={<SelectUserForFeedback />}
-          />
           <Route exact path = "/Wingman" element = {<Wingman />}/>
           <Route exact path="/FindMatch" element={<FindMatch />} />
           <Route exact path="/Conversations" element={<Conversations />} />

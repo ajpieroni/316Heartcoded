@@ -13,6 +13,11 @@ div#root{
   }
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+body {
+  font-family: 'Varela Round', sans-serif;
+}
+
 .App-header {
   align-items: center;
   background-color: #282c34;
@@ -35,4 +40,14 @@ div#root{
   to {
     transform: rotate(360deg);
   }
+}
+
+:root {
+  --dark: #b9375e;
+  --rose: #e05780;
+  --pink: #ff7aa2;
+  --light-pink: #ff9ebb;
+  --blush: #ffc2d4;
+  --pale: #fff0f3;
+  --text: #522e38;
 }

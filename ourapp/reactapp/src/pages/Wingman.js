@@ -4,6 +4,7 @@ import { UserContext } from "../components/contexts/UserContext";
 import axios from "axios";
 // import "./Chat.css";
 import "./Wingman.css"
+import Header from "../components/Header";
 
 export default function Chat() {
     const apiToken = process.env.REACT_APP_API_TOKEN;
@@ -87,6 +88,8 @@ export default function Chat() {
   }, [user]);
 
   return (
+    <>
+    <Header/>
     <main className="main-container">
       <h1>Chat with your Wingman</h1>
       <div className="chat-container">
@@ -119,5 +122,6 @@ export default function Chat() {
         </div>
       </div>
     </main>
+    </>
   );
 }

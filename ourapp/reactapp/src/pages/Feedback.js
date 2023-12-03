@@ -5,6 +5,7 @@ import axios from "axios";
 import { UserContext } from "../components/contexts/UserContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Feedback.css";
+import Header from "../components/Header";
 
 export default function Feedback() {
   // Define categories
@@ -76,8 +77,8 @@ export default function Feedback() {
         await axios.post("http://localhost:3000/feedbacks", {
           feedback: {
             "receives_uid": users.receiver,
-            "gives_uid": users.sender,
-            "feedback": ratings[categories[i]],
+            "gives_uid": user.id,
+            "feedback": ratings[categories[i]] || 0,
             "category": categories[i]
           } 
         });
@@ -114,6 +115,8 @@ export default function Feedback() {
 
 
   return (
+    <>
+    <Header/>
     <main className="main-container">
         <h1>User Feedback Form</h1>
 
@@ -148,6 +151,7 @@ export default function Feedback() {
         
         
     </main>
+    </>
   );
 }
 

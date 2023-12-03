@@ -1,12 +1,16 @@
-.main-container {
-    /* text-align: center; */
-    /* background-color: #f0f0f0; */
-    /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); */
+.q-main-container {
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    font-family: 'Varela Round', sans-serif;
+    justify-content: center;
   }
   
   .main-title {
-    font-size: 24px;
-    margin-bottom: 20px;
+    font-family: 'Varela Round', sans-serif;
+    font-size: 40px;
+    text-align: center;
+    margin-top: 80px;
   }
   
   .question-container {
@@ -14,74 +18,32 @@
   }
   
   .question-title {
-    font-size: 18px;
+    font-size: 24px;
   }
   
   .question-text {
-    font-size: 16px;
+    font-size: 20px;
     margin-top: 10px;
   }
   
   .response-container {
     margin-top: 20px;
+    min-width: 75vh;
   }
   
   .response-title {
     font-size: 18px;
   }
-  
-  .response-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 10px;
+
+  .q-response-container{
+    display:flex;
   }
-  
-  /* .response-button {
-    font-size: 16px;
-    padding: 5px 10px;
-    margin: 5px;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; 
-  } */
+
+  .response-button {
+    background-color: var(--rose);
+    margin: 8px;
+  }
   
   .response-button:hover {
-    background-color: #0056b3; /* bg color on hover */
+    background-color: var(--dark);
   }
-  
-  .save-button {
-    font-size: 18px;
-    margin-top: 20px;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; 
-  }
-  
-  .save-button:hover {
-    background-color: #1f8c26; 
-  }
-  
-  .generate-button {
-    font-size: 18px;
-    margin-top: 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /*fade in???*/
-  }
-  
-  .generate-button:hover {
-    background-color: #0056b3;
-  }
-  
-  

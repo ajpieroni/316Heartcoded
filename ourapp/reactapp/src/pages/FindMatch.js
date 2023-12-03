@@ -26,7 +26,6 @@ export default function FindMatch() {
   }, []);
 
   const currentUser = user?.id;
-  const [currentName, setCurrentName] = useState("");
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
@@ -36,10 +35,10 @@ export default function FindMatch() {
   }, [setUser]);
 
   const newMatches = async () => {
-    if (myMatches.length >= 10) {
-      console.log("Too many matches already!");
-      return;
-    }
+    // if (myMatches.length >= 10) {
+    //   console.log("Too many matches already!");
+    //   return;
+    // }
     if (!currentUser) return;
 
     try {
@@ -88,13 +87,6 @@ export default function FindMatch() {
     fetchMatches();
   };
 
-  const fetchUserNameById = (id) => {
-    return fetch(`http://localhost:3000/test_users/${id}`)
-      .then((response) => response.json())
-      .then((data) => data.name)
-      .catch((error) => console.error("Error fetching user:", error));
-  };
-
   const fetchUserById = (id) => {
     return fetch(`http://localhost:3000/test_users/${id}`)
       .then((response) => response.json())
@@ -102,13 +94,36 @@ export default function FindMatch() {
       .catch((error) => console.error("Error fetching user:", error));
   };
 
-  const fetchMatches = (async) => {
+  const showUnmatchConfirmation = (otherUser) => {
+    const confirmation = window.confirm(`Are you sure you want to unmatch ${otherUser?.name}?`);
+    
+    if (confirmation) {
+      unmatch(otherUser);
+    }
+  };
+
+  const fetchDefaultMatch = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/test_users/find_by_username?username=Wingman`);
+      const users = await response.json();
+      console.log("default:", users);
+      return users; // Get the first user with username "Wingman"
+    } catch (error) {
+      console.error('Error fetching default match:', error);
+      return null;
+    }
+  };
+
+  const fetchMatches = async () => {
+    const defaultMatch = await fetchDefaultMatch();
+    console.log("default", defaultMatch);
     fetch(`http://localhost:3000/matched_withs/users/${currentUser}`)
       .then((response) => response.json())
       .then(async (matches) => {
-        const myName = await fetchUserNameById(currentUser);
-        setCurrentName(myName);
         const matchesArray = [];
+        if (defaultMatch) {
+          matchesArray.push(defaultMatch);
+        }
         for (let match of matches) {
           const otherUserId =
             match.uid1 === currentUser ? match.uid2 : match.uid1;
@@ -126,14 +141,17 @@ export default function FindMatch() {
   }, [currentUser]);
 
   function openConversations(matchUser) {
-    console.log(`clicked conversations with ${matchuser?.name}`);
+    console.log(`clicked conversations with ${matchUser?.name}`);
     setReciever(matchUser);
     console.log("reciever in match", reciever);
-
+    if (matchUser.username === 'Wingman') { 
+      navigate("/Wingman");
+    } else {
     navigate("/Chat", { state: { reciever: matchUser } });
+    }
   }
   function openFeedback(matchUser) {
-    console.log(`clicked feedback with ${matchuser?.name}`);
+    console.log(`clicked feedback with ${matchUser?.name}`);
     setReciever(matchUser);
     console.log("reciever in feedback", reciever);
 
@@ -154,19 +172,16 @@ export default function FindMatch() {
   }
 
   return (
-    <main className="main-container">
+    <div>
       <Header />
+      <main className="main-container">
 
       {loading ? (
         <div className="loading">Loading{".".repeat(ellipsisDots)}</div>
       ) : (
         <>
-          <div class="welcome-message">
-            {/* {user?.name.split(" ")[0]}'s Current Matches */}
-          </div>
 
-          {/* <h1>{user?.name.split(" ")[0]}'s Current Matches</h1> */}
-          <button onClick={newMatches}>New matches!</button>
+          {myMatches.length < 11 && <button onClick={newMatches}>New matches!</button>}
 
           <div class="card-container">
             {myMatches.length === 0 ? (
@@ -205,13 +220,14 @@ export default function FindMatch() {
                             Feedback with {matchUser.name}
                           </span>
                         </div>
-
+                        <div className="unmatch">
                         <button
-                          className="unmatch-button"
-                          onClick={() => unmatch(matchUser)}
-                        >
-                          Unmatch
-                        </button>
+  className="unmatch-button"
+  onClick={() => showUnmatchConfirmation(matchUser)}
+>
+  Unmatch
+</button>
+                        </div>
                       </>
                     ) : null}
                   </div>
@@ -222,5 +238,6 @@ export default function FindMatch() {
         </>
       )}
     </main>
+    </div>
   );
 }
