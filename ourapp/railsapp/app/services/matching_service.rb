@@ -50,6 +50,7 @@ class MatchingService
         user != other_user && !already_matched?(user, other_user) &&
           user.location == other_user.location &&
           (user.preferences == 'Open' || user.preferences == other_user.gender)
+          && (other_user.preferences == 'Open' || other_user.preferences == user.gender)
       end
   
       Rails.logger.debug("All Users: #{all_users}")
