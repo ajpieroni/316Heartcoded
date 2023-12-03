@@ -13,7 +13,7 @@ export default function FindMatch() {
 
   const [myMatches, setMyMatches] = useState([]);
   const [reciever, setReciever] = useState();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const [ellipsisDots, setEllipsisDots] = useState(1);
 
@@ -35,22 +35,31 @@ export default function FindMatch() {
   }, [setUser]);
 
   const newMatches = async () => {
-    // if (myMatches.length >= 10) {
-    //   console.log("Too many matches already!");
-    //   return;
-    // }
-    if (!currentUser) return;
+  setLoading(true); // Set loading to true when starting the fetch operation
 
-    try {
-      const response = await fetch(
-        `http://localhost:3000/match/${currentUser}`
-      );
-      const matches = await response.json();
-    } catch (error) {
-      console.error("Error fetching new matches:", error);
-    }
+  // if (myMatches.length >= 10) {
+  //   console.log("Too many matches already!");
+  //   return;
+  // }
+  if (!currentUser) {
+    setLoading(false); // Set loading to false in case of an early return
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      `http://localhost:3000/match/${currentUser}`
+    );
+    const matches = await response.json();
+    // Process matches here if needed
+  } catch (error) {
+    console.error("Error fetching new matches:", error);
+  } finally {
+    setLoading(false); // Set loading to false when fetch operation completes
     fetchMatches();
-  };
+  }
+};
+
 
   const unmatch = async (otherUser) => {
     if (otherUser?.id === 0) {
@@ -92,6 +101,14 @@ export default function FindMatch() {
       .then((response) => response.json())
       .then((data) => data)
       .catch((error) => console.error("Error fetching user:", error));
+  };
+
+  const showUnmatchConfirmation = (otherUser) => {
+    const confirmation = window.confirm(`Are you sure you want to unmatch ${otherUser?.name}?`);
+    
+    if (confirmation) {
+      unmatch(otherUser);
+    }
   };
 
   const fetchDefaultMatch = async () => {
@@ -167,70 +184,66 @@ export default function FindMatch() {
     <div>
       <Header />
       <main className="main-container">
-
-      {loading ? (
-        <div className="loading">Loading{".".repeat(ellipsisDots)}</div>
-      ) : (
-        <>
-
-          {/* <h1>{user?.name.split(" ")[0]}'s Current Matches</h1> */}
+      {loading && (
+        <div className="loading-container">
+          <div className="loading-text">
+            Loading{".".repeat(ellipsisDots)}
+          </div>
+        </div>
+      )}
+  
+        {!loading && myMatches.length < 11 && (
           <button onClick={newMatches}>New matches!</button>
-
-          <div class="card-container">
-            {myMatches.length === 0 ? (
-              <p>You have no matches, get some!</p>
-            ) : (
-              <>
-                {myMatches.map((matchUser) => (
-                  <div key={matchUser.id} className="user-card">
-                    <h2>{matchUser.name}</h2>
-
-                    <p>Age: {calculateAge(matchUser.birthday)}</p>
-                    <p>Bio: {matchUser.bio}</p>
-
-                    <div className="chat-section">
-                      <ChatIcon onClick={() => openConversations(matchUser)} />
-
-                      <span
-                        className="chat-text"
-                        onClick={() => openConversations(matchUser)}
-                      >
-                        Chat with {matchUser.name}
-                      </span>
-                    </div>
-
-                    {matchUser && matchUser.id !== 1 ? (
-                      <>
-                        <div className="feedback-section">
-                          <InsightsIcon
-                            onClick={() => openFeedback(matchUser)}
-                          />
-
-                          <span
-                            className="feedback-text"
-                            onClick={() => openFeedback(matchUser)}
-                          >
-                            Feedback with {matchUser.name}
-                          </span>
-                        </div>
-                        <div className="unmatch">
+        )}
+  
+        <div className="card-container">
+          {myMatches.length === 0 ? (
+            <p>You have no matches, get some!</p>
+          ) : (
+            <>
+              {myMatches.map((matchUser) => (
+                <div key={matchUser.id} className="user-card">
+                  <h2>{matchUser.name}</h2>
+                  <p>Age: {calculateAge(matchUser.birthday)}</p>
+                  <p>Bio: {matchUser.bio}</p>
+  
+                  <div className="chat-section">
+                    <ChatIcon onClick={() => openConversations(matchUser)} />
+                    <span
+                      className="chat-text"
+                      onClick={() => openConversations(matchUser)}
+                    >
+                      Chat with {matchUser.name}
+                    </span>
+                  </div>
+  
+                  {matchUser && matchUser.id !== 1 ? (
+                    <>
+                      <div className="feedback-section">
+                        <InsightsIcon onClick={() => openFeedback(matchUser)} />
+                        <span
+                          className="feedback-text"
+                          onClick={() => openFeedback(matchUser)}
+                        >
+                          Feedback with {matchUser.name}
+                        </span>
+                      </div>
+                      <div className="unmatch">
                         <button
                           className="unmatch-button"
-                          onClick={() => unmatch(matchUser)}
+                          onClick={() => showUnmatchConfirmation(matchUser)}
                         >
                           Unmatch
                         </button>
-                        </div>
-                      </>
-                    ) : null}
-                  </div>
-                ))}
-              </>
-            )}
-          </div>
-        </>
-      )}
-    </main>
+                      </div>
+                    </>
+                  ) : null}
+                </div>
+              ))}
+            </>
+          )}
+        </div>
+      </main>
     </div>
   );
-}
+                  }  
