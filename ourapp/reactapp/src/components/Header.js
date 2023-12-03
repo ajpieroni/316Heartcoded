@@ -3,8 +3,8 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { UserContext } from './contexts/UserContext';
-import { Link } from 'react-router-dom';
 import './Header.css'; // You can create a Header.css for styling your header
+import { Link } from "react-router-dom";
 
 function Header() {
 //   const { setUser } = useContext(UserContext);
@@ -59,7 +59,6 @@ function Header() {
     </header>
     </div>
   );
-  
 }
 
 export default Header;

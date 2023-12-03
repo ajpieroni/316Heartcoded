@@ -174,12 +174,6 @@ export default function UserForm() {
       alert("You are too young");
       return;
     }
-    validateEmail(formData.email);
-    if (emailError){
-      console.error("Email validation failed. Form not submitted.");
-      alert("Please enter a duke email");
-      return ;
-    }
 
     try {
       console.log("here's form data:", formData);
@@ -234,12 +228,6 @@ export default function UserForm() {
     console.log(selectedOptions);
     setFormData({ ...formData, red_flags: selectedOptions });
     console.log(formData);
-  };
-
-  const handleRemoveRedFlag = (flagToRemove) => {
-    const updatedRedFlags = selectedRedFlags.filter((flag) => flag !== flagToRemove);
-    setSelectedRedFlags(updatedRedFlags);
-    setFormData({ ...formData, red_flags: updatedRedFlags });
   };
 
   return (
@@ -340,13 +328,6 @@ export default function UserForm() {
             {selectedRedFlags.map((flag) => (
               <div key={flag} className="selected-flag">
                 {flag}
-                <button
-                  type="button"
-                  onClick={() => handleRemoveRedFlag(flag)}
-                  className="remove-flag-button"
-                >
-                  &#x2715; {/* Unicode for a cross (X) */}
-                </button>
               </div>
             ))}
           </div>
