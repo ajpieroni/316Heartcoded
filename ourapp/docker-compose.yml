@@ -9,12 +9,11 @@ services:
       - exclude:/app/node_modules
     ports:
       - 3001:3000
-
     environment:
       - REACT_APP_API_TOKEN = ADDHERE
       - REACT_APP_LOCAL_HOST = ADDHERE
+      
     # env_file: ./reactapp/.env
-
   db:
     env_file: .env
     image: postgres
