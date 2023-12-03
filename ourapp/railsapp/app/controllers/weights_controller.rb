@@ -57,6 +57,34 @@ class WeightsController < ApplicationController
     end
   end
 
+  def user_most_valued_category
+    user = TestUser.find_by(id: params[:id])
+    
+    if user
+      max_weight = Weight.where(test_user_id: user.id).maximum(:weight)
+      categories = Weight.where(test_user_id: user.id, weight: max_weight).pluck(:category_id)
+      category_descriptors = Category.where(id: categories).pluck(:descriptor)
+      
+      render json: { category_descriptors: category_descriptors }, status: :ok
+    else
+      render json: { error: 'TestUser not found' }, status: :not_found
+    end
+  end
+
+  def user_least_valued_category
+    user = TestUser.find_by(id: params[:id])
+    
+    if user
+      min_weight = Weight.where(test_user_id: user.id).minimum(:weight)
+      categories = Weight.where(test_user_id: user.id, weight: min_weight).pluck(:category_id)
+      category_descriptors = Category.where(id: categories).pluck(:descriptor)
+      
+      render json: { category_descriptors: category_descriptors }, status: :ok
+    else
+      render json: { error: 'TestUser not found' }, status: :not_found
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_weight

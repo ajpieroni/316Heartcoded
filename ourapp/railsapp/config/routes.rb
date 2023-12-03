@@ -37,6 +37,8 @@ Rails.application.routes.draw do
   get 'unanswered_questions/:id', to: 'questions#unanswered_questions'
   get 'messages_between/:user1_id/:user2_id', to: 'messages#messages_between'
   get 'answered_questions_count/:id', to: 'questions#answered_questions_count'
+  get 'user_most_valued_category/:id', to: 'weights#user_most_valued_category'
+  get 'user_least_valued_category/:id', to: 'weights#user_least_valued_category'
 
   # Uncomment the following if you're using these APIs and ensure their correct placement within the namespace
   # namespace :api do
