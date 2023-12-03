@@ -25,7 +25,7 @@ export default function Chat() {
 
   const fetchMessages = () => {
     axios
-      .get(`http://localhost:3000/messages/${user?.id}/${botId}`)
+      .get(`http://localhost:3000/messages_between/${user?.id}/${botId}`)
       .then((response) => {
         setMessages(response.data);
       })
@@ -33,6 +33,34 @@ export default function Chat() {
         console.error("Error fetching the messages:", error);
       });
   };
+
+  const sendMessage = (messageObject) => {
+    const url = `http://localhost:3000/test_users/${user?.id}/messages`;
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(messageObject), // Convert your message object into a JSON string
+    };
+
+    return fetch(url, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          console.log(response);
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Message sent:", data);
+        return data;
+      })
+      .catch((error) => {
+        console.error("Error sending message:", error);
+        return Promise.reject(error);
+      });
+  };
+
   const sendMessageToBot = async (text) => {
     try {
       const data = {
@@ -66,18 +94,16 @@ export default function Chat() {
 
       if (reply) {
         console.log(reply[1]);
-        console.log("set to reply[1]"
-        )
-        botreply = reply[1].replace(/"/g, '');
-        
-        
+        console.log("set to reply[1]");
+        botreply = reply[1].replace(/"/g, "");
       } else {
-        const partToRemove = /Respond with a reply, sarcastically, as a dating wingman\. Make your response brief: /;
+        const partToRemove =
+          /Respond with a reply, sarcastically, as a dating wingman\. Make your response brief: /;
         const newMessage = fullResponse.replace(partToRemove, "").trim();
         const finalMessage = newMessage.replace(messagetobecut, "").trim();
-        console.log("set to regex" )
-        botreply = finalMessage.replace(/"/g, '');
-        console.log(botreply)
+        console.log("set to regex");
+        botreply = finalMessage.replace(/"/g, "");
+        console.log(botreply);
       }
 
       return botreply;
@@ -87,20 +113,26 @@ export default function Chat() {
   };
 
   const handleSend = async () => {
-    setNewMessage("")
+    setNewMessage("");
     if (newMessage.trim() === "") return;
     setIsSending(true);
-    
-
 
     const userMessage = {
       id: messages.length + 1, // simplistic way to generate a unique ID
       uid_sender_id: user.id,
+      uid_receiver_id: botId,
       message: newMessage.trim(),
       timestamp: Date.now(),
     };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
 
+    const messageToSend = {
+      message: userMessage,
+    };
+    sendMessage(messageToSend);
+
+    console.log("here is user message to send", userMessage);
+    // post user response to db
     // wait for response
     const botResponse = await sendMessageToBot(
       "Respond with a reply, sarcastically, as a dating wingman. Make your response brief: " +
@@ -115,6 +147,7 @@ export default function Chat() {
         timestamp: Date.now(),
         isBot: true,
       };
+
       setMessages((prevMessages) => [...prevMessages, botMessage]);
       setIsSending(false);
     }
@@ -128,54 +161,54 @@ export default function Chat() {
 
   return (
     <>
-    <Header/>
-    <main className="main-container">
-      <h1>Chat with your Wingman</h1>
-      <div className="chat-container">
-        <div className="message-list">
-          {messages.map((msg, index) => {
-            const isSender = msg.uid_sender_id === user.id;
-            return (
-              <div
-                key={index}
-                className={`message ${isSender ? "sent" : "received"}`}
-              >
-                <p>
-                  {isSender
-                    ? `You: ${msg.message}`
-                    : `Your Wingman: ${msg.message}`}
-                </p>
-                <span className="timestamp">
-                  {new Date(msg.timestamp).toLocaleString()}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-        {isSending && (
-          <div className="lds-ellipsis">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+      <Header />
+      <main className="main-container">
+        <h1>Chat with your Wingman</h1>
+        <div className="chat-container">
+          <div className="message-list">
+            {messages.map((msg, index) => {
+              const isSender = msg.uid_sender_id === user.id;
+              return (
+                <div
+                  key={index}
+                  className={`message ${isSender ? "sent" : "received"}`}
+                >
+                  <p>
+                    {isSender
+                      ? `You: ${msg.message}`
+                      : `Your Wingman: ${msg.message}`}
+                  </p>
+                  <span className="timestamp">
+                    {new Date(msg.timestamp).toLocaleString()}
+                  </span>
+                </div>
+              );
+            })}
           </div>
-        )}
-        <div className="message-input-container">
-          <input
-            type="text"
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            placeholder="Type a message..."
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleSend();
-              }
-            }}
-          />
-          <button onClick={handleSend}>Send</button>
+          {isSending && (
+            <div className="lds-ellipsis">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          )}
+          <div className="message-input-container">
+            <input
+              type="text"
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              placeholder="Type a message..."
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSend();
+                }
+              }}
+            />
+            <button onClick={handleSend}>Send</button>
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
     </>
   );
 }
