@@ -23,10 +23,7 @@ export default function UserSignedIn() {
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState(false);
   console.log("UserContext:", UserContext);
-  console.log("User from context:", user);
-
-  const [confirmation, setConfirmation] = useState('');
-  const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
+console.log("User from context:", user);
 
 const username = localStorage.getItem("username") || "defaultUsername";
 const initializeUser = () => {
@@ -65,32 +62,6 @@ const initializeUser = () => {
     }, [setUser]);
 
 
-  const handleDelete = async () => {
-    if (confirmation==="DELETE"){
-      try {
-        if (!user || !user.id) {
-          console.error('User ID is not available.');
-          return;
-        }
-
-        const response = await axios.delete(`http://localhost:3000/test_users/${user.id}`);
-    
-        if (response.status === 200) {
-          console.log('User deleted successfully');
-          // Handle successful deletion, e.g., redirect or update state
-        } else {
-          console.error('Failed to delete user');
-        }
-      } catch (error) {
-        console.error('Error deleting user:', error);
-      }
-      setConfirmation('');
-      setShowConfirmationDialog(false);
-      navigate('/');
-  }
-  };
-
-
   // const history = useHistory();
   const navigate = useNavigate();
 return(
@@ -98,49 +69,9 @@ return(
 <div className="features">
   <Header />
         <div class = "welcome-message"> {user?.name}'s Dashboard</div>
-        {/* <Link to={{
-        pathname: '/',
-        state: { data: user }
-      }}>
-        <button
-            onClick={handleDelete}
-            style={{ marginLeft: '10px', backgroundColor: 'red', color: 'white', cursor: 'pointer' }}
-          >
-            Delete Profile
-          </button>
-          </Link> */}
-
-
-  <div>
-      <button
-        onClick={() => setShowConfirmationDialog(true)}
-        style={{ marginLeft: '10px', backgroundColor: 'red', color: 'white', cursor: 'pointer' }}
-      >
-        Delete Profile
-      </button>
-
-      {showConfirmationDialog && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <p>Please enter "DELETE" to confirm:</p>
-            <input
-              type="text"
-              value={confirmation}
-              onChange={(e) => setConfirmation(e.target.value)}
-            />
-            {/* <Link to={{
-            pathname: '/',
-            state: { data: user }
-            }}> */}
-              <button onClick={handleDelete} className="modal-button">Confirm</button>
-            {/* </Link> */}
-            <button onClick={() => setShowConfirmationDialog(false)} className="modal-button">Cancel</button>
-          </div>
-        </div>
-      )}
-    </div>
+      
     
-      {/* <Link to={{
+      <Link to={{
         pathname: '/EditProfile',
         state: { data: user }
       }}>
@@ -151,8 +82,7 @@ return(
               list your interests for potential matches to see.
             </p>
           </div>
-        </Link> */}
-
+        </Link>
 
         <Link to="/FindMatch">
           <div className="feature-card">
