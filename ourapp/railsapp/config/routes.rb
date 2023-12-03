@@ -39,6 +39,8 @@ Rails.application.routes.draw do
   get 'answered_questions_count/:id', to: 'questions#answered_questions_count'
   get 'user_most_valued_category/:id', to: 'weights#user_most_valued_category'
   get 'user_least_valued_category/:id', to: 'weights#user_least_valued_category'
+  get 'user_most_valued_feedback/:id', to: 'weights#user_most_valued_feedback'
+  get 'user_least_valued_feedback/:id', to: 'weights#user_least_valued_feedback'
 
   # Uncomment the following if you're using these APIs and ensure their correct placement within the namespace
   # namespace :api do
