@@ -46,6 +46,7 @@ Rails.application.routes.draw do
   get 'messages/num_messages_sent/:uid_sender_id', to: 'messages#num_messages_sent'
   get 'messages/num_messages_gotten/:uid_receiver_id', to: 'messages#num_messages_gotten'
   get 'messages/top_three_messaged_users/:uid_sender_id', to: 'messages#top_three_messaged_users'
+  get 'messages/top_three_mess_users/:uid_receiver_id', to: 'messages#top_three_mess_users'
 
   # Uncomment the following if you're using these APIs and ensure their correct placement within the namespace
   # namespace :api do
