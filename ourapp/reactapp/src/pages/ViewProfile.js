@@ -5,6 +5,7 @@ import "./ViewProfile.css";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
+import DeleteProfile from "../components/DeleteButton";
 
 
 export default function UserForm({ onUserAdded }) {
@@ -306,31 +307,10 @@ export default function UserForm({ onUserAdded }) {
               </div>
             </div>
           </div>
-          {/* <button
-          className="profile-button"
-          type="button"
-          onClick={() => setPasswordUpdateVisible(!isPasswordUpdateVisible)}
-          disabled
-        >
-          Update password?
-        </button>
-        {isPasswordUpdateVisible && (
-          <label>
-            Update Password: 
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              disabled
-              className="disabled-field"
-            />
-          </label>
-        )} */}
           <br></br>
           
         </form>
-        <button onClick={() => navigate("/delete-profile")}>Delete Profile</button>
+        <DeleteProfile/>
       </div>
     </>
   );
