@@ -3,14 +3,17 @@
 }
 
 .chat-container {
-    border: 1px solid #e0e0e0 !important;
+    border: 1px solid var(--pale) !important;
     padding: 10px !important;
     border-radius: 8px !important;
+    margin-right: 40px;
+    height: 92vh;
 }
 
 .message-list {
-    max-height: 400px !important;
+    height: 84vh;
     overflow-y: auto !important;
+    font-family: 'Varela Round', sans-serif;
 }
 
 .message {
