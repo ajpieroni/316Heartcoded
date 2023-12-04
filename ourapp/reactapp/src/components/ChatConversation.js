@@ -8,7 +8,7 @@ import axios from "axios";
 export default function ChatConversation({ selectedUser }) {
   const reciever = selectedUser;
   const [convStarters, setConvStarters] = useState({});
-  const [datePrompt, setDatePrompt] = useState({});
+  const [date, setDate] = useState({});
 
   const [convLoading, setConvLoading] = useState(false);
   // console.log("reciever test", recievertest)
@@ -17,6 +17,8 @@ export default function ChatConversation({ selectedUser }) {
   const { user, setUser } = useContext(UserContext);
   const [newMessage, setNewMessage] = useState("");
   const [users, setUsers] = useState({});
+  let conversationKey = `${user.id}-${reciever.id}`;
+
 
   const fetchMessages = () => {
     fetch(`http://localhost:3000/test_users/${user?.id}/messages`)
@@ -109,10 +111,6 @@ export default function ChatConversation({ selectedUser }) {
     "Generate a short icebreaker question about creativity for two single people. Don't explain your answer, only respond with the question.",
     "Generate a short icebreaker question about traditionalism for two single people. Don't explain your answer, only respond with the question.",
     "Generate a short icebreaker question about assertiveness for two single people. Don't explain your answer, only respond with the question.",
-
-
-
-
   ];
 
   const getNextPrompt = () => {
@@ -122,12 +120,17 @@ export default function ChatConversation({ selectedUser }) {
   };
 
   const sendMessageToBot = async (text) => {
-
     try {
       setConvLoading(true);
-      const prompt = getNextPrompt();
-      const data = { inputs: prompt };
-      console.log("Sending to bot:", data);
+      let data;
+
+      if (!date[conversationKey]) {
+        const prompt = getNextPrompt();
+        data = { inputs: prompt };
+        console.log("Sending to bot:", data);
+      } else {
+        data = { inputs: text };
+      }
 
       const response = await fetch(
         "https://api-inference.huggingface.co/models/meta-llama/Llama-2-70b-chat-hf",
@@ -159,14 +162,13 @@ export default function ChatConversation({ selectedUser }) {
         console.log("set to reply[1]");
         botreply = reply[1].replace(/"/g, "");
       } else {
-        const partToRemove =
-          /Generate a conversation starter for a potential couple\.  Be a bit sarcastic: /;
+        const partToRemove = "Example:";
         const newMessage = fullResponse.replace(partToRemove, "").trim();
         const finalMessage = newMessage.replace(messagetobecut, "").trim();
         console.log("set to regex");
         botreply = finalMessage.replace(/"/g, "");
         console.log(botreply);
-        const conversationKey = `${user.id}-${reciever.id}`;
+        // const conversationKey = `${user.id}-${reciever.id}`;
         setConvStarters((prevStarters) => ({
           ...prevStarters,
           [conversationKey]: botreply,
@@ -175,7 +177,7 @@ export default function ChatConversation({ selectedUser }) {
         console.log("conv starter", convStarters);
         setConvLoading(false);
       }
-      const conversationKey = `${user.id}-${reciever.id}`;
+      // const conversationKey = `${user.id}-${reciever.id}`;
       setConvStarters((prevStarters) => ({
         ...prevStarters,
         [conversationKey]: botreply,
@@ -189,77 +191,32 @@ export default function ChatConversation({ selectedUser }) {
   };
 
   useEffect(() => {
-    const filteredMessages = messages.filter(msg => 
-      (msg.uid_sender_id === user?.id && msg.uid_receiver_id === reciever?.id) || 
-      (msg.uid_sender_id === reciever?.id && msg.uid_receiver_id === user?.id)
+    const filteredMessages = messages.filter(
+      (msg) =>
+        (msg.uid_sender_id === user?.id &&
+          msg.uid_receiver_id === reciever?.id) ||
+        (msg.uid_sender_id === reciever?.id && msg.uid_receiver_id === user?.id)
     );
-  
+
     if (filteredMessages.length === 10 || filteredMessages.length > 10) {
       // Call your desired function here
-      yourFunction();
+      queueDate();
     }
   }, [messages, user?.id, reciever?.id]); // Depend on messages, user.id, and reciever.id
-  
-  function yourFunction() {
+
+  function queueDate() {
     // Define what you want to do when there are 10 messages
     console.log("There are 10 messages between the two users.");
-    console.log("called function")
-    sendMessageToBotDate("Tell two users who have sent more than 10 messagaes on a dating app to go on a date with a simple sentence. Be cheeky and sarcastic, similar to this message: Hey there, message-aholics! It's time to put down your phones and actually meet in person. You've already exchanged enough words to write a novel, so why not take the next step and see if your chemistry is as strong in real life as it is in the chat?")
+    console.log("called function");
+    setDate((prevDate) => ({
+      ...prevDate,
+      [conversationKey]: true,
+    }));
 
+    sendMessageToBot(
+      "Tell two users who have sent more than 10 messagaes on a dating app to go on a date with a only one simple sentence. Be cheeky and sarcastic. Do not include any variations."
+    );
   }
-
-  const sendMessageToBotDate = async (text) => {
-    try {
-      setConvLoading(true);
-      const data = { inputs: text };
-      const response = await fetch(
-        "https://api-inference.huggingface.co/models/meta-llama/Llama-2-70b-chat-hf",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${apiToken}`,
-          },
-          body: JSON.stringify(data),
-        }
-      );
-  
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-        
-      }
-  
-      const responseData = await response.json();
-      const generatedText = responseData[0].generated_text;
-  
-      let botReply = "";
-  
-      const responseRegex = /\n([\s\S]*)/;
-      const replyMatch = generatedText.match(responseRegex);
-  
-      if (replyMatch) {
-        botReply = replyMatch[1].replace(/"/g, "");
-      } else {
-        const partToRemove = /Generate a conversation starter for a potential couple\.  Be a bit sarcastic: /;
-        const newMessage = generatedText.replace(partToRemove, "").trim();
-        const finalMessage = newMessage.replace(text.trim(), "").trim();
-        botReply = finalMessage.replace(/"/g, "");
-  
-        const conversationKey = `${user?.id}-${reciever?.id}`;
-        setDatePrompt((prevDate) => ({
-          ...prevDate,
-          [conversationKey]: botReply,
-        }));
-      }
-  
-      setConvLoading(false);
-      return botReply;
-    } catch (error) {
-      console.error("Error sending message to the bot:", error);
-      setConvLoading(false);
-    }
-  };
-  
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
@@ -320,7 +277,7 @@ export default function ChatConversation({ selectedUser }) {
           users={users}
           reciever={reciever}
           convStarters={convStarters}
-          datePrompt={datePrompt}
+          // datePrompt={datePrompt}
         />
 
         <div className="message-input-container">
@@ -352,11 +309,10 @@ export default function ChatConversation({ selectedUser }) {
   );
 }
 
-function MessageList({ messages, currentUser, users, reciever, convStarters, datePrompt }) {
-  console.log("here's reciever", reciever);
+function MessageList({ messages, currentUser, users, reciever, convStarters }) {
+  // console.log("here's reciever", reciever);
   const conversationKey = `${currentUser.id}-${reciever.id}`;
- 
-  
+
   return (
     <div className="message-list">
       <h1>{reciever?.name}</h1>
@@ -388,18 +344,16 @@ function MessageList({ messages, currentUser, users, reciever, convStarters, dat
             </div>
           );
         })}
-       {convStarters[conversationKey] && (
+      {convStarters[conversationKey] && (
         <div className="bot-reply">
           <p>Wingman: {convStarters[conversationKey]}</p>
         </div>
       )}
-      {datePrompt[conversationKey] && (
+      {/* {datePrompt[conversationKey] && (
         <div className="bot-reply">
           <p>Wingman: {datePrompt[conversationKey]}</p>
         </div>
-      )}
-       
-     
+      )} */}
     </div>
   );
 }
