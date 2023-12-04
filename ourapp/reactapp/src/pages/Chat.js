@@ -145,7 +145,7 @@ export default function Chat() {
     <main className="main-container">
       <h1>Chat</h1>
       <h2>Welcome, {user?.name}</h2>
-      <div className="chat-container">
+      <div className="chat-page-container">
         <MessageList messages={messages} currentUser={user} users={users} reciever={reciever} />
 
         <div className="message-input-container">

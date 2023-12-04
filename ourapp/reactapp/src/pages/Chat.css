@@ -10,6 +10,15 @@
     height: 92vh;
 }
 
+.chat-page-container {
+    border: 1px solid var(--pale) !important;
+    padding: 10px !important;
+    border-radius: 8px !important;
+    margin-bottom: 40px;
+    height: 92vh;
+    min-width: 600px;
+}
+
 .message-list {
     height: 84vh;
     overflow-y: auto !important;
