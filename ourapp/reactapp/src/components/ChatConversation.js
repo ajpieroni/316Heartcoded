@@ -4,22 +4,22 @@ import { UserContext } from "../components/contexts/UserContext";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import Picker from "emoji-picker-react";
+import EmojiPickerComponent from "./EmojiPickerComponent";
 
 export default function ChatConversation({ selectedUser }) {
   const reciever = selectedUser;
-  // console.log("reciever test", recievertest)
-  const [chosenEmoji, setChosenEmoji] = useState(null);
-  const [toggleEmoji, setToggleEmoji] = useState(false); 
-
-
-  const onEmojiClick = (event, emojiObject) => {
-    setChosenEmoji(emojiObject);
-  };
+  const [chosenEmoji, setChosenEmoji] = useState(null); // Define this state
+  const [toggleEmoji, setToggleEmoji] = useState(false); // Define this state
 
   const [messages, setMessages] = useState([]);
   const { user, setUser } = useContext(UserContext);
   const [newMessage, setNewMessage] = useState("");
   const [users, setUsers] = useState({});
+
+  const onEmojiClick = (event, emojiObject) => {
+    setChosenEmoji(emojiObject);
+    setNewMessage((prev) => prev + emojiObject.emoji); // Append emoji to message
+  };
 
   const fetchMessages = () => {
     fetch(`http://localhost:3000/test_users/${user?.id}/messages`)
@@ -143,11 +143,9 @@ export default function ChatConversation({ selectedUser }) {
       });
   };
 
-
   const toggleEmojiPicker = () => {
-    setToggleEmoji(!toggleEmoji); 
+    setToggleEmoji(!toggleEmoji);
   };
-
 
   return (
     <>
@@ -162,7 +160,6 @@ export default function ChatConversation({ selectedUser }) {
         />
 
         <div className="message-input-container">
-         
           <input
             type="text"
             value={newMessage}
@@ -174,22 +171,14 @@ export default function ChatConversation({ selectedUser }) {
               }
             }}
           />
-          <button onClick={handleSend}>Send</button>
-          <button onClick={toggleEmojiPicker}>React</button>
-          <div>
-          
-              </div>
+          <button onClick={handleSend}>Send</button>{" "}
+          <EmojiPickerComponent
+            chosenEmoji={chosenEmoji}
+            setChosenEmoji={setChosenEmoji}
+            onEmojiClick={onEmojiClick} // Pass this function
+          />
+          <div></div>
         </div>
-        {toggleEmoji && (
-      <>
-        {chosenEmoji ? (
-          <span>You chose: {chosenEmoji.emoji}</span>
-        ) : (
-          <span>No emoji Chosen</span>
-        )}
-        <Picker onEmojiClick={onEmojiClick} />
-      </>
-    )}
       </div>
     </>
   );
@@ -197,7 +186,6 @@ export default function ChatConversation({ selectedUser }) {
 
 function MessageList({ messages, currentUser, users, reciever }) {
   console.log("here's reciever", reciever);
-  
 
   return (
     <div className="message-list">
@@ -227,7 +215,6 @@ function MessageList({ messages, currentUser, users, reciever }) {
               <span className="timestamp">
                 {new Date(msg.timestamp).toLocaleString()}
               </span>
-              
             </div>
           );
         })}
