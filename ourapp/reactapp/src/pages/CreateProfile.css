@@ -17,7 +17,7 @@ label, input, select, textarea{
     padding: 0.5rem 1rem;
     font-size: 1rem;
     border: none;
-    border-radius: 9999px;
+    border-radius: 10px;
     outline: none;
     transition: border-color 0.3s, box-shadow 0.3s;
     font-family: 'Varela Round', sans-serif;
@@ -35,12 +35,12 @@ label, input, select, textarea{
 }
 
 .profile-button:hover{
-    background-color: #F87171;
+    background-color: var(--pink);
 }
 
 .selected-flag {
     display: inline-block;
-    background-color: #FBB6CE;
+    background-color: var(--dark);
     color: white;
     font-weight:bold;
     padding: 0.5rem 1rem;
@@ -49,6 +49,6 @@ label, input, select, textarea{
     border-radius: 20px;
   }
   
-  .selected-flag:hover {
+  /* .selected-flag:hover {
     background-color: #f97ba7;
-  }
+  } */
