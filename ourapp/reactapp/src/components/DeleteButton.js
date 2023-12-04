@@ -46,6 +46,11 @@ const DeleteProfile = () => {
         navigate("/"); 
       }
     }
+    if(confirmation !== "DELETE"){
+        alert("Be sure to type 'DELETE'");
+    }
+    
+    
   };
 
   return (

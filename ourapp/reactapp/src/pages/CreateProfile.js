@@ -322,6 +322,7 @@ export default function UserForm() {
           <select
             multiple
             name="red_flags"
+            style={{width: 953}}
             value={formData.red_flags}
             onChange={handleRedFlagsChange}
           >

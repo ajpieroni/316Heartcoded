@@ -310,7 +310,9 @@ export default function UserForm({ onUserAdded }) {
           <br></br>
           
         </form>
+        <div className="delete">
         <DeleteProfile/>
+        </div>
       </div>
     </>
   );
