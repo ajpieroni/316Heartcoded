@@ -141,8 +141,8 @@ export default function UserForm() {
   };
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setFormData({ ...formData, avatar: file });
     setSelectedAvatar(file);
+    setFormData({ ...formData, avatar: file });
   };
 
   const handleStateSelected = (e) => {
@@ -178,6 +178,7 @@ export default function UserForm() {
 
       if (user.id){
         const response = await axios.patch(`http://localhost:3000/test_users/${user.id}`, formData);
+        console.log("response",response);
         setIsSuccessModalOpen(true);
       }
       else{
