@@ -17,6 +17,7 @@ export default function Wrapped() {
   const [ref6, inView6] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [ref7, inView7] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [ref8, inView8] = useInView({ triggerOnce: true, threshold: 0.1 });
+  const [ref9, inView9] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   const [question, setQuestion] = useState("UNINIT");
   const [testUser, setTestUser] = useState("UNINIT");
@@ -38,7 +39,7 @@ export default function Wrapped() {
   const [topMessGot, setTopMessGot] = useState([]);
 
   const [loading, setLoading] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   const togglePlayPause = () => {
     const audioElement = document.getElementById("backgroundMusic");
@@ -245,19 +246,19 @@ export default function Wrapped() {
                 {isPlaying ? "Pause Music" : "Play Music"}
               </button>
               <div className="audio">
-              <audio
-                id="backgroundMusic"
-                controls
-                autoPlay
-                volume={0.5}
-                className={isPlaying ? "" : "hidden-audio"}
-              >
-                <source src={lofiMusic} type="audio/mpeg" />
-                Your browser does not support the audio element.
-              </audio>
+                <audio
+                  id="backgroundMusic"
+                  controls
+                  autoPlay
+                  volume={0.5}
+                  className={isPlaying ? "" : "hidden-audio"}
+                >
+                  <source src={lofiMusic} type="audio/mpeg" />
+                  Your browser does not support the audio element.
+                </audio>
               </div>
             </div>
-            <h1 className="slide-in welcome-message">{user?.name}'s Wrapped</h1>
+            <h1 className="slide-in welcome-wrap-message">{user?.name}'s Wrapped</h1>
             <p className="subtitle">A Year in Review: Unwrap Your Activity!</p>
 
             <div
@@ -267,9 +268,7 @@ export default function Wrapped() {
               <h2 className="scale-up">
                 Questions Answered: {questionsAnswered}
               </h2>
-              <p className="subtitle">
-                Curiosity Unleashed: Every Answer Counts!
-              </p>
+              <p className="subtitle">Every Answer Counts!</p>
             </div>
 
             <div
@@ -278,7 +277,7 @@ export default function Wrapped() {
             >
               <h2>Most Valued Categories:</h2>
               <p className="subtitle">
-                The Peaks of Your Interests: Your Top Picks!
+                Your Top Picks! These are the categories that you value most.
               </p>
               <ul>
                 {mostValuedCategory.map((descriptor, index) => (
@@ -294,7 +293,9 @@ export default function Wrapped() {
               className={`section font ${inView3 ? "visible" : "hidden"}`}
             >
               <h2>Least Valued Categories:</h2>
-              <p className="subtitle">Room for Growth: Areas to Explore!</p>
+              <p className="subtitle">
+                Areas to Explore! These are the categories you value least.
+              </p>
               <ul>
                 {leastValuedCategory.map((descriptor, index) => (
                   <li key={index} className="pulse">
@@ -310,8 +311,8 @@ export default function Wrapped() {
             >
               <h2>Most Valued Feedback:</h2>
               <p className="subtitle">
-                Applause and Accolades: Your Impact Highlighted! This is what
-                categories users ranked you as caring the most about in.
+                Your Impact Highlighted: These are the categories users ranked
+                you as valuing most.
               </p>
               <ul>
                 {mostValuedFeedback.map((item, index) => (
@@ -330,7 +331,7 @@ export default function Wrapped() {
               <h2>Least Valued Feedback</h2>
               <p className="subtitle">
                 Constructive Critique: These are categories that users think you
-                don't value.
+                don't value as much...
               </p>
               <ul>
                 {leastValuedFeedback.map((item, index) => (
@@ -349,57 +350,50 @@ export default function Wrapped() {
               <h2 className="scale-up">
                 Historical Number of Matches: {numMatch}
               </h2>
-              <p className="subtitle">
-                Connections Made: Your Social Tapestry!
-              </p>
-              <h2 className="scale-up">Number of Unmatches: {numUnMatch}</h2>
-              <p className="subtitle">
-                Selective Syncs: Choosing What Fits Best!
-              </p>
+              <p className="subtitle">Your Social Tapestry!</p>
             </div>
 
             <div
               ref={ref7}
               className={`section font ${inView7 ? "visible" : "hidden"}`}
             >
-              <h2 className="scale-up">
-                Number of Messages Sent: {numMessSent}
-              </h2>
+              <h2 className="scale-up">Number of Unmatches: {numUnMatch}</h2>
               <p className="subtitle">
-                Words on the Wind: Your Conversational Journey!
+                Selective Syncs: Here are the total number of people you have
+                unmatched with... stay picky!
               </p>
-              <h2 className="scale-up">
-                Number of Messages Received: {numMessGot}
-              </h2>
-              <p className="subtitle">Echoes Returned: Engaging Dialogues!</p>
             </div>
 
             <div
               ref={ref8}
               className={`section font ${inView8 ? "visible" : "hidden"}`}
             >
-              <h2>Top Messaged Users</h2>
+              <h2 className="scale-up">
+                Number of Messages Sent: {numMessSent}
+              </h2>
               <p className="subtitle">
-                Pen Pals Galore: Your Top Chat Companions!
+                Words on the Wind: You've sent {numMessSent} messages––chaty
+                Cathy!
               </p>
-              <ul>
-                {Object.entries(topMessaged).map(([userId, userInfo]) => (
-                  <li key={userId} className="pulse">
-                    You've messaged {userInfo.name} {userInfo.message_count}{" "}
-                    times.
-                  </li>
-                ))}
-              </ul>
-              <h2>Your Biggest Fans: Users who have Messaged You the Most</h2>
-              <p className="subtitle">Fan Mail: Your Admirers in Numbers!</p>
-              <ul>
-                {Object.entries(topMessGot).map(([userId, userInfo]) => (
-                  <li key={userId} className="pulse">
-                    {userInfo.name} has messaged you {userInfo.message_count}{" "}
-                    times.
-                  </li>
-                ))}
-              </ul>
+              <h2 className="scale-up">
+                Number of Messages Received: {numMessGot}
+              </h2>
+              <p className="subtitle">
+                Echoes Returned: You're a hot commodity, with {numMessGot}{" "}
+                messages received!
+              </p>
+            </div>
+
+            <div
+              ref={ref9}
+              className={`section font ${inView9 ? "visible" : "hidden"}`}
+            >
+              <h2
+                className="pulse"
+                style={{ color: "white", fontSize: "4rem" }}
+              >
+                Thanks for checking out your Heartcoded Wrapped, {user?.name}.
+              </h2>
             </div>
           </>
         )}
