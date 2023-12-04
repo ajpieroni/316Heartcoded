@@ -1,8 +1,8 @@
-.welcome-message {
+.welcome-wrap-message {
     text-align: center !important;
     color: white  !important;
     margin-top: 6rem !important;
-    font-size: 8rem !important;
+    font-size: 8rem;
     font-family: 'Bebas Neue', sans-serif !important;
 
 }
