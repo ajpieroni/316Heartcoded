@@ -65,10 +65,10 @@ export default function UserForm() {
     if (user?.id) {
       fetch(`http://localhost:3000/test_users/${user?.id}`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ test_user: updatedData }),
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
+        body: updatedData,
       })
         .then((response) => {
           if (!response.ok) {
@@ -104,6 +104,7 @@ export default function UserForm() {
     red_flags: [],
     username: username,
     email: "",
+    avatar: null,
   });
 
   function StatesList({ onStateSelected }) {
@@ -176,9 +177,23 @@ export default function UserForm() {
     }
 
     try {
-      console.log("here's form data:", formData);
+      //console.log("here's form data:", formData);
+
+      const newFormData = new FormData();
+      newFormData.append("test_user[name]", formData.name);
+      newFormData.append("test_user[gender]", formData.gender);
+      newFormData.append("test_user[preferences]", formData.preferences);
+      newFormData.append("test_user[birthday]", formData.birthday);
+      newFormData.append("test_user[bio]", formData.bio);
+      newFormData.append("test_user[location]", formData.location);
+      newFormData.append("test_user[red_flags]", JSON.stringify(formData.red_flags));
+      newFormData.append("test_user[username]", formData.username);
+      newFormData.append("test_user[email]", formData.email);
+      // Append avatar file if available
+      newFormData.append("test_user[avatar]", formData.avatar);
+  
       // const response = await axios.post(`http://localhost:3000/test_users`, formData);
-      patchUserData(formData);
+      patchUserData(newFormData);
       // onUserAdded(response.data);
       setIsSuccessModalOpen(true);
       setFormData({
@@ -192,6 +207,7 @@ export default function UserForm() {
         // password: "",
         username: "",
         email: "",
+        avatar: null,
         // password: "",
       });
     } catch (error) {
@@ -235,6 +251,15 @@ export default function UserForm() {
       <h2>Welcome to HeartCoded</h2>
       <h2>Your username is {username}</h2>
       <form onSubmit={handleSubmit}>
+        <label htmlFor="avatar">Avatar:</label>
+        <input id="avatar" type="file" accepts="image/*" onChange={(e)=>{
+          setFormData({
+            ...formData,
+            avatar: e.target.files[0],
+          });
+          console.log(e.target.files[0]);
+        }}
+        />
         <label>
           Name<span style={{ color: "red" }}>*</span>:
           <input
