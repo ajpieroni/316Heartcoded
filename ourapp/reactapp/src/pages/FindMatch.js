@@ -57,7 +57,7 @@ export default function FindMatch() {
       if (matches.length === 0) {
         setMatchesMaxed(true);
       } else {
-        // Process matches here if needed
+        setMatchesMaxed(false);
       }
     } catch (error) {
       console.error("Error fetching new matches:", error);
@@ -207,7 +207,7 @@ export default function FindMatch() {
         {matchesMaxed && (
           <div className="loading-container">
           <div className="loading-text">
-            No more new matches!
+            No more new matches available! You're picky!
           </div>
         </div>
         )}
