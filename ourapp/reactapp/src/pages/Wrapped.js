@@ -16,6 +16,7 @@ export default function Wrapped() {
   const [questionsAnswered, setQuestionsAnswered] = useState("");
   const [mostValuedCategory, setMostValuedCategory] = useState([]);
   const [leastValuedCategory, setLeastValuedCategory] = useState([]);
+  const [mostValuedFeedback, setmostValuedFeedback] = useState([]);
   
 
   const fetchQuestions = () => {
@@ -55,7 +56,19 @@ export default function Wrapped() {
       });
   };
 
-  http://localhost:3000/user_most_valued_feedback/93 
+  const fetchMostValuedFeedback = () => {
+    axios
+      .get(`http://localhost:3000/user_most_valued_feedback/${user?.id}`)
+      .then((response) => {
+        console.log("here new!!!",response.data )
+        setmostValuedFeedback(response.data.categories)
+      })
+      .catch((error) => {
+        console.error("Error fetching the messages:", error);
+      });
+  };
+
+  
 
   
 
@@ -68,14 +81,17 @@ export default function Wrapped() {
   }, []);
 
   useEffect(() => {
-    console.log('New least valued category:', leastValuedCategory);
-  }, [leastValuedCategory]);
+    console.log('feed:', mostValuedFeedback);
+  }, [mostValuedFeedback]);
   
   useEffect(() => {
     if (user && user.id) {
       fetchQuestions();
       fetchMostValuedCategory();
       fetchLeastValuedCategory();
+      fetchMostValuedFeedback();
+
+      
     }
   }, [user]);
 
@@ -100,6 +116,14 @@ export default function Wrapped() {
             <li key={index}>{descriptor}</li>
           ))}
         </ul>
+        <h2>Most Valued Feedback:</h2>
+        <ul>
+        {mostValuedFeedback.map((item, index) => (
+          <li key={index}>
+            Descriptor: {item.descriptor}, Feedback: {item.feedback*100}%
+          </li>
+        ))}
+      </ul>
       </main>
     </div>
   );
