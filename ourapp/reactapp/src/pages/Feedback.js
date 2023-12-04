@@ -133,14 +133,14 @@ export default function Feedback() {
     <>
     <Header/>
     <main className="main-container">
-      <h1>User Feedback Form</h1>
+      <h1 className="main-title">User Feedback Form</h1>
 
       {!isSubmitted && !hasFeedback ? (
-        <><h1>Feedback</h1>
-        <form onSubmit={handleSubmit}>
+        <>
+        <form className="feedback-form" onSubmit={handleSubmit}>
           {categories.map((category) => (
-            <div key= {category}>
-              <Typography id="discrete-slider" gutterBottom>
+            <div className="feedback-q" key= {category}>
+              <Typography className="how-much" id="discrete-slider" gutterBottom style={{ fontFamily: "'Varela Round', sans-serif" }}>
                 How much does {receiver?.name} care about {category?.toLowerCase()}?
               </Typography>
               <br></br>
@@ -162,9 +162,9 @@ export default function Feedback() {
           <input type="submit" value="Submit Feedback"/>
         </form>
     </>): hasFeedback ? (
-      <><p>You've already submitted feedback about {receiver?.name}!</p> <button onClick={goBack}>Back</button></>
+      <><p className="feedback-font">You've already submitted feedback about {receiver?.name}!</p> <button onClick={goBack}>Back</button></>
     ) : (
-      <><p>You've submitted the form!</p> <button onClick={goBack}>Back</button></>
+      <><p className="feedback-font">You've submitted the form!</p> <button onClick={goBack}>Back</button></>
     )}
         
         

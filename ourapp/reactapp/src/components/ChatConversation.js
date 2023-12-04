@@ -221,7 +221,7 @@ export default function ChatConversation({ selectedUser }) {
   };
 
   return (
-    <main className="main-container">
+    <>
       {/* <h1>Chat</h1> */}
       {/* <h2>Welcome, {user?.name}</h2> */}
       <div className="chat-container">
@@ -258,7 +258,7 @@ export default function ChatConversation({ selectedUser }) {
           </button>
         </div>
       </div>
-    </main>
+    </>
   );
 }
 

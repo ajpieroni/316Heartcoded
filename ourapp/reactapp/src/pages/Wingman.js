@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useContext } from "react";
 import { UserContext } from "../components/contexts/UserContext";
 import axios from "axios";
-import Replicate from "replicate";
+// import Replicate from "replicate";
 
 // import "./Chat.css";
 import "./Wingman.css";
@@ -214,9 +214,9 @@ console.log("called send message", messageToSend)
     <>
       <Header />
       <main className="main-container">
-        <h1>Chat with your Wingman</h1>
-        <div className="chat-container">
-          <div className="message-list">
+        <h1 className="main-title">Chat With Your Wingman</h1>
+        <div className="chat-wingman-container">
+          <div className="message-wingman-list">
             {messages.map((msg, index) => {
               const isSender = msg.uid_sender_id === user.id;
               return (

@@ -57,6 +57,72 @@ class WeightsController < ApplicationController
     end
   end
 
+  def user_most_valued_category
+    user = TestUser.find_by(id: params[:id])
+    
+    if user
+      max_weight = Weight.where(test_user_id: user.id).maximum(:weight)
+      categories = Weight.where(test_user_id: user.id, weight: max_weight).pluck(:category_id)
+      category_descriptors = Category.where(id: categories).pluck(:descriptor)
+      
+      render json: { category_descriptors: category_descriptors }, status: :ok
+    else
+      render json: { error: 'TestUser not found' }, status: :not_found
+    end
+  end
+
+  def user_least_valued_category
+    user = TestUser.find_by(id: params[:id])
+    
+    if user
+      min_weight = Weight.where(test_user_id: user.id).minimum(:weight)
+      categories = Weight.where(test_user_id: user.id, weight: min_weight).pluck(:category_id)
+      category_descriptors = Category.where(id: categories).pluck(:descriptor)
+      
+      render json: { category_descriptors: category_descriptors }, status: :ok
+    else
+      render json: { error: 'TestUser not found' }, status: :not_found
+    end
+  end
+
+  def user_most_valued_feedback
+    user = TestUser.find_by(id: params[:id])
+    
+    if user
+      max_feedback = Weight.where(test_user_id: user.id).where.not(feedback: nil).maximum(:feedback)
+      categories = Weight.where(test_user_id: user.id, feedback: max_feedback).where.not(feedback: nil).pluck(:category_id, :feedback)
+      category_info = Category.where(id: categories.map(&:first)).pluck(:id, :descriptor)
+      
+      result = categories.map do |category_id, feedback|
+        category_info_entry = category_info.find { |info| info[0] == category_id }
+        { descriptor: category_info_entry[1], feedback: feedback }
+      end
+      
+      render json: { categories: result }, status: :ok
+    else
+      render json: { error: 'TestUser not found' }, status: :not_found
+    end
+  end
+
+  def user_least_valued_feedback
+    user = TestUser.find_by(id: params[:id])
+    
+    if user
+      min_feedback = Weight.where(test_user_id: user.id).where.not(feedback: nil).minimum(:feedback)
+      categories = Weight.where(test_user_id: user.id, feedback: min_feedback).where.not(feedback: nil).pluck(:category_id, :feedback)
+      category_info = Category.where(id: categories.map(&:first)).pluck(:id, :descriptor)
+      
+      result = categories.map do |category_id, feedback|
+        category_info_entry = category_info.find { |info| info[0] == category_id }
+        { descriptor: category_info_entry[1], feedback: feedback }
+      end
+      
+      render json: { categories: result }, status: :ok
+    else
+      render json: { error: 'TestUser not found' }, status: :not_found
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_weight

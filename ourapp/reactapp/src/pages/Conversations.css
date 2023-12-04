@@ -11,18 +11,19 @@
 }
 .conversations-container {
     display: flex; 
-    justify-content: space-between; 
+    justify-content: center; 
     /* margin: 20px;  */
  }
   
   .match-list-container {
-    flex: 1; 
+    margin-right: -80px;
+    flex: 1;
     /* padding: 20px;  */
     /* margin-right: 20px;  */
   }
   
   .chat-conversation-container {
-    flex: 2; 
+    flex: 1.5; 
     /* padding: 20px;  */
   }
  
