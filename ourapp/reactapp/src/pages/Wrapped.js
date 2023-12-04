@@ -230,12 +230,12 @@ export default function Wrapped() {
       <h1 className="slide-in welcome-message">{user?.name}'s Wrapped</h1>
       <p className="subtitle">A Year in Review: Unwrap Your Activity!</p>
 
-      <div ref={ref1} className={`section ${inView1 ? 'visible' : 'hidden'}`}>
+      <div ref={ref1} className={`section font ${inView1 ? 'visible' : 'hidden'}`}>
         <h2 className="scale-up">Questions Answered: {questionsAnswered}</h2>
         <p className="subtitle">Curiosity Unleashed: Every Answer Counts!</p>
       </div>
 
-      <div ref={ref2} className={`section ${inView2 ? 'visible' : 'hidden'}`}>
+      <div ref={ref2} className={`section font ${inView2 ? 'visible' : 'hidden'}`}>
         <h2>Most Valued Categories:</h2>
         <p className="subtitle">The Peaks of Your Interests: Your Top Picks!</p>
         <ul>
@@ -245,7 +245,7 @@ export default function Wrapped() {
         </ul>
       </div>
 
-      <div ref={ref3} className={`section ${inView3 ? 'visible' : 'hidden'}`}>
+      <div ref={ref3} className={`section font ${inView3 ? 'visible' : 'hidden'}`}>
         <h2>Least Valued Categories:</h2>
         <p className="subtitle">Room for Growth: Areas to Explore!</p>
         <ul>
@@ -255,7 +255,7 @@ export default function Wrapped() {
         </ul>
       </div>
 
-      <div ref={ref4} className={`section ${inView4 ? 'visible' : 'hidden'}`}>
+      <div ref={ref4} className={`section font ${inView4 ? 'visible' : 'hidden'}`}>
         <h2>Most Valued Feedback:</h2>
         <p className="subtitle">Applause and Accolades: Your Impact Highlighted! This is what categories users ranked you as caring the most about in.</p>
         <ul>
@@ -267,7 +267,7 @@ export default function Wrapped() {
         </ul>
       </div>
 
-      <div ref={ref5} className={`section ${inView5 ? 'visible' : 'hidden'}`}>
+      <div ref={ref5} className={`section font ${inView5 ? 'visible' : 'hidden'}`}>
         <h2>Least Valued Feedback</h2>
         <p className="subtitle">Constructive Critique: These are categories that users think you don't value.</p>
         <ul>
@@ -279,21 +279,21 @@ export default function Wrapped() {
         </ul>
       </div>
 
-      <div ref={ref6} className={`section ${inView6 ? 'visible' : 'hidden'}`}>
+      <div ref={ref6} className={`section font ${inView6 ? 'visible' : 'hidden'}`}>
         <h2 className="scale-up">Historical Number of Matches: {numMatch}</h2>
         <p className="subtitle">Connections Made: Your Social Tapestry!</p>
         <h2 className="scale-up">Number of Unmatches: {numUnMatch}</h2>
         <p className="subtitle">Selective Syncs: Choosing What Fits Best!</p>
       </div>
 
-      <div ref={ref7} className={`section ${inView7 ? 'visible' : 'hidden'}`}>
+      <div ref={ref7} className={`section font ${inView7 ? 'visible' : 'hidden'}`}>
         <h2 className="scale-up">Number of Messages Sent: {numMessSent}</h2>
         <p className="subtitle">Words on the Wind: Your Conversational Journey!</p>
         <h2 className="scale-up">Number of Messages Received: {numMessGot}</h2>
         <p className="subtitle">Echoes Returned: Engaging Dialogues!</p>
       </div>
 
-      <div ref={ref8} className={`section ${inView8 ? 'visible' : 'hidden'}`}>
+      <div ref={ref8} className={`section font ${inView8 ? 'visible' : 'hidden'}`}>
         <h2>Top Messaged Users</h2>
         <p className="subtitle">Pen Pals Galore: Your Top Chat Companions!</p>
         <ul>
