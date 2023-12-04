@@ -3,6 +3,7 @@ import axios from 'axios';
 import { UserContext } from "../components/contexts/UserContext";
 import "./ViewProfile.css";
 import { Link } from "react-router-dom";
+// import replicate from 'replicate';
 
 
 export default function UserForm({ onUserAdded }) {

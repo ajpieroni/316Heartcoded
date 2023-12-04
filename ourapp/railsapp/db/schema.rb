@@ -67,6 +67,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_28_224705) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "images", force: :cascade do |t|
+    t.bigint "test_users_id"
+    t.binary "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["test_users_id"], name: "index_images_on_test_users_id"
+  end
+
   create_table "matched_withs", force: :cascade do |t|
     t.integer "uid1"
     t.integer "uid2"
@@ -123,6 +131,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_28_224705) do
     t.string "username"
     t.string "password_digest"
     t.string "email"
+    t.binary "profile_image"
   end
 
   create_table "weights", force: :cascade do |t|
@@ -140,6 +149,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_28_224705) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "test_users"
+  add_foreign_key "images", "test_users", column: "test_users_id"
   add_foreign_key "matched_withs", "test_users", column: "uid1"
   add_foreign_key "matched_withs", "test_users", column: "uid2"
   add_foreign_key "messages", "test_users", column: "uid_receiver_id"
