@@ -223,90 +223,100 @@ export default function Wrapped() {
       <Header />
 
       <main className="main-container">
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          <>
-            <h1 className="slide-in welcome-message">{user?.name}'s Wrapped</h1>
+  {loading ? (
+    <p>Loading...</p>
+  ) : (
+    <>
+      <h1 className="slide-in welcome-message">{user?.name}'s Wrapped</h1>
+      <p className="subtitle">A Year in Review: Unwrap Your Activity!</p>
 
-            <div ref={ref1} className={`section ${inView1 ? 'visible' : 'hidden'}`}>
-              <h2 className="scale-up">Questions Answered: {questionsAnswered}</h2>
-            </div>
+      <div ref={ref1} className={`section ${inView1 ? 'visible' : 'hidden'}`}>
+        <h2 className="scale-up">Questions Answered: {questionsAnswered}</h2>
+        <p className="subtitle">Curiosity Unleashed: Every Answer Counts!</p>
+      </div>
 
-            <div ref={ref2} className={`section ${inView2 ? 'visible' : 'hidden'}`}>
-              <h2>Most Valued Categories:</h2>
-              <ul>
-                {mostValuedCategory.map((descriptor, index) => (
-                  <li key={index} className="pulse">{descriptor}</li>
-                ))}
-              </ul>
-            </div>
+      <div ref={ref2} className={`section ${inView2 ? 'visible' : 'hidden'}`}>
+        <h2>Most Valued Categories:</h2>
+        <p className="subtitle">The Peaks of Your Interests: Your Top Picks!</p>
+        <ul>
+          {mostValuedCategory.map((descriptor, index) => (
+            <li key={index} className="pulse">{descriptor}</li>
+          ))}
+        </ul>
+      </div>
 
-            <div ref={ref3} className={`section ${inView3 ? 'visible' : 'hidden'}`}>
-              <h2>Least Valued Categories:</h2>
-              <ul>
-                {leastValuedCategory.map((descriptor, index) => (
-                  <li key={index} className="pulse">{descriptor}</li>
-                ))}
-              </ul>
-            </div>
+      <div ref={ref3} className={`section ${inView3 ? 'visible' : 'hidden'}`}>
+        <h2>Least Valued Categories:</h2>
+        <p className="subtitle">Room for Growth: Areas to Explore!</p>
+        <ul>
+          {leastValuedCategory.map((descriptor, index) => (
+            <li key={index} className="pulse">{descriptor}</li>
+          ))}
+        </ul>
+      </div>
 
-            <div ref={ref4} className={`section ${inView4 ? 'visible' : 'hidden'}`}>
-              <h2>Most Valued Feedback:</h2>
-              <ul>
-                {mostValuedFeedback.map((item, index) => (
-                  <li key={index} className="pulse">
-                    Category: {item.descriptor}, Feedback: {item.feedback * 100}%
-                  </li>
-                ))}
-              </ul>
-            </div>
+      <div ref={ref4} className={`section ${inView4 ? 'visible' : 'hidden'}`}>
+        <h2>Most Valued Feedback:</h2>
+        <p className="subtitle">Applause and Accolades: Your Impact Highlighted! This is what categories users ranked you as caring the most about in.</p>
+        <ul>
+          {mostValuedFeedback.map((item, index) => (
+            <li key={index} className="pulse">
+              Category: {item.descriptor}, Feedback: {item.feedback * 100}%
+            </li>
+          ))}
+        </ul>
+      </div>
 
-            <div ref={ref5} className={`section ${inView5 ? 'visible' : 'hidden'}`}>
-              <h2>Least Valued Feedback</h2>
-              <ul>
-                {leastValuedFeedback.map((item, index) => (
-                  <li key={index} className="pulse">
-                    Category: {item.descriptor}, Feedback: {item.feedback * 100}%
-                  </li>
-                ))}
-              </ul>
-            </div>
+      <div ref={ref5} className={`section ${inView5 ? 'visible' : 'hidden'}`}>
+        <h2>Least Valued Feedback</h2>
+        <p className="subtitle">Constructive Critique: These are categories that users think you don't value.</p>
+        <ul>
+          {leastValuedFeedback.map((item, index) => (
+            <li key={index} className="pulse">
+              Category: {item.descriptor}, Feedback: {item.feedback * 100}%
+            </li>
+          ))}
+        </ul>
+      </div>
 
-            <div ref={ref6} className={`section ${inView6 ? 'visible' : 'hidden'}`}>
-              <h2 className="scale-up">Historical Number of Matches: {numMatch}</h2>
-              <h2 className="scale-up">Number of Unmatches: {numUnMatch}</h2>
-            </div>
+      <div ref={ref6} className={`section ${inView6 ? 'visible' : 'hidden'}`}>
+        <h2 className="scale-up">Historical Number of Matches: {numMatch}</h2>
+        <p className="subtitle">Connections Made: Your Social Tapestry!</p>
+        <h2 className="scale-up">Number of Unmatches: {numUnMatch}</h2>
+        <p className="subtitle">Selective Syncs: Choosing What Fits Best!</p>
+      </div>
 
-            <div ref={ref7} className={`section ${inView7 ? 'visible' : 'hidden'}`}>
-              <h2 className="scale-up">Number of Messages Sent: {numMessSent}</h2>
-              <h2 className="scale-up">Number of Messages Received: {numMessGot}</h2>
-            </div>
+      <div ref={ref7} className={`section ${inView7 ? 'visible' : 'hidden'}`}>
+        <h2 className="scale-up">Number of Messages Sent: {numMessSent}</h2>
+        <p className="subtitle">Words on the Wind: Your Conversational Journey!</p>
+        <h2 className="scale-up">Number of Messages Received: {numMessGot}</h2>
+        <p className="subtitle">Echoes Returned: Engaging Dialogues!</p>
+      </div>
 
-            <div ref={ref8} className={`section ${inView8 ? 'visible' : 'hidden'}`}>
-              <h2>Top Messaged Users</h2>
-              <ul>
-                {Object.entries(topMessaged).map(([userId, userInfo]) => (
-                  <li key={userId} className="pulse">
-                    You've messaged {userInfo.name} {userInfo.message_count} times.
-                  </li>
-                ))}
-              </ul>
-              <h2>Your Biggest Fans: Users who have Messaged You the Most</h2>
-              <ul>
-                {Object.entries(topMessGot).map(([userId, userInfo]) => (
-                  <li key={userId} className="pulse">
-                    {userInfo.name} has messaged you {userInfo.message_count} times.
-                  </li>
-                ))}
-              </ul>
-            </div>
+      <div ref={ref8} className={`section ${inView8 ? 'visible' : 'hidden'}`}>
+        <h2>Top Messaged Users</h2>
+        <p className="subtitle">Pen Pals Galore: Your Top Chat Companions!</p>
+        <ul>
+          {Object.entries(topMessaged).map(([userId, userInfo]) => (
+            <li key={userId} className="pulse">
+              You've messaged {userInfo.name} {userInfo.message_count} times.
+            </li>
+          ))}
+        </ul>
+        <h2>Your Biggest Fans: Users who have Messaged You the Most</h2>
+        <p className="subtitle">Fan Mail: Your Admirers in Numbers!</p>
+        <ul>
+          {Object.entries(topMessGot).map(([userId, userInfo]) => (
+            <li key={userId} className="pulse">
+              {userInfo.name} has messaged you {userInfo.message_count} times.
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
+  )}
+</main>
+</div>
 
-            {/* Add more sections as needed */}
-          </>
-        )}
-      </main>
-    </div>
-  );
 
-}
+)}

@@ -6,6 +6,12 @@
     font-family: 'Bebas Neue', sans-serif !important;
 
 }
+.subtitle {
+    font-size: 16px;
+    color: white; /* You can adjust the color to your preference */
+    margin-top: 4px; /* Adjust the spacing as needed */
+    font-style: italic;
+  }
   
 
 @keyframes gradientBackground {
