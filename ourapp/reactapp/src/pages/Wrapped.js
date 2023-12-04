@@ -18,7 +18,8 @@ export default function Wrapped() {
   const [leastValuedCategory, setLeastValuedCategory] = useState([]);
   const [mostValuedFeedback, setmostValuedFeedback] = useState([]);
   const [leastValuedFeedback, setLeastValuedFeedback] = useState([]);
-
+  const [numMatch, setNumMatched] = useState("");
+  const [numUnMatch, setNumUnMatched] = useState("");
 
   const fetchQuestions = () => {
     axios
@@ -61,7 +62,6 @@ export default function Wrapped() {
     axios
       .get(`http://localhost:3000/user_most_valued_feedback/${user?.id}`)
       .then((response) => {
-        console.log("here new!!!", response.data);
         setmostValuedFeedback(response.data.categories);
       })
       .catch((error) => {
@@ -69,12 +69,10 @@ export default function Wrapped() {
       });
   };
 
-
   const fetchLeastValuedFeedback = () => {
     axios
       .get(`http://localhost:3000/user_least_valued_feedback/${user?.id}`)
       .then((response) => {
-        console.log("here new!!!", response.data);
         setLeastValuedFeedback(response.data.categories);
       })
       .catch((error) => {
@@ -82,7 +80,29 @@ export default function Wrapped() {
       });
   };
 
+  const fetchNumMatched = () => {
+    axios
+      .get(`http://localhost:3000/num_matches_historic/${user?.id}`)
+      .then((response) => {
+        setNumMatched(response.data.num_matches);
+      })
+      .catch((error) => {
+        console.error("Error fetching the messages:", error);
+      });
+  };
 
+  const fetchNumUnMatched = () => {
+    axios
+      .get(`http://localhost:3000/num_unmatches/${user?.id}`)
+      .then((response) => {
+        console.log("here new!!!", response.data);
+        setNumUnMatched(response.data.num_unmatches);
+      })
+      .catch((error) => {
+        console.error("Error fetching the messages:", error);
+      });
+  };
+ 
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
@@ -103,6 +123,8 @@ export default function Wrapped() {
       fetchLeastValuedCategory();
       fetchMostValuedFeedback();
       fetchLeastValuedFeedback();
+      fetchNumMatched();
+      fetchNumUnMatched();
     }
   }, [user]);
 
@@ -143,7 +165,8 @@ export default function Wrapped() {
             </li>
           ))}
         </ul>
-        
+        <h2>Historical Number of Matches: {numMatch}</h2>
+        <h2>Number of Unmatches: {numUnMatch}</h2>
       </main>
     </div>
   );
