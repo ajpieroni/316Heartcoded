@@ -13,6 +13,7 @@ function Header() {
   
   const handleLogout = () => {
     sessionStorage.removeItem('user');
+    // localStorage.setItem()
     setUser(null); 
     navigate('/'); 
   };
