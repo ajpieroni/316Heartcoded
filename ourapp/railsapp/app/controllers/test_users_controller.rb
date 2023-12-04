@@ -85,6 +85,9 @@ end
   def create
     @test_user = TestUser.new(test_user_params)
 
+    @test_user.avatar.attach(params[:avatar]) if params[:avatar]
+
+
     if @test_user.save
       render json: {success: true, message: "user successfully created", id: @test_user.id }
     else
@@ -109,6 +112,9 @@ end
     threshold = 120
 
     is_first_update = (@test_user.updated_at - @test_user.created_at).abs <= threshold
+
+    @test_user.avatar.attach(params[:avatar]) if params[:avatar].present?
+
     # respond_to do |format|
       if @test_user.update(test_user_params)
         # format.html { redirect_to test_user_url(@test_user), notice: "Test user was successfully updated." }
