@@ -8,6 +8,8 @@ import axios from "axios";
 export default function ChatConversation({ selectedUser }) {
   const reciever = selectedUser;
   const [convStarters, setConvStarters] = useState({});
+  const [datePrompt, setDatePrompt] = useState({});
+
   const [convLoading, setConvLoading] = useState(false);
   // console.log("reciever test", recievertest)
   const apiToken = process.env.REACT_APP_API_TOKEN;
@@ -207,58 +209,57 @@ export default function ChatConversation({ selectedUser }) {
   }
 
   const sendMessageToBotDate = async (text) => {
-console.log("try clause")
     try {
       setConvLoading(true);
       const data = { inputs: text };
       const response = await fetch(
         "https://api-inference.huggingface.co/models/meta-llama/Llama-2-70b-chat-hf",
         {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${apiToken}`,
           },
-          method: "POST",
           body: JSON.stringify(data),
         }
       );
-
+  
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
+        
       }
-      console.log("response ok");
-
-      const tempresult = await response.json();
-      let fullResponse = tempresult[0].generated_text;
-      console.log(fullResponse);
+  
+      const responseData = await response.json();
+      const generatedText = responseData[0].generated_text;
+  
+      let botReply = "";
+  
       const responseRegex = /\n([\s\S]*)/;
-      const reply = fullResponse.match(responseRegex);
-      let botreply = "";
-      let messagetobecut = newMessage.trim();
-
-      if (reply) {
-        console.log(reply[1]);
-        console.log("set to reply[1]");
-        botreply = reply[1].replace(/"/g, "");
+      const replyMatch = generatedText.match(responseRegex);
+  
+      if (replyMatch) {
+        botReply = replyMatch[1].replace(/"/g, "");
       } else {
-        const partToRemove =
-          /Generate a conversation starter for a potential couple\.  Be a bit sarcastic: /;
-        const newMessage = fullResponse.replace(partToRemove, "").trim();
-        const finalMessage = newMessage.replace(messagetobecut, "").trim();
-        console.log("set to regex");
-        botreply = finalMessage.replace(/"/g, "");
-        console.log(botreply);
-        setConvLoading(false);
+        const partToRemove = /Generate a conversation starter for a potential couple\.  Be a bit sarcastic: /;
+        const newMessage = generatedText.replace(partToRemove, "").trim();
+        const finalMessage = newMessage.replace(text.trim(), "").trim();
+        botReply = finalMessage.replace(/"/g, "");
+  
+        const conversationKey = `${user?.id}-${reciever?.id}`;
+        setDatePrompt((prevDate) => ({
+          ...prevDate,
+          [conversationKey]: botReply,
+        }));
       }
-     
+  
       setConvLoading(false);
-      console.log(botreply);
-      return botreply;
+      return botReply;
     } catch (error) {
       console.error("Error sending message to the bot:", error);
       setConvLoading(false);
     }
   };
+  
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
@@ -319,6 +320,7 @@ console.log("try clause")
           users={users}
           reciever={reciever}
           convStarters={convStarters}
+          datePrompt={datePrompt}
         />
 
         <div className="message-input-container">
@@ -350,7 +352,7 @@ console.log("try clause")
   );
 }
 
-function MessageList({ messages, currentUser, users, reciever, convStarters }) {
+function MessageList({ messages, currentUser, users, reciever, convStarters, datePrompt }) {
   console.log("here's reciever", reciever);
   const conversationKey = `${currentUser.id}-${reciever.id}`;
  
@@ -391,6 +393,13 @@ function MessageList({ messages, currentUser, users, reciever, convStarters }) {
           <p>Wingman: {convStarters[conversationKey]}</p>
         </div>
       )}
+      {datePrompt[conversationKey] && (
+        <div className="bot-reply">
+          <p>Wingman: {datePrompt[conversationKey]}</p>
+        </div>
+      )}
+       
+     
     </div>
   );
 }
