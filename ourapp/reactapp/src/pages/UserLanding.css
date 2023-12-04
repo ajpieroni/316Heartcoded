@@ -43,6 +43,7 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 2rem;
+    margin-bottom: 40px;
   }
   
   .feature-card {
