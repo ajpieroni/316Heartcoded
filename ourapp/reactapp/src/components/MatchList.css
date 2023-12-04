@@ -26,3 +26,14 @@
   .matches-and-chat-container{
     height: 100vh;
   }
+
+  .matches-list li {
+    cursor: pointer;
+    padding: 8px 12px;
+    border-bottom: 1px solid #ccc;
+    transition: background-color 0.3s;
+  }
+  
+  .matches-list li:hover {
+    background-color: #fbd7de;
+  }
