@@ -6,7 +6,7 @@ body {
   min-height: 100vh;
   min-width: 100vh;
   font-family: 'Open Sans', sans-serif;
-  background: linear-gradient(to bottom, #FBB6CE, #F87171, #EF4444);
+  background: linear-gradient(to bottom, #FBB6CE, #f99595, #e46d6d);
 }
   
 .welcome-message {

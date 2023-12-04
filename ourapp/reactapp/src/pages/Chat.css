@@ -3,14 +3,26 @@
 }
 
 .chat-container {
-    border: 1px solid #e0e0e0 !important;
+    border: 1px solid var(--pale) !important;
     padding: 10px !important;
     border-radius: 8px !important;
+    margin-right: 60px;
+    height: 92vh;
+}
+
+.chat-page-container {
+    border: 1px solid var(--pale) !important;
+    padding: 10px !important;
+    border-radius: 8px !important;
+    margin-bottom: 40px;
+    height: 92vh;
+    min-width: 600px;
 }
 
 .message-list {
-    max-height: 400px !important;
+    height: 84vh;
     overflow-y: auto !important;
+    font-family: 'Varela Round', sans-serif;
 }
 
 .message {
@@ -43,14 +55,19 @@
     padding: 10px !important;
     border-radius: 8px !important;
     border: 1px solid #e0e0e0 !important;
+    width: 100%;
 }
 
 .message-input-container button {
     padding: 10px 20px !important;
     border: none !important;
-    background-color: #007BFF !important;
+    background-color: var(--rose) !important;
     color: white !important;
     border-radius: 8px !important;
     margin-left: 10px !important;
     cursor: pointer !important;
+}
+
+.message-input-container button:hover {
+    background-color: var(--dark);
 }

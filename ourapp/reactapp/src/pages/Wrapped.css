@@ -1,0 +1,135 @@
+.welcome-wrap-message {
+    text-align: center !important;
+    color: white  !important;
+    margin-top: 6rem !important;
+    font-size: 8rem;
+    font-family: 'Bebas Neue', sans-serif !important;
+
+}
+.audiocontroller{
+    /* background-color: red; */
+    width: 100%;
+    display: inline-flex;
+    flex-direction: column;
+    align-content: space-around;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 100px;
+
+}
+.audio{
+    visibility: hidden;
+}
+.h2{
+    font-family: 'Bebas Neue', sans-serif !important;
+}
+.subtitle {
+    font-size: 1.75rem;
+    color: white; /* You can adjust the color to your preference */
+    margin-top: 4px; /* Adjust the spacing as needed */
+    /* font-style: italic; */
+    font-family: 'Varela Round', sans-serif !important;
+  }
+  
+
+@keyframes gradientBackground {
+    0% { background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); }
+    25% { background: linear-gradient(-45deg, #23a6d5, #23d5ab, #ee7752, #e73c7e); }
+    50% { background: linear-gradient(-45deg, #23d5ab, #ee7752, #e73c7e, #23a6d5); }
+    75% { background: linear-gradient(-45deg, #e73c7e, #23a6d5, #23d5ab, #ee7752); }
+    100% { background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); }
+  }
+  
+  .mainer-container {
+    animation: gradientBackground 15s ease infinite;
+    background-size: 400% 400%;
+  }
+  
+  @keyframes slideInFromLeft {
+    0% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .slide-in {
+    animation: 1s ease-out 0s 1 slideInFromLeft;
+  }
+  
+  @keyframes scaleUp {
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+      font-family: 'Bebas Neue', sans-serif !important;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+      font-family: 'Bebas Neue', sans-serif !important;
+    }
+  }
+  
+  .scale-up {
+    animation: scaleUp 0.5s ease-in-out;
+    font-family: 'Bebas Neue', sans-serif !important;
+    font-size: 4rem !important;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.7;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  .pulse {
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .fade-in {
+    animation: fadeIn 1s ease-in;
+  }
+  
+
+.section {
+    margin: 250px; 
+    max-width: 600px;
+    
+  }
+  
+  .hidden {
+    opacity: 0;
+    transform: translateY(20px); 
+  }
+  
+  .visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  .font{
+    font-size: 2rem !important;
+    font-family: 'Bebas Neue', sans-serif !important;
+
+  }
