@@ -4,6 +4,8 @@ import { UserContext } from "../components/contexts/UserContext";
 import "./ViewProfile.css";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
+import { useNavigate } from "react-router-dom";
+
 
 export default function UserForm({ onUserAdded }) {
   const [ageError, setAgeError] = useState("");
@@ -22,6 +24,7 @@ export default function UserForm({ onUserAdded }) {
     username: "",
   });
 
+  const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [login, setLogin] = useState(false);
 
@@ -325,8 +328,9 @@ export default function UserForm({ onUserAdded }) {
           </label>
         )} */}
           <br></br>
-          <p>Want to delete your profile?</p>
+          
         </form>
+        <button onClick={() => navigate("/delete-profile")}>Delete Profile</button>
       </div>
     </>
   );

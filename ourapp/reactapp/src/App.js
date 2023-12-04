@@ -12,6 +12,7 @@ import Chat from "./pages/Chat";
 import CreateProfile from "./pages/CreateProfile";
 import EditProfile from "./pages/EditProfile";
 import Feedback from "./pages/Feedback";
+import DeleteProfile from "./components/DeleteButton.js";
 import FindMatch from "./pages/FindMatch";
 import Questions from "./pages/Questions";
 import { UserContext } from "./components/contexts/UserContext";
@@ -55,7 +56,8 @@ function App() {
           <Route exact path="/MatchList" element={<MatchList />} />
           <Route exact path="/Questions" element={<Questions />} />
           <Route exact path="/UserSignedIn" element={<UserSignedIn />} />
-          <Route exact path="/Wrapped" element={<Wrapped />} />'
+          <Route exact path="/Wrapped" element={<Wrapped />} />
+          <Route path="/delete-profile" element={<DeleteProfile />} />
           {/* <Route path="/signed-in">
             <UserSignedIn />
           </Route> */}
