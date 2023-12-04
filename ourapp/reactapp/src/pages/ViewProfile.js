@@ -3,6 +3,7 @@ import axios from 'axios';
 import { UserContext } from "../components/contexts/UserContext";
 import "./ViewProfile.css";
 import { Link } from "react-router-dom";
+import Header from '../components/Header';
 
 
 export default function UserForm({ onUserAdded }) {
@@ -122,6 +123,8 @@ export default function UserForm({ onUserAdded }) {
 
 
   return (
+    <>
+    <Header/>
     <div className="user-profile">
       <form>
         {/* <h1>Hello, {formData.name}! You've been with us since {formData.createdAt.split('T')[0]}</h1> */}
@@ -275,6 +278,7 @@ export default function UserForm({ onUserAdded }) {
 
       </form>
     </div>
+    </>
   );
 }
 
