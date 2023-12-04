@@ -2,11 +2,21 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../components/contexts/UserContext";
+import { useEffect } from "react";
 
 const DeleteProfile = () => {
   const { user, setUser } = useContext(UserContext);
   const [confirmation, setConfirmation] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem("user");
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+    //   setLogin(true);
+    }
+  }, []);
 
   const handleDelete = async () => {
     if (confirmation === "DELETE") {
@@ -17,7 +27,7 @@ const DeleteProfile = () => {
         }
 
         const response = await axios.delete(
-          `http://localhost:3000/test_users/${user.id}`
+          `http://localhost:3000/test_users/${user?.id}`
         );
 
         if (response.status === 200) {
@@ -26,12 +36,14 @@ const DeleteProfile = () => {
           setUser(null);
           sessionStorage.removeItem("user");
           localStorage.removeItem("username");
-          navigate("/"); // Navigate to the homepage or login page
+          navigate("/"); 
         } else {
           console.error("Failed to delete user");
+          navigate("/"); 
         }
       } catch (error) {
         console.error("Error deleting user:", error);
+        navigate("/"); 
       }
     }
   };
