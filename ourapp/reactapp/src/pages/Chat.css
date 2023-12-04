@@ -39,7 +39,11 @@
 .message.received {
     background-color: #f4f4f4 !important;
 }
-
+.bot-reply{
+    background-color: lightblue;
+    border-radius: 9999px;
+    padding: 1rem;
+}
 .timestamp {
     font-size: 0.8em !important;
     color: gray !important;
