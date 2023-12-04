@@ -25,7 +25,11 @@ export default function Wrapped() {
   const [topMessaged, setTopMessaged] = useState([]);
   const [topMessGot, setTopMessGot] = useState([]);
 
+  const [loading, setLoading] = useState(true);
+
   const fetchQuestions = () => {
+    setLoading(true);
+
     axios
       .get(` http://localhost:3000/answered_questions_count/${user?.id}`)
       .then((response) => {
@@ -37,6 +41,8 @@ export default function Wrapped() {
       });
   };
   const fetchMostValuedCategory = () => {
+    setLoading(true);
+
     axios
       .get(`http://localhost:3000/user_most_valued_category/${user?.id}`)
       .then((response) => {
@@ -51,6 +57,8 @@ export default function Wrapped() {
       });
   };
   const fetchLeastValuedCategory = () => {
+    setLoading(true);
+
     axios
       .get(`http://localhost:3000/user_least_valued_category/${user?.id}`)
       .then((response) => {
@@ -63,6 +71,8 @@ export default function Wrapped() {
   };
 
   const fetchMostValuedFeedback = () => {
+    setLoading(true);
+
     axios
       .get(`http://localhost:3000/user_most_valued_feedback/${user?.id}`)
       .then((response) => {
@@ -74,6 +84,8 @@ export default function Wrapped() {
   };
 
   const fetchLeastValuedFeedback = () => {
+    setLoading(true);
+
     axios
       .get(`http://localhost:3000/user_least_valued_feedback/${user?.id}`)
       .then((response) => {
@@ -85,6 +97,8 @@ export default function Wrapped() {
   };
 
   const fetchNumMatched = () => {
+    setLoading(true);
+
     axios
       .get(`http://localhost:3000/num_matches_historic/${user?.id}`)
       .then((response) => {
@@ -96,6 +110,8 @@ export default function Wrapped() {
   };
 
   const fetchNumUnMatched = () => {
+    setLoading(true);
+
     axios
       .get(`http://localhost:3000/num_unmatches/${user?.id}`)
       .then((response) => {
@@ -108,6 +124,8 @@ export default function Wrapped() {
   };
 
   const fetchNumMessSent = () => {
+    setLoading(true);
+
     axios
       .get(`http://localhost:3000/messages/num_messages_sent/${user?.id}`)
       .then((response) => {
@@ -120,6 +138,8 @@ export default function Wrapped() {
   };
 
   const fetchNumMessGot = () => {
+    setLoading(true);
+
     axios
       .get(`http://localhost:3000/messages/num_messages_gotten/${user?.id}`)
       .then((response) => {
@@ -130,13 +150,17 @@ export default function Wrapped() {
         console.error("Error fetching the messages:", error);
       });
   };
- 
 
   const fetchTopMess = () => {
+    setLoading(true);
+
     axios
-      .get(`http://localhost:3000/messages/top_three_messaged_users/${user?.id}`)
+      .get(
+        `http://localhost:3000/messages/top_three_messaged_users/${user?.id}`
+      )
       .then((response) => {
         setTopMessaged(response.data);
+        
       })
       .catch((error) => {
         console.error("Error fetching the messages:", error);
@@ -144,18 +168,20 @@ export default function Wrapped() {
   };
 
   const fetchTopMessGot = () => {
+    setLoading(true);
+
     axios
       .get(`http://localhost:3000/messages/top_three_mess_users/${user?.id}`)
       .then((response) => {
         setTopMessGot(response.data);
+      setLoading(false);
+
       })
       .catch((error) => {
         console.error("Error fetching the messages:", error);
       });
   };
 
-
-  
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
@@ -189,58 +215,66 @@ export default function Wrapped() {
       <Header />
 
       <main className="main-container">
-        <h1>{user?.name}'s Wrapped</h1>
-        <h2>Questions Answered: {questionsAnswered}</h2>
-        <h2>Most Valued Categories:</h2>
-        <ul>
-          {/* Directly map over mostValuedCategory */}
-          {mostValuedCategory.map((descriptor, index) => (
-            <li key={index}>{descriptor}</li>
-          ))}
-        </ul>
-        <h2>Least Valued Categories:</h2>
-        <ul>
-          {/* Directly map over mostValuedCategory */}
-          {leastValuedCategory.map((descriptor, index) => (
-            <li key={index}>{descriptor}</li>
-          ))}
-        </ul>
-        <h2>Most Valued Feedback:</h2>
-        <ul>
-          {mostValuedFeedback.map((item, index) => (
-            <li key={index}>
-              Category: {item.descriptor}, Feedback: {item.feedback * 100}%
-            </li>
-          ))}
-        </ul>
-        <h2>Least Valued Feedback</h2>
-        <ul>
-          {leastValuedFeedback.map((item, index) => (
-            <li key={index}>
-              Category: {item.descriptor}, Feedback: {item.feedback * 100}%
-            </li>
-          ))}
-        </ul>
-        <h2>Historical Number of Matches: {numMatch}</h2>
-        <h2>Number of Unmatches: {numUnMatch}</h2>
-        <h2>Number of Messages Sent: {numMessSent}</h2>
-        <h2>Number of Messages Received: {numMessGot}</h2>
-        <h2>Top Messaged Users</h2>
-      <ul>
-        {Object.entries(topMessaged).map(([userId, userInfo]) => (
-          <li key={userId}>
-            You've messaged {userInfo.name} {userInfo.message_count} times.
-          </li>
-        ))}
-      </ul>
-      <h2>Your Biggest Fans: Users who have Messaged You the Most</h2>
-      <ul>
-        {Object.entries(topMessGot).map(([userId, userInfo]) => (
-          <li key={userId}>
-            {userInfo.name} has messaged you {userInfo.message_count} times.
-          </li>
-        ))}
-      </ul>
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            <h1>{user?.name}'s Wrapped</h1>
+            <h2>Questions Answered: {questionsAnswered}</h2>
+            <h2>Most Valued Categories:</h2>
+            <ul>
+              {/* Directly map over mostValuedCategory */}
+              {mostValuedCategory.map((descriptor, index) => (
+                <li key={index}>{descriptor}</li>
+              ))}
+            </ul>
+            <h2>Least Valued Categories:</h2>
+            <ul>
+              {/* Directly map over mostValuedCategory */}
+              {leastValuedCategory.map((descriptor, index) => (
+                <li key={index}>{descriptor}</li>
+              ))}
+            </ul>
+            <h2>Most Valued Feedback:</h2>
+            <ul>
+              {mostValuedFeedback.map((item, index) => (
+                <li key={index}>
+                  Category: {item.descriptor}, Feedback: {item.feedback * 100}%
+                </li>
+              ))}
+            </ul>
+            <h2>Least Valued Feedback</h2>
+            <ul>
+              {leastValuedFeedback.map((item, index) => (
+                <li key={index}>
+                  Category: {item.descriptor}, Feedback: {item.feedback * 100}%
+                </li>
+              ))}
+            </ul>
+            <h2>Historical Number of Matches: {numMatch}</h2>
+            <h2>Number of Unmatches: {numUnMatch}</h2>
+            <h2>Number of Messages Sent: {numMessSent}</h2>
+            <h2>Number of Messages Received: {numMessGot}</h2>
+            <h2>Top Messaged Users</h2>
+            <ul>
+              {Object.entries(topMessaged).map(([userId, userInfo]) => (
+                <li key={userId}>
+                  You've messaged {userInfo.name} {userInfo.message_count}{" "}
+                  times.
+                </li>
+              ))}
+            </ul>
+            <h2>Your Biggest Fans: Users who have Messaged You the Most</h2>
+            <ul>
+              {Object.entries(topMessGot).map(([userId, userInfo]) => (
+                <li key={userId}>
+                  {userInfo.name} has messaged you {userInfo.message_count}{" "}
+                  times.
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </main>
     </div>
   );
