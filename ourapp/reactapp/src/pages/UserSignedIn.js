@@ -60,7 +60,7 @@ export default function UserSignedIn() {
   };
 
   useEffect(() => {
-    initializeUser(); // Call the initializeUser function if no user data is in sessionStorage
+    initializeUser(); 
   }, [setUser]);
 
   const handleDelete = async () => {
