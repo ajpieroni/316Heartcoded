@@ -17,7 +17,8 @@ export default function Wrapped() {
   const [mostValuedCategory, setMostValuedCategory] = useState([]);
   const [leastValuedCategory, setLeastValuedCategory] = useState([]);
   const [mostValuedFeedback, setmostValuedFeedback] = useState([]);
-  
+  const [leastValuedFeedback, setLeastValuedFeedback] = useState([]);
+
 
   const fetchQuestions = () => {
     axios
@@ -48,7 +49,7 @@ export default function Wrapped() {
     axios
       .get(`http://localhost:3000/user_least_valued_category/${user?.id}`)
       .then((response) => {
-        console.log("here new",response.data.category_descriptors )
+        console.log("here new", response.data.category_descriptors);
         setLeastValuedCategory(response.data.category_descriptors);
       })
       .catch((error) => {
@@ -60,17 +61,28 @@ export default function Wrapped() {
     axios
       .get(`http://localhost:3000/user_most_valued_feedback/${user?.id}`)
       .then((response) => {
-        console.log("here new!!!",response.data )
-        setmostValuedFeedback(response.data.categories)
+        console.log("here new!!!", response.data);
+        setmostValuedFeedback(response.data.categories);
       })
       .catch((error) => {
         console.error("Error fetching the messages:", error);
       });
   };
 
-  
 
-  
+  const fetchLeastValuedFeedback = () => {
+    axios
+      .get(`http://localhost:3000/user_least_valued_feedback/${user?.id}`)
+      .then((response) => {
+        console.log("here new!!!", response.data);
+        setLeastValuedFeedback(response.data.categories);
+      })
+      .catch((error) => {
+        console.error("Error fetching the messages:", error);
+      });
+  };
+
+
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
@@ -81,17 +93,16 @@ export default function Wrapped() {
   }, []);
 
   useEffect(() => {
-    console.log('feed:', mostValuedFeedback);
+    console.log("feed:", mostValuedFeedback);
   }, [mostValuedFeedback]);
-  
+
   useEffect(() => {
     if (user && user.id) {
       fetchQuestions();
       fetchMostValuedCategory();
       fetchLeastValuedCategory();
       fetchMostValuedFeedback();
-
-      
+      fetchLeastValuedFeedback();
     }
   }, [user]);
 
@@ -118,12 +129,21 @@ export default function Wrapped() {
         </ul>
         <h2>Most Valued Feedback:</h2>
         <ul>
-        {mostValuedFeedback.map((item, index) => (
-          <li key={index}>
-            Descriptor: {item.descriptor}, Feedback: {item.feedback*100}%
-          </li>
-        ))}
-      </ul>
+          {mostValuedFeedback.map((item, index) => (
+            <li key={index}>
+              Category: {item.descriptor}, Feedback: {item.feedback * 100}%
+            </li>
+          ))}
+        </ul>
+        <h2>Least Valued Feedback</h2>
+        <ul>
+          {leastValuedFeedback.map((item, index) => (
+            <li key={index}>
+              Category: {item.descriptor}, Feedback: {item.feedback * 100}%
+            </li>
+          ))}
+        </ul>
+        
       </main>
     </div>
   );
