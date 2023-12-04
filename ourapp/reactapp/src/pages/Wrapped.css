@@ -14,7 +14,8 @@
     align-content: space-around;
     justify-content: space-around;
     align-items: center;
-    padding: 15px;
+    padding-top: 100px;
+
 }
 .audio{
     visibility: hidden;
