@@ -32,18 +32,31 @@ class TestUsersController < ApplicationController
 end
 
 # *Find by username
-def find_by_username
-  username = params[:username]
-  decoded_username = URI.decode_www_form_component(username)
+  def find_by_username
+    username = params[:username]
+    decoded_username = URI.decode_www_form_component(username)
 
-  test_user = TestUser.find_by(username: username)
+    test_user = TestUser.find_by(username: username)
 
-  if test_user
-    render json: test_user
-  else
-    render json: { error: 'User not found' }, status: 404
+    if test_user
+      render json: test_user
+    else
+      render json: { error: 'User not found' }, status: 404
+    end
   end
-end
+
+  def find_by_email
+    email = params[:email]  
+
+    test_user = TestUser.find_by(email: email)
+  
+    if test_user
+      render json: test_user
+    else
+      render json: { error: 'User not found' }, status: 404
+    end
+  end
+
 
   
   def create_message
