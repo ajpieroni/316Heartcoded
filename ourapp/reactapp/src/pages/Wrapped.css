@@ -6,6 +6,19 @@
     font-family: 'Bebas Neue', sans-serif !important;
 
 }
+.audiocontroller{
+    /* background-color: red; */
+    width: 100%;
+    display: inline-flex;
+    flex-direction: column;
+    align-content: space-around;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px;
+}
+.audio{
+    visibility: hidden;
+}
 .h2{
     font-family: 'Bebas Neue', sans-serif !important;
 }
