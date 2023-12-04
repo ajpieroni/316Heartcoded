@@ -2,7 +2,7 @@
   .left-panel {
     background-color: var(--pale);
     padding: 20px;
-    margin-left: 40px;
+    margin-left: 60px;
     height: 90vh;
     overflow-y: auto;
     border-radius: 40px;
