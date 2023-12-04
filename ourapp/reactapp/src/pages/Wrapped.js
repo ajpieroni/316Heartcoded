@@ -22,6 +22,7 @@ export default function Wrapped() {
   const [numUnMatch, setNumUnMatched] = useState("");
   const [numMessSent, setNumMessSent] = useState("");
   const [numMessGot, setNumMessGot] = useState("");
+  const [topMessaged, setTopMessaged] = useState([]);
 
   const fetchQuestions = () => {
     axios
@@ -130,8 +131,17 @@ export default function Wrapped() {
   };
  
 
-//   http://localhost:3000/messages/num_messages_sent/62
-//   http://localhost:3000/messages/num_messages_gotten/62
+  const fetchTopMess = () => {
+    axios
+      .get(`http://localhost:3000/messages/top_three_messaged_users/${user?.id}`)
+      .then((response) => {
+        console.log("here new!!! AYOOOO", response.data);
+        setTopMessaged(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching the messages:", error);
+      });
+  };
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
@@ -156,6 +166,7 @@ export default function Wrapped() {
       fetchNumUnMatched();
       fetchNumMessSent();
       fetchNumMessGot();
+      fetchTopMess();
     }
   }, [user]);
 
@@ -200,6 +211,14 @@ export default function Wrapped() {
         <h2>Number of Unmatches: {numUnMatch}</h2>
         <h2>Number of Messages Sent: {numMessSent}</h2>
         <h2>Number of Messages Received: {numMessGot}</h2>
+        <h2>Top Messaged Users</h2>
+      <ul>
+        {Object.entries(topMessaged).map(([userId, userInfo]) => (
+          <li key={userId}>
+            You've messaged {userInfo.name} {userInfo.message_count} times.
+          </li>
+        ))}
+      </ul>
       </main>
     </div>
   );
