@@ -3,6 +3,7 @@ import "./UserLogin.css";
 import { useNavigate } from "react-router-dom";
 import Conversations from "./Conversations";
 import "./UserSignedIn.css";
+import Picker from 'emoji-picker-react';
 
 import axios from "axios";
 import { useHistory } from "react-router-dom";
@@ -17,7 +18,11 @@ import Header from "../components/Header";
 export default function UserSignedIn() {
   // const [question, setQuestion] = useState("UNINIT");
   const [testUser, setTestUser] = useState("UNINIT");
+  const [chosenEmoji, setChosenEmoji] = useState(null);
 
+  const onEmojiClick = (event, emojiObject) => {
+    setChosenEmoji(emojiObject);
+  };
   const { user, setUser } = useContext(UserContext);
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState(false);
@@ -169,6 +174,7 @@ export default function UserSignedIn() {
             <p> Check out your Heartcoded insights!</p>
           </div>
         </Link>
+        
         {/* hello */}
       </div>
     </div>
