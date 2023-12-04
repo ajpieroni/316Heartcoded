@@ -82,7 +82,7 @@ export default function UserSignedIn() {
   
           </div>
 
-          {showConfirmationDialog && (
+          {/* {showConfirmationDialog && (
             <div className="modal-overlay">
               <div className="modal">
                 <p>Please enter "DELETE" to confirm:</p>
@@ -95,19 +95,19 @@ export default function UserSignedIn() {
             pathname: '/',
             state: { data: user }
             }}> */}
-                <button onClick={handleDelete} className="modal-button">
+                {/* <button onClick={handleDelete} className="modal-button">
                   Confirm
-                </button>
+                </button> */}
                 {/* </Link> */}
-                <button
-                  onClick={() => setShowConfirmationDialog(false)}
-                  className="modal-button"
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          )}
+                {/* <button */}
+                  {/* // onClick={() => setShowConfirmationDialog(false)} */}
+                  {/* // className="modal-button" */}
+                {/* // > */}
+                  {/* Cancel */}
+                {/* </button> */}
+              {/* </div> */}
+            {/* </div> */}
+          {/* )}  */}
         </div>
 
         {/* <Link to={{
