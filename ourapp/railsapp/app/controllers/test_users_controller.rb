@@ -6,20 +6,31 @@ class TestUsersController < ApplicationController
   # GET /test_users or /test_users.json
   def index
     # @test_users = TestUser.all
-    render json: TestUser.all
+    test_users_with_avatars = @test_users.map do |test_user|
+      if test_user.avatar.attached?
+        test_user.as_json.merge(avatar_url: url_for(test_user.avatar))
+      else
+        test_user.as_json.merge(avatar_url: nil)
+      end
+    end
+    render json: test_users_with_avatars
   end
 
   # GET /test_users/1 or /test_users/1.json
   # !TODO: Copy this line to any new table, specifically the json part
   def show
     @test_user = TestUser.find(params[:id])
-    
+  
     if @test_user
-       render json: @test_user
+      if @test_user.avatar.attached?
+        render json: @test_user.as_json.merge(avatar_url: url_for(@test_user.avatar))
+      else
+        render json: @test_user.as_json.merge(avatar_url: nil)
+      end
     else
-       render json: { error: 'User not found' }, status: :not_found
+      render json: { error: 'User not found' }, status: :not_found
     end
- end
+  end
  
  def check_username
   new_username = params[:username]
