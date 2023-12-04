@@ -205,7 +205,7 @@ export default function UserLanding() {
           <div className="feature-card">
             <h2>WRAPPED</h2>
             <p>
-              
+              Check out your Heartcoded insights!
             </p>
           </div>
         </Link>
