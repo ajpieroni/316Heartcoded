@@ -4,8 +4,19 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../components/contexts/UserContext";
 // import bcrypt from 'bcryptjs';
 import Header from "../components/Header";
+import "./Wrapped.css";
+import { useInView } from 'react-intersection-observer';
 
 export default function Wrapped() {
+    const [ref1, inView1] = useInView({ triggerOnce: true, threshold: 0.1 });
+    const [ref2, inView2] = useInView({ triggerOnce: true, threshold: 0.1 });
+    const [ref3, inView3] = useInView({ triggerOnce: true, threshold: 0.1 });
+    const [ref4, inView4] = useInView({ triggerOnce: true, threshold: 0.1 });
+    const [ref5, inView5] = useInView({ triggerOnce: true, threshold: 0.1 });
+    const [ref6, inView6] = useInView({ triggerOnce: true, threshold: 0.1 });
+    const [ref7, inView7] = useInView({ triggerOnce: true, threshold: 0.1 });
+    const [ref8, inView8] = useInView({ triggerOnce: true, threshold: 0.1 });
+  
   const [question, setQuestion] = useState("UNINIT");
   const [testUser, setTestUser] = useState("UNINIT");
   const [error, setError] = useState(null);
@@ -160,7 +171,6 @@ export default function Wrapped() {
       )
       .then((response) => {
         setTopMessaged(response.data);
-        
       })
       .catch((error) => {
         console.error("Error fetching the messages:", error);
@@ -174,8 +184,7 @@ export default function Wrapped() {
       .get(`http://localhost:3000/messages/top_three_mess_users/${user?.id}`)
       .then((response) => {
         setTopMessGot(response.data);
-      setLoading(false);
-
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching the messages:", error);
@@ -209,7 +218,6 @@ export default function Wrapped() {
       fetchTopMessGot();
     }
   }, [user]);
-
   return (
     <div>
       <Header />
@@ -219,63 +227,86 @@ export default function Wrapped() {
           <p>Loading...</p>
         ) : (
           <>
-            <h1>{user?.name}'s Wrapped</h1>
-            <h2>Questions Answered: {questionsAnswered}</h2>
-            <h2>Most Valued Categories:</h2>
-            <ul>
-              {/* Directly map over mostValuedCategory */}
-              {mostValuedCategory.map((descriptor, index) => (
-                <li key={index}>{descriptor}</li>
-              ))}
-            </ul>
-            <h2>Least Valued Categories:</h2>
-            <ul>
-              {/* Directly map over mostValuedCategory */}
-              {leastValuedCategory.map((descriptor, index) => (
-                <li key={index}>{descriptor}</li>
-              ))}
-            </ul>
-            <h2>Most Valued Feedback:</h2>
-            <ul>
-              {mostValuedFeedback.map((item, index) => (
-                <li key={index}>
-                  Category: {item.descriptor}, Feedback: {item.feedback * 100}%
-                </li>
-              ))}
-            </ul>
-            <h2>Least Valued Feedback</h2>
-            <ul>
-              {leastValuedFeedback.map((item, index) => (
-                <li key={index}>
-                  Category: {item.descriptor}, Feedback: {item.feedback * 100}%
-                </li>
-              ))}
-            </ul>
-            <h2>Historical Number of Matches: {numMatch}</h2>
-            <h2>Number of Unmatches: {numUnMatch}</h2>
-            <h2>Number of Messages Sent: {numMessSent}</h2>
-            <h2>Number of Messages Received: {numMessGot}</h2>
-            <h2>Top Messaged Users</h2>
-            <ul>
-              {Object.entries(topMessaged).map(([userId, userInfo]) => (
-                <li key={userId}>
-                  You've messaged {userInfo.name} {userInfo.message_count}{" "}
-                  times.
-                </li>
-              ))}
-            </ul>
-            <h2>Your Biggest Fans: Users who have Messaged You the Most</h2>
-            <ul>
-              {Object.entries(topMessGot).map(([userId, userInfo]) => (
-                <li key={userId}>
-                  {userInfo.name} has messaged you {userInfo.message_count}{" "}
-                  times.
-                </li>
-              ))}
-            </ul>
+            <h1 className="slide-in welcome-message">{user?.name}'s Wrapped</h1>
+
+            <div ref={ref1} className={`section ${inView1 ? 'visible' : 'hidden'}`}>
+              <h2 className="scale-up">Questions Answered: {questionsAnswered}</h2>
+            </div>
+
+            <div ref={ref2} className={`section ${inView2 ? 'visible' : 'hidden'}`}>
+              <h2>Most Valued Categories:</h2>
+              <ul>
+                {mostValuedCategory.map((descriptor, index) => (
+                  <li key={index} className="pulse">{descriptor}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div ref={ref3} className={`section ${inView3 ? 'visible' : 'hidden'}`}>
+              <h2>Least Valued Categories:</h2>
+              <ul>
+                {leastValuedCategory.map((descriptor, index) => (
+                  <li key={index} className="pulse">{descriptor}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div ref={ref4} className={`section ${inView4 ? 'visible' : 'hidden'}`}>
+              <h2>Most Valued Feedback:</h2>
+              <ul>
+                {mostValuedFeedback.map((item, index) => (
+                  <li key={index} className="pulse">
+                    Category: {item.descriptor}, Feedback: {item.feedback * 100}%
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div ref={ref5} className={`section ${inView5 ? 'visible' : 'hidden'}`}>
+              <h2>Least Valued Feedback</h2>
+              <ul>
+                {leastValuedFeedback.map((item, index) => (
+                  <li key={index} className="pulse">
+                    Category: {item.descriptor}, Feedback: {item.feedback * 100}%
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div ref={ref6} className={`section ${inView6 ? 'visible' : 'hidden'}`}>
+              <h2 className="scale-up">Historical Number of Matches: {numMatch}</h2>
+              <h2 className="scale-up">Number of Unmatches: {numUnMatch}</h2>
+            </div>
+
+            <div ref={ref7} className={`section ${inView7 ? 'visible' : 'hidden'}`}>
+              <h2 className="scale-up">Number of Messages Sent: {numMessSent}</h2>
+              <h2 className="scale-up">Number of Messages Received: {numMessGot}</h2>
+            </div>
+
+            <div ref={ref8} className={`section ${inView8 ? 'visible' : 'hidden'}`}>
+              <h2>Top Messaged Users</h2>
+              <ul>
+                {Object.entries(topMessaged).map(([userId, userInfo]) => (
+                  <li key={userId} className="pulse">
+                    You've messaged {userInfo.name} {userInfo.message_count} times.
+                  </li>
+                ))}
+              </ul>
+              <h2>Your Biggest Fans: Users who have Messaged You the Most</h2>
+              <ul>
+                {Object.entries(topMessGot).map(([userId, userInfo]) => (
+                  <li key={userId} className="pulse">
+                    {userInfo.name} has messaged you {userInfo.message_count} times.
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Add more sections as needed */}
           </>
         )}
       </main>
     </div>
   );
+
 }
