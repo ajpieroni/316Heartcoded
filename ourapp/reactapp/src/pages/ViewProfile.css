@@ -9,6 +9,11 @@
     align-items: center;
     justify-content: center;
   }
+.delete{
+    width: 50%;
+    margin-bottom: 50px;
+    padding: 10px;
+}
 
   
 .user-profile label{
