@@ -2,14 +2,14 @@
     justify-content: flex-start !important;
 }
 
-.chat-container {
+.chat-wingman-container {
     border: 1px solid var(--pale);
     padding: 10px !important;
     border-radius: 8px !important;
 }
 
-.message-list {
-    height: 84vh;
+.message-wingman-list {
+    /* height: 84vh; */
     overflow-y: auto !important;
 }
 
@@ -19,14 +19,14 @@
     margin: 5px 0 !important;
 }
 .message.sent {
-    background-color: #e9f5fe !important;
+    background-color: var(--pale) !important;
     text-align: right !important; 
     margin-left: auto !important; 
     margin-right: 0 !important;   
 }
 
 .message.received {
-    background-color: #f4f4f4 !important;
+    background-color: #fbd7de !important;
     text-align: left !important; 
     margin-right: auto !important; 
     margin-left: 0 !important;    
@@ -52,11 +52,15 @@
 .message-input-container button {
     padding: 10px 20px !important;
     border: none !important;
-    background-color: #007BFF !important;
+    background-color: var(--rose)!important;
     color: white !important;
     border-radius: 8px !important;
     margin-left: 10px !important;
     cursor: pointer !important;
+}
+
+.message-input-container button:hover {
+  background-color: var(--dark);
 }
 
 .lds-ellipsis,

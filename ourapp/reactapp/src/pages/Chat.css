@@ -51,9 +51,13 @@
 .message-input-container button {
     padding: 10px 20px !important;
     border: none !important;
-    background-color: #007BFF !important;
+    background-color: var(--rose) !important;
     color: white !important;
     border-radius: 8px !important;
     margin-left: 10px !important;
     cursor: pointer !important;
+}
+
+.message-input-container button:hover {
+    background-color: var(--dark);
 }
