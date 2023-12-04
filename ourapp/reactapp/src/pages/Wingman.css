@@ -6,6 +6,7 @@
     border: 1px solid var(--pale);
     padding: 10px !important;
     border-radius: 8px !important;
+    min-width: 600px;
 }
 
 .message-wingman-list {
