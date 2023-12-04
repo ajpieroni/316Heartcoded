@@ -53,7 +53,7 @@ Rails.application.routes.draw do
   #   post '/send_timeslot_confirmation_email', to: 'api#send_timeslot_confirmation_email'
   #   get '/timeslots/condensed_timeslots', to: 'timeslots#condensed_timeslots'
   #   resources :admin_messages
-  #   resources :line_statuses
+#   resources :line_statuses
   #   resources :user_timeslots, defaults: { format: :json } do
   #     member do
   #       put 'update_status_by_timeslot/:timeslot_id', action: 'update_status_by_timeslot', as: 'update_status_by_timeslot'
