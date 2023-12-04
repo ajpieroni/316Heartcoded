@@ -57,7 +57,7 @@ export default function FindMatch() {
       if (matches.length === 0) {
         setMatchesMaxed(true);
       } else {
-        setMatchesMaxed(false);
+        // setMatchesMaxed(false);
       }
     } catch (error) {
       console.error("Error fetching new matches:", error);
