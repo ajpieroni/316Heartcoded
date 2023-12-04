@@ -187,6 +187,80 @@ export default function ChatConversation({ selectedUser }) {
   };
 
   useEffect(() => {
+    const filteredMessages = messages.filter(msg => 
+      (msg.uid_sender_id === user?.id && msg.uid_receiver_id === reciever?.id) || 
+      (msg.uid_sender_id === reciever?.id && msg.uid_receiver_id === user?.id)
+    );
+  
+    if (filteredMessages.length === 10 || filteredMessages.length > 10) {
+      // Call your desired function here
+      yourFunction();
+    }
+  }, [messages, user?.id, reciever?.id]); // Depend on messages, user.id, and reciever.id
+  
+  function yourFunction() {
+    // Define what you want to do when there are 10 messages
+    console.log("There are 10 messages between the two users.");
+    console.log("called function")
+    sendMessageToBotDate("Tell two users who have sent more than 10 messagaes on a dating app to go on a date with a simple sentence. Be cheeky and sarcastic, similar to this message: Hey there, message-aholics! It's time to put down your phones and actually meet in person. You've already exchanged enough words to write a novel, so why not take the next step and see if your chemistry is as strong in real life as it is in the chat?")
+
+  }
+
+  const sendMessageToBotDate = async (text) => {
+console.log("try clause")
+    try {
+      setConvLoading(true);
+      const data = { inputs: text };
+      const response = await fetch(
+        "https://api-inference.huggingface.co/models/meta-llama/Llama-2-70b-chat-hf",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiToken}`,
+          },
+          method: "POST",
+          body: JSON.stringify(data),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      console.log("response ok");
+
+      const tempresult = await response.json();
+      let fullResponse = tempresult[0].generated_text;
+      console.log(fullResponse);
+      const responseRegex = /\n([\s\S]*)/;
+      const reply = fullResponse.match(responseRegex);
+      let botreply = "";
+      let messagetobecut = newMessage.trim();
+
+      if (reply) {
+        console.log(reply[1]);
+        console.log("set to reply[1]");
+        botreply = reply[1].replace(/"/g, "");
+      } else {
+        const partToRemove =
+          /Generate a conversation starter for a potential couple\.  Be a bit sarcastic: /;
+        const newMessage = fullResponse.replace(partToRemove, "").trim();
+        const finalMessage = newMessage.replace(messagetobecut, "").trim();
+        console.log("set to regex");
+        botreply = finalMessage.replace(/"/g, "");
+        console.log(botreply);
+        setConvLoading(false);
+      }
+     
+      setConvLoading(false);
+      console.log(botreply);
+      return botreply;
+    } catch (error) {
+      console.error("Error sending message to the bot:", error);
+      setConvLoading(false);
+    }
+  };
+
+  useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -279,7 +353,8 @@ export default function ChatConversation({ selectedUser }) {
 function MessageList({ messages, currentUser, users, reciever, convStarters }) {
   console.log("here's reciever", reciever);
   const conversationKey = `${currentUser.id}-${reciever.id}`;
-
+ 
+  
   return (
     <div className="message-list">
       <h1>{reciever?.name}</h1>
