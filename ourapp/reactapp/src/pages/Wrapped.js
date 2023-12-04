@@ -15,6 +15,8 @@ export default function Wrapped() {
   const [login, setLogin] = useState(false);
   const [questionsAnswered, setQuestionsAnswered] = useState("");
   const [mostValuedCategory, setMostValuedCategory] = useState([]);
+  const [leastValuedCategory, setLeastValuedCategory] = useState([]);
+  
 
   const fetchQuestions = () => {
     axios
@@ -41,10 +43,21 @@ export default function Wrapped() {
         console.error("Error fetching the messages:", error);
       });
   };
+  const fetchLeastValuedCategory = () => {
+    axios
+      .get(`http://localhost:3000/user_least_valued_category/${user?.id}`)
+      .then((response) => {
+        console.log("here new",response.data.category_descriptors )
+        setLeastValuedCategory(response.data.category_descriptors);
+      })
+      .catch((error) => {
+        console.error("Error fetching the messages:", error);
+      });
+  };
 
-  useEffect(() => {
-    console.log("New most valued category:", mostValuedCategory);
-  }, [mostValuedCategory]);
+  http://localhost:3000/user_most_valued_feedback/93 
+
+  
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
@@ -55,9 +68,14 @@ export default function Wrapped() {
   }, []);
 
   useEffect(() => {
+    console.log('New least valued category:', leastValuedCategory);
+  }, [leastValuedCategory]);
+  
+  useEffect(() => {
     if (user && user.id) {
       fetchQuestions();
       fetchMostValuedCategory();
+      fetchLeastValuedCategory();
     }
   }, [user]);
 
@@ -67,11 +85,18 @@ export default function Wrapped() {
 
       <main className="main-container">
         <h1>{user?.name}'s Wrapped</h1>
-        <h1>Questions Answered: {questionsAnswered}</h1>
+        <h2>Questions Answered: {questionsAnswered}</h2>
         <h2>Most Valued Categories:</h2>
         <ul>
           {/* Directly map over mostValuedCategory */}
           {mostValuedCategory.map((descriptor, index) => (
+            <li key={index}>{descriptor}</li>
+          ))}
+        </ul>
+        <h2>Least Valued Categories:</h2>
+        <ul>
+          {/* Directly map over mostValuedCategory */}
+          {leastValuedCategory.map((descriptor, index) => (
             <li key={index}>{descriptor}</li>
           ))}
         </ul>
