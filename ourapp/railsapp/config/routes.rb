@@ -17,7 +17,8 @@ Rails.application.routes.draw do
   end
 
   resources :password_resets, only: [:edit, :update]
-
+  post 'password/forgot', to: 'password_resets#forgot'
+  post 'password/reset', to: 'password_resets#reset'
 
   # Define all RESTful routes for test_users and custom member/collection routes
   resources :test_users do

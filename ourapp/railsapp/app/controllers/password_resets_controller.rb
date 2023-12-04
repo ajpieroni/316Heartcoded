@@ -1,8 +1,52 @@
 class PasswordResetsController < ApplicationController
   before_action :find_user_by_reset_token, only: [:edit, :update]
+  skip_before_action :verify_authenticity_token, only: [:forgot, :reset]
+
 
   def edit
   end
+  
+  def forgot
+    puts "Received params: #{params}"
+    if params[:email].blank?
+      render json: { error: 'Email not present' }, status: :unprocessable_entity
+      return
+    end
+  
+    user = TestUser.find_by(email: params[:email])
+  
+    if user.present?
+      user.generate_password_token!
+      user.save 
+      HeartcodedMailer.password_reset_email(user).deliver_now
+      render json: { status: 'ok' }, status: :ok
+    else
+      render json: { error: ['Email address not found. Please check and try again.'] }, status: :not_found
+    end
+  end
+  
+
+  def reset
+    code = params[:code].to_s
+  
+    if params[:email].blank?
+      render json: { error: 'Code not present' }, status: :unprocessable_entity
+      return
+    end
+  
+    user = TestUser.find_by(reset_password_token: code)
+  
+    if user.present? && user.password_token_valid?
+      if user.reset_password!(params[:password])
+        render json: { status: 'ok' }, status: :ok
+      else
+        render json: { error: user.errors.full_messages }, status: :unprocessable_entity
+      end
+    else
+      render json: { error: ['Code not valid or expired. Try generating a new code.'] }, status: :not_found
+    end
+  end
+  
 
   def update
     if @user && @user.update(password: params[:password])
@@ -17,10 +61,12 @@ class PasswordResetsController < ApplicationController
   private
 
   def find_user_by_reset_token
-    @user = User.find_by(reset_token: params[:reset_token], email: params[:email])
-    unless @user
-      flash[:alert] = "Invalid password reset link."
+    @user = TestUser.find_by(reset_password_token: params[:code])
+  
+    unless @user && @user.password_token_valid?
+      flash[:alert] = "Invalid or expired password reset code. Please try again."
       redirect_to root_path
     end
   end
+  
 end

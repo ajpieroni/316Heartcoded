@@ -21,6 +21,8 @@ import Wingman from "./pages/Wingman";
 import MatchList from "./components/MatchList";
 import ForgotPassword from "./pages/ForgotPassword";
 import SignUp from "./pages/SignUp";
+import ResetRequest from "./pages/ResetRequest";
+import ResetPassword from "./pages/ResetPassword";
 
 
 function App() {
@@ -52,6 +54,9 @@ function App() {
           <Route exact path="/MatchList" element={<MatchList />} />
           <Route exact path="/Questions" element={<Questions />} />
           <Route exact path="/UserSignedIn" element={<UserSignedIn />} />'
+          <Route exact path="/ResetRequest" element={<ResetRequest />} />'
+          <Route exact path="/ResetPassword" element={<ResetPassword />} />'
+
           {/* <Route path="/signed-in">
             <UserSignedIn />
           </Route> */}
