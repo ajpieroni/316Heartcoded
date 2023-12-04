@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   get 'user_least_valued_feedback/:id', to: 'weights#user_least_valued_feedback'
   get 'num_matches_historic/:id', to: 'matched_withs#num_matches_historic'
   get 'num_unmatches/:id', to: 'matched_withs#num_unmatches'
+  get 'messages/num_messages_sent/:uid_sender_id', to: 'messages#num_messages_sent'
 
   # Uncomment the following if you're using these APIs and ensure their correct placement within the namespace
   # namespace :api do
