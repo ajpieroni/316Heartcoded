@@ -170,6 +170,10 @@ end
 
   # DELETE /test_users/1 or /test_users/1.json
   def destroy
+    # @test_user.messages.destroy_all
+    # @test_user.matched_withs.destroy_all
+    @test_user.sent_messages.destroy_all
+    @test_user.received_messages.destroy_all
     @test_user.destroy
 
     respond_to do |format|

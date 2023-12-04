@@ -11,6 +11,12 @@
   position: fixed;
   width: 100%;
   background-color: var(--rose);
+  z-index: 100;
+}
+
+.nav-right{
+  display:flex;
+  justify-content: space-between;
 }
 
 .user-welcome {
