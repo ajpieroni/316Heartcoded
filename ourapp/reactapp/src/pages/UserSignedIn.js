@@ -60,38 +60,11 @@ export default function UserSignedIn() {
   };
 
   useEffect(() => {
-    initializeUser(); // Call the initializeUser function if no user data is in sessionStorage
+    initializeUser(); 
   }, [setUser]);
 
-  const handleDelete = async () => {
-    if (confirmation === "DELETE") {
-      try {
-        if (!user || !user.id) {
-          console.error("User ID is not available.");
-          return;
-        }
 
-        const response = await axios.delete(
-          `http://localhost:3000/test_users/${user.id}`
-        );
 
-        if (response.status === 200) {
-          console.log("User deleted successfully");
-          // Handle successful deletion, e.g., redirect or update state
-        } else {
-          console.error("Failed to delete user");
-        }
-      } catch (error) {
-        console.error("Error deleting user:", error);
-      }
-      setConfirmation("");
-      setShowConfirmationDialog(false);
-      navigate("/");
-    }
-  };
-
-  // const history = useHistory();
-  const navigate = useNavigate();
   return (
     <div>
       <div className="features">
@@ -106,16 +79,7 @@ export default function UserSignedIn() {
               alignItems: "center",
             }}
           >
-            <button
-              onClick={() => setShowConfirmationDialog(true)}
-              style={{
-                backgroundColor: "red",
-                color: "white",
-                cursor: "pointer",
-              }}
-            >
-              Delete Profile
-            </button>
+  
           </div>
 
           {showConfirmationDialog && (
