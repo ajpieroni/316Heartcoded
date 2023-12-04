@@ -28,42 +28,47 @@ export default function UserForm({ onUserAdded }) {
 
 
   
-  useEffect(() => {
-    // console.log('User ID in useEffect:', user.id);
+useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);
       setLogin(true);
-    
-    axios.get(`http://localhost:3000/test_users/${user?.id}`)
-      .then(response => {
-        let userData = response.data;
-        setFormData({
-          name: userData.name || '',
-          gender: userData.gender || '',
-          birthday: userData.birthday || '',
-          bio: userData.bio || '',
-          location: userData.location || '',
-          preferences: userData.preferences || '',
-          password: userData.password || '',
-          red_flags: userData.red_flags || [],
-          createdAt: userData.created_at || '',
-          updatedAt: userData.updated_at || '',
-          username: userData.username || ''
+    }
+  }, []); 
+  
+  
+  useEffect(() => {
+    if (user?.id) {
+      axios.get(`http://localhost:3000/test_users/${user.id}`)
+        .then(response => {
+          let userData = response.data;
+          setFormData({
+            name: userData.name || '',
+            gender: userData.gender || '',
+            birthday: userData.birthday || '',
+            bio: userData.bio || '',
+            location: userData.location || '',
+            preferences: userData.preferences || '',
+            password: userData.password || '',
+            red_flags: userData.red_flags || [],
+            createdAt: userData.created_at || '',
+            updatedAt: userData.updated_at || '',
+            username: userData.username || ''
+          });
+  
+          const joinedDate = new Date(userData.created_at);
+          const today = new Date();
+          const timeDiff = today - joinedDate;
+          const calculatedDays = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+          setDays(calculatedDays);
+        })
+        .catch(error => {
+          console.error('Error fetching user data:', error);
         });
-
-        const joinedDate = new Date(userData.created_at);
-        const today = new Date();
-        const timeDiff = today - joinedDate;
-        const calculatedDays = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-        setDays(calculatedDays);
-    
-      })
-      .catch(error => {
-        console.error('Error fetching user data:', error);
-      });
-  }}, [user?.id]);
+    }
+  }, [user?.id]); 
+  
 
   function StatesList({ onStateSelected }) {
     const [states, setStates] = useState([]);
@@ -78,13 +83,6 @@ export default function UserForm({ onUserAdded }) {
         });
     }, []);
 
-    useEffect(() => {
-        const storedUser = sessionStorage.getItem("user");
-        if (storedUser) {
-          setUser(JSON.parse(storedUser));
-          setLogin(true);
-        }
-      }, []);
 
     return (
       <div>
@@ -144,12 +142,15 @@ export default function UserForm({ onUserAdded }) {
     <div className="user-profile">
       <form>
         {/* <h1>Hello, {formData.name}! You've been with us since {formData.createdAt.split('T')[0]}</h1> */}
-        <h1 className="main-title"> Hello, {formData.name}!  
+        <h1 className="main-title"> Hello, {formData.name}!  </h1>
+        {/* <h2>
   {
-    days === 0 
-    ? " You've been a user since today, thanks for joining!" 
-    : ` You've been with us for ${days} ${days === 1 ? 'day' : 'days'}.`
-  }.</h1>
+    days !== null 
+    ? (days === 0 
+        ? " You've been a user since today, thanks for joining!" 
+        : ` You've been with us for ${days} ${days === 1 ? 'day.' : 'days.'}`)
+    : ""
+  } </h2> */}
         <div className="profile-form">
         <div style={{ display: 'flex', alignItems: 'center' }}>
         <Link to={{
