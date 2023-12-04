@@ -125,7 +125,7 @@ export default function UserForm({ onUserAdded }) {
     <div className="user-profile">
       <form>
         {/* <h1>Hello, {formData.name}! You've been with us since {formData.createdAt.split('T')[0]}</h1> */}
-        <h1 className="view-profile-title">Hello, {formData.name}! You've been with us for {days} {days === 1 ? 'day' : 'days'}.</h1>
+        <h1 className="main-title">Hello, {formData.name}! You've been with us for {days} {days === 1 ? 'day' : 'days'}.</h1>
         <div className="profile-form">
         <div style={{ display: 'flex', alignItems: 'center' }}>
         <Link to={{
