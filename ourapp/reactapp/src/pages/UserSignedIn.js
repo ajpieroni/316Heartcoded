@@ -202,7 +202,7 @@ export default function UserSignedIn() {
         <Link to="/Wrapped">
           <div className="feature-card">
             <h2>Wrapped</h2>
-            <p></p>
+            <p> Check out your Heartcoded insights!</p>
           </div>
         </Link>
         {/* hello */}
