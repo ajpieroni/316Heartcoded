@@ -184,6 +184,7 @@ export default function FindMatch() {
     <div>
       <Header />
       <main className="main-container">
+      <h1 className="main-title">Your Matches</h1>
       {loading && (
         <div className="loading-container">
           <div className="loading-text">

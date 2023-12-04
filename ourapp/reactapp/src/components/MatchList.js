@@ -136,7 +136,7 @@ export default function MatchList({onUserSelected}) {
   }
 
   return (
-    <main className="main-container">
+    <>
       {loading ? (
         <div className="loading">Loading{".".repeat(ellipsisDots)}</div>
       ) : (
@@ -145,7 +145,7 @@ export default function MatchList({onUserSelected}) {
          
             {/* Left Side Panel */}
             <div className="left-panel">
-              <h3>Matches</h3>
+            <h3 className="centered-heading">Matches</h3>
               <ul className="matches-list">
                 {myMatches.map((matchUser) => (
                   <li
@@ -162,6 +162,6 @@ export default function MatchList({onUserSelected}) {
           </div>
         </>
       )}
-    </main>
+    </>
   );
 }
