@@ -20,6 +20,8 @@ export default function Wrapped() {
   const [leastValuedFeedback, setLeastValuedFeedback] = useState([]);
   const [numMatch, setNumMatched] = useState("");
   const [numUnMatch, setNumUnMatched] = useState("");
+  const [numMessSent, setNumMessSent] = useState("");
+  const [numMessGot, setNumMessGot] = useState("");
 
   const fetchQuestions = () => {
     axios
@@ -102,7 +104,34 @@ export default function Wrapped() {
         console.error("Error fetching the messages:", error);
       });
   };
+
+  const fetchNumMessSent = () => {
+    axios
+      .get(`http://localhost:3000/messages/num_messages_sent/${user?.id}`)
+      .then((response) => {
+        console.log("here new!!! ALERT", response.data);
+        setNumMessSent(response.data.messages_count);
+      })
+      .catch((error) => {
+        console.error("Error fetching the messages:", error);
+      });
+  };
+
+  const fetchNumMessGot = () => {
+    axios
+      .get(`http://localhost:3000/messages/num_messages_gotten/${user?.id}`)
+      .then((response) => {
+        console.log("here new!!!", response.data);
+        setNumMessGot(response.data.messages_count);
+      })
+      .catch((error) => {
+        console.error("Error fetching the messages:", error);
+      });
+  };
  
+
+//   http://localhost:3000/messages/num_messages_sent/62
+//   http://localhost:3000/messages/num_messages_gotten/62
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
@@ -125,6 +154,8 @@ export default function Wrapped() {
       fetchLeastValuedFeedback();
       fetchNumMatched();
       fetchNumUnMatched();
+      fetchNumMessSent();
+      fetchNumMessGot();
     }
   }, [user]);
 
@@ -167,6 +198,8 @@ export default function Wrapped() {
         </ul>
         <h2>Historical Number of Matches: {numMatch}</h2>
         <h2>Number of Unmatches: {numUnMatch}</h2>
+        <h2>Number of Messages Sent: {numMessSent}</h2>
+        <h2>Number of Messages Received: {numMessGot}</h2>
       </main>
     </div>
   );
