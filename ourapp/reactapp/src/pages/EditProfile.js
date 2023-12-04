@@ -8,6 +8,7 @@ import Header from "../components/Header";
 
 
 export default function UserForm() {
+  const [selectedAvatar, setSelectedAvatar] = useState(null);
   const [ageError, setAgeError] = useState("");
 
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
@@ -24,7 +25,8 @@ export default function UserForm() {
     location: '',
     preferences: '',
     password: '',
-    red_flags: []
+    red_flags: [],
+    avatar:null,
   });
   const { user, setUser } = useContext(UserContext);
   const username = localStorage.getItem("username") || "defaultUsername";
@@ -50,7 +52,8 @@ export default function UserForm() {
             bio: data.bio,
             location: data.location,
             password: data.password,
-            red_flags: data.red_flags
+            red_flags: data.red_flags,
+            avatar: data.avatar || null
           });
           setFormData({
             name: data.name || '',
@@ -60,7 +63,8 @@ export default function UserForm() {
             location: data.location || '',
             preferences: data.preferences || '',
             password: data.password|| '',
-            red_flags: data.red_flags || []
+            red_flags: data.red_flags || [],
+            avatar: data.avatar || null
           });
           sessionStorage.setItem("user", JSON.stringify(data));
         }
@@ -133,7 +137,14 @@ export default function UserForm() {
     if (name === "birthday") {
       validateAge(value);
     }
+    console.log("handleInputChange",formData);
   };
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setFormData({ ...formData, avatar: file });
+    setSelectedAvatar(file);
+  };
+
   const handleStateSelected = (e) => {
     const selectedState = e.target.value;
     setFormData({ ...formData, location: selectedState });
@@ -160,6 +171,9 @@ export default function UserForm() {
       return;
     }
 
+    // formData.append('avatar',avatarData);
+    // console.log("withAvatar",formData);
+
     try {
 
       if (user.id){
@@ -170,7 +184,7 @@ export default function UserForm() {
         const response = await axios.post(`http://localhost:3000/test_users`, formData);
         setIsSuccessModalOpen(true);
       }
-      setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '', red_flags: [], password: '' });
+      setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '', red_flags: [], password: '', avatar:null });
       //setSuccessMessage("Form submitted successfully.");
     } catch (error) {
       console.error('Error adding a new user:', error);
@@ -216,8 +230,22 @@ export default function UserForm() {
     <div className="user-form-edit">
       {/* <h2>Nice to see you, {user.name.split(' ')[0]}!</h2> */}
       <h1 style={{marginLeft:'20px'}}>Edit Your Information</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
+      <label htmlFor="avatar">Avatar</label>
+        <input
+          type="file"
+          id="avatar"
+          name="avatar"
+          onChange={handleFileChange}
+        />
+        {/* <input type="file" accept="image/*" onChange={(e)=>setAvatarData(e.target.files[0])} /> */}
         <label>
+        {selectedAvatar && (
+          <div>
+            <p>Selected Avatar:</p>
+            <img src={URL.createObjectURL(selectedAvatar)} alt="Selected Avatar" />
+          </div>
+        )}
           Name<span style={{ color: 'red' }}>*</span>: 
           <input
             type="text"
