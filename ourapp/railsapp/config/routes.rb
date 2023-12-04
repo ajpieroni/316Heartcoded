@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   get 'num_matches_historic/:id', to: 'matched_withs#num_matches_historic'
   get 'num_unmatches/:id', to: 'matched_withs#num_unmatches'
   get 'messages/num_messages_sent/:uid_sender_id', to: 'messages#num_messages_sent'
+  get 'messages/num_messages_gotten/:uid_receiver_id', to: 'messages#num_messages_gotten'
 
   # Uncomment the following if you're using these APIs and ensure their correct placement within the namespace
   # namespace :api do

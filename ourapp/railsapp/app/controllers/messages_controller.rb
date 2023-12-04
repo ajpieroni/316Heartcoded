@@ -43,6 +43,13 @@ class MessagesController < ApplicationController
     render json: { sender_id: sender_id, messages_count: messages_count }
   end
 
+  def num_messages_gotten
+    receiver_id = params[:uid_receiver_id]
+    messages_count = Message.where(uid_receiver_id: receiver_id).count
+
+    render json: { receiver_id: receiver_id, messages_count: messages_count }
+  end
+
 
   # PATCH/PUT /messages/1 or /messages/1.json
   def update
