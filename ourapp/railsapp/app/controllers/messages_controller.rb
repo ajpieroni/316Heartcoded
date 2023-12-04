@@ -72,6 +72,29 @@ class MessagesController < ApplicationController
       render json: sorted_top_users
   
     end
+
+
+    def top_three_mess_users
+      receiver_id = params[:uid_receiver_id]
+  
+      top_user_ids = Message.where(uid_receiver_id: receiver_id)
+                            .group(:uid_sender_id)
+                            .order('count_id DESC')
+                            .limit(3)
+                            .count(:id)
+  
+      top_users_with_names = TestUser.where(id: top_user_ids.keys)
+                            .pluck(:id, :name)
+                            .each_with_object({}) do |(id, name), hash|
+                              message_count = top_user_ids[id] 
+                              hash[id.to_s] = { name: name, message_count: message_count }
+      end
+
+      sorted_top_users = top_users_with_names.sort_by { |uid, details| -details[:message_count] }.to_h
+
+      render json: sorted_top_users
+  
+    end
   
 
   # PATCH/PUT /messages/1 or /messages/1.json

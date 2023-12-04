@@ -23,6 +23,7 @@ export default function Wrapped() {
   const [numMessSent, setNumMessSent] = useState("");
   const [numMessGot, setNumMessGot] = useState("");
   const [topMessaged, setTopMessaged] = useState([]);
+  const [topMessGot, setTopMessGot] = useState([]);
 
   const fetchQuestions = () => {
     axios
@@ -135,7 +136,6 @@ export default function Wrapped() {
     axios
       .get(`http://localhost:3000/messages/top_three_messaged_users/${user?.id}`)
       .then((response) => {
-        console.log("here new!!! AYOOOO", response.data);
         setTopMessaged(response.data);
       })
       .catch((error) => {
@@ -143,6 +143,19 @@ export default function Wrapped() {
       });
   };
 
+  const fetchTopMessGot = () => {
+    axios
+      .get(`http://localhost:3000/messages/top_three_mess_users/${user?.id}`)
+      .then((response) => {
+        setTopMessGot(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching the messages:", error);
+      });
+  };
+
+
+  
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
@@ -167,6 +180,7 @@ export default function Wrapped() {
       fetchNumMessSent();
       fetchNumMessGot();
       fetchTopMess();
+      fetchTopMessGot();
     }
   }, [user]);
 
@@ -216,6 +230,14 @@ export default function Wrapped() {
         {Object.entries(topMessaged).map(([userId, userInfo]) => (
           <li key={userId}>
             You've messaged {userInfo.name} {userInfo.message_count} times.
+          </li>
+        ))}
+      </ul>
+      <h2>Your Biggest Fans: Users who have Messaged You the Most</h2>
+      <ul>
+        {Object.entries(topMessGot).map(([userId, userInfo]) => (
+          <li key={userId}>
+            {userInfo.name} has messaged you {userInfo.message_count} times.
           </li>
         ))}
       </ul>
