@@ -92,11 +92,25 @@ export default function ChatConversation({ selectedUser }) {
 
   const [currentPromptIndex, setCurrentPromptIndex] = useState(0);
   const prompts = [
-    "Generate a short conversation starter, be sarcastic about travel for two single people.",
-    "Generate a short conversation starter about food for two single people.",
-    "Generate a short conversation starter about movies for two single people.",
-    "Generate a short conversation starter about hobbies for two single people.",
-    "Generate a short conversation starter about current events for two single people."
+    "Generate a short icebreaker question about travel for two single people. Don't explain your answer, only respond with the question.",
+    "Generate a short icebreaker question about food for two single people. Don't explain your answer, only respond with the question.",
+    "Generate a short icebreaker question about movies for two single people. Don't explain your answer, only respond with the question.",
+    "Generate a short icebreaker question about hobbies for two single people. Don't explain your answer, only respond with the question.",
+    "Generate a short icebreaker question about spirituality for two single people. Don't explain your answer, only respond with the question.",
+    "Generate a short icebreaker question about environmental consciousness for two single people. Don't explain your answer, only respond with the question.",
+    "Generate a short icebreaker question about family for two single people. Don't explain your answer, only respond with the question.",
+    "Generate a short icebreaker question about career interests for two single people. Don't explain your answer, only respond with the question.",
+    "Generate a short icebreaker question about adventure for two single people. Don't explain your answer, only respond with the question.",
+    "Generate a short icebreaker question about trustfulness for two single people. Don't explain your answer, only respond with the question.",
+    "Generate a short icebreaker question about frugality for two single people. Don't explain your answer, only respond with the question.",
+    "Generate a short icebreaker question about sentimentality for two single people. Don't explain your answer, only respond with the question.",
+    "Generate a short icebreaker question about creativity for two single people. Don't explain your answer, only respond with the question.",
+    "Generate a short icebreaker question about traditionalism for two single people. Don't explain your answer, only respond with the question.",
+    "Generate a short icebreaker question about assertiveness for two single people. Don't explain your answer, only respond with the question.",
+
+
+
+
   ];
 
   const getNextPrompt = () => {
@@ -299,7 +313,7 @@ function MessageList({ messages, currentUser, users, reciever, convStarters }) {
         })}
        {convStarters[conversationKey] && (
         <div className="bot-reply">
-          <p>Bot: {convStarters[conversationKey]}</p>
+          <p>Wingman: {convStarters[conversationKey]}</p>
         </div>
       )}
     </div>
