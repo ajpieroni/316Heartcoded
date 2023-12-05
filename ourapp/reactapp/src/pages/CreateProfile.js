@@ -154,6 +154,12 @@ export default function UserForm() {
     setFormData({ ...formData, location: selectedState });
   };
 
+  const handleRemoveRedFlag = (flagToRemove) => {
+    const updatedRedFlags = selectedRedFlags.filter((flag) => flag !== flagToRemove);
+    setSelectedRedFlags(updatedRedFlags);
+    setFormData({ ...formData, red_flags: updatedRedFlags });
+  };
+  
   const validateAge = (birthdate) => {
     const today = new Date();
     const enteredDate = new Date(birthdate);
@@ -367,6 +373,13 @@ export default function UserForm() {
             {selectedRedFlags.map((flag) => (
               <div key={flag} className="selected-flag">
                 {flag}
+                <button
+                  type="button"
+                  onClick={() => handleRemoveRedFlag(flag)}
+                  className="remove-flag-button"
+                >
+                  &#x2715; {/* Unicode for a cross (X) */}
+                </button>
               </div>
             ))}
           </div>

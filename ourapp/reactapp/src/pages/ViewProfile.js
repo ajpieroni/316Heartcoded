@@ -40,6 +40,12 @@ export default function UserForm({ onUserAdded }) {
     }
   }, []);
 
+  const handleRemoveRedFlag = (flagToRemove) => {
+    const updatedRedFlags = selectedRedFlags.filter((flag) => flag !== flagToRemove);
+    setSelectedRedFlags(updatedRedFlags);
+    setFormData({ ...formData, red_flags: updatedRedFlags });
+  };
+
   useEffect(() => {
     if (user?.id) {
       axios
@@ -324,7 +330,15 @@ export default function UserForm({ onUserAdded }) {
                 {selectedRedFlags.map((flag) => (
                   <div key={flag} className="selected-flag">
                     {flag}
+                    <button
+                  type="button"
+                  onClick={() => handleRemoveRedFlag(flag)}
+                  className="remove-flag-button"
+                >
+                  &#x2715; {/* Unicode for a cross (X) */}
+                </button>
                   </div>
+                  
                 ))}
               </div>
             </div>

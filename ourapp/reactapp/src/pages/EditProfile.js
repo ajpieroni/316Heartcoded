@@ -19,6 +19,12 @@ export default function UserForm() {
     setIsSuccessModalOpen(false);
   };
 
+  const handleRemoveRedFlag = (flagToRemove) => {
+    const updatedRedFlags = selectedRedFlags.filter((flag) => flag !== flagToRemove);
+    setSelectedRedFlags(updatedRedFlags);
+    setFormData({ ...formData, red_flags: updatedRedFlags });
+  };
+
   const [formData, setFormData] = useState({
     name: '',
     gender: '',
@@ -377,6 +383,13 @@ export default function UserForm() {
             {selectedRedFlags.map((flag) => (
               <div key={flag} className="selected-flag">
                 {flag}
+                <button
+                  type="button"
+                  onClick={() => handleRemoveRedFlag(flag)}
+                  className="remove-flag-button"
+                >
+                  &#x2715; {/* X symbol */}
+                </button>
               </div>
             ))}
           </div>
