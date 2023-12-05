@@ -53,8 +53,6 @@ export default function UserForm() {
     }
   }, [setUser]);
 
-  
-
   const patchUserData = (updatedData) => {
     if (user?.id) {
       fetch(`http://localhost:3000/test_users/${user?.id}`, {
@@ -108,22 +106,29 @@ export default function UserForm() {
       axios
         .get("http://localhost:3000/states")
         .then((response) => {
-          setStates(response.data); 
+          setStates(response.data);
         })
         .catch((error) => {
           console.error("Error fetching states:", error);
         });
     };
-    
+
     useEffect(() => {
       getStates();
-    }, []); // 
+    }, []); //
     return (
       <div>
         <label>
           Select Your Location<span style={{ color: "red" }}>*</span>:
-          <select style={{width: 200}} onChange={onStateSelected} required value={formData.location}>
-            <option style={{width: 200}}value="">Select a state</option>
+          <select
+            style={{ width: 200 }}
+            onChange={onStateSelected}
+            required
+            value={formData.location}
+          >
+            <option style={{ width: 200 }} value="">
+              Select a state
+            </option>
             {states.map((state) => (
               <option key={state.id} value={state.name}>
                 {state.name}
@@ -133,9 +138,16 @@ export default function UserForm() {
         </label>
       </div>
     );
-
-    
   }
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!emailRegex.test(email)) {
+      setEmailError("Please enter a valid email address");
+    } else {
+      setEmailError("");
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -144,9 +156,9 @@ export default function UserForm() {
       validateAge(value);
     }
 
-    // if (name === "email") {
-    //   validateEmail(value);
-    // }
+    if (name === "email") {
+      validateEmail(value);
+    }
   };
   const handleStateSelected = (e) => {
     const selectedState = e.target.value;
@@ -400,9 +412,9 @@ export default function UserForm() {
         </div>
         <br></br>
         <label>
-        <button className="profile-button" type="submit">
-          Submit Info
-        </button>
+          <button className="profile-button" type="submit">
+            Submit Info
+          </button>
         </label>
 
         {isSuccessModalOpen && (
