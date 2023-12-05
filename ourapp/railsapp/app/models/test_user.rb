@@ -2,6 +2,10 @@ require 'argon2'
 class TestUser < ApplicationRecord
     has_many :sent_messages, class_name: 'Message', foreign_key: 'uid_sender_id'
     has_many :received_messages, class_name: 'Message', foreign_key: 'uid_receiver_id'
+    # has_many :matched_withs, foreign_key: 'uid1', dependent: :destroy
+    # has_many :matched_withs, foreign_key: 'uid2', dependent: :destroy
+    has_many :matched_withs_as_uid1, class_name: 'MatchedWith', foreign_key: 'uid1', dependent: :destroy
+    has_many :matched_withs_as_uid2, class_name: 'MatchedWith', foreign_key: 'uid2', dependent: :destroy
     validates :username, presence: true, uniqueness: { case_sensitive: false }
     validates :password_digest, length: { minimum: 6, message: 'must be at least 6 characters long and include at least one letter and one number' }
 
@@ -33,13 +37,33 @@ class TestUser < ApplicationRecord
       save
     end
     
-    
+    def generate_password_token!
+      self.reset_password_token = rand(100_000..999_999).to_s
+      self.reset_password_sent_at = Time.current
+      save!
+    end
+     
+     def password_token_valid?
+      (self.reset_password_sent_at + 4.hours) > Time.now.utc
+     end
+     
+     def reset_password!(password)
+      self.reset_password_token = nil
+      self.password = password
+      save!
+     end
+          
+     
     
     def messages
         Message.where("uid_sender_id = :id OR uid_receiver_id = :id", id: id)
     end
 
     private
+
+    def generate_token
+      SecureRandom.hex(10)
+     end
 
     attribute :red_flags, :string, array: true
 

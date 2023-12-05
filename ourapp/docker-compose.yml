@@ -9,8 +9,8 @@ services:
       - exclude:/app/node_modules
     ports:
       - 3001:3000
-    env_file: ./reactapp/.env
-     
+    env_file: .env
+    
   db:
     env_file: .env
     image: postgres
@@ -52,7 +52,6 @@ services:
       - RAILS_ENV=development
       - RAILS_MAX_THREADS=5
       - DATABASE_PASSWORD=password
-
   redis:
     image: redis:latest
     command: redis-server --save 60 50 --loglevel warning
@@ -60,7 +59,6 @@ services:
       - redis_data:/data
     ports:
       - '6379:6379'
-
 volumes:
   exclude:
   postgres:

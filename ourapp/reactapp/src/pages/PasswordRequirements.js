@@ -34,7 +34,6 @@ const PasswordRequirements = ({ password }) => {
 
   return (
     <div>
-      <h3>Password Requirements:</h3>
         <ul>
         {passwordRequirements.map((requirement) => (
           <li key={requirement.id} style={{ color: requirement.isValid ? 'green' : 'white' }}>

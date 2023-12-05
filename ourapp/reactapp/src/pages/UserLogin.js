@@ -6,6 +6,7 @@ import CreateProfile from "./CreateProfile.js";
 import axios from "axios";
 // import bcrypt from "bcrypt";
 import "./UserLogin.css";
+import ResetRequest from "./ResetRequest";
 
 export default function UserLogin() {
   // State hooks
@@ -181,7 +182,7 @@ export default function UserLogin() {
   return (
     <main className="main-login-container">
       <div className="hero-login-section">
-        <div className="hero-login-title">Welcome to Heartcoded!!!</div>
+        <div className="hero-login-title">Welcome to Heartcoded</div>
         <p className="hero-login-subtitle">Find your soulmate today!</p>
         <div className="user-login-init-container">
           {showSignIn && (
@@ -218,7 +219,7 @@ export default function UserLogin() {
               >
                 Forgot Password?
               </button>
-              {showForgotPassword && <ForgotPassword />}
+              {showForgotPassword && <ResetRequest />}
             </>
           )}
           {renderSignUpButton()}

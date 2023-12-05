@@ -4,7 +4,7 @@
     font-family: 'Varela Round', sans-serif;
     display: flex;
     flex-direction: column;
-    margin-top: 56px;
+    /* margin-top: 56px; */
     /* max-width: 1200px; */
     /* margin: auto; */
     /* background-color: #f5f5f5; */
@@ -99,4 +99,18 @@
   .ChatIcon:hover {
     color: #0056b3;
   }
+
+  .loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px; /* Adjust the height as needed */
+  }
+  
+  .loading-text {
+    padding: 10px; /* Adjust the padding as needed */
+    background-color: #f0f0f0; /* Adjust the background color as needed */
+    border-radius: 5px; /* Adjust the border radius as needed */
+  }
+  
   

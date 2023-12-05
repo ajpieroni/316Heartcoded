@@ -2,7 +2,7 @@
     align-items: center;
     justify-content: space-between;
     min-height: 100vh;
-    background: linear-gradient(to bottom, #FBB6CE, #F87171, #EF4444);
+    background: linear-gradient(to bottom, #FBB6CE, #f99595, #e46d6d);
   }
   
   
@@ -43,6 +43,7 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 2rem;
+    margin-bottom: 40px;
   }
   
   .feature-card {
@@ -121,7 +122,25 @@
   color: white;
 }
 
+.setpassword-input-container{
+  padding: 0.5rem 1rem !important; 
+  font-size: 1rem !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  outline: none !important;
+  transition: border-color 0.3s, box-shadow 0.3s !important;
+  width: 100%;
+}
+.setpass-init-input{
+  padding: 0.5rem 1rem !important; 
+  font-size: 1rem !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  outline: none !important;
+  transition: border-color 0.3s, box-shadow 0.3s !important;
+  width: 67%;
 
+}
 /* ... (previous CSS code) */
 
 /* CSS for Password Initialization */
@@ -131,6 +150,8 @@
   align-items: center;
   gap: 1rem;
 }
+
+
 
 .password-input {
   padding: 0.5rem 1rem;

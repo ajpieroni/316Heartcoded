@@ -1,3 +1,4 @@
+
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
@@ -63,12 +64,13 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "exampleapp_production"
 
   # config.action_mailer.perform_caching = false
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {:address  => "smtp.duke.edu",
-                                        :port  => 25,
-                                        :domain => "duke.edu",
-                                        :authentication => :none,
-                                        :enable_starttls_auto => false}
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {:address  => "smtp.duke.edu",
+  #                                       :port  => 25,
+  #                                       :domain => "duke.edu",
+  #                                       :authentication => :none,
+  #                                       :enable_starttls_auto => false}
+
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -94,16 +96,26 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
-  config.action_mailer.default_url_options = { host: 'localhost:3000' }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {:address  => "smtp.duke.edu",
-                                        :port  => 25,
-                                        :domain => "duke.edu",
-                                        :authentication => :none,
-                                        :enable_starttls_auto => false}
+  # config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {:address  => "smtp.duke.edu",
+  #                                       :port  => 25,
+  #                                       :domain => "duke.edu",
+  #                                       :authentication => :none,
+  #                                       :enable_starttls_auto => false}
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: ENV['SMTP_ADDRESS'],
+    port: ENV['SMTP_PORT'],
+    user_name: ENV['SMTP_USERNAME'],
+    password: ENV['SMTP_PASSWORD'],
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
 
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 end
+

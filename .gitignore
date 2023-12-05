@@ -9,6 +9,8 @@
 ./railsapp/tmp/cache
  
 .env
+**.env
+
  
 yarn-error.log
 yarn-debug.log*

@@ -53,13 +53,13 @@ export default function UserForm() {
     }
   }, [setUser]);
 
-  const validateEmail = (email) => {
-    if (!email.endsWith("@duke.edu")) {
-      setEmailError("Email must end with @duke.edu");
-    } else {
-      setEmailError("");
-    }
-  };
+  // const validateEmail = (email) => {
+  //   if (!email.endsWith("@duke.edu")) {
+  //     setEmailError("Email must end with @duke.edu");
+  //   } else {
+  //     setEmailError("");
+  //   }
+  // };
 
   const patchUserData = (updatedData) => {
     if (user?.id) {
@@ -144,9 +144,9 @@ export default function UserForm() {
       validateAge(value);
     }
 
-    if (name === "email") {
-      validateEmail(value);
-    }
+    // if (name === "email") {
+    //   validateEmail(value);
+    // }
   };
   const handleStateSelected = (e) => {
     const selectedState = e.target.value;
@@ -232,9 +232,19 @@ export default function UserForm() {
 
   return (
     <div className="user-form">
-      <h2>Welcome to HeartCoded</h2>
-      <h2>Your username is {username}</h2>
+      <div className="welcome-message">Welcome to HeartCoded</div>
+      {/* <h2>Your username is {username}</h2> */}
       <form onSubmit={handleSubmit}>
+      <label>
+          Username<span style={{ color: "red" }}>*</span>:
+          <input
+            type="text"
+            name="name"
+            value={username}
+            // onChange={handleInputChange}
+            disabled
+          />
+        </label>
         <label>
           Name<span style={{ color: "red" }}>*</span>:
           <input
@@ -246,7 +256,7 @@ export default function UserForm() {
           />
         </label>
         <label>
-          Email (@duke.edu)<span style={{ color: "red" }}>*</span>:
+          Email<span style={{ color: "red" }}>*</span>:
           <input
             type="text"
             name="email"
@@ -312,6 +322,7 @@ export default function UserForm() {
           <select
             multiple
             name="red_flags"
+            style={{width: 953}}
             value={formData.red_flags}
             onChange={handleRedFlagsChange}
           >
