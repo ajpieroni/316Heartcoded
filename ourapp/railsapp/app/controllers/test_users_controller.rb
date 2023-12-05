@@ -5,7 +5,7 @@ class TestUsersController < ApplicationController
 
   # GET /test_users or /test_users.json
   def index
-    # @test_users = TestUser.all
+    @test_users = TestUser.all
     test_users_with_avatars = @test_users.map do |test_user|
       if test_user.avatar.attached?
         test_user.as_json.merge(avatar_url: url_for(test_user.avatar))

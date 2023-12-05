@@ -5,6 +5,8 @@ import axios from 'axios';
 import { UserContext } from "../components/contexts/UserContext";
 import SuccessModal from "../components/SuccessModal"
 import Header from "../components/Header";
+import { useNavigate } from 'react-router-dom';
+
 
 
 export default function UserForm() {
@@ -193,6 +195,35 @@ export default function UserForm() {
     }
   };
 
+  const [confirmation, setConfirmation] = useState('');
+  const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
+  const navigate = useNavigate();
+
+  const handleDelete = async () => {
+    if (confirmation==="DELETE"){
+      try {
+        if (!user || !user.id) {
+          console.error('User ID is not available.');
+          return;
+        }
+
+        const response = await axios.delete(`http://localhost:3000/test_users/${user.id}`);
+    
+        if (response.status === 200) {
+          console.log('User deleted successfully');
+          // Handle successful deletion, e.g., redirect or update state
+        } else {
+          console.error('Failed to delete user');
+        }
+      } catch (error) {
+        console.error('Error deleting user:', error);
+      }
+      setConfirmation('');
+      setShowConfirmationDialog(false);
+      navigate('/');
+  }
+  };
+
 
   const [isPasswordUpdateVisible, setPasswordUpdateVisible] = useState(false);
 
@@ -332,7 +363,7 @@ export default function UserForm() {
             ))}
           </div>
         </div>
-        <button className="profile-button"
+        {/* <button className="profile-button"
         type="button"
         onClick={() => setPasswordUpdateVisible(!isPasswordUpdateVisible)}
       >
@@ -349,7 +380,7 @@ export default function UserForm() {
             // required
           />
         </label>
-        )}
+        )} */}
         <br></br>
         <button className="profile-button" type="submit">Submit Info</button>
 
@@ -360,6 +391,38 @@ export default function UserForm() {
           redirectUrl="/UserSignedIn"
         />
       )}
+
+
+  <div>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <button
+          onClick={() => setShowConfirmationDialog(true)}
+          style={{ backgroundColor: 'red', color: 'white', cursor: 'pointer' }}
+        >
+          Delete Profile
+        </button>
+      </div>
+
+      {showConfirmationDialog && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <p>Please enter "DELETE" to confirm:</p>
+            <input
+              type="text"
+              value={confirmation}
+              onChange={(e) => setConfirmation(e.target.value)}
+            />
+            {/* <Link to={{
+            pathname: '/',
+            state: { data: user }
+            }}> */}
+              <button onClick={handleDelete} className="modal-button">Confirm</button>
+            {/* </Link> */}
+            <button onClick={() => setShowConfirmationDialog(false)} className="modal-button">Cancel</button>
+          </div>
+        </div>
+      )}
+    </div>
       </form>
     </div>
     </>
