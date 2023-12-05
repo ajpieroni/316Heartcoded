@@ -11,5 +11,7 @@ class HeartcodedMailer < ApplicationMailer
           render template: 'heartcoded_mailer/password_reset_email'
         end
       end
+
+
     end
 end

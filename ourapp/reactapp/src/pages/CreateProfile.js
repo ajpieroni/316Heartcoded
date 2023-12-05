@@ -232,9 +232,19 @@ export default function UserForm() {
 
   return (
     <div className="user-form">
-      <h2>Welcome to HeartCoded</h2>
-      <h2>Your username is {username}</h2>
+      <div className="welcome-message">Welcome to HeartCoded</div>
+      {/* <h2>Your username is {username}</h2> */}
       <form onSubmit={handleSubmit}>
+      <label>
+          Username<span style={{ color: "red" }}>*</span>:
+          <input
+            type="text"
+            name="name"
+            value={username}
+            // onChange={handleInputChange}
+            disabled
+          />
+        </label>
         <label>
           Name<span style={{ color: "red" }}>*</span>:
           <input
@@ -312,6 +322,7 @@ export default function UserForm() {
           <select
             multiple
             name="red_flags"
+            style={{width: 953}}
             value={formData.red_flags}
             onChange={handleRedFlagsChange}
           >
