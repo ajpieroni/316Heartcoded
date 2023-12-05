@@ -399,9 +399,11 @@ export default function UserForm() {
           </div>
         </div>
         <br></br>
+        <label>
         <button className="profile-button" type="submit">
           Submit Info
         </button>
+        </label>
 
         {isSuccessModalOpen && (
           <SuccessModal
