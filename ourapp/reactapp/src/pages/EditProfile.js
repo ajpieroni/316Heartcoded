@@ -159,28 +159,34 @@ export default function UserForm() {
       alert("You are too young");
       return;
     }
-
-    // formData.append('avatar',avatarData);
-    // console.log("withAvatar",formData);
-
+  
     try {
-
-      if (user.id){
-        const response = await axios.patch(`http://localhost:3000/test_users/${user.id}`, formData);
-        console.log("response",response);
-        setIsSuccessModalOpen(true);
+      const newFormData = new FormData();
+      for (const key in formData) {
+        if (key !== 'avatar') {
+          newFormData.append(key, formData[key]);
+        }
       }
-      else{
-        const response = await axios.post(`http://localhost:3000/test_users`, formData);
-        setIsSuccessModalOpen(true);
+      if (formData.avatar) {
+        newFormData.append('avatar', formData.avatar);
       }
-      setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '', red_flags: [], password: '', avatar:null });
-      //setSuccessMessage("Form submitted successfully.");
+  
+      let response;
+      if (user.id) {
+        response = await axios.patch(`http://localhost:3000/test_users/${user.id}`, newFormData);
+      } else {
+        response = await axios.post(`http://localhost:3000/test_users`, newFormData);
+      }
+      
+      setIsSuccessModalOpen(true);
+      setFormData({ name: '', gender: '', preferences: '', birthday: '', bio: '', location: '', red_flags: [], password: '', avatar: null });
+      // Handle response here if needed
     } catch (error) {
-      console.error('Error adding a new user:', error);
+      console.error('Error adding or updating user:', error);
       setIsSuccessModalOpen(true);
     }
   };
+  
 
   const [confirmation, setConfirmation] = useState('');
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
@@ -243,6 +249,25 @@ export default function UserForm() {
     console.log(formData);
   };
 
+  const [avatarUrl, setAvatarUrl] = useState(null);
+  useEffect(() => {
+    const fetchAvatarUrl = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/test_users/${user.id}`);
+        if (response.ok) {
+          const data = await response.json();
+          setAvatarUrl(data.avatar_url);
+        } else {
+          console.error('Error fetching avatar URL');
+        }
+      } catch (error) {
+        console.error('Error fetching avatar URL:', error);
+      }
+    };
+
+    fetchAvatarUrl();
+  }, [user?.id]);
+
   return (
     <>
     <Header/>
@@ -259,6 +284,11 @@ export default function UserForm() {
           console.log(e.target.files[0]);
         }}
         /> */}
+        <img
+              src={avatarUrl}
+              alt="Profile Avatar"
+              style={{ maxHeight: "200px" }}
+            />
         <label>
           Name<span style={{ color: "red" }}>*</span>:
           <input
@@ -267,6 +297,22 @@ export default function UserForm() {
             value={formData.name}
             onChange={handleInputChange}
             required
+          />
+        </label>
+        
+        <label htmlFor="avatar">
+          Change Avatar:{" "}
+          <input
+            id="avatar"
+            type="file"
+            accepts="image/*"
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                avatar: e.target.files[0],
+              });
+              console.log(e.target.files[0]);
+            }}
           />
         </label>
       {/* {/* <label htmlFor="avatar">Avatar</label>
