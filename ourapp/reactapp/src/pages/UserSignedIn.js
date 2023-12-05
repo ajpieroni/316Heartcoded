@@ -65,30 +65,7 @@ const initializeUser = () => {
     }, [setUser]);
 
 
-  const handleDelete = async () => {
-    if (confirmation==="DELETE"){
-      try {
-        if (!user || !user.id) {
-          console.error('User ID is not available.');
-          return;
-        }
 
-        const response = await axios.delete(`http://localhost:3000/test_users/${user.id}`);
-    
-        if (response.status === 200) {
-          console.log('User deleted successfully');
-          // Handle successful deletion, e.g., redirect or update state
-        } else {
-          console.error('Failed to delete user');
-        }
-      } catch (error) {
-        console.error('Error deleting user:', error);
-      }
-      setConfirmation('');
-      setShowConfirmationDialog(false);
-      navigate('/');
-  }
-  };
 
 
   // const history = useHistory();
@@ -110,7 +87,7 @@ return(
           </button>
           </Link> */}
 
-
+{/* 
   <div>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <button
@@ -130,17 +107,14 @@ return(
               value={confirmation}
               onChange={(e) => setConfirmation(e.target.value)}
             />
-            {/* <Link to={{
-            pathname: '/',
-            state: { data: user }
-            }}> */}
+
               <button onClick={handleDelete} className="modal-button">Confirm</button>
-            {/* </Link> */}
+
             <button onClick={() => setShowConfirmationDialog(false)} className="modal-button">Cancel</button>
           </div>
         </div>
       )}
-    </div>
+    </div> */}
     
       {/* <Link to={{
         pathname: '/EditProfile',

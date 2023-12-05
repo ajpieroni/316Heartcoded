@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 export default function UserForm({ onUserAdded }) {
   const [ageError, setAgeError] = useState("");
   const [days, setDays] = useState(null);
+  const [avatarUrl, setAvatarUrl] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     gender: '',
@@ -56,6 +57,25 @@ export default function UserForm({ onUserAdded }) {
         console.error('Error fetching user data:', error);
       });
   }, [user.id]);
+
+  useEffect(() => {
+    const fetchAvatarUrl = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/test_users/${user.id}`);
+        if (response.ok) {
+          const data = await response.json();
+          setAvatarUrl(data.avatar_url);
+        } else {
+          console.error('Error fetching avatar URL');
+        }
+      } catch (error) {
+        console.error('Error fetching avatar URL:', error);
+      }
+    };
+
+    fetchAvatarUrl();
+  }, [user.id]);
+
 
   function StatesList({ onStateSelected }) {
     const [states, setStates] = useState([]);
@@ -153,6 +173,7 @@ export default function UserForm({ onUserAdded }) {
             className="disabled-field"
           />
         </label>
+        <img src={avatarUrl} alt="Profile Avatar" style={{ maxHeight: '200px' }} />
         <label>
           Name: 
           <input
