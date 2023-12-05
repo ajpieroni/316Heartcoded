@@ -6,7 +6,7 @@ import CreateProfile from "./CreateProfile.js";
 import axios from "axios";
 // import bcrypt from "bcrypt";
 import "./UserLogin.css";
-import ResetRequest from "./ResetRequest";
+// import ResetRequest from "./ResetRequest";
 
 export default function UserLogin() {
   // State hooks
