@@ -264,6 +264,16 @@ export default function UserForm() {
         }}
         />
         <label>
+          Username<span style={{ color: "red" }}>*</span>:
+          <input
+            type="text"
+            name="name"
+            value={username}
+            // onChange={handleInputChange}
+            disabled
+          />
+        </label>
+        <label>
           Name<span style={{ color: "red" }}>*</span>:
           <input
             type="text"

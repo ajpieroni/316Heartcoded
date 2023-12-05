@@ -68,13 +68,3 @@ input, select, textarea{
     border-radius: 20px;
   }
   
-  /* .selected-flag:hover {
-    background-color: #f97ba7;
-  }
-
-  .modal input{
-    border-width: 2px;
-    border-radius: 5px;
-    border-color: #ccc;
-    border-style: solid;
-  }
