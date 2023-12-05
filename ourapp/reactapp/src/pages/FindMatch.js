@@ -13,7 +13,8 @@ export default function FindMatch() {
 
   const [myMatches, setMyMatches] = useState([]);
   const [reciever, setReciever] = useState();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [pageloading, setPageLoading] = useState(true);
   const { user, setUser } = useContext(UserContext);
   const [ellipsisDots, setEllipsisDots] = useState(1);
   const [matchesMaxed, setMatchesMaxed] = useState(false);
@@ -91,6 +92,7 @@ export default function FindMatch() {
         setMyMatches((prevMatches) =>
           prevMatches.filter((match) => match.id !== otherUid)
         );
+        // setPageLoading(false);
       } else {
         console.error("Failed to unmatch:", data);
       }
@@ -233,21 +235,21 @@ export default function FindMatch() {
   // Functions for rending user details
   function formatDate(dateString) {
     const date = new Date(dateString);
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return date.toLocaleDateString("en-US", options);
   }
   function getPronoun(gender) {
-  switch (gender) {
-    case 'M':
-      return 'his';
-    case 'F':
-      return 'her';
-    case 'X':
-      return 'their';
-    default:
-      return 'their'; 
+    switch (gender) {
+      case "M":
+        return "his";
+      case "F":
+        return "her";
+      case "X":
+        return "their";
+      default:
+        return "their";
+    }
   }
-}
 
   return (
     <div>
@@ -279,7 +281,8 @@ export default function FindMatch() {
               <p>Bio: {reciever.bio}</p>
               <p>Birthday: {reciever.birthday}</p>
               <p>
-              {reciever.name} last updated {getPronoun(reciever.gender)} profile on {formatDate(reciever.updated_at)}
+                {reciever.name} last updated {getPronoun(reciever.gender)}{" "}
+                profile on {formatDate(reciever.updated_at)}
               </p>
 
               {/* Add other details as needed */}
@@ -299,17 +302,17 @@ export default function FindMatch() {
         )}
 
         <div className="card-container">
-          {myMatches.length === 0 ? (
+          {loading ? (
+            <p></p>
+          ) : myMatches.length === 0 ? (
             <p>You have no matches, get some!</p>
           ) : (
             <>
               {myMatches.map((matchUser) => (
                 <div key={matchUser.id} className="user-card">
                   <h2>{matchUser.name}</h2>
-                  
-                  
-                  <p style={{fontStyle:"italic"}}>@{matchUser.username}</p> 
-                  
+
+                  <p style={{ fontStyle: "italic" }}>@{matchUser.username}</p>
 
                   <div className="chat-section">
                     <ChatIcon onClick={() => openConversations(matchUser)} />
@@ -333,13 +336,13 @@ export default function FindMatch() {
                         </span>
                       </div>
                       <div className="unmatch">
-                    <button
-                      className="unmatch-button"
-                      onClick={() => openDetailsDialog(matchUser)}
-                    >
-                      View User Info
-                    </button>
-                  </div>
+                        <button
+                          className="unmatch-button"
+                          onClick={() => openDetailsDialog(matchUser)}
+                        >
+                          View User Info
+                        </button>
+                      </div>
                       <div className="unmatch">
                         <button
                           className="unmatch-button"
@@ -348,7 +351,6 @@ export default function FindMatch() {
                           Unmatch
                         </button>
                       </div>
-                      
                     </>
                   ) : null}
                 </div>
