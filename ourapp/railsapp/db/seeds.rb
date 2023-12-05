@@ -173,18 +173,30 @@ match10 = MatchedWith.create(uid1: 2, uid2: 6, status: true, date: "11-11-2000")
 
 puts "User 1 ID: #{user1.id}, User 2 ID: #{user2.id}"
 
-male_avatar_path = Rails.root.join('db/seeds/avatars/man.png')
-female_avatar_path = Rails.root.join('db/seeds/avatars/woman.png')
-nonbinary_avatar_path = Rails.root.join('db/seeds/avatars/nonbinary.png')
+male_avatar_paths = [
+  Rails.root.join('db/seeds/avatars/man1.png'),
+  Rails.root.join('db/seeds/avatars/man2.png'),
+  Rails.root.join('db/seeds/avatars/man3.png')
+]
+female_avatar_paths = [
+  Rails.root.join('db/seeds/avatars/woman1.png'),
+  Rails.root.join('db/seeds/avatars/woman2.png'),
+  Rails.root.join('db/seeds/avatars/woman3.png')
+]
+nonbinary_avatar_paths = [
+  Rails.root.join('db/seeds/avatars/nonbinary1.png'),
+  Rails.root.join('db/seeds/avatars/nonbinary2.png'),
+  Rails.root.join('db/seeds/avatars/nonbinary3.png')
+]
 
-def attach_avatar(user, male_avatar_path, female_avatar_path, nonbinary_avatar_path)
+def attach_avatar(user, male_avatar_paths, female_avatar_paths, nonbinary_avatar_paths)
     case user.gender
     when 'M'
-      avatar_path = male_avatar_path
+      avatar_path = male_avatar_paths.sample
     when 'F'
-      avatar_path = female_avatar_path
+      avatar_path = female_avatar_paths.sample
     when 'X'
-      avatar_path = nonbinary_avatar_path
+      avatar_path = nonbinary_avatar_paths.sample
     else
       raise "Unknown gender: #{user.gender}"
     end
@@ -195,10 +207,11 @@ def attach_avatar(user, male_avatar_path, female_avatar_path, nonbinary_avatar_p
       content_type: 'image/png'
     )
   end
-
+  
   TestUser.find_each do |user|
-    attach_avatar(user, male_avatar_path, female_avatar_path, nonbinary_avatar_path)
+    attach_avatar(user, male_avatar_paths, female_avatar_paths, nonbinary_avatar_paths)
   end
+  
   puts "Users and avatars seeded."
 # # Create sample messages
 # message1 = Message.create(chat_order: 1, uid_sender_id: user1.id, uid_receiver_id: user2.id, timestamp: Time.now, message: "Hey Linda, how's it going?")
