@@ -8,6 +8,7 @@ import InsightsIcon from "@mui/icons-material/Insights";
 import "./FindMatch.css";
 import Header from "../components/Header";
 import { useHistory } from "react-router-dom";
+import ProfileCard from "./ProfileCard";
 export default function FindMatch() {
   const navigate = useNavigate(); // const history  = useHistory();
 
@@ -273,28 +274,7 @@ export default function FindMatch() {
         )}
 
         {showDetailsDialog && (
-          <div className="modal-overlay">
-            <div className="modal">
-              <h2>{reciever.name}</h2>
-              <img
-                src={avatarUrl}
-                style={{ maxWidth: 200 }}
-                alt="User Avatar"
-              />
-              <p>Age: {calculateAge(reciever.birthday)}</p>
-              <p>Bio: {reciever.bio}</p>
-              <p>Birthday: {reciever.birthday}</p>
-              <p>
-                {reciever.name} last updated {getPronoun(reciever.gender)}{" "}
-                profile on {formatDate(reciever.updated_at)}
-              </p>
-
-              {/* Add other details as needed */}
-              <button onClick={closeDetailsDialog} className="modal-button">
-                Close
-              </button>
-            </div>
-          </div>
+          <ProfileCard user = {reciever} onClose={closeDetailsDialog} />
         )}
 
         {matchesMaxed && (

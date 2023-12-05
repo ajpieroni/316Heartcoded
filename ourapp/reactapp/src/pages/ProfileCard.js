@@ -11,7 +11,7 @@ function ProfileCard({ user, onClose }) {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return date.toLocaleDateString("en-US", options);
   }
-  
+
   const fetchAvatarUrl = async () => {
     try {
       const avatarResponse = await fetch(
