@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_04_003553) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_01_223448) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -65,14 +65,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_04_003553) do
     t.integer "feedback"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "images", force: :cascade do |t|
-    t.bigint "test_users_id"
-    t.binary "data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["test_users_id"], name: "index_images_on_test_users_id"
   end
 
   create_table "matched_withs", force: :cascade do |t|
@@ -131,7 +123,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_04_003553) do
     t.string "username"
     t.string "password_digest"
     t.string "email"
-    t.binary "profile_image"
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
   end
 
   create_table "weights", force: :cascade do |t|
@@ -149,7 +142,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_04_003553) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "test_users"
-  add_foreign_key "images", "test_users", column: "test_users_id"
   add_foreign_key "matched_withs", "test_users", column: "uid1"
   add_foreign_key "matched_withs", "test_users", column: "uid2"
   add_foreign_key "messages", "test_users", column: "uid_receiver_id"
