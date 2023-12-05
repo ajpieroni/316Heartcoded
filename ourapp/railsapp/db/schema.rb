@@ -62,7 +62,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_28_224705) do
     t.integer "gives_uid"
     t.integer "receives_uid"
     t.string "category"
-    t.integer "feedback"
+    t.string "feedback"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -120,9 +120,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_28_224705) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "red_flags", default: [], array: true
-    t.string "username"
     t.string "password_digest"
+    t.string "username"
     t.string "email"
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
   end
 
   create_table "weights", force: :cascade do |t|
