@@ -8,10 +8,10 @@ import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
 import DeleteProfile from "../components/DeleteButton";
 
-
 export default function UserForm({ onUserAdded }) {
   const [ageError, setAgeError] = useState("");
   const [days, setDays] = useState(null);
+  const [canEdit, setCanEdit] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -40,10 +40,18 @@ export default function UserForm({ onUserAdded }) {
     }
   }, []);
 
+  const handleRemoveRedFlag = (flagToRemove) => {
+    const updatedRedFlags = selectedRedFlags.filter(
+      (flag) => flag !== flagToRemove
+    );
+    setSelectedRedFlags(updatedRedFlags);
+    setFormData({ ...formData, red_flags: updatedRedFlags });
+  };
+
   useEffect(() => {
     if (user?.id) {
       axios
-        .get(`http://localhost:3000/test_users/${user.id}`)
+        .get(`http://localhost:3000/test_users/${user?.id}`)
         .then((response) => {
           let userData = response.data;
           setFormData({
@@ -88,7 +96,7 @@ export default function UserForm({ onUserAdded }) {
     };
 
     fetchAvatarUrl();
-  }, [user.id]);
+  }, [user?.id]);
 
 
   function StatesList({ onStateSelected }) {
@@ -141,7 +149,6 @@ export default function UserForm({ onUserAdded }) {
     setFormData({ ...formData, location: selectedState });
   };
 
-  //   console.log(user.id);
 
   const validateAge = (birthdate) => {
     const today = new Date();
@@ -192,7 +199,6 @@ export default function UserForm({ onUserAdded }) {
           ) : (
             <></>
           )}
-          {/* <h1>Hello, {formData.name}! You've been with us since {formData.createdAt.split('T')[0]}</h1> */}
 
           <div className="profile-form">
             <div style={{ display: "flex", alignItems: "center" }}>
@@ -231,8 +237,12 @@ export default function UserForm({ onUserAdded }) {
                 className="disabled-field"
               />
             </label>
-            <img src={avatarUrl} alt="Profile Avatar" style={{ maxHeight: '200px' }} />
-        <label>
+            <img
+              src={avatarUrl}
+              alt="Profile Avatar"
+              style={{ maxHeight: "200px" }}
+            />
+            <label>
               Name:
               <input
                 type="text"
@@ -302,84 +312,31 @@ export default function UserForm({ onUserAdded }) {
                 className="disabled-field"
               />
             </label>
-            <label>
-              Your red flags:
-              {/* <select
-            multiple
-            name="red_flags"
-            value={formData.red_flags}
-            onChange={handleRedFlagsChange}
-            disabled
-            className="disabled-field"
-          >
-            {redFlagsOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select> */}
-            </label>
+            <label>Your red flags:</label>
             <div>
               <div>
                 {selectedRedFlags.map((flag) => (
                   <div key={flag} className="selected-flag">
                     {flag}
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveRedFlag(flag)}
+                      className="remove-flag-button"
+                      disabled
+                    >
+                      &#x2715; {/* Unicode for a cross (X) */}
+                    </button>
                   </div>
                 ))}
               </div>
             </div>
           </div>
           <br></br>
-          
         </form>
         <div className="delete">
-        <DeleteProfile/>
+          <DeleteProfile />
         </div>
       </div>
     </>
   );
 }
-
-// import React, { useState, useEffect, useContext } from "react";
-// import "./UserLogin.css";
-// import { useNavigate } from "react-router-dom";
-
-// import axios from "axios";
-// import { useHistory } from "react-router-dom";
-// import { Link } from "react-router-dom";
-// import { UserContext } from "../components/contexts/UserContext";
-
-// export default function ViewProfile() {
-//     const { user } = useContext(UserContext);
-
-//     useEffect(() => {
-//       axios.get(`http://localhost:3000/test_users/${user.id}`)
-//         .then(response => {
-//           const userData = response.data;
-
-//           // Handle user data as needed, you can log it or perform other actions
-//           console.log(userData);
-//         })
-//         .catch(error => {
-//           console.error('Error fetching user data:', error);
-//         });
-//     }, [user.id]);
-
-//   return (
-//     <main className="main-container">
-//         <h2>{user.name}'s Profile</h2>
-//         <h2>Username: {user.username}</h2>
-//         <h2>You've been with us since: {user.join_date}</h2>
-//         <h2>Gender: {user.gender}</h2>
-//         <h2>birthday: {user.birthday}</h2>
-//         <h2>bio: {user.bio}</h2>
-//         <h2>Email: {user.email}</h2>
-//         <h2>Location: {user.locaiton}</h2>
-//         <h2>You are looking for: {user.preferences}</h2>
-//         <h2>Your Red Flags: {user.red_flags}</h2>
-
-//     </main>
-
-//   );
-
-// }

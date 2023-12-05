@@ -80,7 +80,83 @@ user57 = TestUser.create(name: "Sofia Garcia", location: "Arizona", bio: "Explor
 user58 = TestUser.create(name: "Alexander Turner", location: "Colorado", bio: "Science geek and stargazing enthusiast!", gender: "M", preferences: "F", birthday: "2005-07-05", username: "AstroAlex", password_digest:"password1")
 user59 = TestUser.create(name: "Isabella Miller", location: "Massachusetts", bio: "History buff and bookworm!", gender: "F", preferences: "M", birthday: "1999-11-28", username: "IsabellaBookwise", password_digest:"password1")
 user60 = TestUser.create(name: "Noah Patel", location: "Texas", bio: "Outdoor sports enthusiast and BBQ lover!", gender: "M", preferences: "F", birthday: "2000-06-24", username: "OutdoorsmanNoah", password_digest:"password1")
-
+user61 = TestUser.create(name: "Emma Rodriguez", location: "Nevada", bio: "Nature photographer and wildlife lover!", gender: "F", preferences: "M", birthday: "2003-10-21", username: "EmmaWildlife", password_digest:"password1")
+user62 = TestUser.create(name: "Ryan Nguyen", location: "Michigan", bio: "Tech enthusiast and AI researcher!", gender: "M", preferences: "F", birthday: "1997-05-12", username: "RyanTechie", password_digest:"password1")
+user63 = TestUser.create(name: "Aisha Khan", location: "Virginia", bio: "Yoga instructor and holistic wellness advocate!", gender: "F", preferences: "M", birthday: "2002-08-16", username: "AishaYoga", password_digest:"password1")
+user64 = TestUser.create(name: "Liam Johnson", location: "Oregon", bio: "Craft beer enthusiast and homebrewer!", gender: "M", preferences: "F", birthday: "1998-03-09", username: "LiamBrew", password_digest:"password1")
+user65 = TestUser.create(name: "Zoe Smith", location: "Florida", bio: "Marine biologist and scuba diver!", gender: "F", preferences: "M", birthday: "2001-07-04", username: "ZoeMarine", password_digest:"password1")
+user66 = TestUser.create(name: "Mohamed Ali", location: "Texas", bio: "Fitness coach and motivational speaker!", gender: "M", preferences: "F", birthday: "1999-04-22", username: "MohamedFit", password_digest:"password1")
+user67 = TestUser.create(name: "Charlotte Lee", location: "California", bio: "Aspiring filmmaker and scriptwriter!", gender: "F", preferences: "M", birthday: "2005-11-30", username: "CharlotteFilm", password_digest:"password1")
+user68 = TestUser.create(name: "Omar Hassan", location: "New York", bio: "Street photographer and urban explorer!", gender: "M", preferences: "F", birthday: "2000-12-15", username: "OmarStreets", password_digest:"password1")
+user69 = TestUser.create(name: "Isabella Martinez", location: "Arizona", bio: "Veterinarian and animal rights advocate!", gender: "F", preferences: "M", birthday: "2004-09-09", username: "IsabellaVet", password_digest:"password1")
+user70 = TestUser.create(name: "Jack Wong", location: "Washington", bio: "Graphic designer and animation enthusiast!", gender: "M", preferences: "F", birthday: "2002-06-18", username: "JackDesigns", password_digest:"password1")
+user71 = TestUser.create(name: "Mia Gonzalez", location: "Illinois", bio: "Classical musician and piano teacher!", gender: "F", preferences: "M", birthday: "1997-01-27", username: "MiaMusic", password_digest:"password1")
+user72 = TestUser.create(name: "Daniel Kim", location: "Massachusetts", bio: "Start-up enthusiast and crypto investor!", gender: "M", preferences: "F", birthday: "1996-04-03", username: "DanielCrypto", password_digest:"password1")
+user73 = TestUser.create(name: "Hannah Murphy", location: "Nevada", bio: "Travel blogger and landscape photographer!", gender: "F", preferences: "M", birthday: "2003-02-14", username: "HannahTravels", password_digest:"password1")
+user74 = TestUser.create(name: "Ethan Patel", location: "Michigan", bio: "Engineering student and robotics hobbyist!", gender: "M", preferences: "F", birthday: "2001-10-28", username: "EthanRobot", password_digest:"password1")
+user75 = TestUser.create(name: "Layla Thompson", location: "Virginia", bio: "Sustainable living advocate and environmentalist!", gender: "F", preferences: "M", birthday: "2005-08-19", username: "LaylaGreen", password_digest:"password1")
+user76 = TestUser.create(name: "Aiden Lee", location: "Oregon", bio: "Outdoor runner and fitness blogger!", gender: "M", preferences: "F", birthday: "2002-07-22", username: "AidenRun", password_digest:"password1")
+user77 = TestUser.create(name: "Grace Martinez", location: "Florida", bio: "Fashion blogger and style consultant!", gender: "F", preferences: "M", birthday: "1998-09-11", username: "GraceStyle", password_digest:"password1")
+user79 = TestUser.create(name: "Alex Rivera", location: "California", bio: "Digital artist and VR enthusiast!", gender: "X", preferences: "All", birthday: "2004-05-05", username: "AlexVirtual", password_digest:"password1")
+user80 = TestUser.create(name: "Jordan Lee", location: "New York", bio: "Freelance writer and podcast host!", gender: "X", preferences: "All", birthday: "1996-07-17", username: "JordanWrites", password_digest:"password1")
+user81 = TestUser.create(name: "Taylor Kim", location: "Illinois", bio: "Urban gardener and sustainability advocate!", gender: "X", preferences: "All", birthday: "1999-03-22", username: "TaylorGreen", password_digest:"password1")
+user82 = TestUser.create(name: "Morgan Chen", location: "Texas", bio: "Indie musician and vinyl collector!", gender: "X", preferences: "All", birthday: "2002-10-10", username: "MorganMusic", password_digest:"password1")
+user83 = TestUser.create(name: "Riley Patel", location: "Florida", bio: "Aspiring astronomer and stargazer!", gender: "X", preferences: "All", birthday: "2001-01-30", username: "RileyStars", password_digest:"password1")
+user84 = TestUser.create(name: "Casey Johnson", location: "Washington", bio: "Coffee enthusiast and barista blogger!", gender: "X", preferences: "All", birthday: "2003-09-09", username: "CaseyCoffee", password_digest:"password1")
+user85 = TestUser.create(name: "Jamie Martinez", location: "Arizona", bio: "Travel photographer and adventure seeker!", gender: "X", preferences: "All", birthday: "1997-12-12", username: "JamieAdventures", password_digest:"password1")
+user86 = TestUser.create(name: "Cameron Smith", location: "Massachusetts", bio: "Tech startup founder and coder!", gender: "X", preferences: "All", birthday: "1995-06-16", username: "CameronTech", password_digest:"password1")
+user87 = TestUser.create(name: "Dakota Nguyen", location: "Oregon", bio: "Yoga instructor and wellness blogger!", gender: "X", preferences: "All", birthday: "2000-11-11", username: "DakotaYoga", password_digest:"password1")
+user88 = TestUser.create(name: "Skyler Wilson", location: "Michigan", bio: "Graphic designer and street art enthusiast!", gender: "X", preferences: "All", birthday: "2002-04-04", username: "SkylerDesigns", password_digest:"password1")
+user89 = TestUser.create(name: "Rowan Garcia", location: "Virginia", bio: "Culinary artist and food critic!", gender: "X", preferences: "All", birthday: "1998-08-08", username: "RowanCuisine", password_digest:"password1")
+user90 = TestUser.create(name: "Quinn Brown", location: "Nevada", bio: "Professional gamer and esports commentator!", gender: "X", preferences: "All", birthday: "2003-02-02", username: "QuinnGamer", password_digest:"password1")
+user91 = TestUser.create(name: "Jesse Thompson", location: "Florida", bio: "Marine conservationist and scuba instructor!", gender: "X", preferences: "All", birthday: "1996-10-10", username: "JesseOcean", password_digest:"password1")
+user92 = TestUser.create(name: "Bailey Rodriguez", location: "California", bio: "Fashion designer and boutique owner!", gender: "X", preferences: "All", birthday: "1999-05-15", username: "BaileyFashion", password_digest:"password1")
+user93 = TestUser.create(name: "Reese Patel", location: "New York", bio: "Theater director and playwright!", gender: "X", preferences: "All", birthday: "2001-07-07", username: "ReeseStage", password_digest:"password1")
+user94 = TestUser.create(name: "Eliana Foster", location: "Texas", bio: "Aspiring novelist and historical researcher!", gender: "F", preferences: "M", birthday: "1998-03-15", username: "ElianaWrites", password_digest:"password1")
+user95 = TestUser.create(name: "Marcus Alvarez", location: "Texas", bio: "Music producer and sound engineer!", gender: "M", preferences: "F", birthday: "1995-07-22", username: "MarcusMusic", password_digest:"password1")
+user96 = TestUser.create(name: "Lena Nguyen", location: "Texas", bio: "Environmental scientist and nature photographer!", gender: "F", preferences: "M", birthday: "2002-11-08", username: "LenaNature", password_digest:"password1")
+user97 = TestUser.create(name: "Kai Robinson", location: "Texas", bio: "Professional chef and BBQ expert!", gender: "M", preferences: "F", birthday: "1997-09-30", username: "KaiBBQ", password_digest:"password1")
+user98 = TestUser.create(name: "Amelia Ortiz", location: "Texas", bio: "Veterinary technician and animal rescue volunteer!", gender: "F", preferences: "M", birthday: "2001-06-14", username: "AmeliaVet", password_digest:"password1")
+user99 = TestUser.create(name: "Leo Martinez", location: "Texas", bio: "Fitness trainer and nutrition blogger!", gender: "M", preferences: "F", birthday: "1996-04-20", username: "LeoFit", password_digest:"password1")
+user100 = TestUser.create(name: "Gabriella Chen", location: "Texas", bio: "Architect and urban planning enthusiast!", gender: "F", preferences: "M", birthday: "1999-02-27", username: "GabriellaDesign", password_digest:"password1")
+user101 = TestUser.create(name: "Isaiah Lopez", location: "Texas", bio: "Software developer and tech innovator!", gender: "M", preferences: "F", birthday: "2000-08-05", username: "IsaiahTech", password_digest:"password1")
+user102 = TestUser.create(name: "Zara Patel", location: "Texas", bio: "Journalist and documentary filmmaker!", gender: "F", preferences: "M", birthday: "1998-05-19", username: "ZaraJournal", password_digest:"password1")
+user103 = TestUser.create(name: "Ethan Wong", location: "Texas", bio: "Graphic artist and animation creator!", gender: "M", preferences: "F", birthday: "2003-01-10", username: "EthanGraphics", password_digest:"password1")
+user104 = TestUser.create(name: "Sophia Ramirez", location: "Texas", bio: "Event planner and travel blogger!", gender: "F", preferences: "M", birthday: "1997-12-03", username: "SophiaEvents", password_digest:"password1")
+user105 = TestUser.create(name: "Miguel Johnson", location: "Texas", bio: "Automotive engineer and car enthusiast!", gender: "M", preferences: "F", birthday: "1999-10-25", username: "MiguelCars", password_digest:"password1")
+user106 = TestUser.create(name: "Lily Kim", location: "Texas", bio: "Fashion stylist and trendsetter!", gender: "F", preferences: "M", birthday: "2002-07-17", username: "LilyFashion", password_digest:"password1")
+user107 = TestUser.create(name: "Adrian Sanchez", location: "Texas", bio: "Real estate investor and market analyst!", gender: "M", preferences: "F", birthday: "1995-03-08", username: "AdrianRealEstate", password_digest:"password1")
+user108 = TestUser.create(name: "Isla Rodriguez", location: "Texas", bio: "Yoga instructor and health coach!", gender: "F", preferences: "M", birthday: "2001-04-12", username: "IslaYoga", password_digest:"password1")
+user109 = TestUser.create(name: "Caleb Hernandez", location: "Florida", bio: "Surfer and marine biology student!", gender: "M", preferences: "F", birthday: "2000-05-21", username: "CalebSurf", password_digest:"password1")
+user110 = TestUser.create(name: "Nora Smith", location: "Florida", bio: "Landscape architect and gardening blogger!", gender: "F", preferences: "M", birthday: "1998-09-11", username: "NoraGardens", password_digest:"password1")
+user111 = TestUser.create(name: "Henry Martinez", location: "Florida", bio: "Wildlife photographer and conservationist!", gender: "M", preferences: "F", birthday: "1996-04-17", username: "HenryWildlife", password_digest:"password1")
+user112 = TestUser.create(name: "Grace Lee", location: "Florida", bio: "Cruise ship entertainer and world traveler!", gender: "F", preferences: "M", birthday: "2002-06-30", username: "GraceCruise", password_digest:"password1")
+user113 = TestUser.create(name: "Lucas Johnson", location: "Florida", bio: "Professional kite surfer and beach lifeguard!", gender: "M", preferences: "F", birthday: "1999-07-22", username: "LucasKiteSurf", password_digest:"password1")
+user114 = TestUser.create(name: "Ava Wilson", location: "Florida", bio: "Real estate agent and interior design enthusiast!", gender: "F", preferences: "M", birthday: "2001-12-13", username: "AvaDesign", password_digest:"password1")
+user115 = TestUser.create(name: "Oliver Brown", location: "Florida", bio: "Yacht captain and seafood connoisseur!", gender: "M", preferences: "F", birthday: "1997-03-05", username: "OliverYacht", password_digest:"password1")
+user116 = TestUser.create(name: "Mia Thompson", location: "Florida", bio: "Ballet instructor and dance critic!", gender: "F", preferences: "M", birthday: "2003-08-20", username: "MiaBallet", password_digest:"password1")
+user117 = TestUser.create(name: "Isaac Rodriguez", location: "Florida", bio: "Jet ski instructor and water sports fan!", gender: "M", preferences: "F", birthday: "2000-01-15", username: "IsaacJetski", password_digest:"password1")
+user118 = TestUser.create(name: "Zoe Patel", location: "Florida", bio: "Event planner and luxury travel advisor!", gender: "F", preferences: "M", birthday: "1999-10-29", username: "ZoeLuxTravel", password_digest:"password1")
+user119 = TestUser.create(name: "Jackson Garcia", location: "Florida", bio: "Marathon runner and fitness blogger!", gender: "M", preferences: "F", birthday: "2001-02-11", username: "JacksonRun", password_digest:"password1")
+user120 = TestUser.create(name: "Harper Lee", location: "Florida", bio: "Children's book author and illustrator!", gender: "F", preferences: "M", birthday: "1997-11-07", username: "HarperBooks", password_digest:"password1")
+user121 = TestUser.create(name: "Ethan Kim", location: "Florida", bio: "Aquarium curator and marine educator!", gender: "M", preferences: "F", birthday: "1998-08-16", username: "EthanAquarium", password_digest:"password1")
+user122 = TestUser.create(name: "Sofia Martinez", location: "Florida", bio: "Luxury yacht broker and sailing enthusiast!", gender: "F", preferences: "M", birthday: "2002-04-25", username: "SofiaYacht", password_digest:"password1")
+user123 = TestUser.create(name: "Liam Johnson", location: "Florida", bio: "Beach volleyball coach and fitness trainer!", gender: "M", preferences: "F", birthday: "1995-05-19", username: "LiamVolley", password_digest:"password1")
+user124 = TestUser.create(name: "Ella Sanchez", location: "California", bio: "Independent filmmaker and screenwriter!", gender: "F", preferences: "M", birthday: "1999-06-14", username: "EllaFilms", password_digest:"password1")
+user125 = TestUser.create(name: "Aiden Patel", location: "California", bio: "Surf instructor and ocean conservation advocate!", gender: "M", preferences: "F", birthday: "2001-08-25", username: "AidenSurf", password_digest:"password1")
+user126 = TestUser.create(name: "Sam Jordan", location: "California", bio: "Tech entrepreneur and angel investor!", gender: "X", preferences: "All", birthday: "1997-10-05", username: "SamTech", password_digest:"password1")
+user127 = TestUser.create(name: "Luna Garcia", location: "California", bio: "Yoga teacher and mindfulness coach!", gender: "F", preferences: "M", birthday: "2002-03-17", username: "LunaYoga", password_digest:"password1")
+user128 = TestUser.create(name: "Dylan Kim", location: "California", bio: "Professional skateboarder and street artist!", gender: "M", preferences: "F", birthday: "2000-07-29", username: "DylanSkate", password_digest:"password1")
+user129 = TestUser.create(name: "Riley Chen", location: "California", bio: "Indie band lead singer and songwriter!", gender: "X", preferences: "All", birthday: "1998-11-23", username: "RileyMusic", password_digest:"password1")
+user130 = TestUser.create(name: "Zoey Martinez", location: "California", bio: "Fashion blogger and social media influencer!", gender: "F", preferences: "M", birthday: "2003-04-12", username: "ZoeyFashion", password_digest:"password1")
+user131 = TestUser.create(name: "Carter Nguyen", location: "California", bio: "Emerging visual artist and gallery owner!", gender: "M", preferences: "F", birthday: "1996-02-09", username: "CarterArt", password_digest:"password1")
+user132 = TestUser.create(name: "Peyton Lee", location: "California", bio: "Sustainable architect and urban planner!", gender: "X", preferences: "All", birthday: "1999-12-06", username: "PeytonDesign", password_digest:"password1")
+user133 = TestUser.create(name: "Aria Smith", location: "California", bio: "Culinary chef and organic food advocate!", gender: "F", preferences: "M", birthday: "2000-09-21", username: "AriaCuisine", password_digest:"password1")
+user134 = TestUser.create(name: "Blake Johnson", location: "California", bio: "Adventure photographer and travel vlogger!", gender: "M", preferences: "F", birthday: "2001-05-18", username: "BlakeAdventure", password_digest:"password1")
+user135 = TestUser.create(name: "Charlie Rodriguez", location: "California", bio: "Software developer and cybersecurity expert!", gender: "X", preferences: "All", birthday: "1995-07-24", username: "CharlieTech", password_digest:"password1")
+user136 = TestUser.create(name: "Emma Wong", location: "California", bio: "Veterinary surgeon and animal welfare activist!", gender: "F", preferences: "M", birthday: "1998-01-31", username: "EmmaVet", password_digest:"password1")
+user137 = TestUser.create(name: "Jordan Patel", location: "California", bio: "Startup advisor and digital marketing strategist!", gender: "M", preferences: "F", birthday: "1997-04-16", username: "JordanStartup", password_digest:"password1")
+user138 = TestUser.create(name: "Casey Lee", location: "California", bio: "Environmental lawyer and climate change advocate!", gender: "X", preferences: "All", birthday: "2002-08-08", username: "CaseyEnvironment", password_digest:"password1")
 
 
 
@@ -97,7 +173,46 @@ match10 = MatchedWith.create(uid1: 2, uid2: 6, status: true, date: "11-11-2000")
 
 puts "User 1 ID: #{user1.id}, User 2 ID: #{user2.id}"
 
+male_avatar_paths = [
+  Rails.root.join('db/seeds/avatars/man1.png'),
+  Rails.root.join('db/seeds/avatars/man2.png'),
+  Rails.root.join('db/seeds/avatars/man3.png')
+]
+female_avatar_paths = [
+  Rails.root.join('db/seeds/avatars/woman1.png'),
+  Rails.root.join('db/seeds/avatars/woman2.png'),
+  Rails.root.join('db/seeds/avatars/woman3.png')
+]
+nonbinary_avatar_paths = [
+  Rails.root.join('db/seeds/avatars/nonbinary1.png'),
+  Rails.root.join('db/seeds/avatars/nonbinary2.png'),
+  Rails.root.join('db/seeds/avatars/nonbinary3.png')
+]
 
+def attach_avatar(user, male_avatar_paths, female_avatar_paths, nonbinary_avatar_paths)
+    case user.gender
+    when 'M'
+      avatar_path = male_avatar_paths.sample
+    when 'F'
+      avatar_path = female_avatar_paths.sample
+    when 'X'
+      avatar_path = nonbinary_avatar_paths.sample
+    else
+      raise "Unknown gender: #{user.gender}"
+    end
+  
+    user.avatar.attach(
+      io: File.open(avatar_path),
+      filename: File.basename(avatar_path),
+      content_type: 'image/png'
+    )
+  end
+  
+  TestUser.find_each do |user|
+    attach_avatar(user, male_avatar_paths, female_avatar_paths, nonbinary_avatar_paths)
+  end
+  
+  puts "Users and avatars seeded."
 # # Create sample messages
 # message1 = Message.create(chat_order: 1, uid_sender_id: user1.id, uid_receiver_id: user2.id, timestamp: Time.now, message: "Hey Linda, how's it going?")
 # message2 = Message.create(chat_order: 2, uid_sender_id: user2.id, uid_receiver_id: user1.id, timestamp: Time.now + 5.minutes, message: "Hey Jacob, going well! Just got back from my trip to Iceland. Have you ever been?")

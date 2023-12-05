@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import Picker from "emoji-picker-react";
 import EmojiPickerComponent from "./EmojiPickerComponent";
-
+import ProfileCard from "../pages/ProfileCard";
 export default function ChatConversation({ selectedUser }) {
   const reciever = selectedUser;
   const [convStarters, setConvStarters] = useState({});
@@ -107,21 +107,21 @@ export default function ChatConversation({ selectedUser }) {
 
   const [currentPromptIndex, setCurrentPromptIndex] = useState(0);
   const prompts = [
-    "Generate a short icebreaker question about travel for two single people. Don't explain your answer, only respond with the question.",
-    "Generate a short icebreaker question about food for two single people. Don't explain your answer, only respond with the question.",
-    "Generate a short icebreaker question about movies for two single people. Don't explain your answer, only respond with the question.",
-    "Generate a short icebreaker question about hobbies for two single people. Don't explain your answer, only respond with the question.",
-    "Generate a short icebreaker question about spirituality for two single people. Don't explain your answer, only respond with the question.",
-    "Generate a short icebreaker question about environmental consciousness for two single people. Don't explain your answer, only respond with the question.",
-    "Generate a short icebreaker question about family for two single people. Don't explain your answer, only respond with the question.",
-    "Generate a short icebreaker question about career interests for two single people. Don't explain your answer, only respond with the question.",
-    "Generate a short icebreaker question about adventure for two single people. Don't explain your answer, only respond with the question.",
-    "Generate a short icebreaker question about trustfulness for two single people. Don't explain your answer, only respond with the question.",
-    "Generate a short icebreaker question about frugality for two single people. Don't explain your answer, only respond with the question.",
-    "Generate a short icebreaker question about sentimentality for two single people. Don't explain your answer, only respond with the question.",
-    "Generate a short icebreaker question about creativity for two single people. Don't explain your answer, only respond with the question.",
-    "Generate a short icebreaker question about traditionalism for two single people. Don't explain your answer, only respond with the question.",
-    "Generate a short icebreaker question about assertiveness for two single people. Don't explain your answer, only respond with the question.",
+    "Generate an icebreaker question about travel for two single people. Don't explain your answer, only respond with the question.",
+    "Generate an icebreaker question about food for two single people. Don't explain your answer, only respond with the question.",
+    "Generate an icebreaker question about movies for two single people. Don't explain your answer, only respond with the question.",
+    "Generate an icebreaker question about hobbies for two single people. Don't explain your answer, only respond with the question.",
+    "Generate an icebreaker question about spirituality for two single people. Don't explain your answer, only respond with the question.",
+    "Generate an icebreaker question about environmental consciousness for two single people. Don't explain your answer, only respond with the question.",
+    "Generate an icebreaker question about family for two single people. Don't explain your answer, only respond with the question.",
+    "Generate an icebreaker question about career interests for two single people. Don't explain your answer, only respond with the question.",
+    "Generate an icebreaker question about adventure for two single people. Don't explain your answer, only respond with the question.",
+    "Generate an icebreaker question about trustfulness for two single people. Don't explain your answer, only respond with the question.",
+    "Generate an icebreaker question about frugality for two single people. Don't explain your answer, only respond with the question.",
+    "Generate an icebreaker question about sentimentality for two single people. Don't explain your answer, only respond with the question.",
+    "Generate an icebreaker question about creativity for two single people. Don't explain your answer, only respond with the question.",
+    "Generate an icebreaker question about traditionalism for two single people. Don't explain your answer, only respond with the question.",
+    "Generate an icebreaker question about assertiveness for two single people. Don't explain your answer, only respond with the question.",
   ];
 
   const getNextPrompt = () => {
@@ -244,6 +244,10 @@ export default function ChatConversation({ selectedUser }) {
   }, [user]);
 
   const handleSend = () => {
+    const trimmedMessage = newMessage.trim();
+    if(!trimmedMessage){
+      return;
+    }
     console.log("handleSend triggered");
     const timestamp = Date.now();
     console.log("here's timestamp", timestamp);
@@ -326,12 +330,28 @@ export default function ChatConversation({ selectedUser }) {
 }
 
 function MessageList({ messages, currentUser, users, reciever, convStarters }) {
+  
   // console.log("here's reciever", reciever);
   const conversationKey = `${currentUser.id}-${reciever.id}`;
+  const [showProfileCard, setShowProfileCard] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const openProfileCard = () => {
+    setSelectedUser(selectedUser);
+    setShowProfileCard(true);
+  };
+
+  const closeProfileCard = () => {
+    setSelectedUser(null);
+    setShowProfileCard(false);
+  };
 
   return (
     <div className="message-list">
-      <h1>{reciever?.name}</h1>
+      <h1 onClick={openProfileCard}>{reciever?.name}</h1>
+      {showProfileCard && (
+        <ProfileCard user={reciever} onClose={closeProfileCard} />
+      )}
       {messages
         .filter(
           (msg) =>

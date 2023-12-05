@@ -234,6 +234,10 @@ export default function Chat() {
 
   const handleSend = () => {
     console.log("handleSend triggered");
+    const trimmedMessage = newMessage.trim();
+    if(!trimmedMessage){
+      return;
+    }
     const timestamp = Date.now();
     console.log("here's timestamp", timestamp);
     console.log("here's timestamp locale", timestamp.toLocaleString());
@@ -294,7 +298,7 @@ export default function Chat() {
               }}
             />
 
-            <button onClick={handleSend}>Send!!</button>
+            <button onClick={handleSend}>Send</button>
             <button
               onClick={sendMessageToBot}
               disabled={convLoading}

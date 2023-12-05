@@ -18,6 +18,8 @@ export default function Wrapped() {
   const [ref7, inView7] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [ref8, inView8] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [ref9, inView9] = useInView({ triggerOnce: true, threshold: 0.1 });
+  const [ref10, inView10] = useInView({ triggerOnce: true, threshold: 0.1 });
+  const [ref11, inView11] = useInView({ triggerOnce: true, threshold: 0.1 });
 
   const [question, setQuestion] = useState("UNINIT");
   const [testUser, setTestUser] = useState("UNINIT");
@@ -258,7 +260,9 @@ export default function Wrapped() {
                 </audio>
               </div>
             </div>
-            <h1 className="slide-in welcome-wrap-message">{user?.name}'s Wrapped</h1>
+            <h1 className="slide-in welcome-wrap-message">
+              {user?.name.split(" ")[0]}'s Wrapped
+            </h1>
             <p className="subtitle">A Year in Review: Unwrap Your Activity!</p>
 
             <div
@@ -383,10 +387,39 @@ export default function Wrapped() {
                 messages received!
               </p>
             </div>
-
             <div
               ref={ref9}
               className={`section font ${inView9 ? "visible" : "hidden"}`}
+            >
+              <h2 className="scale-up">Top Messaged Users</h2>
+              <ul>
+                {Object.entries(topMessaged).map(([userId, userInfo]) => (
+                  <li key={userId} className="pulse">
+                    You've messaged {userInfo.name} {userInfo.message_count}{" "}
+                    times.
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div
+              ref={ref10}
+              className={`section font ${inView10 ? "visible" : "hidden"}`}
+            >
+              <h2 className="scale-up">Your Biggest Fans: Users who have Messaged You the Most</h2>
+              <ul>
+                {Object.entries(topMessGot).map(([userId, userInfo]) => (
+                  <li key={userId} className="pulse">
+                    {userInfo.name} has messaged you {userInfo.message_count}{" "}
+                    times.
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div
+              ref={ref11}
+              className={`section font ${inView11 ? "visible" : "hidden"}`}
             >
               <h2
                 className="pulse"
