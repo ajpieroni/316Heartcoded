@@ -37,17 +37,23 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.perform_caching = false
 
+  config.action_mailer.perform_deliveries = true
+
   # !Mailer:
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {:address  => "smtp.duke.edu",
-                                        :port  => 25,
-                                        :domain => "duke.edu",
-                                        :authentication => :none,
-                                        :enable_starttls_auto => false}
+  config.action_mailer.smtp_settings = {
+                        :address => "smtp.gmail.com",
+                        :port => 587,
+                        :user_name => 'heartcoded214@gmail.com',
+                        :password => 'wwps ltpp zrro drtw',
+                        :authentication => :plain,
+                        :enable_starttls_auto => true
+  }
+  
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -79,12 +85,12 @@ Rails.application.configure do
   #test_userid = ENV['Test_DUID'] || "jsx"
 
   #config.middleware.use RackAuthenticator::Configurable, *[test_netid, []]
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {:address  => "smtp.duke.com",
-                                        :port  => 25,
-                                        :domain => "duke.edu",
-                                        :authentication => :none,
-                                        :enable_starttls_auto => false}
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {:address  => "smtp.duke.com",
+  #                                       :port  => 25,
+  #                                       :domain => "duke.edu",
+  #                                       :authentication => :none,
+  #                                       :enable_starttls_auto => false}
 
   # config.middleware.use RackAuthenticator::Configurable, *[
   #   "rk337@duke.edu",["urn:mace:duke.edu:groups:group-manager:roles:fixit-admin"], #exact string might be changed

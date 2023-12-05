@@ -37,13 +37,33 @@ class TestUser < ApplicationRecord
       save
     end
     
-    
+    def generate_password_token!
+      self.reset_password_token = rand(100_000..999_999).to_s
+      self.reset_password_sent_at = Time.current
+      save!
+    end
+     
+     def password_token_valid?
+      (self.reset_password_sent_at + 4.hours) > Time.now.utc
+     end
+     
+     def reset_password!(password)
+      self.reset_password_token = nil
+      self.password = password
+      save!
+     end
+          
+     
     
     def messages
         Message.where("uid_sender_id = :id OR uid_receiver_id = :id", id: id)
     end
 
     private
+
+    def generate_token
+      SecureRandom.hex(10)
+     end
 
     attribute :red_flags, :string, array: true
 

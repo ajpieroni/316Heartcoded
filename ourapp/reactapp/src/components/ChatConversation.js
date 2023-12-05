@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { useContext } from "react";
 import { UserContext } from "../components/contexts/UserContext";
 import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
-// import "./Chat.css";
+import Picker from "emoji-picker-react";
+import EmojiPickerComponent from "./EmojiPickerComponent";
 
 export default function ChatConversation({ selectedUser }) {
   const reciever = selectedUser;
@@ -37,6 +39,7 @@ export default function ChatConversation({ selectedUser }) {
       .then((response) => response.json())
       .then((data) => {
         return data.name;
+        return data.name;
       })
       .catch((error) => console.error("Error fetching user:", error));
   };
@@ -44,15 +47,23 @@ export default function ChatConversation({ selectedUser }) {
   const sendMessage = (messageObject) => {
     const url = `http://localhost:3000/test_users/${user?.id}/messages`;
 
+
     const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(messageObject), // Convert your message object into a JSON string
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(messageObject), // Convert your message object into a JSON string
     };
 
+
     return fetch(url, requestOptions)
       .then((response) => {
+      .then((response) => {
         if (!response.ok) {
+          console.log(response);
+          throw new Error("Network response was not ok");
           console.log(response);
           throw new Error("Network response was not ok");
         }
@@ -265,6 +276,10 @@ export default function ChatConversation({ selectedUser }) {
       .catch((error) => {
         console.error("There was an error sending the message:", error);
       });
+  };
+
+  const toggleEmojiPicker = () => {
+    setToggleEmoji(!toggleEmoji);
   };
 
   return (

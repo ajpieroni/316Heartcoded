@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, createContext } from "react";
 import { useLocation } from "react-router-dom";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import 'emoji-mart/css/emoji-mart.css'
+// import { Picker } from 'emoji-mart'
 // import
 // import headerRef
 
@@ -24,6 +26,8 @@ import ForgotPassword from "./pages/ForgotPassword";
 import SignUp from "./pages/SignUp";
 import ViewProfile from "./pages/ViewProfile.js";
 import Wrapped from "./pages/Wrapped.js";
+import ResetRequest from "./pages/ResetRequest";
+import ResetPassword from "./pages/ResetPassword";
 
 
 function App() {
@@ -55,9 +59,12 @@ function App() {
           <Route exact path="/Conversations" element={<Conversations />} />
           <Route exact path="/MatchList" element={<MatchList />} />
           <Route exact path="/Questions" element={<Questions />} />
+
           <Route exact path="/UserSignedIn" element={<UserSignedIn />} />
           <Route exact path="/Wrapped" element={<Wrapped />} />
           <Route path="/delete-profile" element={<DeleteProfile />} />
+          <Route exact path="/ResetRequest" element={<ResetRequest />} />'
+          <Route exact path="/ResetPassword" element={<ResetPassword />} />'
           {/* <Route path="/signed-in">
             <UserSignedIn />
           </Route> */}
