@@ -229,6 +229,11 @@ export default function FindMatch() {
   const closeDetailsDialog = () => {
     setShowDetailsDialog(false);
   };
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
+  }
+  
 
   return (
     <div>
@@ -260,7 +265,7 @@ export default function FindMatch() {
               <p>Bio: {reciever.bio}</p>
               <p>Birthday: {reciever.birthday}</p>
               <p>
-                {reciever.name} updated profile on {reciever.updated_at}
+              {reciever.name} updated profile on {formatDate(reciever.updated_at)}
               </p>
 
               {/* Add other details as needed */}
@@ -287,8 +292,9 @@ export default function FindMatch() {
               {myMatches.map((matchUser) => (
                 <div key={matchUser.id} className="user-card">
                   <h2>{matchUser.name}</h2>
-                  {/* <p>Age: {calculateAge(matchUser.birthday)}</p>
-                  <p>Bio: {matchUser.bio}</p> */}
+                  
+                  
+                  <p style={{fontStyle:"italic"}}>@{matchUser.username}</p> 
                   
 
                   <div className="chat-section">
