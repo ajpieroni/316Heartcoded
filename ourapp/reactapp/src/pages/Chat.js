@@ -4,6 +4,7 @@ import { UserContext } from "../components/contexts/UserContext";
 import { useLocation } from 'react-router-dom';
 import axios from "axios";
 import "./Chat.css";
+import Header from "../components/Header";
 
 
 export default function Chat() {
@@ -142,10 +143,11 @@ export default function Chat() {
   };
 
   return (
+    <>
+    <Header/>
     <main className="main-container">
-      <h1>Chat</h1>
-      <h2>Welcome, {user?.name}</h2>
-      <div className="chat-container">
+      <h1 className="main-title">Chat With {reciever?.name}</h1>
+      <div className="chat-page-container">
         <MessageList messages={messages} currentUser={user} users={users} reciever={reciever} />
 
         <div className="message-input-container">
@@ -165,6 +167,7 @@ export default function Chat() {
         </div>
       </div>
     </main>
+    </>
   );
 }
 
@@ -173,7 +176,6 @@ function MessageList({ messages, currentUser, users, reciever }) {
 
   return (
     <div className="message-list">
-      <h1>{reciever?.name}</h1>
       {messages
         .filter(msg => 
           (msg.uid_sender_id === currentUser.id && msg.uid_receiver_id === reciever.id) || 

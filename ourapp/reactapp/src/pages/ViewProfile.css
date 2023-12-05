@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Raleway&display=swap');
+
+.user-profile {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+.delete{
+    width: 50%;
+    margin-bottom: 50px;
+    padding: 10px;
+}
+
+  
+.user-profile label{
+    font-weight: bold;
+    color:white;
+}
+
+.user-profile input{
+    font-weight: bold;
+    color:black;
+}
+
+.user-profile textarea{
+    font-weight: bold;
+    color:white;
+}
+
+.user-profile select{
+    font-weight: bold;
+    color:white;
+}
+
+label, input, select, textarea{
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    max-width: 75vh;
+}
+
+.view-profile-title{
+    /* font-family: 'Bebas Neue', sans-serif; */
+    margin-top: 2rem;
+    font-size: 28px;
+}
+
+.profile-form {
+    margin-left: 0px;
+    border-style: solid;
+    border-color: white;
+    border-width: 5px;
+    border-radius: 20px;
+    padding:30px;
+  }
+
+.profile-button{
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    /* background: linear-gradient(to right, #FBB6CE , #f0709d); */
+    background:white;
+    border-radius:9999px;
+    cursor:pointer;
+    color:black;
+}
+
+.profile-button:hover{
+    background-color: var(--pink);
+}
+
+.selected-flag {
+    display: inline-block;
+    background-color: var(--dark);
+    color: white;
+    font-weight:bold;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    margin: 5px;
+    border-radius: 20px;
+  }
+  
+  /* .selected-flag:hover {
+    background-color: var(--pink);
+  } */
+
+  .disabled-field {
+    background-color: transparent;
+  }
+
+  .disabled-field{
+    color:white;
+    font-weight: bold;
+    opacity: 1;
+  }

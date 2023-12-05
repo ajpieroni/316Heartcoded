@@ -2,7 +2,8 @@ class HeartcodedMailer < ApplicationMailer
     def new_user_email
         @test_user = params[:test_user]
         mail(to: @test_user.email, subject: "Welcome to Heartcoded!")
-      end
+    end
+  
     def password_reset_email(user)
       @user = user
       mail(to: @user.email, subject: 'Password Reset Request') do |format|
