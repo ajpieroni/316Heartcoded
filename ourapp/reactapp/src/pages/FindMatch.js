@@ -229,11 +229,25 @@ export default function FindMatch() {
   const closeDetailsDialog = () => {
     setShowDetailsDialog(false);
   };
+
+  // Functions for rending user details
   function formatDate(dateString) {
     const date = new Date(dateString);
-    return `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
   }
-  
+  function getPronoun(gender) {
+  switch (gender) {
+    case 'M':
+      return 'his';
+    case 'F':
+      return 'her';
+    case 'X':
+      return 'their';
+    default:
+      return 'their'; 
+  }
+}
 
   return (
     <div>
@@ -265,7 +279,7 @@ export default function FindMatch() {
               <p>Bio: {reciever.bio}</p>
               <p>Birthday: {reciever.birthday}</p>
               <p>
-              {reciever.name} updated profile on {formatDate(reciever.updated_at)}
+              {reciever.name} last updated {getPronoun(reciever.gender)} profile on {formatDate(reciever.updated_at)}
               </p>
 
               {/* Add other details as needed */}
