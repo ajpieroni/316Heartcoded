@@ -97,7 +97,33 @@ match10 = MatchedWith.create(uid1: 2, uid2: 6, status: true, date: "11-11-2000")
 
 puts "User 1 ID: #{user1.id}, User 2 ID: #{user2.id}"
 
+male_avatar_path = Rails.root.join('db/seeds/avatars/man.png')
+female_avatar_path = Rails.root.join('db/seeds/avatars/woman.png')
+nonbinary_avatar_path = Rails.root.join('db/seeds/avatars/nonbinary.png')
 
+def attach_avatar(user, male_avatar_path, female_avatar_path, nonbinary_avatar_path)
+    case user.gender
+    when 'M'
+      avatar_path = male_avatar_path
+    when 'F'
+      avatar_path = female_avatar_path
+    when 'X'
+      avatar_path = nonbinary_avatar_path
+    else
+      raise "Unknown gender: #{user.gender}"
+    end
+  
+    user.avatar.attach(
+      io: File.open(avatar_path),
+      filename: File.basename(avatar_path),
+      content_type: 'image/png'
+    )
+  end
+
+  TestUser.find_each do |user|
+    attach_avatar(user, male_avatar_path, female_avatar_path, nonbinary_avatar_path)
+  end
+  puts "Users and avatars seeded."
 # # Create sample messages
 # message1 = Message.create(chat_order: 1, uid_sender_id: user1.id, uid_receiver_id: user2.id, timestamp: Time.now, message: "Hey Linda, how's it going?")
 # message2 = Message.create(chat_order: 2, uid_sender_id: user2.id, uid_receiver_id: user1.id, timestamp: Time.now + 5.minutes, message: "Hey Jacob, going well! Just got back from my trip to Iceland. Have you ever been?")
