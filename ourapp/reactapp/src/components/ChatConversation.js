@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useContext } from "react";
 import { UserContext } from "../components/contexts/UserContext";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import Picker from "emoji-picker-react";
@@ -59,7 +59,7 @@ export default function ChatConversation({ selectedUser }) {
 
 
     return fetch(url, requestOptions)
-      .then((response) => {
+
       .then((response) => {
         if (!response.ok) {
           console.log(response);
