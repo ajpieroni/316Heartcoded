@@ -297,7 +297,7 @@ export default function FindMatch() {
                       className="chat-text"
                       onClick={() => openConversations(matchUser)}
                     >
-                      Chat with {matchUser.name}
+                      Chat with {matchUser.name.split(" ")[0]}
                     </span>
                   </div>
 
@@ -309,7 +309,7 @@ export default function FindMatch() {
                           className="feedback-text"
                           onClick={() => openFeedback(matchUser)}
                         >
-                          Feedback with {matchUser.name}
+                          Give Feedback to {matchUser.name.split(" ")[0]}
                         </span>
                       </div>
                       <div className="unmatch">
