@@ -165,6 +165,33 @@ export default function UserForm() {
       setAgeError("");
     }
   };
+  const [selectedRedFlags, setSelectedRedFlags] = useState([]);
+  // !TODO: not hardcoded
+  const redFlagsOptions = [
+    "Vanity",
+    "Environmental Consciousness",
+    "Spirituality",
+    "Family",
+    "Career",
+    "Adventure",
+    "Trustfulness",
+    "Frugality",
+    "Sentimentality",
+    "Creativity",
+    "Traditionalism",
+    "Assertiveness",
+  ];
+
+  const handleRedFlagsChange = (e) => {
+    const selectedOptions = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    );
+    setSelectedRedFlags(selectedOptions);
+    console.log(selectedOptions);
+    setFormData({ ...formData, red_flags: selectedOptions });
+    console.log(formData);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -186,7 +213,10 @@ export default function UserForm() {
       newFormData.append("test_user[birthday]", formData.birthday);
       newFormData.append("test_user[bio]", formData.bio);
       newFormData.append("test_user[location]", formData.location);
-      newFormData.append("test_user[red_flags]", JSON.stringify(formData.red_flags));
+      formData.red_flags.forEach(flag => {
+        newFormData.append("test_user[red_flags][]", flag);
+      });
+      
       newFormData.append("test_user[username]", formData.username);
       newFormData.append("test_user[email]", formData.email);
       // Append avatar file if available
@@ -218,33 +248,6 @@ export default function UserForm() {
 
   //const [isPasswordUpdateVisible, setPasswordUpdateVisible] = useState(false);
 
-  const [selectedRedFlags, setSelectedRedFlags] = useState([]);
-  // !TODO: not hardcoded
-  const redFlagsOptions = [
-    "Vanity",
-    "Environmental Consciousness",
-    "Spirituality",
-    "Family",
-    "Career",
-    "Adventure",
-    "Trustfulness",
-    "Frugality",
-    "Sentimentality",
-    "Creativity",
-    "Traditionalism",
-    "Assertiveness",
-  ];
-
-  const handleRedFlagsChange = (e) => {
-    const selectedOptions = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
-    );
-    setSelectedRedFlags(selectedOptions);
-    console.log(selectedOptions);
-    setFormData({ ...formData, red_flags: selectedOptions });
-    console.log(formData);
-  };
 
   return (
     <div className="user-form">
