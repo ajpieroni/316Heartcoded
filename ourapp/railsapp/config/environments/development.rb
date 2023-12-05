@@ -1,6 +1,8 @@
 require "active_support/core_ext/integer/time"
+require 'logger'
 
 Rails.application.configure do
+  logger = Logger.new($stdout)
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded any time
@@ -37,17 +39,28 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.perform_caching = false
 
+  config.action_mailer.perform_deliveries = true
+
   # !Mailer:
+  logger.info "SMTP Address: #{ENV['SMTP_ADDRESS']}"
+  logger.info "SMTP Port: #{ENV['SMTP_PORT']}"
+  logger.info "SMTP Username: #{ENV['SMTP_USERNAME']}"
+  
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {:address  => "smtp.duke.edu",
-                                        :port  => 25,
-                                        :domain => "duke.edu",
-                                        :authentication => :none,
-                                        :enable_starttls_auto => false}
+  config.action_mailer.smtp_settings = {
+    address: ENV['SMTP_ADDRESS'],
+    port: ENV['SMTP_PORT'],
+    user_name: ENV['SMTP_USERNAME'],
+    password: ENV['SMTP_PASSWORD'],
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
+
+  
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -67,47 +80,7 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
-  # Raises error for missing translations.
-  # config.i18n.raise_on_missing_translations = true
-
-  # Annotate rendered view with file names.
-  # config.action_view.annotate_rendered_view_with_filenames = true
-
-  # Uncomment if you wish to allow Action Cable access from any origin.
-  # config.action_cable.disable_request_forgery_protection = true
-
-  #test_userid = ENV['Test_DUID'] || "jsx"
-
-  #config.middleware.use RackAuthenticator::Configurable, *[test_netid, []]
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {:address  => "smtp.duke.com",
-                                        :port  => 25,
-                                        :domain => "duke.edu",
-                                        :authentication => :none,
-                                        :enable_starttls_auto => false}
-
-  # config.middleware.use RackAuthenticator::Configurable, *[
-  #   "rk337@duke.edu",["urn:mace:duke.edu:groups:group-manager:roles:fixit-admin"], #exact string might be changed
-  #   {
-  #     'HTTP_EMPLID' => '000000',
-  #     'HTTP_DUDUKEID' => '1197415',
-  #     'HTTP_GIVENNAME' => 'Ria',
-  #     'HTTP_SN' => 'Kapoor',
-  #     'HTTP_DISPLAYNAME' => 'Ria Kapoor',
-  #     'HTTP_AFFILIATION' => "student",
-  #     'HTTP_MAIL' => 'rk337@duke.edu'
-
-  #     # 'HTTP_EMPLID' => '000000',
-  #     # 'HTTP_DUDUKEID' => '1097969',
-  #     # 'HTTP_GIVENNAME' => 'Aaron',
-  #     # 'HTTP_SN' => 'Diefes',
-  #     # 'HTTP_DISPLAYNAME' => 'Aaron Diefes',
-  #     # 'HTTP_AFFILIATION' => "student",
-  #     # 'HTTP_MAIL' => 'awd18@duke.edu'
-
-  #   }
-  # ]
-
 end
+
 
 

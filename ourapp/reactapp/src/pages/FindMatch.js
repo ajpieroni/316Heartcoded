@@ -17,6 +17,7 @@ export default function FindMatch() {
   const [loading, setLoading] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const [ellipsisDots, setEllipsisDots] = useState(1);
+  const [matchesMaxed, setMatchesMaxed] = useState(false);
   const [showDetailsDialog, setShowDetailsDialog] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState(null);
 
@@ -40,30 +41,36 @@ export default function FindMatch() {
   }, [setUser]);
 
   const newMatches = async () => {
-  setLoading(true); // Set loading to true when starting the fetch operation
-
-  // if (myMatches.length >= 10) {
-  //   console.log("Too many matches already!");
-  //   return;
-  // }
-  if (!currentUser) {
-    setLoading(false); // Set loading to false in case of an early return
-    return;
-  }
-
-  try {
-    const response = await fetch(
-      `http://localhost:3000/match/${currentUser}`
-    );
-    const matches = await response.json();
-    // Process matches here if needed
-  } catch (error) {
-    console.error("Error fetching new matches:", error);
-  } finally {
-    setLoading(false); // Set loading to false when fetch operation completes
-    fetchMatches();
-  }
-};
+    setLoading(true); // Set loading to true when starting the fetch operation
+  
+    // if (myMatches.length >= 10) {
+    //   console.log("Too many matches already!");
+    //   return;
+    // }
+    if (!currentUser) {
+      setLoading(false); // Set loading to false in case of an early return
+      return;
+    }
+  
+    try {
+      const response = await fetch(
+        `http://localhost:3000/match/${currentUser}`
+      );
+      const matches = await response.json();
+  
+      // Check if matches array is empty
+      if (matches.length === 0) {
+        setMatchesMaxed(true);
+      } else {
+        // setMatchesMaxed(false);
+      }
+    } catch (error) {
+      console.error("Error fetching new matches:", error);
+    } finally {
+      setLoading(false); // Set loading to false when fetch operation completes
+      fetchMatches();
+    }
+  };
 
 
   const unmatch = async (otherUser) => {
@@ -158,9 +165,9 @@ export default function FindMatch() {
       .then((response) => response.json())
       .then(async (matches) => {
         const matchesArray = [];
-        if (defaultMatch) {
-          matchesArray.push(defaultMatch);
-        }
+        // if (defaultMatch) {
+        //   matchesArray.push(defaultMatch);
+        // }
         for (let match of matches) {
           const otherUserId =
             match.uid1 === currentUser ? match.uid2 : match.uid1;
@@ -230,6 +237,7 @@ export default function FindMatch() {
     <div>
       <Header />
       <main className="main-container">
+      <h1 className="main-title">Your Matches</h1>
       {loading && (
         <div className="loading-container">
           <div className="loading-text">
@@ -238,7 +246,7 @@ export default function FindMatch() {
         </div>
       )}
   
-        {!loading && myMatches.length < 11 && (
+        {!loading && !matchesMaxed && myMatches.length < 11 && (
           <button onClick={newMatches}>New matches!</button>
         )}
 
@@ -255,6 +263,14 @@ export default function FindMatch() {
               <button onClick={closeDetailsDialog} className="modal-button">Close</button>
             </div>
           </div>
+        )}
+
+        {matchesMaxed && (
+          <div className="loading-container">
+          <div className="loading-text">
+            No more new matches available! You're picky!
+          </div>
+        </div>
         )}
   
         <div className="card-container">

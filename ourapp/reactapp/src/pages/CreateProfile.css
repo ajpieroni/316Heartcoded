@@ -1,27 +1,45 @@
+
 .user-form {
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* align-items: center; */
-    /* justify-content: space-between; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
     min-height: 100vh;
-    /* padding: 2rem; */
-    /* background: linear-gradient(to bottom, #FBB6CE, #F87171, #EF4444); */
+    padding: 2rem;
+    background: linear-gradient(to bottom, #FBB6CE, #F87171, #EF4444);
   }
+  .welcome-message {
+    text-align: center;
+    color: white;
+    margin-top: 6rem;
+    font-size: 4rem;
+    font-family: 'Bebas Neue', sans-serif;
+
+}
 
   .user-form-edit {
 
     min-height: 100vh;
-    margin-top: 56px;
   }
 
-label, input, select, textarea{
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    border: none;
-    border-radius: 9999px;
-    outline: none;
-    transition: border-color 0.3s, box-shadow 0.3s;
-    font-family: 'Varela Round', sans-serif;
+label{
+  padding: 1rem 10rem !important;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  font-family: 'Varela Round', sans-serif;
+  color: white;
+}
+input, select, textarea{
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  font-family: 'Varela Round', sans-serif;
 }
 
 .profile-button{
@@ -36,12 +54,12 @@ label, input, select, textarea{
 }
 
 .profile-button:hover{
-    background-color: #F87171;
+    background-color: var(--pink);
 }
 
 .selected-flag {
     display: inline-block;
-    background-color: #FBB6CE;
+    background-color: var(--dark);
     color: white;
     font-weight:bold;
     padding: 0.5rem 1rem;
@@ -50,7 +68,7 @@ label, input, select, textarea{
     border-radius: 20px;
   }
   
-  .selected-flag:hover {
+  /* .selected-flag:hover {
     background-color: #f97ba7;
   }
 

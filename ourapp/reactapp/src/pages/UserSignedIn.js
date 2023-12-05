@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./UserLogin.css";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import Conversations from "./Conversations";
-import "./UserSignedIn.css"
+import "./UserSignedIn.css";
+import Picker from 'emoji-picker-react';
 
 import axios from "axios";
-import { useHistory } from "react-router-dom"; 
+import { useHistory } from "react-router-dom";
 // const history = useHistory();
 import { Link } from "react-router-dom";
 import { UserContext } from "../components/contexts/UserContext";
@@ -15,54 +16,57 @@ import CreateProfile from "./CreateProfile.js";
 import Header from "../components/Header";
 
 export default function UserSignedIn() {
-
   // const [question, setQuestion] = useState("UNINIT");
   const [testUser, setTestUser] = useState("UNINIT");
+  const [chosenEmoji, setChosenEmoji] = useState(null);
 
+  const onEmojiClick = (event, emojiObject) => {
+    setChosenEmoji(emojiObject);
+  };
   const { user, setUser } = useContext(UserContext);
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState(false);
   console.log("UserContext:", UserContext);
   console.log("User from context:", user);
 
-  const [confirmation, setConfirmation] = useState('');
+  const [confirmation, setConfirmation] = useState("");
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
 
-const username = localStorage.getItem("username") || "defaultUsername";
-const initializeUser = () => {
-  fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      if (data) {
-        const updatedUser = {
-          ...user,
-          name: data.name,
-          id: data.id,
-          birthday: data.birthday,
-          gender: data.gender,
-          preferences: data.preferences,
-          bio: data.bio,
-          location: data.location,
-          password: data.password,
-          red_flags: data.red_flags
-        };
-        setUser(updatedUser); // Update the context immediately after setting the user data
-        sessionStorage.setItem("user", JSON.stringify(data));
-      }
-    })
-    .catch((error) => {
-      console.error("Failed to initialize user:", error);
-    });
-};
-  
-    useEffect(() => {
-      initializeUser(); // Call the initializeUser function if no user data is in sessionStorage
-    }, [setUser]);
+  const username = localStorage.getItem("username") || "defaultUsername";
+  const initializeUser = () => {
+    fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data) {
+          const updatedUser = {
+            ...user,
+            name: data.name,
+            id: data.id,
+            birthday: data.birthday,
+            gender: data.gender,
+            preferences: data.preferences,
+            bio: data.bio,
+            location: data.location,
+            password: data.password,
+            red_flags: data.red_flags,
+          };
+          setUser(updatedUser); // Update the context immediately after setting the user data
+          sessionStorage.setItem("user", JSON.stringify(data));
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to initialize user:", error);
+      });
+  };
+
+  useEffect(() => {
+    initializeUser(); 
+  }, [setUser]);
 
 
 
@@ -72,51 +76,50 @@ const initializeUser = () => {
   const navigate = useNavigate();
 return(
     <div>
-<div className="features">
-  <Header />
-        <div class = "welcome-message"> {user?.name}'s Dashboard</div>
-        {/* <Link to={{
-        pathname: '/',
-        state: { data: user }
-      }}>
-        <button
-            onClick={handleDelete}
-            style={{ marginLeft: '10px', backgroundColor: 'red', color: 'white', cursor: 'pointer' }}
+      <div className="features">
+        <Header />
+        <div class="welcome-message"> {user?.name}'s Dashboard</div>
+
+        <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
-            Delete Profile
-          </button>
-          </Link> */}
-
-{/* 
-  <div>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <button
-          onClick={() => setShowConfirmationDialog(true)}
-          style={{ backgroundColor: 'red', color: 'white', cursor: 'pointer' }}
-        >
-          Delete Profile
-        </button>
-      </div>
-
-      {showConfirmationDialog && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <p>Please enter "DELETE" to confirm:</p>
-            <input
-              type="text"
-              value={confirmation}
-              onChange={(e) => setConfirmation(e.target.value)}
-            />
-
-              <button onClick={handleDelete} className="modal-button">Confirm</button>
-
-            <button onClick={() => setShowConfirmationDialog(false)} className="modal-button">Cancel</button>
+  
           </div>
+
+          {/* {showConfirmationDialog && (
+            <div className="modal-overlay">
+              <div className="modal">
+                <p>Please enter "DELETE" to confirm:</p>
+                <input
+                  type="text"
+                  value={confirmation}
+                  onChange={(e) => setConfirmation(e.target.value)}
+                />
+                {/* <Link to={{
+            pathname: '/',
+            state: { data: user }
+            }}> */}
+                {/* <button onClick={handleDelete} className="modal-button">
+                  Confirm
+                </button> */}
+                {/* </Link> */}
+                {/* <button */}
+                  {/* // onClick={() => setShowConfirmationDialog(false)} */}
+                  {/* // className="modal-button" */}
+                {/* // > */}
+                  {/* Cancel */}
+                {/* </button> */}
+              {/* </div> */}
+            {/* </div> */}
+          {/* )}  */}
         </div>
-      )}
-    </div> */}
-    
-      {/* <Link to={{
+
+        {/* <Link to={{
         pathname: '/EditProfile',
         state: { data: user }
       }}>
@@ -128,7 +131,6 @@ return(
             </p>
           </div>
         </Link> */}
-
 
         <Link to="/FindMatch">
           <div className="feature-card">
@@ -148,9 +150,7 @@ return(
         <Link to="/Wingman">
           <div className="feature-card">
             <h2>Wingman</h2>
-            <p>
-              Talk to your Wingman!
-            </p>
+            <p>Talk to your Wingman!</p>
           </div>
         </Link>
         {/* <Link to="/Chat">
@@ -172,12 +172,15 @@ return(
             </p>
           </div>
         </Link>
+        <Link to="/Wrapped">
+          <div className="feature-card">
+            <h2>Wrapped</h2>
+            <p> Check out your Heartcoded insights!</p>
+          </div>
+        </Link>
+        
         {/* hello */}
       </div>
-
- 
     </div>
-)
-    
-
+  );
 }

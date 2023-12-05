@@ -69,6 +69,17 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def answered_questions_count
+    user = TestUser.find_by(id: params[:id])
+    
+    if user
+      answered_question_count = Answer.where(test_user_id: user.id).count
+      render json: { answered_question_count: answered_question_count }, status: :ok
+    else
+      render json: { error: 'TestUser not found' }, status: :not_found
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_question
