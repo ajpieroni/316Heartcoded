@@ -12,6 +12,7 @@ import DeleteProfile from "../components/DeleteButton";
 export default function UserForm({ onUserAdded }) {
   const [ageError, setAgeError] = useState("");
   const [days, setDays] = useState(null);
+  const [canEdit, setCanEdit] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -334,6 +335,7 @@ export default function UserForm({ onUserAdded }) {
                   type="button"
                   onClick={() => handleRemoveRedFlag(flag)}
                   className="remove-flag-button"
+                  disabled
                 >
                   &#x2715; {/* Unicode for a cross (X) */}
                 </button>
