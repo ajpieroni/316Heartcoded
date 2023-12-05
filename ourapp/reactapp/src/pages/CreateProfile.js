@@ -12,6 +12,7 @@ export default function UserForm() {
   const { user, setUser } = useContext(UserContext);
   const [emailError, setEmailError] = useState("");
   const [ageError, setAgeError] = useState("");
+  const [sameEmail, setSameEmail] = useState("")
   const [avatarUrl, setAvatarUrl] = useState(null);
 
   // console.log(user?.id);
@@ -54,6 +55,33 @@ export default function UserForm() {
       initializeUser(); // Call the initializeUser function if no user data is in sessionStorage
     }
   }, [setUser]);
+
+  const checkEmail = (email) => {
+    fetch(`http://localhost:3000/test_users/find_by_email/${email}`)
+      .then((response) => {
+        if (!response.ok) {
+          setSameEmail("Another user has that email.")
+          console.log("Network error or user not found at server level");
+          return;
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data) {
+          
+          setSameEmail("Another user has that email.")
+
+        } else {
+         
+          console.log("User not found at data level");
+        }
+      })
+      .catch((error) => {
+        setSameEmail("Another user has that email.")
+        console.error("Failed to fetch data:", error);
+      });
+  };
+  
 
   const patchUserData = (updatedData) => {
     if (user?.id) {
@@ -148,6 +176,7 @@ export default function UserForm() {
       setEmailError("Please enter a valid email address");
     } else {
       setEmailError("");
+      checkEmail(email);
     }
   };
 
@@ -289,14 +318,22 @@ export default function UserForm() {
       <div className="welcome-message">Welcome to HeartCoded</div>
       {/* <h2>Your username is {username}</h2> */}
       <form onSubmit={handleSubmit}>
-      {avatarUrl ?(<><label> Avatar Preview
-          <img
-            src={avatarUrl}
-            alt="Profile Avatar"
-            style={{ maxHeight: "200px" }}
-          />
-        </label></>):(<></>)}
-      
+        {avatarUrl ? (
+          <>
+            <label>
+              {" "}
+              Avatar Preview
+              <img
+                src={avatarUrl}
+                alt="Profile Avatar"
+                style={{ maxHeight: "200px" }}
+              />
+            </label>
+          </>
+        ) : (
+          <></>
+        )}
+
         <label htmlFor="avatar">
           Avatar<span style={{ color: "red" }}>*</span>:{" "}
           <input
@@ -338,6 +375,7 @@ export default function UserForm() {
             required
           />
           {emailError && <div style={{ color: "red" }}>{emailError}</div>}
+          {sameEmail && <div style={{ color: "red" }}>{sameEmail}</div>}
         </label>
         <label>
           Gender<span style={{ color: "red" }}>*</span>:
