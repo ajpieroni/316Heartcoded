@@ -65,10 +65,10 @@ export default function UserForm() {
     if (user?.id) {
       fetch(`http://localhost:3000/test_users/${user?.id}`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ test_user: updatedData }),
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
+        body: updatedData,
       })
         .then((response) => {
           if (!response.ok) {
@@ -104,6 +104,7 @@ export default function UserForm() {
     red_flags: [],
     username: username,
     email: "",
+    avatar: null,
   });
 
   function StatesList({ onStateSelected }) {
@@ -164,44 +165,6 @@ export default function UserForm() {
       setAgeError("");
     }
   };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    validateAge(formData.birthday);
-    if (ageError) {
-      console.error("Age validation failed. Form not submitted.");
-      alert("You are too young");
-      return;
-    }
-
-    try {
-      console.log("here's form data:", formData);
-      // const response = await axios.post(`http://localhost:3000/test_users`, formData);
-      patchUserData(formData);
-      // onUserAdded(response.data);
-      setIsSuccessModalOpen(true);
-      setFormData({
-        name: "",
-        gender: "",
-        preferences: "",
-        birthday: "",
-        bio: "",
-        location: "",
-        red_flags: [],
-        // password: "",
-        username: "",
-        email: "",
-        // password: "",
-      });
-    } catch (error) {
-      setIsSuccessModalOpen(true);
-      console.error("Error adding a new user:", error);
-    }
-  };
-
-  //const [isPasswordUpdateVisible, setPasswordUpdateVisible] = useState(false);
-
   const [selectedRedFlags, setSelectedRedFlags] = useState([]);
   // !TODO: not hardcoded
   const redFlagsOptions = [
@@ -230,12 +193,77 @@ export default function UserForm() {
     console.log(formData);
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    validateAge(formData.birthday);
+    if (ageError) {
+      console.error("Age validation failed. Form not submitted.");
+      alert("You are too young");
+      return;
+    }
+
+    try {
+      //console.log("here's form data:", formData);
+
+      const newFormData = new FormData();
+      newFormData.append("test_user[name]", formData.name);
+      newFormData.append("test_user[gender]", formData.gender);
+      newFormData.append("test_user[preferences]", formData.preferences);
+      newFormData.append("test_user[birthday]", formData.birthday);
+      newFormData.append("test_user[bio]", formData.bio);
+      newFormData.append("test_user[location]", formData.location);
+      formData.red_flags.forEach(flag => {
+        newFormData.append("test_user[red_flags][]", flag);
+      });
+      
+      newFormData.append("test_user[username]", formData.username);
+      newFormData.append("test_user[email]", formData.email);
+      // Append avatar file if available
+      newFormData.append("test_user[avatar]", formData.avatar);
+  
+      // const response = await axios.post(`http://localhost:3000/test_users`, formData);
+      patchUserData(newFormData);
+      // onUserAdded(response.data);
+      setIsSuccessModalOpen(true);
+      setFormData({
+        name: "",
+        gender: "",
+        preferences: "",
+        birthday: "",
+        bio: "",
+        location: "",
+        red_flags: [],
+        // password: "",
+        username: "",
+        email: "",
+        avatar: null,
+        // password: "",
+      });
+    } catch (error) {
+      setIsSuccessModalOpen(true);
+      console.error("Error adding a new user:", error);
+    }
+  };
+
+  //const [isPasswordUpdateVisible, setPasswordUpdateVisible] = useState(false);
+
+
   return (
     <div className="user-form">
       <div className="welcome-message">Welcome to HeartCoded</div>
       {/* <h2>Your username is {username}</h2> */}
       <form onSubmit={handleSubmit}>
-      <label>
+        <label htmlFor="avatar">Avatar:</label>
+        <input id="avatar" type="file" accepts="image/*" onChange={(e)=>{
+          setFormData({
+            ...formData,
+            avatar: e.target.files[0],
+          });
+          console.log(e.target.files[0]);
+        }}
+        />
+        <label>
           Username<span style={{ color: "red" }}>*</span>:
           <input
             type="text"

@@ -70,7 +70,11 @@ export default function UserSignedIn() {
 
 
 
-  return (
+
+
+  // const history = useHistory();
+  const navigate = useNavigate();
+return(
     <div>
       <div className="features">
         <Header />
