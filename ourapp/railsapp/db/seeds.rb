@@ -112,6 +112,21 @@ user90 = TestUser.create(name: "Quinn Brown", location: "Nevada", bio: "Professi
 user91 = TestUser.create(name: "Jesse Thompson", location: "Florida", bio: "Marine conservationist and scuba instructor!", gender: "X", preferences: "All", birthday: "1996-10-10", username: "JesseOcean", password_digest:"password1")
 user92 = TestUser.create(name: "Bailey Rodriguez", location: "California", bio: "Fashion designer and boutique owner!", gender: "X", preferences: "All", birthday: "1999-05-15", username: "BaileyFashion", password_digest:"password1")
 user93 = TestUser.create(name: "Reese Patel", location: "New York", bio: "Theater director and playwright!", gender: "X", preferences: "All", birthday: "2001-07-07", username: "ReeseStage", password_digest:"password1")
+user94 = TestUser.create(name: "Eliana Foster", location: "Texas", bio: "Aspiring novelist and historical researcher!", gender: "F", preferences: "M", birthday: "1998-03-15", username: "ElianaWrites", password_digest:"password1")
+user95 = TestUser.create(name: "Marcus Alvarez", location: "Texas", bio: "Music producer and sound engineer!", gender: "M", preferences: "F", birthday: "1995-07-22", username: "MarcusMusic", password_digest:"password1")
+user96 = TestUser.create(name: "Lena Nguyen", location: "Texas", bio: "Environmental scientist and nature photographer!", gender: "F", preferences: "M", birthday: "2002-11-08", username: "LenaNature", password_digest:"password1")
+user97 = TestUser.create(name: "Kai Robinson", location: "Texas", bio: "Professional chef and BBQ expert!", gender: "M", preferences: "F", birthday: "1997-09-30", username: "KaiBBQ", password_digest:"password1")
+user98 = TestUser.create(name: "Amelia Ortiz", location: "Texas", bio: "Veterinary technician and animal rescue volunteer!", gender: "F", preferences: "M", birthday: "2001-06-14", username: "AmeliaVet", password_digest:"password1")
+user99 = TestUser.create(name: "Leo Martinez", location: "Texas", bio: "Fitness trainer and nutrition blogger!", gender: "M", preferences: "F", birthday: "1996-04-20", username: "LeoFit", password_digest:"password1")
+user100 = TestUser.create(name: "Gabriella Chen", location: "Texas", bio: "Architect and urban planning enthusiast!", gender: "F", preferences: "M", birthday: "1999-02-27", username: "GabriellaDesign", password_digest:"password1")
+user101 = TestUser.create(name: "Isaiah Lopez", location: "Texas", bio: "Software developer and tech innovator!", gender: "M", preferences: "F", birthday: "2000-08-05", username: "IsaiahTech", password_digest:"password1")
+user102 = TestUser.create(name: "Zara Patel", location: "Texas", bio: "Journalist and documentary filmmaker!", gender: "F", preferences: "M", birthday: "1998-05-19", username: "ZaraJournal", password_digest:"password1")
+user103 = TestUser.create(name: "Ethan Wong", location: "Texas", bio: "Graphic artist and animation creator!", gender: "M", preferences: "F", birthday: "2003-01-10", username: "EthanGraphics", password_digest:"password1")
+user104 = TestUser.create(name: "Sophia Ramirez", location: "Texas", bio: "Event planner and travel blogger!", gender: "F", preferences: "M", birthday: "1997-12-03", username: "SophiaEvents", password_digest:"password1")
+user105 = TestUser.create(name: "Miguel Johnson", location: "Texas", bio: "Automotive engineer and car enthusiast!", gender: "M", preferences: "F", birthday: "1999-10-25", username: "MiguelCars", password_digest:"password1")
+user106 = TestUser.create(name: "Lily Kim", location: "Texas", bio: "Fashion stylist and trendsetter!", gender: "F", preferences: "M", birthday: "2002-07-17", username: "LilyFashion", password_digest:"password1")
+user107 = TestUser.create(name: "Adrian Sanchez", location: "Texas", bio: "Real estate investor and market analyst!", gender: "M", preferences: "F", birthday: "1995-03-08", username: "AdrianRealEstate", password_digest:"password1")
+user108 = TestUser.create(name: "Isla Rodriguez", location: "Texas", bio: "Yoga instructor and health coach!", gender: "F", preferences: "M", birthday: "2001-04-12", username: "IslaYoga", password_digest:"password1")
 
 
 
