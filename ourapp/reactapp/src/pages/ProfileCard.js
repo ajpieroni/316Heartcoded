@@ -60,6 +60,7 @@ function ProfileCard({ user, onClose }) {
         <p>Age: {calculateAge(user?.birthday)}</p>
         <p>Bio: {user?.bio}</p>
         <p>Birthday: {user?.birthday}</p>
+        <p>Location: {user?.location}</p>
         <p>
           {user?.name} last updated {getPronoun(user?.gender)} profile on{" "}
           {formatDate(user?.updated_at)}
