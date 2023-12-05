@@ -12,6 +12,8 @@ export default function UserForm() {
   const { user, setUser } = useContext(UserContext);
   const [emailError, setEmailError] = useState("");
   const [ageError, setAgeError] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState(null);
+
   // console.log(user?.id);
 
   const initializeUser = () => {
@@ -273,25 +275,35 @@ export default function UserForm() {
   };
 
   //const [isPasswordUpdateVisible, setPasswordUpdateVisible] = useState(false);
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const objectUrl = URL.createObjectURL(file);
+      setAvatarUrl(objectUrl); // Set the generated URL for preview
+      setFormData({ ...formData, avatar: file }); // Update formData with the file
+    }
+  };
 
   return (
     <div className="user-form">
       <div className="welcome-message">Welcome to HeartCoded</div>
       {/* <h2>Your username is {username}</h2> */}
       <form onSubmit={handleSubmit}>
+      {avatarUrl ?(<><label> Avatar Preview
+          <img
+            src={avatarUrl}
+            alt="Profile Avatar"
+            style={{ maxHeight: "200px" }}
+          />
+        </label></>):(<></>)}
+      
         <label htmlFor="avatar">
           Avatar:{" "}
           <input
             id="avatar"
             type="file"
             accepts="image/*"
-            onChange={(e) => {
-              setFormData({
-                ...formData,
-                avatar: e.target.files[0],
-              });
-              console.log(e.target.files[0]);
-            }}
+            onChange={handleAvatarChange}
           />
         </label>
 
