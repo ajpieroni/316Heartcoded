@@ -322,17 +322,18 @@ export default function UserForm() {
           console.log(e.target.files[0]);
         }}
         /> */}
+        <label> Avatar Preview
           <img
             src={avatarUrl}
             alt="Profile Avatar"
             style={{ maxHeight: "200px" }}
           />
+        </label>
           <label>
             Name<span style={{ color: "red" }}>*</span>:
             <input
               type="text"
               name="name"
-              label="Avatar Preview"
               value={formData.name}
               onChange={handleInputChange}
               required
