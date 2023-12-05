@@ -263,14 +263,13 @@ export default function UserForm() {
       {/* <h2>Nice to see you, {user.name.split(' ')[0]}!</h2> */}
       <h1 style={{marginLeft:'20px'}}>Edit Your Information</h1>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
-      <label htmlFor="avatar">Avatar</label>
+      {/* <label htmlFor="avatar">Avatar</label>
         <input
           type="file"
           id="avatar"
           name="avatar"
           onChange={handleFileChange}
         />
-        {/* <input type="file" accept="image/*" onChange={(e)=>setAvatarData(e.target.files[0])} /> */}
         <label>
         {selectedAvatar && (
           <div>
@@ -286,7 +285,7 @@ export default function UserForm() {
             onChange={handleInputChange}
             required
           />
-        </label>
+        </label> */}
         <label>
           Gender<span style={{ color: 'red' }}>*</span>:  
           <select

@@ -293,7 +293,7 @@ export default function UserForm({ onUserAdded }) {
           </label>
         )} */}
         <br></br>
-        <p>Want to delete your profile?</p>
+        {/* <p>Want to delete your profile?</p> */}
 
       </form>
     </div>
