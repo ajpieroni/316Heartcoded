@@ -43,7 +43,7 @@ export default function UserLanding() {
       setError('Username is already taken.');
       return;
     }
-    localStorage.setItem('username', username);
+    sessionStorage.setItem('username', username);
     
     axios.post("http://localhost:3000/test_users", {
       test_user: {
@@ -76,7 +76,7 @@ export default function UserLanding() {
 
   useEffect(() => {
     if (username) {
-      localStorage.setItem('username', username);
+      sessionStorage.setItem('username', username);
     }
   }, [username]); 
   

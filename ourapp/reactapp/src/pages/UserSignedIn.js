@@ -32,7 +32,7 @@ export default function UserSignedIn() {
   const [confirmation, setConfirmation] = useState("");
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
 
-  const username = localStorage.getItem("username") || "defaultUsername";
+  const username = sessionStorage.getItem("username") || "defaultUsername";
   const initializeUser = () => {
     fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
       .then((response) => {

@@ -8,7 +8,7 @@ import { UserContext } from "../components/contexts/UserContext";
 
 export default function UserForm() {
   const location = useLocation();
-  const username = localStorage.getItem("username") || "defaultUsername";
+  const username = sessionStorage.getItem("username") || "defaultUsername";
   const { user, setUser } = useContext(UserContext);
   const [emailError, setEmailError] = useState("");
   const [ageError, setAgeError] = useState("");
@@ -174,6 +174,7 @@ export default function UserForm() {
     setSelectedRedFlags(updatedRedFlags);
     setFormData({ ...formData, red_flags: updatedRedFlags });
   };
+  console.log(username)
 
   const validateAge = (birthdate) => {
     const today = new Date();
@@ -209,6 +210,7 @@ export default function UserForm() {
     "Traditionalism",
     "Assertiveness",
   ];
+  console.log(username)
 
   const handleRedFlagsChange = (e) => {
     const selectedOptions = Array.from(
@@ -244,6 +246,7 @@ export default function UserForm() {
       formData.red_flags.forEach((flag) => {
         newFormData.append("test_user[red_flags][]", flag);
       });
+      console.log(username)
 
       newFormData.append("test_user[username]", formData.username);
       newFormData.append("test_user[email]", formData.email);
