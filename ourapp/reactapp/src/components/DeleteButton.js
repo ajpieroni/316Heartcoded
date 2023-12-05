@@ -35,6 +35,7 @@ const DeleteProfile = () => {
           // Here you should also clear the user context and any stored sessions
           setUser(null);
           sessionStorage.removeItem("user");
+          sessionStorage.removeItem("username");
           localStorage.removeItem("username");
           navigate("/"); 
         } else {

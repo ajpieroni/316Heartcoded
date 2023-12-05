@@ -23,6 +23,15 @@ export default function UserLanding() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [successMessage, setSuccessMessage] = useState('')
   const navigate = useNavigate();
+ 
+
+  useEffect(() => {
+    if (username) {
+      sessionStorage.setItem("username", username);
+      console.log("set username")
+      // localStorage.setItem('username', username);
+    }
+  }, [username]); 
 
   const signUpUser = async () => {
     setError(null);
@@ -43,7 +52,8 @@ export default function UserLanding() {
       setError('Username is already taken.');
       return;
     }
-    localStorage.setItem('username', username);
+    // localStorage.setItem('username', username);
+   
     
     axios.post("http://localhost:3000/test_users", {
       test_user: {
@@ -60,7 +70,8 @@ export default function UserLanding() {
       if (response.data.success === true) {
         const message = "Account successfully created. Click here to <a href='/CreateProfile'>initialize profile</a>";
         setSuccessMessage(message);
-       
+        sessionStorage.setItem("username", username);
+        
         navigate("/CreateProfile");
       }
       else{
@@ -74,11 +85,6 @@ export default function UserLanding() {
     
   };
 
-  useEffect(() => {
-    if (username) {
-      localStorage.setItem('username', username);
-    }
-  }, [username]); 
   
   const checkUsernameAvailability = async (username) => {
     try {

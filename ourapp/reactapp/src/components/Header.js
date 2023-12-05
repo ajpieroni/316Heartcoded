@@ -15,6 +15,8 @@ function Header() {
     sessionStorage.removeItem('user');
     // localStorage.setItem()
     setUser(null); 
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('user');
     navigate('/'); 
   };
   useEffect(() => {

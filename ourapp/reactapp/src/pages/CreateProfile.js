@@ -8,7 +8,9 @@ import { UserContext } from "../components/contexts/UserContext";
 
 export default function UserForm() {
   const location = useLocation();
-  const username = localStorage.getItem("username") || "defaultUsername";
+  // const username = localStorage.getItem("username") || "defaultUsername";
+  const username = sessionStorage.getItem("username");
+  // sessionStorage.setItem("username", JSON.stringify(data));
   const { user, setUser } = useContext(UserContext);
   const [emailError, setEmailError] = useState("");
   const [ageError, setAgeError] = useState("");
@@ -100,11 +102,10 @@ export default function UserForm() {
     email: "",
     avatar: null,
   });
-
   function StatesList({ onStateSelected }) {
     const [states, setStates] = useState([]);
 
-    const getStates = () => {
+    useEffect(() => {
       axios
         .get("http://localhost:3000/states")
         .then((response) => {
@@ -113,24 +114,14 @@ export default function UserForm() {
         .catch((error) => {
           console.error("Error fetching states:", error);
         });
-    };
+    }, [user?.id]);
 
-    useEffect(() => {
-      getStates();
-    }, []); //
     return (
       <div>
         <label>
           Select Your Location<span style={{ color: "red" }}>*</span>:
-          <select
-            style={{ width: 200 }}
-            onChange={onStateSelected}
-            required
-            value={formData.location}
-          >
-            <option style={{ width: 200 }} value="">
-              Select a state
-            </option>
+          <select onChange={onStateSelected} required value={formData.location}>
+            <option value="">Select a state</option>
             {states.map((state) => (
               <option key={state.id} value={state.name}>
                 {state.name}
@@ -141,6 +132,7 @@ export default function UserForm() {
       </div>
     );
   }
+
 
   const validateEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
