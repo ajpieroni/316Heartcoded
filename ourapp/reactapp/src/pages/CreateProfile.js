@@ -260,15 +260,15 @@ export default function UserForm() {
       <div className="welcome-message">Welcome to HeartCoded</div>
       {/* <h2>Your username is {username}</h2> */}
       <form onSubmit={handleSubmit}>
-        <label htmlFor="avatar">Avatar:</label>
-        <input id="avatar" type="file" accepts="image/*" onChange={(e)=>{
+        <label htmlFor="avatar">Avatar: <input id="avatar" type="file" accepts="image/*" onChange={(e)=>{
           setFormData({
             ...formData,
             avatar: e.target.files[0],
           });
           console.log(e.target.files[0]);
         }}
-        />
+        /></label>
+        
         <label>
           Username<span style={{ color: "red" }}>*</span>:
           <input
