@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./UserLogin.css";
 import { useNavigate } from "react-router-dom";
+import ProfileCard from "./ProfileCard.js";
 
 import axios from "axios";
 import { useHistory } from "react-router-dom";
@@ -27,7 +28,8 @@ export default function Conversations() {
   const [login, setLogin] = useState(false);
   console.log("UserContext:", UserContext);
   console.log("User from context:", user);
-
+  // const [selectedUser, setSelectedUser] = useState(null);
+  
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
@@ -45,13 +47,16 @@ export default function Conversations() {
       <h1 className="main-title">Your Conversations</h1>
       <div className="conversations-container">
         <div className="match-list-container">
+        
           <MatchList
             onUserSelected={(user) => {
               console.log("Selected User:", user);
               setSelectedUser(user); 
             }}
           />
+
         </div>
+       
         <div className="chat-conversation-container">
           {selectedUser && <ChatConversation selectedUser={selectedUser} />}
         </div>

@@ -298,7 +298,7 @@ export default function Chat() {
               }}
             />
 
-            <button onClick={handleSend}>Send!!</button>
+            <button onClick={handleSend}>Send</button>
             <button
               onClick={sendMessageToBot}
               disabled={convLoading}
