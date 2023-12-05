@@ -65,4 +65,17 @@
   form > *:last-child {
     margin-bottom: 0;
   }
+
+  .feedback-form{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .feedback-q{
+    text-align: center;
+  }
+
+  .feedback-font{
+    font-family: 'Varela Round', sans-serif;
+  }
   

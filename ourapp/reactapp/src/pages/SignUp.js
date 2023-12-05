@@ -43,6 +43,8 @@ export default function UserLanding() {
       setError('Username is already taken.');
       return;
     }
+    localStorage.setItem('username', username);
+    
     axios.post("http://localhost:3000/test_users", {
       test_user: {
         username: username,
@@ -58,7 +60,7 @@ export default function UserLanding() {
       if (response.data.success === true) {
         const message = "Account successfully created. Click here to <a href='/CreateProfile'>initialize profile</a>";
         setSuccessMessage(message);
-        localStorage.setItem('username', username);
+       
         navigate("/CreateProfile");
       }
       else{
@@ -112,35 +114,42 @@ export default function UserLanding() {
             required
           />
           
-          <div className="password-input-container">
-            <input
-              type={showPassword ? "text" : "password"}
-              className="user-init-input"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Set Password"
-              required
-            />
-            <div className="show-password-button" onClick={() => setShowPassword(!showPassword)}>
-              {showPassword ? <Visibility /> : <VisibilityOff />}
-            </div>
-          </div>
 
-          <div className="password-input-container">
-            <input
-              type={showConfirmPassword ? "text" : "password"}
-              className="user-init-input"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Confirm Password"
-              required
-            />
-            <div className="show-password-button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-              {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
-            </div>
-          </div>
+          <div className="setpassword-input-container">
+          <input
+            type={showPassword ? "text" : "password"}
+            className="setpass-init-input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Set Password"
+            required
+          />
+          <IconButton
+            className="show-password-button"
+            onClick={() => setShowPassword(!showPassword)}
+            edge="end"
+          >
+            {showPassword ? <Visibility /> : <VisibilityOff />}
+          </IconButton>
+        </div>
 
-
+        <div className="setpassword-input-container">
+          <input
+            type={showConfirmPassword ? "text" : "password"}
+            className="setpass-init-input"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Confirm Password"
+            required
+          />
+          <IconButton
+            className="show-password-button"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            edge="end"
+          >
+            {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+          </IconButton>
+        </div>
 
   
           <PasswordRequirements password={password} />

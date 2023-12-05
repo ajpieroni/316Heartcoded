@@ -182,7 +182,7 @@ export default function UserLogin() {
   return (
     <main className="main-login-container">
       <div className="hero-login-section">
-        <div className="hero-login-title">Welcome to Heartcoded!!!</div>
+        <div className="hero-login-title">Welcome to Heartcoded</div>
         <p className="hero-login-subtitle">Find your soulmate today!</p>
         <div className="user-login-init-container">
           {showSignIn && (
