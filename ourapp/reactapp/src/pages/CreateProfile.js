@@ -53,13 +53,13 @@ export default function UserForm() {
     }
   }, [setUser]);
 
-  const validateEmail = (email) => {
-    if (!email.endsWith("@duke.edu")) {
-      setEmailError("Email must end with @duke.edu");
-    } else {
-      setEmailError("");
-    }
-  };
+  // const validateEmail = (email) => {
+  //   if (!email.endsWith("@duke.edu")) {
+  //     setEmailError("Email must end with @duke.edu");
+  //   } else {
+  //     setEmailError("");
+  //   }
+  // };
 
   const patchUserData = (updatedData) => {
     if (user?.id) {
@@ -144,9 +144,9 @@ export default function UserForm() {
       validateAge(value);
     }
 
-    if (name === "email") {
-      validateEmail(value);
-    }
+    // if (name === "email") {
+    //   validateEmail(value);
+    // }
   };
   const handleStateSelected = (e) => {
     const selectedState = e.target.value;
@@ -246,7 +246,7 @@ export default function UserForm() {
           />
         </label>
         <label>
-          Email (@duke.edu)<span style={{ color: "red" }}>*</span>:
+          Email<span style={{ color: "red" }}>*</span>:
           <input
             type="text"
             name="email"
