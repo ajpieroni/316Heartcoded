@@ -14,7 +14,7 @@ const EmojiPickerComponent = ({ chosenEmoji, setChosenEmoji }) => {
 
   return (
     <div>
-      <button onClick={toggleEmojiPicker}>React</button>
+      {/* <button onClick={toggleEmojiPicker}>React</button> */}
       {toggleEmoji && (
         <>
           {chosenEmoji ? (
