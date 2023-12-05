@@ -83,28 +83,9 @@ export default function UserForm() {
   };
 
   useEffect(() => {
-      initializeUser(); // Call the initializeUser function if no user data is in sessionStorage
+      initializeUser(); 
   }, [setUser]);
 
-    // useEffect(() => {
-    //   axios.get(`http://localhost:3000/test_users/${user.id}`)
-    //     .then(response => {
-    //     let user = response.data;
-    //       setFormData({
-    //         name: user.name || '',
-    //         gender: user.gender || '',
-    //         birthday: user.birthday || '',
-    //         bio: user.bio || '',
-    //         location: user.location || '',
-    //         preferences: user.preferences || '',
-    //         password: user.password|| '',
-    //         red_flags: user.red_flags || []
-    //       });
-    //     })
-    //     .catch(error => {
-    //       console.error('Error fetching user data:', error);
-    //     });
-    // }, [user]);
 
     function StatesList({ onStateSelected }) {
       const [states, setStates] = useState([]);
@@ -117,7 +98,7 @@ export default function UserForm() {
           .catch(error => {
             console.error('Error fetching states:', error);
           });
-      }, []);
+      }, [user?.id]);
     
       return (
         <div>

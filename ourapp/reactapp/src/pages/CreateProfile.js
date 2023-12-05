@@ -119,7 +119,7 @@ export default function UserForm() {
         .catch((error) => {
           console.error("Error fetching states:", error);
         });
-    }, []);
+    }, [user?.id]);
 
     return (
       <div>
