@@ -12,7 +12,7 @@ export default function UserForm() {
   const { user, setUser } = useContext(UserContext);
   const [emailError, setEmailError] = useState("");
   const [ageError, setAgeError] = useState("");
-  console.log(user?.id);
+  // console.log(user?.id);
 
   const initializeUser = () => {
     fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
@@ -34,7 +34,7 @@ export default function UserForm() {
             bio: data.bio,
             location: data.location,
             password: data.password,
-            red_flags: data.red_flags
+            red_flags: data.red_flags,
           });
           sessionStorage.setItem("user", JSON.stringify(data));
         }
@@ -53,13 +53,7 @@ export default function UserForm() {
     }
   }, [setUser]);
 
-  // const validateEmail = (email) => {
-  //   if (!email.endsWith("@duke.edu")) {
-  //     setEmailError("Email must end with @duke.edu");
-  //   } else {
-  //     setEmailError("");
-  //   }
-  // };
+  
 
   const patchUserData = (updatedData) => {
     if (user?.id) {
@@ -110,23 +104,26 @@ export default function UserForm() {
   function StatesList({ onStateSelected }) {
     const [states, setStates] = useState([]);
 
-    useEffect(() => {
+    const getStates = () => {
       axios
         .get("http://localhost:3000/states")
         .then((response) => {
-          setStates(response.data);
+          setStates(response.data); 
         })
         .catch((error) => {
           console.error("Error fetching states:", error);
         });
-    }, [user?.id]);
-
+    };
+    
+    useEffect(() => {
+      getStates();
+    }, []); // 
     return (
       <div>
         <label>
           Select Your Location<span style={{ color: "red" }}>*</span>:
-          <select onChange={onStateSelected} required value={formData.location}>
-            <option value="">Select a state</option>
+          <select style={{width: 200}} onChange={onStateSelected} required value={formData.location}>
+            <option style={{width: 200}}value="">Select a state</option>
             {states.map((state) => (
               <option key={state.id} value={state.name}>
                 {state.name}
@@ -136,6 +133,8 @@ export default function UserForm() {
         </label>
       </div>
     );
+
+    
   }
 
   const handleInputChange = (e) => {
@@ -155,17 +154,26 @@ export default function UserForm() {
   };
 
   const handleRemoveRedFlag = (flagToRemove) => {
-    const updatedRedFlags = selectedRedFlags.filter((flag) => flag !== flagToRemove);
+    const updatedRedFlags = selectedRedFlags.filter(
+      (flag) => flag !== flagToRemove
+    );
     setSelectedRedFlags(updatedRedFlags);
     setFormData({ ...formData, red_flags: updatedRedFlags });
   };
-  
+
   const validateAge = (birthdate) => {
     const today = new Date();
     const enteredDate = new Date(birthdate);
     //const age = today.getFullYear() - enteredDate.getFullYear();
 
-    if (today < new Date(enteredDate.getFullYear() + 18, enteredDate.getMonth(), enteredDate.getDate())) {
+    if (
+      today <
+      new Date(
+        enteredDate.getFullYear() + 18,
+        enteredDate.getMonth(),
+        enteredDate.getDate()
+      )
+    ) {
       setAgeError("You need to be at least 18");
     } else {
       setAgeError("");
@@ -219,15 +227,15 @@ export default function UserForm() {
       newFormData.append("test_user[birthday]", formData.birthday);
       newFormData.append("test_user[bio]", formData.bio);
       newFormData.append("test_user[location]", formData.location);
-      formData.red_flags.forEach(flag => {
+      formData.red_flags.forEach((flag) => {
         newFormData.append("test_user[red_flags][]", flag);
       });
-      
+
       newFormData.append("test_user[username]", formData.username);
       newFormData.append("test_user[email]", formData.email);
       // Append avatar file if available
       newFormData.append("test_user[avatar]", formData.avatar);
-  
+
       // const response = await axios.post(`http://localhost:3000/test_users`, formData);
       patchUserData(newFormData);
       // onUserAdded(response.data);
@@ -254,21 +262,27 @@ export default function UserForm() {
 
   //const [isPasswordUpdateVisible, setPasswordUpdateVisible] = useState(false);
 
-
   return (
     <div className="user-form">
       <div className="welcome-message">Welcome to HeartCoded</div>
       {/* <h2>Your username is {username}</h2> */}
       <form onSubmit={handleSubmit}>
-        <label htmlFor="avatar">Avatar: <input id="avatar" type="file" accepts="image/*" onChange={(e)=>{
-          setFormData({
-            ...formData,
-            avatar: e.target.files[0],
-          });
-          console.log(e.target.files[0]);
-        }}
-        /></label>
-        
+        <label htmlFor="avatar">
+          Avatar:{" "}
+          <input
+            id="avatar"
+            type="file"
+            accepts="image/*"
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                avatar: e.target.files[0],
+              });
+              console.log(e.target.files[0]);
+            }}
+          />
+        </label>
+
         <label>
           Username<span style={{ color: "red" }}>*</span>:
           <input
@@ -317,16 +331,16 @@ export default function UserForm() {
         </label>
 
         <label>
-        Birthday<span style={{ color: "red" }}>*</span>:
-        <input
-          type="date"
-          name="birthday"
-          value={formData.birthday}
-          onChange={handleInputChange}
-          required
-        />
-        {ageError && <div style={{ color: "red" }}>{ageError}</div>}
-      </label>
+          Birthday<span style={{ color: "red" }}>*</span>:
+          <input
+            type="date"
+            name="birthday"
+            value={formData.birthday}
+            onChange={handleInputChange}
+            required
+          />
+          {ageError && <div style={{ color: "red" }}>{ageError}</div>}
+        </label>
         <StatesList onStateSelected={handleStateSelected} />
         <label>
           Who would you like to meet<span style={{ color: "red" }}>*</span>:
@@ -356,7 +370,7 @@ export default function UserForm() {
           <select
             multiple
             name="red_flags"
-            style={{width: 953}}
+            style={{ width: 953 }}
             value={formData.red_flags}
             onChange={handleRedFlagsChange}
           >
