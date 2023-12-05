@@ -263,6 +263,25 @@ export default function UserForm() {
       {/* <h2>Nice to see you, {user.name.split(' ')[0]}!</h2> */}
       <h1 style={{marginLeft:'20px'}}>Edit Your Information</h1>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
+      {/* <label htmlFor="avatar">Avatar:</label>
+        <input id="avatar" type="file" accepts="image/*" onChange={(e)=>{
+          setFormData({
+            ...formData,
+            avatar: e.target.files[0],
+          });
+          console.log(e.target.files[0]);
+        }}
+        /> */}
+        <label>
+          Name<span style={{ color: "red" }}>*</span>:
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+            required
+          />
+        </label>
       {/* <label htmlFor="avatar">Avatar</label>
         <input
           type="file"

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 import { UserContext } from "../components/contexts/UserContext";
 import ChatIcon from "@mui/icons-material/Chat";
 import InsightsIcon from "@mui/icons-material/Insights";
@@ -16,6 +17,10 @@ export default function FindMatch() {
   const [loading, setLoading] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const [ellipsisDots, setEllipsisDots] = useState(1);
+  const [showDetailsDialog, setShowDetailsDialog] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState(null);
+
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -96,12 +101,35 @@ export default function FindMatch() {
     fetchMatches();
   };
 
-  const fetchUserById = (id) => {
-    return fetch(`http://localhost:3000/test_users/${id}`)
-      .then((response) => response.json())
-      .then((data) => data)
-      .catch((error) => console.error("Error fetching user:", error));
+  const fetchUserById = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3000/test_users/${id}`);
+      const user = await response.json();
+  
+      const fetchAvatarUrl = async () => {
+        try {
+          const avatarResponse = await fetch(`http://localhost:3000/test_users/${id}`);
+          if (avatarResponse.ok) {
+            const avatarData = await avatarResponse.json();
+            setAvatarUrl(avatarData.avatar_url);
+          } else {
+            console.error('Error fetching avatar URL');
+          }
+        } catch (error) {
+          console.error('Error fetching avatar URL:', error);
+        }
+      };
+  
+      fetchAvatarUrl();
+  
+      console.log("User details:", user);
+      return user;
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      return null;
+    }
   };
+  
 
   const showUnmatchConfirmation = (otherUser) => {
     const confirmation = window.confirm(`Are you sure you want to unmatch ${otherUser?.name}?`);
@@ -180,6 +208,24 @@ export default function FindMatch() {
     return age;
   }
 
+  const openDetailsDialog = async (matchUser) => {
+    try {
+      const detailedUser = await fetchUserById(matchUser.id);
+      if (detailedUser) {
+        setReciever(detailedUser);
+        setShowDetailsDialog(true);
+      } else {
+        console.error("User details not available.");
+      }
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+    }
+  };
+
+  const closeDetailsDialog = () => {
+    setShowDetailsDialog(false);
+  };
+
   return (
     <div>
       <Header />
@@ -195,6 +241,21 @@ export default function FindMatch() {
         {!loading && myMatches.length < 11 && (
           <button onClick={newMatches}>New matches!</button>
         )}
+
+        {showDetailsDialog && (
+          <div className="modal-overlay">
+            <div className="modal">
+              <h2>{reciever.name}</h2>
+              <p>Age: {calculateAge(reciever.birthday)}</p>
+              <p>Bio: {reciever.bio}</p>
+              <p>Birthday: {reciever.birthday}</p>
+              <p>{reciever.name} updated profile on {reciever.updated_at}</p>
+              <img src={avatarUrl} alt="User Avatar" />
+              {/* Add other details as needed */}
+              <button onClick={closeDetailsDialog} className="modal-button">Close</button>
+            </div>
+          </div>
+        )}
   
         <div className="card-container">
           {myMatches.length === 0 ? (
@@ -204,8 +265,11 @@ export default function FindMatch() {
               {myMatches.map((matchUser) => (
                 <div key={matchUser.id} className="user-card">
                   <h2>{matchUser.name}</h2>
-                  <p>Age: {calculateAge(matchUser.birthday)}</p>
-                  <p>Bio: {matchUser.bio}</p>
+                  {/* <p>Age: {calculateAge(matchUser.birthday)}</p>
+                  <p>Bio: {matchUser.bio}</p> */}
+
+              <button onClick={() => openDetailsDialog(matchUser)}>View User Info</button>
+
   
                   <div className="chat-section">
                     <ChatIcon onClick={() => openConversations(matchUser)} />
