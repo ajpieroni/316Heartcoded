@@ -20,6 +20,7 @@ export default function FindMatch() {
   const [matchesMaxed, setMatchesMaxed] = useState(false);
   const [showDetailsDialog, setShowDetailsDialog] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState(null);
+  const [matchSet, setMatchSet] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -36,7 +37,7 @@ export default function FindMatch() {
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
-  }, [setUser]);
+  }, [user?.id]);
 
   const newMatches = async () => {
     setLoading(true);
@@ -174,14 +175,16 @@ export default function FindMatch() {
           matchesArray.push(currMatch);
         }
         setMyMatches(matchesArray);
+        
       })
       .catch((error) => console.error("Error fetching matches:", error))
       .finally(() => setLoading(false));
+
   };
 
   useEffect(() => {
     fetchMatches();
-  }, [currentUser]);
+  }, [user?.id]);
 
   function openConversations(matchUser) {
     console.log(`clicked conversations with ${matchUser?.name}`);
@@ -230,6 +233,7 @@ export default function FindMatch() {
 
   const closeDetailsDialog = () => {
     setShowDetailsDialog(false);
+    setAvatarUrl(null);
   };
 
   // Functions for rending user details
@@ -304,8 +308,6 @@ export default function FindMatch() {
         <div className="card-container">
           {loading ? (
             <p></p>
-          ) : myMatches.length === 0 ? (
-            <p>You have no matches, get some!</p>
           ) : (
             <>
               {myMatches.map((matchUser) => (
@@ -320,7 +322,7 @@ export default function FindMatch() {
                       className="chat-text"
                       onClick={() => openConversations(matchUser)}
                     >
-                      Chat with {matchUser.name.split(" ")[0]}
+                      Chat with {matchUser?.name.split(" ")[0]}
                     </span>
                   </div>
 
@@ -357,6 +359,9 @@ export default function FindMatch() {
               ))}
             </>
           )}
+          {myMatches.length === 0 && !loading && matchSet ? (
+            <p>You have no matches, get some!</p>
+          ) : null}
         </div>
       </main>
     </div>
