@@ -244,6 +244,10 @@ export default function ChatConversation({ selectedUser }) {
   }, [user]);
 
   const handleSend = () => {
+    const trimmedMessage = newMessage.trim();
+    if(!trimmedMessage){
+      return;
+    }
     console.log("handleSend triggered");
     const timestamp = Date.now();
     console.log("here's timestamp", timestamp);
