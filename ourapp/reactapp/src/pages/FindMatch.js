@@ -166,9 +166,9 @@ export default function FindMatch() {
       .then((response) => response.json())
       .then(async (matches) => {
         const matchesArray = [];
-        if (defaultMatch) {
-          matchesArray.push(defaultMatch);
-        }
+        // if (defaultMatch) {
+        //   matchesArray.push(defaultMatch);
+        // }
         for (let match of matches) {
           const otherUserId =
             match.uid1 === currentUser ? match.uid2 : match.uid1;
