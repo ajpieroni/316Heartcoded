@@ -148,7 +148,7 @@ export default function FindMatch() {
   const fetchDefaultMatch = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/test_users/find_by_username?username=Wingman`
+        `http://localhost:3000/test_users/find_by_username/Wingman`
       );
       const users = await response.json();
       console.log("default:", users);
@@ -166,9 +166,9 @@ export default function FindMatch() {
       .then((response) => response.json())
       .then(async (matches) => {
         const matchesArray = [];
-        // if (defaultMatch) {
-        //   matchesArray.push(defaultMatch);
-        // }
+        if (defaultMatch) {
+          matchesArray.push(defaultMatch);
+        }
         for (let match of matches) {
           const otherUserId =
             match.uid1 === currentUser ? match.uid2 : match.uid1;
