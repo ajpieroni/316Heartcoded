@@ -298,12 +298,13 @@ export default function UserForm() {
         </label></>):(<></>)}
       
         <label htmlFor="avatar">
-          Avatar:{" "}
+          Avatar<span style={{ color: "red" }}>*</span>:{" "}
           <input
             id="avatar"
             type="file"
             accepts="image/*"
             onChange={handleAvatarChange}
+            required
           />
         </label>
 
