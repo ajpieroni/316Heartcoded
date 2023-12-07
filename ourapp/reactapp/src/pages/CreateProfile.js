@@ -21,7 +21,7 @@ export default function UserForm() {
   const [username, setUsername] = useState("");
 
 const initializeUser = () => {
-  if (!username) return; // Ensure username is defined
+  if (!username) return;
 
   fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
     .then(response => {

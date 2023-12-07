@@ -10,12 +10,18 @@ import { useNavigate } from "react-router-dom";
 export default function UserForm() {
   const [selectedAvatar, setSelectedAvatar] = useState(null);
   const [ageError, setAgeError] = useState("");
-
+  const [storedUser, setStoredUser] = useState(null); // Declare storedUser at a higher scope
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [username, setUsername] = useState("");
+  const [uid, setUid] = useState("");
+  const { user, setUser } = useContext(UserContext);
+
 
   const handleSuccessModalClose = () => {
     setIsSuccessModalOpen(false);
   };
+  console.log("UserContext:", UserContext);
+  console.log("User from context:", user);
 
   const handleRemoveRedFlag = (flagToRemove) => {
     const updatedRedFlags = selectedRedFlags.filter(
@@ -36,8 +42,7 @@ export default function UserForm() {
     red_flags: [],
     avatar: null,
   });
-  const { user, setUser } = useContext(UserContext);
-  const username = localStorage.getItem("username") || "defaultUsername";
+  // const username = sessionStorage.getItem("username") || "defaultUsername";
   const initializeUser = () => {
     fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
       .then((response) => {
@@ -74,17 +79,42 @@ export default function UserForm() {
             red_flags: data.red_flags || [],
             avatar: data.avatar || null,
           });
-          sessionStorage.setItem("user", JSON.stringify(data));
+          // sessionStorage.setItem("user", JSON.stringify(data));
         }
       })
       .catch((error) => {
         console.error("Failed to initialize user:", error);
       });
   };
+  useEffect(() => {
+    // Retrieve username and uid from sessionStorage
+    const sessionUsername = sessionStorage.getItem("username");
+    const sessionUid = sessionStorage.getItem("uid");
+    console.log("here it is"+sessionUsername, sessionUid)
+  
+    // Only proceed if sessionUsername and sessionUid are available
+    if (sessionUsername && sessionUid) {
+      setUsername(sessionUsername);
+      setUid(sessionUid);
+  
+      // Parse the user data from session storage, if available
+      const storedUserData = sessionStorage.getItem("user");
+      if (storedUserData) {
+        const userData = JSON.parse(storedUserData); 
+        setStoredUser(userData); 
+        setUser(userData);
+      } else {
+        // Initialize user if the data is not in session storage
+        initializeUser(sessionUsername);
+      }
+    }
+  }, [user]); 
 
   useEffect(() => {
-    initializeUser();
-  }, [setUser]);
+    console.log("User data:", storedUser);
+    console.log("user", user)
+    console.log("username", username)
+  }, [user, storedUser, username]);
 
   function StatesList({ onStateSelected }) {
     const [states, setStates] = useState([]);
@@ -282,7 +312,7 @@ export default function UserForm() {
     const fetchAvatarUrl = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/test_users/${user.id}`
+          `http://localhost:3000/test_users/${user?.id}`
         );
         if (response.ok) {
           const data = await response.json();
