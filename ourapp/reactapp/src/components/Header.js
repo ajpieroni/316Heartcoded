@@ -15,6 +15,13 @@ function Header() {
     sessionStorage.removeItem('user');
     // localStorage.setItem()
     setUser(null); 
+      sessionStorage.setItem('user', null);
+      sessionStorage.setItem('uid', null);
+      sessionStorage.setItem('username', null);
+      localStorage.setItem('username', null);
+      localStorage.setItem('uid', null);
+      localStorage.setItem('user', null);
+
     navigate('/'); 
   };
   useEffect(() => {

@@ -31,8 +31,20 @@ export default function UserSignedIn() {
 
   const [confirmation, setConfirmation] = useState("");
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
-
+  const [error, setError] = useState(null);
   const username = localStorage.getItem("username") || "defaultUsername";
+  useEffect(() => {
+    let timer;
+
+    if (user === null) {
+      setError("You have been logged out. Please log in again.");
+      timer = setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    }
+    return () => clearTimeout(timer);
+  }, [user]);
+
   const initializeUser = () => {
     fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
       .then((response) => {
@@ -79,7 +91,7 @@ return(
       <div className="features">
         <Header />
         <div class="welcome-message"> {user?.name}'s Dashboard</div>
-
+        {error && <div style={{color: '#FF0000'}}>{error}</div>}
         <div>
           <div
             style={{
