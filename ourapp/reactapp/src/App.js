@@ -41,6 +41,19 @@ function App() {
     return null;
   }
 
+  useEffect(() => {
+    if (location.pathname === '/') {
+      sessionStorage.setItem('user', null);
+      sessionStorage.setItem('uid', null);
+      sessionStorage.setItem('username', null);
+      setUser(null)
+
+      
+
+    }
+  }, [location]); 
+
+
   const [user, setUser] = useState(null);
   return (
     <UserContext.Provider value={{ user, setUser }}>
