@@ -168,20 +168,28 @@ export default function UserForm() {
     }
 
     try {
+      // const newFormData = new FormData();
       const newFormData = new FormData();
-      for (const key in formData) {
-        if (key !== "avatar") {
-          newFormData.append(key, formData[key]);
-        }
-      }
-      if (formData.avatar) {
-        newFormData.append("avatar", formData.avatar);
-      }
+      newFormData.append("test_user[name]", formData.name);
+      newFormData.append("test_user[gender]", formData.gender);
+      newFormData.append("test_user[preferences]", formData.preferences);
+      newFormData.append("test_user[birthday]", formData.birthday);
+      newFormData.append("test_user[bio]", formData.bio);
+      newFormData.append("test_user[location]", formData.location);
+      formData.red_flags.forEach((flag) => {
+        newFormData.append("test_user[red_flags][]", flag);
+      });
+
+      newFormData.append("test_user[username]", formData.username);
+      newFormData.append("test_user[email]", formData.email);
+      // Append avatar file if available
+      newFormData.append("test_user[avatar]", formData.avatar);
 
       let response;
+      
       if (user.id) {
         response = await axios.patch(
-          `http://localhost:3000/test_users/${user.id}`,
+          `http://localhost:3000/test_users/${user?.id}`,
           newFormData
         );
       } else {
@@ -282,7 +290,7 @@ export default function UserForm() {
     const fetchAvatarUrl = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/test_users/${user.id}`
+          `http://localhost:3000/test_users/${user?.id}`
         );
         if (response.ok) {
           const data = await response.json();
@@ -297,12 +305,15 @@ export default function UserForm() {
 
     fetchAvatarUrl();
   }, [user?.id]);
+
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
+    console.log("avatar changed")
     if (file) {
       const objectUrl = URL.createObjectURL(file);
       setAvatarUrl(objectUrl); // Set the generated URL for preview
       setFormData({ ...formData, avatar: file }); // Update formData with the file
+      console.log(formData[avatar])
     }
   };
 

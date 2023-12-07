@@ -83,7 +83,7 @@ export default function UserForm({ onUserAdded }) {
   useEffect(() => {
     const fetchAvatarUrl = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/test_users/${user.id}`);
+        const response = await fetch(`http://localhost:3000/test_users/${user?.id}`);
         if (response.ok) {
           const data = await response.json();
           setAvatarUrl(data.avatar_url);
