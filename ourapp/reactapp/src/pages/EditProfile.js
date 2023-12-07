@@ -169,17 +169,25 @@ export default function UserForm() {
     }
   
     try {
+      
       const newFormData = new FormData();
-      for (const key in formData) {
-        if (key !== "avatar") {
-          newFormData.append(key, formData[key]);
-        }
-      }
-      if (formData.avatar) {
-        newFormData.append("avatar", formData.avatar);
-      }
-  
-      console.log("here is new form", newFormData);
+      newFormData.append("test_user[name]", formData.name);
+      newFormData.append("test_user[gender]", formData.gender);
+      newFormData.append("test_user[preferences]", formData.preferences);
+      newFormData.append("test_user[birthday]", formData.birthday);
+      newFormData.append("test_user[bio]", formData.bio);
+      newFormData.append("test_user[location]", formData.location);
+      formData.red_flags.forEach((flag) => {
+        newFormData.append("test_user[red_flags][]", flag);
+      });
+
+      newFormData.append("test_user[username]", formData.username);
+      newFormData.append("test_user[email]", formData.email);
+      // Append avatar file if available
+      newFormData.append("test_user[avatar]", formData.avatar);
+
+      // const response = await axios.post(`http://localhost:3000/test_users`, formData);
+      patchUserData(newFormData);
   
       let response;
       if (user?.id) {
