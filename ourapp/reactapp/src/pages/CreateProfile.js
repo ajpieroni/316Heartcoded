@@ -14,8 +14,8 @@ export default function UserForm() {
   const [ageError, setAgeError] = useState("");
   const [sameEmail, setSameEmail] = useState("")
   const [avatarUrl, setAvatarUrl] = useState(null);
-
-  // console.log(user?.id);
+  const [userResponse, setUserResponse] = useState("");
+  console.log(user?.id);
 
   const initializeUser = () => {
     fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
@@ -56,32 +56,10 @@ export default function UserForm() {
     }
   }, [setUser]);
 
-  const checkEmail = (email) => {
-    fetch(`http://localhost:3000/test_users/find_by_email/${email}`)
-      .then((response) => {
-        if (!response.ok) {
-          setSameEmail("Another user has that email.")
-          console.log("Network error or user not found at server level");
-          return;
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data) {
-          
-          setSameEmail("Another user has that email.")
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
-        } else {
-         
-          console.log("User not found at data level");
-        }
-      })
-      .catch((error) => {
-        setSameEmail("Another user has that email.")
-        console.error("Failed to fetch data:", error);
-      });
-  };
-  
 
   const patchUserData = (updatedData) => {
     if (user?.id) {
@@ -100,6 +78,8 @@ export default function UserForm() {
         })
         .then((data) => {
           console.log("User updated:", data);
+          let capitalizedString = capitalizeFirstLetter(data.message);
+          setUserResponse(capitalizedString + ".")
         })
         .catch((error) => {
           console.error("Failed to update user:", error);
@@ -176,7 +156,7 @@ export default function UserForm() {
       setEmailError("Please enter a valid email address");
     } else {
       setEmailError("");
-      checkEmail(email);
+      // checkEmail(email);
     }
   };
 
@@ -470,7 +450,7 @@ export default function UserForm() {
 
         {isSuccessModalOpen && (
           <SuccessModal
-            message="Your information was successfully submitted."
+            message={`Your information was successfully submitted. ${userResponse}`}
             onClose={handleSuccessModalClose}
             redirectUrl="/"
           />
