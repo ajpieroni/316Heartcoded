@@ -210,7 +210,6 @@ const validateEmail = (email) => {
     }
   };
 
-÷
   const handleRemoveRedFlag = (flagToRemove) => {
     const updatedRedFlags = selectedRedFlags.filter(
       (flag) => flag !== flagToRemove
