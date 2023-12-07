@@ -32,6 +32,7 @@ const initializeUser = () => {
       if (data) {
         sessionStorage.setItem("user", JSON.stringify(data));
         setCurrUser(data.id);
+        console.log("data", data)
         setUser(data); // Directly setting data to user state
         setStoredUser(data); // Updating storedUser state
       }
@@ -42,12 +43,15 @@ const initializeUser = () => {
 };
 
 useEffect(() => {
+  setUser(sessionStorage.getItem("uid"));
   setUsername(sessionStorage.getItem("username"));
   const storedUserData = sessionStorage.getItem("uid");
   if (storedUserData) {
     const userData = JSON.parse(storedUserData); 
     setUser(userData); 
     setStoredUser(userData); 
+    setUsername(sessionStorage.getItem("username"));
+    
   } else {
     initializeUser(); 
   }
@@ -56,6 +60,7 @@ useEffect(() => {
 useEffect(() => {
   console.log("User data:", storedUser);
   console.log("user", user)
+  console.log("username", username)
 }, [user, storedUser]);
 
   
@@ -65,8 +70,10 @@ useEffect(() => {
 
 
   const patchUserData = (updatedData) => {
-    if (user?.id) {
-      fetch(`http://localhost:3000/test_users/${user?.id}`, {
+    console.log("updated data:", updatedData); 
+    if (user) {
+      // console.log("User ID:", user?.id);
+      fetch(`http://localhost:3000/test_users/${user}`, {
         method: "PATCH",
         // headers: {
         //   "Content-Type": "application/json",
@@ -291,7 +298,7 @@ const validateEmail = (email) => {
         newFormData.append("test_user[red_flags][]", flag);
       });
 
-      newFormData.append("test_user[username]", formData.username);
+      newFormData.append("test_user[username]", username);
       newFormData.append("test_user[email]", formData.email);
       // Append avatar file if available
       newFormData.append("test_user[avatar]", formData.avatar);
