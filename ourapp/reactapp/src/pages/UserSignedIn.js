@@ -3,7 +3,7 @@ import "./UserLogin.css";
 import { useNavigate } from "react-router-dom";
 import Conversations from "./Conversations";
 import "./UserSignedIn.css";
-import Picker from 'emoji-picker-react';
+import Picker from "emoji-picker-react";
 
 import axios from "axios";
 import { useHistory } from "react-router-dom";
@@ -19,6 +19,7 @@ export default function UserSignedIn() {
   // const [question, setQuestion] = useState("UNINIT");
   const [testUser, setTestUser] = useState("UNINIT");
   const [chosenEmoji, setChosenEmoji] = useState(null);
+  const [error, setError] = useState(null);
 
   const onEmojiClick = (event, emojiObject) => {
     setChosenEmoji(emojiObject);
@@ -33,6 +34,19 @@ export default function UserSignedIn() {
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
 
   const username = sessionStorage.getItem("username") || "defaultUsername";
+
+  useEffect(() => {
+    let timer;
+
+    if (user === null) {
+      setError("You have been logged out. Please log in again.");
+      timer = setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    }
+    return () => clearTimeout(timer);
+  }, [user]);
+
   const initializeUser = () => {
     fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
       .then((response) => {
@@ -65,20 +79,17 @@ export default function UserSignedIn() {
   };
 
   useEffect(() => {
-    initializeUser(); 
+    initializeUser();
   }, [setUser]);
-
-
-
-
 
   // const history = useHistory();
   const navigate = useNavigate();
-return(
+  return (
     <div>
       <div className="features">
         <Header />
         <div class="welcome-message"> {user?.name}'s Dashboard</div>
+        {error && <div style={{color: '#FF0000'}}>{error}</div>}
 
         <div>
           <div
@@ -87,9 +98,7 @@ return(
               justifyContent: "center",
               alignItems: "center",
             }}
-          >
-  
-          </div>
+          ></div>
 
           {/* {showConfirmationDialog && (
             <div className="modal-overlay">
@@ -104,18 +113,18 @@ return(
             pathname: '/',
             state: { data: user }
             }}> */}
-                {/* <button onClick={handleDelete} className="modal-button">
+          {/* <button onClick={handleDelete} className="modal-button">
                   Confirm
                 </button> */}
-                {/* </Link> */}
-                {/* <button */}
-                  {/* // onClick={() => setShowConfirmationDialog(false)} */}
-                  {/* // className="modal-button" */}
-                {/* // > */}
-                  {/* Cancel */}
-                {/* </button> */}
-              {/* </div> */}
-            {/* </div> */}
+          {/* </Link> */}
+          {/* <button */}
+          {/* // onClick={() => setShowConfirmationDialog(false)} */}
+          {/* // className="modal-button" */}
+          {/* // > */}
+          {/* Cancel */}
+          {/* </button> */}
+          {/* </div> */}
+          {/* </div> */}
           {/* )}  */}
         </div>
 
@@ -178,7 +187,7 @@ return(
             <p> Check out your Heartcoded insights!</p>
           </div>
         </Link>
-        
+
         {/* hello */}
       </div>
     </div>
