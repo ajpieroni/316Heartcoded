@@ -3,19 +3,35 @@ import React, { useState, useEffect } from "react";
 import { useContext } from "react";
 import axios from "axios";
 import SuccessModal from "../components/SuccessModal";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../components/contexts/UserContext";
 
 export default function UserForm() {
   const location = useLocation();
+  const navigate = useNavigate();
+
   const username = localStorage.getItem("username") || "defaultUsername";
   const { user, setUser } = useContext(UserContext);
   const [emailError, setEmailError] = useState("");
   const [ageError, setAgeError] = useState("");
   const [sameEmail, setSameEmail] = useState("")
   const [avatarUrl, setAvatarUrl] = useState(null);
+  
   const [userResponse, setUserResponse] = useState("");
   console.log(user?.id);
+  const [error, setError] = useState(null);
+  // navigate = useNavigate();
+  useEffect(() => {
+    let timer;
+
+    if (user === null) {
+      setError("You have been logged out. Please log in again.");
+      timer = setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    }
+    return () => clearTimeout(timer);
+  }, [user]);
 
   const initializeUser = () => {
     fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
@@ -40,6 +56,7 @@ export default function UserForm() {
             red_flags: data.red_flags,
           });
           sessionStorage.setItem("user", JSON.stringify(data));
+          console.log(sessionStorage.getItem("user"));
         }
       })
       .catch((error) => {
@@ -48,13 +65,11 @@ export default function UserForm() {
   };
 
   useEffect(() => {
-    const storedUser = sessionStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    } else {
+    if(username){
       initializeUser(); // Call the initializeUser function if no user data is in sessionStorage
+
     }
-  }, [setUser]);
+  }, [username]);
 
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
