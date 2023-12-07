@@ -178,7 +178,7 @@ export default function UserLanding() {
 
         <Link to="/FindMatch">
           <div className="feature-card">
-            <h2>View Current Matches</h2>
+            <h2>Matches</h2>
             <p>View your current matches!</p>
           </div>
         </Link>

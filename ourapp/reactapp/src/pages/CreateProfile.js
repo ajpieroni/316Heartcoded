@@ -3,19 +3,35 @@ import React, { useState, useEffect } from "react";
 import { useContext } from "react";
 import axios from "axios";
 import SuccessModal from "../components/SuccessModal";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../components/contexts/UserContext";
 
 export default function UserForm() {
   const location = useLocation();
+  const navigate = useNavigate();
+
   const username = localStorage.getItem("username") || "defaultUsername";
   const { user, setUser } = useContext(UserContext);
   const [emailError, setEmailError] = useState("");
   const [ageError, setAgeError] = useState("");
   const [sameEmail, setSameEmail] = useState("")
   const [avatarUrl, setAvatarUrl] = useState(null);
+  
+  const [userResponse, setUserResponse] = useState("");
+  console.log(user?.id);
+  const [error, setError] = useState(null);
+  // navigate = useNavigate();
+  useEffect(() => {
+    let timer;
 
-  // console.log(user?.id);
+    if (user === null) {
+      setError("You have been logged out. Please log in again.");
+      timer = setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    }
+    return () => clearTimeout(timer);
+  }, [user]);
 
   const initializeUser = () => {
     fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
@@ -40,6 +56,7 @@ export default function UserForm() {
             red_flags: data.red_flags,
           });
           sessionStorage.setItem("user", JSON.stringify(data));
+          console.log(sessionStorage.getItem("user"));
         }
       })
       .catch((error) => {
@@ -48,40 +65,16 @@ export default function UserForm() {
   };
 
   useEffect(() => {
-    const storedUser = sessionStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    } else {
+    if(username){
       initializeUser(); // Call the initializeUser function if no user data is in sessionStorage
+
     }
-  }, [setUser]);
+  }, [username]);
 
-  const checkEmail = (email) => {
-    fetch(`http://localhost:3000/test_users/find_by_email/${email}`)
-      .then((response) => {
-        if (!response.ok) {
-          setSameEmail("Another user has that email.")
-          console.log("Network error or user not found at server level");
-          return;
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data) {
-          
-          setSameEmail("Another user has that email.")
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
-        } else {
-         
-          console.log("User not found at data level");
-        }
-      })
-      .catch((error) => {
-        setSameEmail("Another user has that email.")
-        console.error("Failed to fetch data:", error);
-      });
-  };
-  
 
   const patchUserData = (updatedData) => {
     if (user?.id) {
@@ -100,6 +93,8 @@ export default function UserForm() {
         })
         .then((data) => {
           console.log("User updated:", data);
+          let capitalizedString = capitalizeFirstLetter(data.message);
+          setUserResponse(capitalizedString + ".")
         })
         .catch((error) => {
           console.error("Failed to update user:", error);
@@ -145,7 +140,8 @@ export default function UserForm() {
 
     useEffect(() => {
       getStates();
-    }, []); //
+    }, []); 
+
     return (
       <div>
         <label>
@@ -169,16 +165,53 @@ export default function UserForm() {
       </div>
     );
   }
+// Utility function for debouncing
+function debounce(func, delay) {
+  let debounceTimer;
+  return function(...args) {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => func.apply(this, args), delay);
+  };
+}
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if (!emailRegex.test(email)) {
-      setEmailError("Please enter a valid email address");
+// Checks if an email exists in the database
+async function checkEmailExists(email) { 
+  try {
+    const response = await fetch(`http://localhost:3000/test_users/find_by_email/${email}`);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const data = await response.json();
+    return data.exists;
+  } catch (error) {
+    console.error("Failed to check user email:", error);
+    throw error;
+  }
+}
+
+// debounced version of checkEmailExists
+const debouncedCheckEmailExists = debounce(async (email) => {
+  try {
+    const emailExists = await checkEmailExists(email);
+    if (emailExists) {
+      setEmailError("Email already exists in the database");
     } else {
       setEmailError("");
-      checkEmail(email);
     }
-  };
+  } catch (error) {
+    setEmailError("An error occurred while checking the email");
+  }
+}, 500); 
+
+// validates the email format and checks for its existence
+const validateEmail = (email) => {
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  if (!emailRegex.test(email)) {
+    setEmailError("Please enter a valid email address");
+    return;
+  }
+  debouncedCheckEmailExists(email);
+};
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -190,10 +223,6 @@ export default function UserForm() {
     if (name === "email") {
       validateEmail(value);
     }
-  };
-  const handleStateSelected = (e) => {
-    const selectedState = e.target.value;
-    setFormData({ ...formData, location: selectedState });
   };
 
   const handleRemoveRedFlag = (flagToRemove) => {
@@ -302,6 +331,10 @@ export default function UserForm() {
       console.error("Error adding a new user:", error);
     }
   };
+  const handleStateSelected = (e) => {
+    const selectedState = e.target.value;
+    setFormData({ ...formData, location: selectedState });
+  };
 
   //const [isPasswordUpdateVisible, setPasswordUpdateVisible] = useState(false);
   const handleAvatarChange = (e) => {
@@ -375,7 +408,7 @@ export default function UserForm() {
             required
           />
           {emailError && <div style={{ color: "red" }}>{emailError}</div>}
-          {sameEmail && <div style={{ color: "red" }}>{sameEmail}</div>}
+          {/* {sameEmail && <div style={{ color: "red" }}>{sameEmail}</div>} */}
         </label>
         <label>
           Gender<span style={{ color: "red" }}>*</span>:
@@ -470,7 +503,7 @@ export default function UserForm() {
 
         {isSuccessModalOpen && (
           <SuccessModal
-            message="Your information was successfully submitted."
+            message={`Your information was successfully submitted. ${userResponse}`}
             onClose={handleSuccessModalClose}
             redirectUrl="/"
           />

@@ -40,10 +40,15 @@ export default function UserLanding() {
 
     const isAvailable = await checkUsernameAvailability(username);
     if (!isAvailable) {
-      setError('Username is already taken.');
-      return;
-    }
-    localStorage.setItem('username', username);
+      if (localStorage.getItem('username') !== username) {
+        localStorage.setItem('username', username);
+        console.log("username changed")
+        // console.log(changedU + )
+      }
+        setError('Username is already taken.');
+        return;
+        
+      }
     
     axios.post("http://localhost:3000/test_users", {
       test_user: {

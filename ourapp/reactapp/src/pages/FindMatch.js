@@ -148,7 +148,7 @@ export default function FindMatch() {
   const fetchDefaultMatch = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/test_users/find_by_username?username=Wingman`
+        `http://localhost:3000/test_users/find_by_username/Wingman`
       );
       const users = await response.json();
       console.log("default:", users);

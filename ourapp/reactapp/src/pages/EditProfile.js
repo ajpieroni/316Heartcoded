@@ -122,6 +122,7 @@ export default function UserForm() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    
     setFormData({ ...formData, [name]: value });
     if (name === "birthday") {
       validateAge(value);
@@ -137,7 +138,11 @@ export default function UserForm() {
   const handleStateSelected = (e) => {
     const selectedState = e.target.value;
     setFormData({ ...formData, location: selectedState });
+      newFormData.append("test_user[avatar]", formData.avatar);
+
   };
+  const newFormData = new FormData();
+
 
   const validateAge = (birthdate) => {
     const today = new Date();
@@ -166,22 +171,36 @@ export default function UserForm() {
       alert("You are too young");
       return;
     }
-
+  
     try {
-      const newFormData = new FormData();
-      for (const key in formData) {
-        if (key !== "avatar") {
-          newFormData.append(key, formData[key]);
-        }
+      newFormData.append("test_user[username]", username);
+      if(formData.name) {
+        newFormData.append("test_user[name]", formData.name);
+
       }
-      if (formData.avatar) {
-        newFormData.append("avatar", formData.avatar);
+      newFormData.append("test_user[gender]", formData.gender);
+      newFormData.append("test_user[preferences]", formData.preferences);
+      newFormData.append("test_user[birthday]", formData.birthday);
+      newFormData.append("test_user[bio]", formData.bio);
+      newFormData.append("test_user[location]", formData.location);
+      formData.red_flags.forEach((flag) => {
+        newFormData.append("test_user[red_flags][]", flag);
+      });
+
+      if(formData.avatar){
+        newFormData.append("test_user[avatar]", formData.avatar);
+
       }
 
+      // Append avatar file if available
+
+      // const response = await axios.post(`http://localhost:3000/test_users`, formData);
+      console.log("newFormData", newFormData);
+  
       let response;
-      if (user.id) {
+      if (user?.id) {
         response = await axios.patch(
-          `http://localhost:3000/test_users/${user.id}`,
+          `http://localhost:3000/test_users/${user?.id}`,
           newFormData
         );
       } else {
@@ -190,7 +209,7 @@ export default function UserForm() {
           newFormData
         );
       }
-
+  
       setIsSuccessModalOpen(true);
       setFormData({
         name: "",
@@ -209,6 +228,7 @@ export default function UserForm() {
       setIsSuccessModalOpen(true);
     }
   };
+  
 
   const [confirmation, setConfirmation] = useState("");
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);

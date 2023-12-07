@@ -237,11 +237,13 @@ export default function UserForm({ onUserAdded }) {
                 className="disabled-field"
               />
             </label>
+            <label>
             <img
               src={avatarUrl}
               alt="Profile Avatar"
               style={{ maxHeight: "200px" }}
             />
+            </label>
             <label>
               Name:
               <input

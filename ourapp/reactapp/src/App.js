@@ -41,6 +41,23 @@ function App() {
     return null;
   }
 
+  // useEffect(() => {
+  //   if (location.pathname === '/') {
+  // //     sessionStorage.setItem('user', null);
+  // //     sessionStorage.setItem('uid', null);
+  // //     sessionStorage.setItem('username', null);
+  // //     localStorage.setItem('username', null);
+  // //     localStorage.setItem('uid', null);
+  // //     localStorage.setItem('user', null);
+
+  //     setUser(null)
+
+      
+
+  //   }
+  // }, [location]); 
+
+
   const [user, setUser] = useState(null);
   return (
     <UserContext.Provider value={{ user, setUser }}>

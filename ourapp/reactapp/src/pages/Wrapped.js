@@ -376,7 +376,7 @@ export default function Wrapped() {
                 Number of Messages Sent: {numMessSent}
               </h2>
               <p className="subtitle">
-                Words on the Wind: You've sent {numMessSent} messages––chaty
+                Words on the Wind: You've sent {numMessSent} messages––Chatty
                 Cathy!
               </p>
               <h2 className="scale-up">

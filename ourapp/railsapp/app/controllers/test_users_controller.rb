@@ -57,17 +57,17 @@ end
   end
 
   def find_by_email
-    email = params[:email]  
-
-    test_user = TestUser.find_by(email: email)
+    email = params[:email]
+    test_user_exists = TestUser.exists?(email: email)
   
-    if test_user
-      render json: test_user
+    if test_user_exists
+      render json: { exists: true }
     else
-      render json: { error: 'User not found' }, status: 404
+      render json: { exists: false }
     end
   end
-
+  
+  
 
   
   def create_message
