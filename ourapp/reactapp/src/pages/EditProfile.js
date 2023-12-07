@@ -122,6 +122,7 @@ export default function UserForm() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    
     setFormData({ ...formData, [name]: value });
     if (name === "birthday") {
       validateAge(value);
@@ -166,7 +167,7 @@ export default function UserForm() {
       alert("You are too young");
       return;
     }
-
+  
     try {
       const newFormData = new FormData();
       for (const key in formData) {
@@ -177,11 +178,13 @@ export default function UserForm() {
       if (formData.avatar) {
         newFormData.append("avatar", formData.avatar);
       }
-
+  
+      console.log("here is new form", newFormData);
+  
       let response;
-      if (user.id) {
+      if (user?.id) {
         response = await axios.patch(
-          `http://localhost:3000/test_users/${user.id}`,
+          `http://localhost:3000/test_users/${user?.id}`,
           newFormData
         );
       } else {
@@ -190,7 +193,7 @@ export default function UserForm() {
           newFormData
         );
       }
-
+  
       setIsSuccessModalOpen(true);
       setFormData({
         name: "",
@@ -209,6 +212,7 @@ export default function UserForm() {
       setIsSuccessModalOpen(true);
     }
   };
+  
 
   const [confirmation, setConfirmation] = useState("");
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
