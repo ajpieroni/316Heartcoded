@@ -32,7 +32,7 @@ Rails.application.routes.draw do
     collection do
       get 'find_by_username', to: 'test_users#find_by_username'
       get 'find_by_username/:username', to: 'test_users#find_by_username'
-      get 'find_by_email', to: 'test_users#find_by_email'
+      get 'find_by_email/:email', to: 'test_users#find_by_email', constraints: { email: /[^\/]+/ }
       get 'check_username', to: 'test_users#check_username'
       post 'authenticate', to: 'test_users#authenticate'
     end
