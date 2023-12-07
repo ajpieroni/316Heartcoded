@@ -13,9 +13,12 @@
   }
   
   .hero-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
+    text-align: center;
+    color: white !important;
+    margin-top: 6rem;
+    font-size: 4rem;
+    font-family: 'Bebas Neue', sans-serif;
+
   }
   
   .hero-subtitle {
