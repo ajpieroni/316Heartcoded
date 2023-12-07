@@ -138,7 +138,11 @@ export default function UserForm() {
   const handleStateSelected = (e) => {
     const selectedState = e.target.value;
     setFormData({ ...formData, location: selectedState });
+      newFormData.append("test_user[avatar]", formData.avatar);
+
   };
+  const newFormData = new FormData();
+
 
   const validateAge = (birthdate) => {
     const today = new Date();
@@ -170,7 +174,6 @@ export default function UserForm() {
   
     try {
       
-      const newFormData = new FormData();
       newFormData.append("test_user[name]", formData.name);
       newFormData.append("test_user[gender]", formData.gender);
       newFormData.append("test_user[preferences]", formData.preferences);
@@ -181,13 +184,11 @@ export default function UserForm() {
         newFormData.append("test_user[red_flags][]", flag);
       });
 
-      newFormData.append("test_user[username]", formData.username);
-      newFormData.append("test_user[email]", formData.email);
+      newFormData.append("test_user[username]", username);
       // Append avatar file if available
-      newFormData.append("test_user[avatar]", formData.avatar);
 
       // const response = await axios.post(`http://localhost:3000/test_users`, formData);
-      patchUserData(newFormData);
+      console.log("newFormData", newFormData);
   
       let response;
       if (user?.id) {
