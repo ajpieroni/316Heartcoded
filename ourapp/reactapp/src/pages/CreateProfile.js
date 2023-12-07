@@ -316,6 +316,10 @@ const validateEmail = (email) => {
       console.error("Error adding a new user:", error);
     }
   };
+  const handleStateSelected = (e) => {
+    const selectedState = e.target.value;
+    setFormData({ ...formData, location: selectedState });
+  };
 
   //const [isPasswordUpdateVisible, setPasswordUpdateVisible] = useState(false);
   const handleAvatarChange = (e) => {
