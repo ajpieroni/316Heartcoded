@@ -173,8 +173,11 @@ export default function UserForm() {
     }
   
     try {
-      
-      newFormData.append("test_user[name]", formData.name);
+      newFormData.append("test_user[username]", username);
+      if(formData.name) {
+        newFormData.append("test_user[name]", formData.name);
+
+      }
       newFormData.append("test_user[gender]", formData.gender);
       newFormData.append("test_user[preferences]", formData.preferences);
       newFormData.append("test_user[birthday]", formData.birthday);
@@ -184,8 +187,10 @@ export default function UserForm() {
         newFormData.append("test_user[red_flags][]", flag);
       });
 
-      newFormData.append("test_user[username]", username);
-      newFormData.append("test_user[avatar]", formData.avatar);
+      if(formData.avatar){
+        newFormData.append("test_user[avatar]", formData.avatar);
+
+      }
 
       // Append avatar file if available
 

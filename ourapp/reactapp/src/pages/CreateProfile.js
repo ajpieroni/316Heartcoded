@@ -14,9 +14,21 @@ export default function UserForm() {
   const [ageError, setAgeError] = useState("");
   const [sameEmail, setSameEmail] = useState("")
   const [avatarUrl, setAvatarUrl] = useState(null);
+  
   const [userResponse, setUserResponse] = useState("");
   console.log(user?.id);
+  const [error, setError] = useState(null);
+  useEffect(() => {
+    let timer;
 
+    if (user === null) {
+      setError("You have been logged out. Please log in again.");
+      timer = setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    }
+    return () => clearTimeout(timer);
+  }, [user]);
   const initializeUser = () => {
     fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
       .then((response) => {
