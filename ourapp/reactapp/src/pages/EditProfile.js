@@ -185,6 +185,8 @@ export default function UserForm() {
       });
 
       newFormData.append("test_user[username]", username);
+      newFormData.append("test_user[avatar]", formData.avatar);
+
       // Append avatar file if available
 
       // const response = await axios.post(`http://localhost:3000/test_users`, formData);
