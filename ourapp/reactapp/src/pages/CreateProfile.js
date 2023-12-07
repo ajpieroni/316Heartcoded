@@ -8,54 +8,57 @@ import { UserContext } from "../components/contexts/UserContext";
 
 export default function UserForm() {
   const location = useLocation();
-  const username = localStorage.getItem("username") || "defaultUsername";
+  
+  // const username = localStorage.getItem("username") || "defaultUsername";
   const { user, setUser } = useContext(UserContext);
   const [emailError, setEmailError] = useState("");
   const [ageError, setAgeError] = useState("");
   const [sameEmail, setSameEmail] = useState("")
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [userResponse, setUserResponse] = useState("");
-  console.log(user?.id);
+  const [currUser, setCurrUser] = useState("");
+  const [storedUser, setStoredUser] = useState(null); // Declare storedUser at a higher scope
+  const [username, setUsername] = useState("");
 
-  const initializeUser = () => {
-    fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data) {
-          setUser({
-            ...user,
-            name: data.name,
-            id: data.id,
-            birthday: data.birthday,
-            gender: data.gender,
-            preferences: data.preferences,
-            bio: data.bio,
-            location: data.location,
-            password: data.password,
-            red_flags: data.red_flags,
-          });
-          sessionStorage.setItem("user", JSON.stringify(data));
-        }
-      })
-      .catch((error) => {
-        console.error("Failed to initialize user:", error);
-      });
-  };
+const initializeUser = () => {
+  if (!username) return; // Ensure username is defined
 
-  useEffect(() => {
-    const storedUser = sessionStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    } else {
-      initializeUser(); // Call the initializeUser function if no user data is in sessionStorage
-    }
-  }, [setUser]);
+  fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
+    .then(response => {
+      if (!response.ok) throw new Error("Network response was not ok");
+      return response.json();
+    })
+    .then(data => {
+      if (data) {
+        sessionStorage.setItem("user", JSON.stringify(data));
+        setCurrUser(data.id);
+        setUser(data); // Directly setting data to user state
+        setStoredUser(data); // Updating storedUser state
+      }
+    })
+    .catch(error => {
+      console.error("Failed to initialize user:", error);
+    });
+};
 
+useEffect(() => {
+  setUsername(sessionStorage.getItem("username"));
+  const storedUserData = sessionStorage.getItem("uid");
+  if (storedUserData) {
+    const userData = JSON.parse(storedUserData); 
+    setUser(userData); 
+    setStoredUser(userData); 
+  } else {
+    initializeUser(); 
+  }
+}, [setUser, username]); 
+
+useEffect(() => {
+  console.log("User data:", storedUser);
+  console.log("user", user)
+}, [user, storedUser]);
+
+  
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }

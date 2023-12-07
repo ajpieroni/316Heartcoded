@@ -43,7 +43,7 @@ export default function UserLanding() {
       setError('Username is already taken.');
       return;
     }
-    localStorage.setItem('username', username);
+    sessionStorage.setItem('username', username);
     
     axios.post("http://localhost:3000/test_users", {
       test_user: {
@@ -57,6 +57,8 @@ export default function UserLanding() {
     })
     .then(response => {
       console.log(response.data);
+      sessionStorage.setItem("uid", response.data.id);
+      console.log(sessionStorage.getItem("uid"));
       if (response.data.success === true) {
         const message = "Account successfully created. Click here to <a href='/CreateProfile'>initialize profile</a>";
         setSuccessMessage(message);
@@ -76,9 +78,10 @@ export default function UserLanding() {
 
   useEffect(() => {
     if (username) {
-      localStorage.setItem('username', username);
+      sessionStorage.setItem("username", username);
     }
-  }, [username]); 
+  }, [username]);
+  
   
   const checkUsernameAvailability = async (username) => {
     try {
