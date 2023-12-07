@@ -8,6 +8,7 @@ class TestUser < ApplicationRecord
     has_many :matched_withs_as_uid2, class_name: 'MatchedWith', foreign_key: 'uid2', dependent: :destroy
     validates :username, presence: true, uniqueness: { case_sensitive: false }
     validates :password_digest, length: { minimum: 6, message: 'must be at least 6 characters long and include at least one letter and one number' }
+    validates :email, uniqueness: true, allow_nil: true
     has_one_attached :avatar
 
     def password=(new_password)

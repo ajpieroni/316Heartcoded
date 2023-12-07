@@ -14,8 +14,8 @@ export default function UserForm() {
   const [ageError, setAgeError] = useState("");
   const [sameEmail, setSameEmail] = useState("")
   const [avatarUrl, setAvatarUrl] = useState(null);
-
-  // console.log(user?.id);
+  const [userResponse, setUserResponse] = useState("");
+  console.log(user?.id);
 
   const initializeUser = () => {
     fetch(`http://localhost:3000/test_users/find_by_username/${username}`)
@@ -56,32 +56,10 @@ export default function UserForm() {
     }
   }, [setUser]);
 
-  const checkEmail = (email) => {
-    fetch(`http://localhost:3000/test_users/find_by_email/${email}`)
-      .then((response) => {
-        if (!response.ok) {
-          setSameEmail("Another user has that email.")
-          console.log("Network error or user not found at server level");
-          return;
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data) {
-          
-          setSameEmail("Another user has that email.")
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
-        } else {
-         
-          console.log("User not found at data level");
-        }
-      })
-      .catch((error) => {
-        setSameEmail("Another user has that email.")
-        console.error("Failed to fetch data:", error);
-      });
-  };
-  
 
   const patchUserData = (updatedData) => {
     if (user?.id) {
@@ -100,6 +78,8 @@ export default function UserForm() {
         })
         .then((data) => {
           console.log("User updated:", data);
+          let capitalizedString = capitalizeFirstLetter(data.message);
+          setUserResponse(capitalizedString + ".")
         })
         .catch((error) => {
           console.error("Failed to update user:", error);
@@ -145,7 +125,8 @@ export default function UserForm() {
 
     useEffect(() => {
       getStates();
-    }, []); //
+    }, []); 
+
     return (
       <div>
         <label>
@@ -169,16 +150,53 @@ export default function UserForm() {
       </div>
     );
   }
+// Utility function for debouncing
+function debounce(func, delay) {
+  let debounceTimer;
+  return function(...args) {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => func.apply(this, args), delay);
+  };
+}
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if (!emailRegex.test(email)) {
-      setEmailError("Please enter a valid email address");
+// Checks if an email exists in the database
+async function checkEmailExists(email) { 
+  try {
+    const response = await fetch(`http://localhost:3000/test_users/find_by_email/${email}`);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const data = await response.json();
+    return data.exists;
+  } catch (error) {
+    console.error("Failed to check user email:", error);
+    throw error;
+  }
+}
+
+// debounced version of checkEmailExists
+const debouncedCheckEmailExists = debounce(async (email) => {
+  try {
+    const emailExists = await checkEmailExists(email);
+    if (emailExists) {
+      setEmailError("Email already exists in the database");
     } else {
       setEmailError("");
-      checkEmail(email);
     }
-  };
+  } catch (error) {
+    setEmailError("An error occurred while checking the email");
+  }
+}, 500); 
+
+// validates the email format and checks for its existence
+const validateEmail = (email) => {
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  if (!emailRegex.test(email)) {
+    setEmailError("Please enter a valid email address");
+    return;
+  }
+  debouncedCheckEmailExists(email);
+};
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -191,11 +209,8 @@ export default function UserForm() {
       validateEmail(value);
     }
   };
-  const handleStateSelected = (e) => {
-    const selectedState = e.target.value;
-    setFormData({ ...formData, location: selectedState });
-  };
 
+÷
   const handleRemoveRedFlag = (flagToRemove) => {
     const updatedRedFlags = selectedRedFlags.filter(
       (flag) => flag !== flagToRemove
@@ -375,7 +390,7 @@ export default function UserForm() {
             required
           />
           {emailError && <div style={{ color: "red" }}>{emailError}</div>}
-          {sameEmail && <div style={{ color: "red" }}>{sameEmail}</div>}
+          {/* {sameEmail && <div style={{ color: "red" }}>{sameEmail}</div>} */}
         </label>
         <label>
           Gender<span style={{ color: "red" }}>*</span>:
@@ -470,7 +485,7 @@ export default function UserForm() {
 
         {isSuccessModalOpen && (
           <SuccessModal
-            message="Your information was successfully submitted."
+            message={`Your information was successfully submitted. ${userResponse}`}
             onClose={handleSuccessModalClose}
             redirectUrl="/"
           />
