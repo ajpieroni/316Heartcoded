@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "@types/react-select": "^5.0.1",
+    "emoji-picker-react": "^4.5.16",
+    "react-intersection-observer": "^9.5.3",
     "react-select": "^5.8.0",
     "replicate": "^0.22.0"
   }

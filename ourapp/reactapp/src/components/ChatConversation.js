@@ -282,9 +282,9 @@ export default function ChatConversation({ selectedUser }) {
       });
   };
 
-  const toggleEmojiPicker = () => {
-    setToggleEmoji(!toggleEmoji);
-  };
+  // const toggleEmojiPicker = () => {
+  //   setToggleEmoji(!toggleEmoji);
+  // };
 
   return (
     <>

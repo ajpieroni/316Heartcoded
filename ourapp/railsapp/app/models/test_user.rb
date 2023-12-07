@@ -6,6 +6,8 @@ class TestUser < ApplicationRecord
     # has_many :matched_withs, foreign_key: 'uid2', dependent: :destroy
     has_many :matched_withs_as_uid1, class_name: 'MatchedWith', foreign_key: 'uid1', dependent: :destroy
     has_many :matched_withs_as_uid2, class_name: 'MatchedWith', foreign_key: 'uid2', dependent: :destroy
+    has_many :weights, dependent: :destroy
+    has_many :answers, dependent: :destroy
     validates :username, presence: true, uniqueness: { case_sensitive: false }
     validates :password_digest, length: { minimum: 6, message: 'must be at least 6 characters long and include at least one letter and one number' }
     has_one_attached :avatar
